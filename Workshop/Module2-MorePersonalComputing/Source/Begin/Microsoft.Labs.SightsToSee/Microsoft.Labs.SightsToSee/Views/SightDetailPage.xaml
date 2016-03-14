@@ -1,0 +1,194 @@
+﻿<Page
+    x:Class="Microsoft.Labs.SightsToSee.Views.SightDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Microsoft.Labs.SightsToSee.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Labs.SightsToSee.Controls"
+    xmlns:viewModels="using:Microsoft.Labs.SightsToSee.ViewModels"
+    x:Name="SightPage"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewModels:SightDetailPageViewModel />
+    </Page.DataContext>
+
+    <Page.Resources>
+        <Flyout x:Key="DeleteFlyout"
+                Placement="Top">
+            <Grid DataContext="{Binding}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Style="{StaticResource CaptionTextBlockStyle}"
+                           Margin="0,0,0,12">
+                    Are you sure you want to remove this sight from your trip?
+                </TextBlock>
+
+                <!-- Buttons -->
+                <StackPanel Orientation="Horizontal"
+                            Grid.Row="1"
+                            HorizontalAlignment="Right">
+                    <Button x:Name="DeleteSightButton"
+                            Tapped="DeleteSightButton_OnTapped"
+                            Click="{x:Bind ViewModel.DeleteSightAsync}">
+                        Remove
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <Flyout.FlyoutPresenterStyle>
+                <Style TargetType="FlyoutPresenter">
+                    <Setter Property="ScrollViewer.ZoomMode" Value="Enabled" />
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="BorderBrush" Value="Gray" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="MinHeight" Value="80" />
+                    <Setter Property="MinWidth" Value="80" />
+                    <Setter Property="Padding" Value="12" />
+                </Style>
+            </Flyout.FlyoutPresenterStyle>
+        </Flyout>
+    </Page.Resources>
+
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TitleCommandBar.Visibility" Value="Visible" />
+                        <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
+                        <Setter Target="MobileCommandBar.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TitleCommandBar.Visibility" Value="Visible" />
+                        <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
+                        <Setter Target="MobileCommandBar.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TitleCommandBar.Visibility" Value="Collapsed" />
+                        <Setter Target="MobileHeader.Visibility" Value="Visible" />
+                        <Setter Target="MobileCommandBar.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+
+        </Grid.RowDefinitions>
+
+        <controls:SightDetailControl x:Name="SightDetailControl" 
+                                     Grid.Row="0"
+                                     Grid.RowSpan="2"
+                                     BackgroundImage="{x:Bind ViewModel.SightImage, Mode=OneWay}"/>
+
+        <CommandBar Grid.Row="0"
+                    x:Name="TitleCommandBar"
+                    Background="Transparent">
+            <AppBarButton x:Name="Share"
+                          Label="Share Sight"
+                          Click="{x:Bind ViewModel.ShareSight}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="Directions"
+                          Label="Directions to Sight"
+                          Click="{x:Bind ViewModel.GetDirectionsAsync}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE707;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="DesktopDeleteFlyout"
+                          Label="Delete from Trip"
+                          Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Flyout="{StaticResource DeleteFlyout}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                          Label="Add to Trip"
+                          Click="{x:Bind ViewModel.AddSightAsync}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+
+            <CommandBar.Content>
+                <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}"
+                           Grid.Row="0"
+                           Margin="12,0"
+                           Text="{x:Bind ViewModel.CurrentSight.Name, Mode=OneWay}" />
+            </CommandBar.Content>
+
+        </CommandBar>
+
+
+        <Border Background="{StaticResource NavMenuBackgroundBrush}"
+                x:Name="MobileHeader"
+                Height="48"
+                Visibility="Collapsed"
+                Grid.Row="0">
+            <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
+                       Foreground="White"
+                       VerticalAlignment="Center"
+                       Margin="48,0,0,0"
+                       Text="{x:Bind ViewModel.CurrentSight.Name, Mode=OneWay}" />
+        </Border>
+
+
+        <CommandBar Grid.Row="2" 
+                    x:Name="MobileCommandBar">
+            <AppBarButton Click="{x:Bind ViewModel.ShareSight}"
+                          Label="Share Sight">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Click="{x:Bind ViewModel.GetDirectionsAsync}"
+                          Label="Directions to Sight">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE707;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="MobileDeleteFlyout"
+                          Label="Delete from Trip"
+                          Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Flyout="{StaticResource DeleteFlyout}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                          Label="Add to Trip"
+                          Click="{x:Bind ViewModel.AddSightAsync}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
+    </Grid>
+</Page>

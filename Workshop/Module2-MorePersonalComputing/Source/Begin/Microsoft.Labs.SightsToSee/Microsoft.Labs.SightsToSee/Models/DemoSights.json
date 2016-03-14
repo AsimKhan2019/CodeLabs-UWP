@@ -1,0 +1,75 @@
+[
+  {
+    "Id": "b114c795-52c1-4b3b-9bc2-3bdc38e546a5",
+    "Name": "Golden Gate Bridge",
+    "Latitude": 37.8105374,
+    "Longitude": -122.4770634,
+    "Address": "Lincoln Boulevard, San Francisco, CA 94129",
+    "ImagePath": "ms-appx:///Assets/DemoImages/GettyImages-547979731.jpg",
+    "Description": "Dolorum voluptatem alias neque optio architecto saepe hic.",
+    "LongDescription": "Est atque enim sint aut facere nesciunt non qui. Laboriosam laborum vel dolorem alias consequatur deleniti. Magni fugiat sint porro molestias.Voluptatem magni eos quia similique pariatur ut porro molestiae. Et reiciendis quis et doloremque et. Pariatur voluptatem eius dolore sit labore dolor. Et ad consequuntur voluptatum. Inventore aut esse in.",
+    "Notes": "",
+    "IsMySight": true,
+    "RankInDestination": 1
+  },
+  {
+    "Id": "a9d9694a-97b0-4682-a158-d040b71ab656",
+    "Name": "Coit Tower",
+    "Latitude": 37.8023791,
+    "Longitude": -122.4058001,
+    "Address": "1 Telegraph Hill Boulevard, San Francisco, CA 94133",
+    "ImagePath": "ms-appx:///Assets/DemoImages/GettyImages-200247472-001.jpg",
+    "Description": "Laboriosam nesciunt laudantium ut qui et eveniet molestiae.",
+    "LongDescription": "Rerum temporibus quia ad. Eum quia nobis sapiente nobis iusto suscipit eius. Quo delectus in non reiciendis dolorum laboriosam maxime. Perferendis quo numquam ut adipisci ad sapiente fuga. Iusto vel impedit possimus ea aut rerum expedita.Officia incidunt maxime similique. Facilis voluptas corrupti nemo distinctio. Et est velit sunt aut natus. Quis consequuntur voluptate alias inventore rerum ut. Doloribus beatae id molestiae necessitatibus voluptatem.",
+    "Notes": "",
+    "RankInDestination": 3
+  },
+  {
+    "Id": "c2eb4cf7-0325-4fbc-9d76-d9916429a2d7",
+    "Name": "Alcatraz",
+    "Latitude": 37.8067324,
+    "Longitude": -122.4051726,
+    "Address": "Alcatraz Landing, Pier 33, Embarcadero, San Francisco, CA 94133",
+    "ImagePath": "ms-appx:///Assets/DemoImages/GettyImages-601811063.jpg",
+    "Description": "Assumenda vero nemo quia omnis aperiam quasi.",
+    "LongDescription": "Sit sit quae iusto. Repudiandae repellendus eius culpa cum. Modi aut numquam soluta est pariatur. Magnam sit nam iure eius occaecati sint et voluptatem. Eius dolorum voluptatem debitis temporibus minus rerum.Veniam qui reprehenderit debitis perspiciatis. Amet ducimus numquam consectetur voluptas illo rerum. Est et voluptas praesentium. Aut cupiditate sint eum saepe incidunt alias sapiente. Ut et architecto ut nulla iusto.",
+    "Notes": "",
+    "RankInDestination": 8
+  },
+  {
+    "Id": "170e1f69-74fc-476e-89ae-9571e41ebafe",
+    "Name": "Lombard Street",
+    "Latitude": 37.7929789,
+    "Longitude": -122.4212424,
+    "Address": "San Francisco, CA 94109",
+    "ImagePath": "ms-appx:///Assets/DemoImages/GettyImages-56143534.jpg",
+    "Description": "Earum culpa et omnis necessitatibus illum nostrum eveniet.",
+    "LongDescription": "Dolor quas ad cupiditate ut beatae accusantium. Voluptatem quisquam est voluptas possimus. Est perspiciatis est est voluptates repellendus. Sunt quia molestias non. Earum blanditiis laboriosam sit beatae blanditiis vel omnis quo.Iusto officiis praesentium ea quibusdam fugit consequuntur repellendus. Aut ea expedita in magni voluptatem neque sint. Id ullam voluptas repellat qui eos. Itaque dolores rerum adipisci tenetur voluptatibus repellendus. Illum numquam eveniet ducimus vel voluptatem blanditiis vitae quisquam.",
+    "Notes": "",
+    "RankInDestination": 9
+  },
+  {
+    "Id": "959f8afc-db62-481b-9827-a1dd75aea0b6",
+    "Name": "Chinatown",
+    "Latitude": 37.7788629,
+    "Longitude": -122.3927818,
+    "Address": "Third and Townsend streets, San Francisco, CA 94103",
+    "ImagePath": "ms-appx:///Assets/DemoImages/GettyImages-512468667.jpg",
+    "Description": "In hic voluptatibus modi quae quas ea.",
+    "LongDescription": "Illum quia pariatur illo dolor velit est accusamus quo. Eos adipisci maiores velit ex. Deserunt in dicta libero accusantium sit.Architecto tenetur voluptatem amet excepturi explicabo qui accusantium illum. Distinctio nobis dolorum qui. Repellendus voluptas aut suscipit pariatur quasi voluptatum. Repudiandae porro rem perferendis dolor ut iste non.",
+    "Notes": "",
+    "RankInDestination": 10
+  },
+  {
+    "Id": "f7ab0bde-61d5-4072-bb41-88ba645feabc",
+    "Name": "Palace of Fine Arts",
+    "Latitude": 37.8039628,
+    "Longitude": -122.4485314,
+    "Address": "3601 Lyon Street, San Francisco, CA 94123",
+    "ImagePath": "ms-appx:///Assets/DemoImages/GettyImages-168644066.jpg",
+    "Description": "Est ut a et in sit sed non.",
+    "LongDescription": "Ex quam veritatis maiores commodi. Non aut sint ut. Sed explicabo soluta ab voluptatem. Aut dolorum nemo est. Rerum at laboriosam odit quia.Ab aut et aut. Nostrum debitis odit sint eum est aut ea aut. Esse in quos officiis ipsa.",
+    "Notes": "",
+    "RankInDestination": 15
+  }
+]

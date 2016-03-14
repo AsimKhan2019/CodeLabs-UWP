@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-us" Name="CommandSet_en-us">
+    <AppName> Sights 2 See </AppName>
+    <Example> Show me sights 2 see nearby </Example>
+
+    <Command Name="show">
+      <Example> Show me sights 2 see nearby </Example>
+      <ListenFor RequireAppName="ExplicitlySpecified"> Show me {builtin:AppName} nearby</ListenFor>
+      <Feedback> On it </Feedback>
+      <Navigate/>
+    </Command>
+
+    <PhraseTopic Label="todo" Scenario="Natural Language" />
+
+  </CommandSet>
+
+  <CommandSet xml:lang="en-gb" Name="CommandSet_en-gb">
+    <AppName> To Do </AppName>
+    <Example> What's on my To Do </Example>
+
+    <Command Name="show">
+      <Example> Show me sights 2 see nearby </Example>
+      <ListenFor RequireAppName="ExplicitlySpecified"> Show me {builtin:AppName} nearby</ListenFor>
+      <Feedback> On it </Feedback>
+      <Navigate/>
+    </Command>
+
+  </CommandSet>
+
+</VoiceCommands>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-us" Name="SightsToSeeCommandSet_en-us">
+    <CommandPrefix> Sights to see, </CommandPrefix>
+    <Example> Show me my sights </Example>
+
+    <Command Name="LaunchApp">
+      <Example>show me my sights</Example>
+      <ListenFor>show me my sights</ListenFor>
+      <Feedback>Opening your Sights To See app</Feedback>
+      <Navigate />
+    </Command>
+
+  </CommandSet>
+</VoiceCommands>
