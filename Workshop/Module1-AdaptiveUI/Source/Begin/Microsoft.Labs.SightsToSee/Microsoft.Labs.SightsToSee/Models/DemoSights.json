@@ -1,0 +1,303 @@
+[
+  {
+    "Id": "76e9e855-68d6-41ae-a1f2-cfe60e367b0b",
+    "Name": "Golden Gate Bridge",
+    "Latitude": 37.8105374,
+    "Longitude": -122.4770634,
+    "ImagePath": "ms-appx:///Assets/DemoImages/GoldenGateBridge.jpg",
+    "Description": "Eligendi assumenda et sed dolor.",
+    "Notes": "",
+    "IsMySight":  true,
+    "RankInDestination": 1
+  },
+  {
+    "Id": "388a6e02-6534-48fb-8686-4b04e70e2ddb",
+    "Name": "The Exploratorium",
+    "Latitude": 37.7976769,
+    "Longitude": -122.3943387,
+    "ImagePath": "ms-appx:///Assets/DemoImages/TheExploratorium.jpg",
+    "Description": "Voluptates enim facere facere alias voluptatibus sapiente eius.",
+    "Notes": "",
+    "RankInDestination": 2
+  },
+  {
+    "Id": "8787a256-a4c1-4381-aa2d-da88ce5cda22",
+    "Name": "Coit Tower",
+    "Latitude": 37.8023791,
+    "Longitude": -122.4058001,
+    "ImagePath": "ms-appx:///Assets/DemoImages/CoitTower.jpg",
+    "Description": "Delectus officia quod enim aliquid aliquid odio vitae.",
+    "Notes": "",
+    "RankInDestination": 3
+  },
+  {
+    "Id": "ff735e54-b1eb-4a52-8b27-763338100ac2",
+    "Name": "Asian Art Museum",
+    "Latitude": 37.7801637,
+    "Longitude": -122.4161985,
+    "ImagePath": "ms-appx:///Assets/DemoImages/AsianArtMuseum.jpg",
+    "Description": "Sunt magnam eos sed dolore doloribus libero illum.",
+    "Notes": "",
+    "RankInDestination": 4
+  },
+  {
+    "Id": "b3809d88-e617-4664-8118-f8ef3fe74f49",
+    "Name": "de Young Museum",
+    "Latitude": 37.7714775,
+    "Longitude": -122.4687303,
+    "ImagePath": "ms-appx:///Assets/DemoImages/deYoungMuseum.jpg",
+    "Description": "Facilis autem excepturi quisquam ut.",
+    "Notes": "",
+    "RankInDestination": 6
+  },
+  {
+    "Id": "aa3952b3-369c-4ed8-aff7-cc4be579f82b",
+    "Name": "San Francisco Museum of Modern Art",
+    "Latitude": 37.7782034,
+    "Longitude": -122.4091251,
+    "ImagePath": "ms-appx:///Assets/DemoImages/SanFranciscoMuseumofModernArt.jpg",
+    "Description": "Dolorem laboriosam delectus error.",
+    "Notes": "",
+    "RankInDestination": 5
+  },
+  {
+    "Id": "32de8a79-1ab3-465c-b335-47e9050830ec",
+    "Name": "Legion of Honor",
+    "Latitude": 37.7813454,
+    "Longitude": -122.497668,
+    "ImagePath": "ms-appx:///Assets/DemoImages/LegionofHonor.jpg",
+    "Description": "Repellat voluptatum consequatur sed voluptatem nisi omnis maxime dolorum.",
+    "Notes": "",
+    "RankInDestination": 7
+  },
+  {
+    "Id": "87c33170-aef8-4eee-a014-565820a01726",
+    "Name": "Alcatraz",
+    "Latitude": 37.8067324,
+    "Longitude": -122.4051726,
+    "ImagePath": "ms-appx:///Assets/DemoImages/Alcatraz.jpg",
+    "Description": "Reiciendis magnam nobis beatae.",
+    "Notes": "",
+    "RankInDestination": 8
+  },
+  {
+    "Id": "8dc3c0a3-d59f-43b2-ae92-6c34ba985809",
+    "Name": "Lombard Street",
+    "Latitude": 37.7929789,
+    "Longitude": -122.4212424,
+    "ImagePath": "ms-appx:///Assets/DemoImages/LombardStreet.jpg",
+    "Description": "Non officia temporibus veritatis voluptas vitae amet vel ipsam.",
+    "Notes": "",
+    "RankInDestination": 9
+  },
+  {
+    "Id": "67ffb26e-771d-45d4-92c5-860b8ce43217",
+    "Name": "Musée Mecanique",
+    "Latitude": 37.809305,
+    "Longitude": -122.416021,
+    "ImagePath": "ms-appx:///Assets/DemoImages/MuséeMecanique.jpg",
+    "Description": "Non dolore quia optio aut aut.",
+    "Notes": "",
+    "RankInDestination": 10
+  },
+  {
+    "Id": "42c9336d-18e8-4187-8140-b78a3b3eec1d",
+    "Name": "California Academy of Sciences",
+    "Latitude": 37.7698218,
+    "Longitude": -122.4660077,
+    "ImagePath": "ms-appx:///Assets/DemoImages/CaliforniaAcademyofSciences.jpg",
+    "Description": "Debitis nesciunt quisquam explicabo odio sit.",
+    "Notes": "",
+    "RankInDestination": 11
+  },
+  {
+    "Id": "8ac036bb-0bc3-4052-9b67-ea294fb7a03e",
+    "Name": "Ferry Building Marketplace",
+    "Latitude": 37.7910528,
+    "Longitude": -122.3991866,
+    "ImagePath": "ms-appx:///Assets/DemoImages/FerryBuildingMarketplace.jpg",
+    "Description": "Ut incidunt molestiae velit quasi nam ut eum facilis.",
+    "Notes": "",
+    "RankInDestination": 12
+  },
+  {
+    "Id": "eba2d049-b310-4be8-88fe-0ab5ee2fe43f",
+    "Name": "Conservatory of Flowers",
+    "Latitude": 37.7717959,
+    "Longitude": -122.4699322,
+    "ImagePath": "ms-appx:///Assets/DemoImages/ConservatoryofFlowers.jpg",
+    "Description": "Sint culpa omnis et et.",
+    "Notes": "",
+    "RankInDestination": 13
+  },
+  {
+    "Id": "2fcc719d-21de-44f0-9a1f-f7599fc7868e",
+    "Name": "Oakland Museum of California",
+    "Latitude": 37.7986167,
+    "Longitude": -122.264194,
+    "ImagePath": "ms-appx:///Assets/DemoImages/OaklandMuseumofCalifornia.jpg",
+    "Description": "Vel distinctio quos eligendi ab aspernatur odio ab sint.",
+    "Notes": "",
+    "RankInDestination": 14
+  },
+  {
+    "Id": "43623d73-e0ca-4b49-83d7-bfcb5a15ad45",
+    "Name": "Palace of Fine Arts",
+    "Latitude": 37.8039628,
+    "Longitude": -122.4485314,
+    "ImagePath": "ms-appx:///Assets/DemoImages/PalaceofFineArts.jpg",
+    "Description": "Mollitia autem non ex.",
+    "Notes": "",
+    "RankInDestination": 15
+  },
+  {
+    "Id": "f56d4708-0a0f-428c-ac31-c881d1ccd641",
+    "Name": "Cable Car Museum",
+    "Latitude": 37.794628,
+    "Longitude": -122.4115149,
+    "ImagePath": "ms-appx:///Assets/DemoImages/CableCarMuseum.jpg",
+    "Description": "Sunt similique recusandae neque sed sequi doloribus maxime et.",
+    "Notes": "",
+    "RankInDestination": 16
+  },
+  {
+    "Id": "91ee257f-d911-4f4c-91b0-dca8480c1dc6",
+    "Name": "Japanese Tea Garden",
+    "Latitude": 37.7694208,
+    "Longitude": -122.4862138,
+    "ImagePath": "ms-appx:///Assets/DemoImages/JapaneseTeaGarden.jpg",
+    "Description": "Eum id voluptatem dolor occaecati praesentium deleniti architecto ipsam.",
+    "Notes": "",
+    "RankInDestination": 17
+  },
+  {
+    "Id": "cd9dd3d7-b4b8-4f8e-ae29-c2d5e40bf572",
+    "Name": "Golden Gate Park",
+    "Latitude": 37.7716702,
+    "Longitude": -122.4545563,
+    "ImagePath": "ms-appx:///Assets/DemoImages/GoldenGatePark.jpg",
+    "Description": "Iusto rerum voluptas aut aut temporibus officiis soluta voluptatibus.",
+    "Notes": "",
+    "RankInDestination": 18
+  },
+  {
+    "Id": "be795e1f-a07e-4131-91a8-e3b3e61f1fe4",
+    "Name": "Haas - Lilienthal House",
+    "Latitude": 37.7932841,
+    "Longitude": -122.424959,
+    "ImagePath": "ms-appx:///Assets/DemoImages/Haas-LilienthalHouse.jpg",
+    "Description": "Dolorem corporis quis molestiae.",
+    "Notes": "",
+    "RankInDestination": 20
+  },
+  {
+    "Id": "fd0f1662-e69f-4546-b34f-8294bec5f962",
+    "Name": "Yerba Buena Center for the Arts",
+    "Latitude": 37.7857984,
+    "Longitude": -122.4024238,
+    "ImagePath": "ms-appx:///Assets/DemoImages/YerbaBuenaCenterfortheArts.jpg",
+    "Description": "Perferendis dolorum quod voluptatem est dolorem.",
+    "Notes": "",
+    "RankInDestination": 19
+  },
+  {
+    "Id": "bb02943d-c577-4ad8-a601-ae25bc7948f3",
+    "Name": "Mission Dolores",
+    "Latitude": 37.7643856,
+    "Longitude": -122.4275673,
+    "ImagePath": "ms-appx:///Assets/DemoImages/MissionDolores.jpg",
+    "Description": "Voluptas consequatur libero dolores esse officiis asperiores fuga sed.",
+    "Notes": "",
+    "RankInDestination": 22
+  },
+  {
+    "Id": "678b38e6-2cc4-44c8-9e5c-bbcb2a80318b",
+    "Name": "San Francisco City Hall",
+    "Latitude": 37.7792719,
+    "Longitude": -122.4192288,
+    "ImagePath": "ms-appx:///Assets/DemoImages/SanFranciscoCityHall.jpg",
+    "Description": "Non ducimus iusto ratione et.",
+    "Notes": "",
+    "RankInDestination": 21
+  },
+  {
+    "Id": "5f99d280-be5e-4192-a6e7-fc70eafa7436",
+    "Name": "USS Pampanito",
+    "Latitude": 37.8099534,
+    "Longitude": -122.4164276,
+    "ImagePath": "ms-appx:///Assets/DemoImages/USSPampanito.jpg",
+    "Description": "Ex maxime veniam nemo.",
+    "Notes": "",
+    "RankInDestination": 23
+  },
+  {
+    "Id": "4c316f84-bb50-4a4b-bc55-f3a568a11698",
+    "Name": "Ghirardelli Square",
+    "Latitude": 37.8056595,
+    "Longitude": -122.4223079,
+    "ImagePath": "ms-appx:///Assets/DemoImages/GhirardelliSquare.jpg",
+    "Description": "Qui quisquam beatae ipsam mollitia placeat molestias voluptas.",
+    "Notes": "",
+    "RankInDestination": 24
+  },
+  {
+    "Id": "5839442b-e143-49d7-bc51-6b7bdc0b6202",
+    "Name": "San Francisco Zoo",
+    "Latitude": 37.7353964,
+    "Longitude": -122.5031024,
+    "ImagePath": "ms-appx:///Assets/DemoImages/SanFranciscoZoo.jpg",
+    "Description": "Consequatur et dicta sint aut occaecati dolores enim.",
+    "Notes": "",
+    "RankInDestination": 27
+  },
+  {
+    "Id": "3f1e6cd5-9715-4127-a300-84de252c8be2",
+    "Name": "Stow Lake",
+    "Latitude": 37.7706273,
+    "Longitude": -122.4770783,
+    "ImagePath": "ms-appx:///Assets/DemoImages/StowLake.jpg",
+    "Description": "Alias nobis ea hic et sunt.",
+    "Notes": "",
+    "RankInDestination": 25
+  },
+  {
+    "Id": "e8f5e053-4458-485d-957b-c2ced02e0dd8",
+    "Name": "San Francisco Botanical Garden",
+    "Latitude": 37.7664123,
+    "Longitude": -122.4671385,
+    "ImagePath": "ms-appx:///Assets/DemoImages/SanFranciscoBotanicalGarden.jpg",
+    "Description": "Doloribus veniam est quos iure occaecati ea sint nesciunt.",
+    "Notes": "",
+    "RankInDestination": 26
+  },
+  {
+    "Id": "cf3f56c6-405d-4b23-ae6d-7e5693a8ecc9",
+    "Name": "AT&T Park",
+    "Latitude": 37.7788629,
+    "Longitude": -122.3927818,
+    "ImagePath": "ms-appx:///Assets/DemoImages/AT&TPark.jpg",
+    "Description": "Sunt officia dolor qui quia.",
+    "Notes": "",
+    "RankInDestination": 28
+  },
+  {
+    "Id": "542ec138-e1ee-4048-b982-3b9eeb2139bc",
+    "Name": "Pier 39",
+    "Latitude": 37.808115099999988,
+    "Longitude": -122.4090985,
+    "ImagePath": "ms-appx:///Assets/DemoImages/Pier39.jpg",
+    "Description": "Repellendus vel corrupti qui ea et.",
+    "Notes": "",
+    "RankInDestination": 29
+  },
+  {
+    "Id": "1ed802e4-37f2-417c-bad2-91d2fc85225f",
+    "Name": "Walt Disney Family Museum",
+    "Latitude": 37.8013495,
+    "Longitude": -122.4586478,
+    "ImagePath": "ms-appx:///Assets/DemoImages/WaltDisneyFamilyMuseum.jpg",
+    "Description": "Quisquam doloribus quae quis.",
+    "Notes": "",
+    "RankInDestination": 30
+  }
+]

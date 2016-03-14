@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<tile>
+    <visual branding="nameAndLogo">
+        <binding template="TileSmall">
+            <text hint-wrap="true">San Francisco</text>
+        </binding>
+        <binding template="TileMedium">
+            <image src="ms-appx:///Assets/DemoImages/TheExploratorium.jpg" placement="peek" hint-overlay="20"/>
+            <text>The Exploratorium</text>
+            <text hint-maxLines="2" hint-style="captionSubtle" hint-wrap="true">Voluptates enim facere facere alias voluptatibus sapiente eius.</text>
+        </binding>
+        <binding template="TileWide">
+            <image src="ms-appx:///Assets/DemoImages/TheExploratorium.jpg" placement="peek" hint-overlay="20"/>
+            <text hint-style="subtitle">The Exploratorium</text>
+            <text hint-maxLines="2" hint-style="bodySubtle" hint-wrap="true">Voluptates enim facere facere alias voluptatibus sapiente eius.</text>
+        </binding>
+        <binding template="TileLarge">
+            <image src="ms-appx:///Assets/DemoImages/TheExploratorium.jpg" placement="peek" hint-overlay="20"/>
+            <text hint-style="subtitle">The Exploratorium</text>
+            <text hint-maxLines="3" hint-style="bodySubtle" hint-wrap="true">Voluptates enim facere facere alias voluptatibus sapiente eius.</text>
+        </binding>
+    </visual>
+</tile>

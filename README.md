@@ -1,2 +1,1 @@
-# CodeLabs-UWP
-Code labs for Windows 10 UWP app development 
+﻿# //build 2016 Workshops

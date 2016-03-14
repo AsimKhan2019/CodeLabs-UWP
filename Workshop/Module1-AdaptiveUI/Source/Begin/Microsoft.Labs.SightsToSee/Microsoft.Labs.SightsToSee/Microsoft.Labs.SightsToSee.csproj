@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{12973612-88B5-4E3E-8805-B862CDEAAE1D}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Labs.SightsToSee</RootNamespace>
+    <AssemblyName>Microsoft.Labs.SightsToSee</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PackageCertificateKeyFile>Microsoft.Labs.SightsToSee_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>CC5962E556B2D023E0C5F31D0EC3205CCDAA82E3</PackageCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;EFCORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;EFCORE;CODE_ANALYSIS;EFCORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\DemoImages\Alcatraz.jpg" />
+    <Content Include="Assets\DemoImages\AsianArtMuseum.jpg" />
+    <Content Include="Assets\DemoImages\AT&amp;TPark.jpg" />
+    <Content Include="Assets\DemoImages\CableCarMuseum.jpg" />
+    <Content Include="Assets\DemoImages\CaliforniaAcademyofSciences.jpg" />
+    <Content Include="Assets\DemoImages\CoitTower.jpg" />
+    <Content Include="Assets\DemoImages\ConservatoryofFlowers.jpg" />
+    <Content Include="Assets\DemoImages\deYoungMuseum.jpg" />
+    <Content Include="Assets\DemoImages\FerryBuildingMarketplace.jpg" />
+    <Content Include="Assets\DemoImages\GhirardelliSquare.jpg" />
+    <Content Include="Assets\DemoImages\GoldenGateBridge.jpg" />
+    <Content Include="Assets\DemoImages\GoldenGatePark.jpg" />
+    <Content Include="Assets\DemoImages\Haas-LilienthalHouse.jpg" />
+    <Content Include="Assets\DemoImages\JapaneseTeaGarden.jpg" />
+    <Content Include="Assets\DemoImages\LegionofHonor.jpg" />
+    <Content Include="Assets\DemoImages\LombardStreet.jpg" />
+    <Content Include="Assets\DemoImages\MissionDolores.jpg" />
+    <Content Include="Assets\DemoImages\MuséeMecanique.jpg" />
+    <Content Include="Assets\DemoImages\OaklandMuseumofCalifornia.jpg" />
+    <Content Include="Assets\DemoImages\PalaceofFineArts.jpg" />
+    <Content Include="Assets\DemoImages\Pier39.jpg" />
+    <Content Include="Assets\DemoImages\SanFranciscoBotanicalGarden.jpg" />
+    <Content Include="Assets\DemoImages\SanFranciscoCityHall.jpg" />
+    <Content Include="Assets\DemoImages\SanFranciscoMuseumofModernArt.jpg" />
+    <Content Include="Assets\DemoImages\SanFranciscoZoo.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\1.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\2.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\3.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\4.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\5.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\6.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\7.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\8.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\9.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\10.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\11.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\13.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\14.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\15.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\16.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\17.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\18.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\19.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\20.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\21.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\22.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\23.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\24.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\25.jpg" />
+    <Content Include="Assets\DemoImages\SightImages\12.jpg" />
+    <Content Include="Assets\DemoImages\StowLake.jpg" />
+    <Content Include="Assets\DemoImages\TheExploratorium.jpg" />
+    <Content Include="Assets\DemoImages\USSPampanito.jpg" />
+    <Content Include="Assets\DemoImages\WaltDisneyFamilyMuseum.jpg" />
+    <Content Include="Assets\DemoImages\YerbaBuenaCenterfortheArts.jpg" />
+    <Content Include="Assets\Images\DialogBackground.jpg" />
+    <Content Include="vcd.xml" />
+    <None Include="Microsoft.Labs.SightsToSee_TemporaryKey.pfx" />
+    <Content Include="Models\DemoSights.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\AccountsHelper.cs" />
+    <Compile Include="Common\ContinuityHelper.cs" />
+    <Compile Include="Common\PopupHelper.cs" />
+    <Compile Include="Controls\BlurredBackgroundControl.xaml.cs">
+      <DependentUpon>BlurredBackgroundControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NavMenuListView.cs" />
+    <Compile Include="Controls\PageHeader.xaml.cs">
+      <DependentUpon>PageHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SightDetailControl.xaml.cs">
+      <DependentUpon>SightDetailControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Migrations\20160212005952_Initial.cs" />
+    <Compile Include="Migrations\20160212005952_Initial.designer.cs">
+      <DependentUpon>20160212005952_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\SightsToSeeDbContextModelSnapshot.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AppSettings.cs" />
+    <Compile Include="Models\NavMenuItem.cs" />
+    <Compile Include="Models\SightFile.cs" />
+    <Compile Include="Models\SightGroup.cs" />
+    <Compile Include="Models\SightVisualMapper.cs" />
+    <Compile Include="Mvvm\BindableBase.cs" />
+    <Compile Include="Mvvm\Command.cs" />
+    <Compile Include="Mvvm\ViewModelBase.cs" />
+    <Compile Include="Services\DataModelService\AzureDataModelService.cs" />
+    <Compile Include="Services\DataModelService\DataModelServiceFactory.cs" />
+    <Compile Include="Services\FileService\FileHelper.cs" />
+    <Compile Include="Services\FileService\FileService.cs" />
+    <Compile Include="Services\NavigationService\INavigatable.cs" />
+    <Compile Include="Services\NavigationService\NavigationEventArgs.cs" />
+    <Compile Include="Services\NavigationService\NavigationFacade.cs" />
+    <Compile Include="Services\NavigationService\NavigationService.cs" />
+    <Compile Include="ViewModels\LandingPageViewModel.cs" />
+    <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="AppShell.xaml.cs">
+      <DependentUpon>AppShell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\TripDetailPageViewModel.cs" />
+    <Compile Include="Views\NewTripPage.xaml.cs">
+      <DependentUpon>NewTripPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LandingControl.xaml.cs">
+      <DependentUpon>LandingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sight.cs" />
+    <Compile Include="Models\SeedDataFactory.cs" />
+    <Compile Include="Models\SightsToSeeDbContext.cs" />
+    <Compile Include="Models\Trip.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DataModelService\EfCoreDataModelService.cs" />
+    <Compile Include="Services\DataModelService\IDataModelService.cs" />
+    <Compile Include="Views\TripDetailPage.xaml.cs">
+      <DependentUpon>TripDetailPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Images\NewStoreLogo.scale-100.png" />
+    <Content Include="Assets\Images\NewStoreLogo.scale-125.png" />
+    <Content Include="Assets\Images\NewStoreLogo.scale-150.png" />
+    <Content Include="Assets\Images\NewStoreLogo.scale-200.png" />
+    <Content Include="Assets\Images\NewStoreLogo.scale-400.png" />
+    <Content Include="Assets\Images\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Images\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Images\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\Images\Square310x310Logo.scale-100.png" />
+    <Content Include="Assets\Images\Square310x310Logo.scale-200.png" />
+    <Content Include="Assets\Images\Square310x310Logo.scale-400.png" />
+    <Content Include="Assets\Images\Square44x44Logo.scale-100.png" />
+    <Content Include="Assets\Images\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Images\Square44x44Logo.scale-400.png" />
+    <Content Include="Assets\Images\Square44x44Logo.targetsize-16.png" />
+    <Content Include="Assets\Images\Square44x44Logo.targetsize-16_altform-unplated.png" />
+    <Content Include="Assets\Images\Square44x44Logo.targetsize-24.png" />
+    <Content Include="Assets\Images\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\Images\Square44x44Logo.targetsize-256.png" />
+    <Content Include="Assets\Images\Square44x44Logo.targetsize-256_altform-unplated.png" />
+    <Content Include="Assets\Images\Square44x44Logo.targetsize-32.png" />
+    <Content Include="Assets\Images\Square44x44Logo.targetsize-32_altform-unplated.png" />
+    <Content Include="Assets\Images\Square44x44Logo.targetsize-48.png" />
+    <Content Include="Assets\Images\Square44x44Logo.targetsize-48_altform-unplated.png" />
+    <Content Include="Assets\Images\Square71x71Logo.scale-100.png" />
+    <Content Include="Assets\Images\Square71x71Logo.scale-200.png" />
+    <Content Include="Assets\Images\Square71x71Logo.scale-400.png" />
+    <Content Include="Assets\Images\Tile_Logo.png" />
+    <Content Include="Assets\Images\ValleyPortrait.jpg" />
+    <Content Include="Assets\Images\ValleyLandscape.jpg" />
+    <Content Include="Assets\Images\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Images\Wide310x150Logo.scale-200.png" />
+    <Content Include="Assets\Images\Wide310x150Logo.scale-400.png" />
+    <Content Include="Properties\Default.rd.xml" />
+    <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Controls\BlurredBackgroundControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PageHeader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SightDetailControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppShell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\NewTripPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LandingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TripDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.UI.Composition.Toolkit\Microsoft.UI.Composition.Toolkit.vcxproj">
+      <Project>{08a7d060-593a-4978-8dcc-b2029aca7c95}</Project>
+      <Name>Microsoft.UI.Composition.Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\TilesNotificationsService\" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
