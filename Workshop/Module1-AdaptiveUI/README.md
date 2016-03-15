@@ -1,6 +1,6 @@
-<a name="HOLTop"></a>
-﻿# Building an Adaptive UI for Multiple Windows Devices #
-
+<a name="HOLTop" ></a>
+﻿
+# Building an Adaptive UI for Multiple Windows Devices #
 ---
 
 <a name="Overview"></a>
@@ -37,12 +37,16 @@ The following is required to complete this module:
 
 ---
 
-<a name="Exercises"></a>
+<a name="Exercises" ></a>
+
 ## Exercises ##
+
 This module includes the following exercises:
+
 1.	[Building an Adaptive UI](#Exercise1)
 1.	[Default and Adaptive Tiles](#Exercise2)
 1.	[Use Maps features](#Exercise3)
+
 
 Estimated time to complete this module:  **40 to 50 minutes**
  
