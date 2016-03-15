@@ -49,7 +49,7 @@ Estimated time to complete this module:  **40 to 50 minutes**
 <a name="Exercise1"></a>
 ### Exercise 1: Building an Adaptive UI ###
 
-The __SightsToSee__ app is a demo travel app that recommends sights and landmarks around a trip destination. In the app, you can view the sights on the map, browse suggested sights and save them to your trip, and explore 3D and Streetside views of the locations.
+The **SightsToSee** app is a demo travel app that recommends sights and landmarks around a trip destination. In the app, you can view the sights on the map, browse suggested sights and save them to your trip, and explore 3D and Streetside views of the locations.
 
 The app has a navigation menu, and selecting elements on that menu will navigate to pages within the application. These pages are hosted within a frame that handles navigation, the back stack, and allows you to save that history through suspend/resume cycles.
 
@@ -60,8 +60,8 @@ We’re going to begin with a version of the SightsToSee app that has a fixed la
 
 Let’s take a look at how the app is set up and plan an adaptive layout. We’ll begin by walking through the starter project.
 
-1.	In a new instance of Visual Studio 2015, choose __File > Open> Project/Solution__. Browse to __&lt;Lab Root&gt;\Module 1\Begin\Microsoft.Labs.SightsToSee__ and open the solution file.
-1.	Once the project has opened, set your Solution Configuration to __Debug__ and your Solution Platform to __x86__. Select __Local Machine__ from the Debug Target dropdown menu.
+1.	In a new instance of Visual Studio 2015, choose **File > Open> Project/Solution**. Browse to **&lt;Lab Root&gt;\Module 1\Begin\Microsoft.Labs.SightsToSee** and open the solution file.
+1.	Once the project has opened, set your Solution Configuration to **Debug** and your Solution Platform to **x86**. Select **Local Machine** from the Debug Target dropdown menu.
 
     ![Configure your app to run on the Local Machine](Images/debug_mode.png?raw=true "Configure your app to run on the Local Machine")
 
@@ -89,19 +89,19 @@ Let’s take a look at how the app is set up and plan an adaptive layout. We’l
 
 1.	Return to Visual Studio and stop debugging.
 
-1.	Let’s take a look at the XAML that defines the layout. Open __AppShell.xaml__ in the main project folder. The app shell contains the navigation pane, which is built with a SplitView, and a frame for content. There is a single visual state in the VisualStateManager.
+1.	Let’s take a look at the XAML that defines the layout. Open **AppShell.xaml** in the main project folder. The app shell contains the navigation pane, which is built with a SplitView, and a frame for content. There is a single visual state in the VisualStateManager.
 
-    >__Note:__ A visual state is used to apply different values to properties on controls. The state is triggered by an adaptive trigger that can fire either based upon MinWindowWidth or MinWindowHeight. Within a visual state, there are Setters that specify the control and its property and the value to assign.
+    >**Note:** A visual state is used to apply different values to properties on controls. The state is triggered by an adaptive trigger that can fire either based upon MinWindowWidth or MinWindowHeight. Within a visual state, there are Setters that specify the control and its property and the value to assign.
 
     >Here you can see that the visual state sets the split view pane called RootSplitView to Open and the display mode to CompactInline.
 
     >CompactInline mode displaces the app content when the menu is open, and it shows the narrow nav pane when the menu is closed.
 
-1.	Open __Views > TripDetailPage.xaml__. The controls in this Grid get loaded into the frame in the app shell. Notice that the Sights and Map are laid out in a RelativePanel inside of a Grid. A RelativePanel is a layout container that allows you to control the placement of its child elements in spatial relation to each other.
+1.	Open **Views > TripDetailPage.xaml**. The controls in this Grid get loaded into the frame in the app shell. Notice that the Sights and Map are laid out in a RelativePanel inside of a Grid. A RelativePanel is a layout container that allows you to control the placement of its child elements in spatial relation to each other.
 
     The single visual state in the Visual State Manager arranges the controls for the Desktop view.
 
-    >__Note:__ There are certain controls that expose their properties to child controls. These properties are known as attached properties. The RelativePanel is an example of such a control. It exposes properties such as RightOf that allows child elements to position themselves within the RelativePanel relative to other child elements or the panel itself.
+    >**Note:** There are certain controls that expose their properties to child controls. These properties are known as attached properties. The RelativePanel is an example of such a control. It exposes properties such as RightOf that allows child elements to position themselves within the RelativePanel relative to other child elements or the panel itself.
 
     >You’ll notice in the Visual State that there is a special syntax in the Setter target attribute where attached properties are surrounded by parentheses.
 
@@ -118,13 +118,13 @@ Now that we’ve explored the fixed UI in the SightsToSee starter app, we can ad
 
     >**Note**: Expansion snippets contain contiguous blocks of code that insert at the point of the cursor. Surround-with snippets can wrap around existing code. In this lab, we will use expansion snippets. For more on code snippets, visit https://msdn.microsoft.com/en-us/library/ms165392.aspx
 
-1. Open __AppShell.xaml__.
+1. Open **AppShell.xaml**.
 
-1. Find the ```<--Desktop State-->``` in the __VisualStateGroup__. Change the __MinWindowWidth__ adaptive trigger for the Desktop state from 0 to __1024__.
+1. Find the ```<--Desktop State-->``` in the **VisualStateGroup**. Change the **MinWindowWidth** adaptive trigger for the Desktop state from 0 to **1024**.
 
-1. Look for the ```<!--Tablet State -->``` section in the __VisualStateGroup__. Insert a new line beneath this comment. Type __M1_ShellTablet__ and hit the Tab key to expand the snippet.
+1. Look for the ```<!--Tablet State -->``` section in the **VisualStateGroup**. Insert a new line beneath this comment. Type **M1_ShellTablet** and hit the Tab key to expand the snippet.
 
-    This state will control the behavior of the navigation pane for mid-size windows and tablets. It will set the SplitView pane to closed by default and keep the SplitView in __CompactInline__ mode.
+    This state will control the behavior of the navigation pane for mid-size windows and tablets. It will set the SplitView pane to closed by default and keep the SplitView in **CompactInline** mode.
 
     #### XAML
     ```XAML
@@ -141,69 +141,69 @@ Now that we’ve explored the fixed UI in the SightsToSee starter app, we can ad
     </VisualState>
     ```
 
-1. The snippet we just added will control the Tablet state for the navigation pane, but we also need to add a tablet state for the content. We will add this state interactively using Blend. Right-click on __Views > TripDetailPage.xaml__ and choose __Design in Blend__.
+1. The snippet we just added will control the Tablet state for the navigation pane, but we also need to add a tablet state for the content. We will add this state interactively using Blend. Right-click on **Views > TripDetailPage.xaml** and choose **Design in Blend**.
 
-1. When Blend opens, display the __States Window__ to view the existing visual states.
+1. When Blend opens, display the **States Window** to view the existing visual states.
 
-    >__Note:__ The States Window usually shares a pane with the Solution Editor in the default layout in Blend. If you can’t find the States Window, use the Quick Launch search field to find it by searching for States Window. Select the States Window search result to open it.
+    >**Note:** The States Window usually shares a pane with the Solution Editor in the default layout in Blend. If you can’t find the States Window, use the Quick Launch search field to find it by searching for States Window. Select the States Window search result to open it.
 
     ![The States Window in Blend](Images/states_window_initial.png?raw=true "The States Window in Blend")
 
     *__Figure 5__: The States Window in Blend*
 
-1. Rename the existing visual state to __DesktopState__ by clicking on the state name to enable editing. Edit its adaptive trigger by clicking on the lightning button to open the State Trigger editor. Change the __MinWindowWidth__ on the existing adaptive trigger to __800__.
+1. Rename the existing visual state to **DesktopState** by clicking on the state name to enable editing. Edit its adaptive trigger by clicking on the lightning button to open the State Trigger editor. Change the **MinWindowWidth** on the existing adaptive trigger to **800**.
 
 1. To make changing the UI easier, select the SightsGrid in the Objects and Timelines Window. Give it a temporary background color in the Properties Window. We don’t have design time data turned on for this control, so a background color will make its position more obvious.
 
-1. In the Design Window, select the __8” Tablet__ as the display device and put it in __Portrait__ mode.
+1. In the Design Window, select the **8” Tablet** as the display device and put it in **Portrait** mode.
 
-1. Use the __Add State__ button inside the existing VisualStateGroup in the __States Window__ to add another visual state called __TabletState__.
+1. Use the **Add State** button inside the existing VisualStateGroup in the **States Window** to add another visual state called **TabletState**.
 
-1. Next, you’ll need to give the Tablet state an adaptive trigger. Use the lightning bolt button next to the TabletState name to open the StateTriggerBase Collection Editor. When the editor is open, select __AdaptiveTrigger__ from the dropdown menu and choose __Add__. Set the __MinWindowWidth__ to __720__ and close the State Trigger editor with the __OK__ button.
+1. Next, you’ll need to give the Tablet state an adaptive trigger. Use the lightning bolt button next to the TabletState name to open the StateTriggerBase Collection Editor. When the editor is open, select **AdaptiveTrigger** from the dropdown menu and choose **Add**. Set the **MinWindowWidth** to **720** and close the State Trigger editor with the **OK** button.
 
     ![Adding an Adaptive Trigger in the State Trigger Editor in Blend](Images/state-trigger-editor.png?raw=true "Adding an Adaptive Trigger in the State Trigger Editor in Blend")
 
     *__Figure 6__: Adding an Adaptive Trigger in the State Trigger Editor in Blend*
 
-1. Select the __TabletState__ in the States Window. When you see a red dot next to the state name, recording is turned on. While recording in Blend, any property changes you make to properties on the XAML controls will be saved to the selected visual state.
+1. Select the **TabletState** in the States Window. When you see a red dot next to the state name, recording is turned on. While recording in Blend, any property changes you make to properties on the XAML controls will be saved to the selected visual state.
 
-    >__Note:__ Recording in Blend is a quick and easy way to make a number of changes at once and save them as a visual state.
+    >**Note:** Recording in Blend is a quick and easy way to make a number of changes at once and save them as a visual state.
 
-1. Let’s build the Tablet visual state. Use the __Objects and Timeline__ Window to select the __title__ TextBlock. Once the title is selected, move over to the __Properties Window__. Right-click on the box to the right of the __Visibility__ field to open its context menu. Select __Record Current Value__ from the context menu. The box to the right of the field will turn solid to indicate that the property is recorded in the visual state.
+1. Let’s build the Tablet visual state. Use the **Objects and Timeline** Window to select the **title** TextBlock. Once the title is selected, move over to the **Properties Window**. Right-click on the box to the right of the **Visibility** field to open its context menu. Select **Record Current Value** from the context menu. The box to the right of the field will turn solid to indicate that the property is recorded in the visual state.
 
-    >__Note:__ Even though some properties already appear to have values in the Properties Window, the new visual state will remain empty until those values are recorded.
+    >**Note:** Even though some properties already appear to have values in the Properties Window, the new visual state will remain empty until those values are recorded.
 
-1. Select the __MobileHeader__ Border element in the __Objects and Timeline Window__. The __Visibility__ property should already be set to __Collapsed__. Record the current value.
+1. Select the **MobileHeader** Border element in the **Objects and Timeline Window**. The **Visibility** property should already be set to **Collapsed**. Record the current value.
 
-1. Use the __Objects and Timeline Window__ to select the __MapGrid__. You may need to drill down into the Visual Tree to find it.
+1. Use the **Objects and Timeline Window** to select the **MapGrid**. You may need to drill down into the Visual Tree to find it.
 
-1. Once the __MapGrid__ is expanded, move over to the __Properties Window__. Expand the __RelativePanel__ section.
+1. Once the **MapGrid** is expanded, move over to the **Properties Window**. Expand the **RelativePanel** section.
 
 1. In the Tablet state, we will position the Map above the Sights grid to make better use of space and show content responsively on the screen. We will use the attached RelativePanel properties to position the Map and the Sights grid in relation to each other and the panel.
 
-    Check the checkboxes in the MapGrid RelativePanel properties for __AlignTopWithPanel__, __AlignLeftWithPanel__, and __AlignRightWithPanel__.
+    Check the checkboxes in the MapGrid RelativePanel properties for **AlignTopWithPanel**, **AlignLeftWithPanel**, and **AlignRightWithPanel**.
 
-    >__Note:__ Visual states sometimes conflict with each other if certain properties aren’t cleared or overridden. With RelativePanels, it is easy to inadvertently set up a circular reference. Explicit layouts and properties directly on controls can also cause conflicts in visual states.
+    >**Note:** Visual states sometimes conflict with each other if certain properties aren’t cleared or overridden. With RelativePanels, it is easy to inadvertently set up a circular reference. Explicit layouts and properties directly on controls can also cause conflicts in visual states.
 
     >You can override properties in a visual state by setting them to different values. To clear out a RelativePanel alignment state without setting it to a new value, set it to the empty string. However, it is recommended that you avoid explicit RelativePanel layouts on controls if you are using visual states.
 
-1. Set the Height property on the MapGrid to __360__.
+1. Set the Height property on the MapGrid to **360**.
 
-1. Set the __Margins__ on the MapGrid to __24, 0, 24, 28__. Record the MapGrid __Padding__ as __0__ on all sides.
+1. Set the **Margins** on the MapGrid to **24, 0, 24, 28**. Record the MapGrid **Padding** as **0** on all sides.
 
-    >__Note:__ Margins and Padding in XAML are set in the clockwise order __left__, __top__, __right__, __bottom__. When four Margin or Padding values are written in a comma-delimited list, you can assume they follow this order. When two values are given, for instance __12, 16__, the values will be interpreted as __12, 16, 12, 16__. When one value is given, it will be applied to all four values on the element.
+    >**Note:** Margins and Padding in XAML are set in the clockwise order **left**, **top**, **right**, **bottom**. When four Margin or Padding values are written in a comma-delimited list, you can assume they follow this order. When two values are given, for instance **12, 16**, the values will be interpreted as **12, 16, 12, 16**. When one value is given, it will be applied to all four values on the element.
 
-1. Select the __LayoutPanel__ in the Objects and Timelines Window and set its __Padding__ to __0__.
+1. Select the **LayoutPanel** in the Objects and Timelines Window and set its **Padding** to **0**.
 
-1. Select the __SightsGrid__ in the Objects and Timelines Window. Using the Properties Window, set its __Width__ to __Auto__. Set its __Margins__ to __24, 0, 0, 0__ and its __Padding__ to __0__.
+1. Select the **SightsGrid** in the Objects and Timelines Window. Using the Properties Window, set its **Width** to **Auto**. Set its **Margins** to **24, 0, 0, 0** and its **Padding** to **0**.
 
-1. Expand the __SightsGrid__ RelativePanel properties in the Properties Window. Set the SightsGrid RelativePanel __Below__ property to __MapGrid__.
+1. Expand the **SightsGrid** RelativePanel properties in the Properties Window. Set the SightsGrid RelativePanel **Below** property to **MapGrid**.
 
-1. Check the __AlignRightWithPanel__ and __AlignLeftWithPanel__ checkboxes to stretch the SightsGrid to full width across the screen.
+1. Check the **AlignRightWithPanel** and **AlignLeftWithPanel** checkboxes to stretch the SightsGrid to full width across the screen.
 
 1. View the XAML for the TabletState and check that the correct Setters have been added. View the Designer to check that the state looks appropriate visually.
 
-    >__Note:__ You may notice that Setter Targets generated by Blend use attached properties—for example, element.(UIElement.Visibility)—instead of dependency properties such as element.Visibility. The attached properties are more type correct, but the end result is the same. Either target can be used to achieve the same result.
+    >**Note:** You may notice that Setter Targets generated by Blend use attached properties—for example, element.(UIElement.Visibility)—instead of dependency properties such as element.Visibility. The attached properties are more type correct, but the end result is the same. Either target can be used to achieve the same result.
 
     Your XAML for the TabletState should look similar to the code sample below.
 
@@ -258,13 +258,13 @@ Now that we’ve explored the fixed UI in the SightsToSee starter app, we can ad
     </VisualState>
     ```
 
-1. Select the __SightsGrid__ in the Objects and Timeline Window. Remove the background color from the SightsGrid by selecting __Reset__ from the Background property context menu.
+1. Select the **SightsGrid** in the Objects and Timeline Window. Remove the background color from the SightsGrid by selecting **Reset** from the Background property context menu.
 
 1. Build and run the app. Resize the window to view the new Tablet visual state. Take a look at the menu behavior and Sight detail popup behavior. If you are using a device that has Tablet Mode, enable it in the Action Center. Although the adaptive layout may not change, because it is triggered by screen size rather than device type, the back button experience will change from the shell back button to the global back button.
 
-1. Save your work, exit Blend, and return to Visual Studio. When prompted to reload __TripDetailPage.xaml__ in Visual Studio, choose __Yes__ to update to the version you recorded in Blend.
+1. Save your work, exit Blend, and return to Visual Studio. When prompted to reload **TripDetailPage.xaml** in Visual Studio, choose **Yes** to update to the version you recorded in Blend.
 
-    >__Note:__ If your Tablet visual state does not display properly, you may delete it in XAML and replace it by expanding the M1_TripTablet snippet.
+    >**Note:** If your Tablet visual state does not display properly, you may delete it in XAML and replace it by expanding the M1_TripTablet snippet.
 
     ![The Tablet visual state in the SightsToSee app](Images/tablet_state.png?raw=true "The Tablet visual state in the SightsToSee app")
 
@@ -274,9 +274,9 @@ Now that we’ve explored the fixed UI in the SightsToSee starter app, we can ad
 
 1. Stop debugging and return to Visual Studio.
 
-1. Open __AppShell.xaml__. Expand the __M1_ShellMobile__ snippet into the ```<!-- Mobile State -->``` section in the VisualStateGroup.
+1. Open **AppShell.xaml**. Expand the **M1_ShellMobile** snippet into the ```<!-- Mobile State -->``` section in the VisualStateGroup.
 
-    This state sets the SplitView pane to __Overlay__ mode. Overlay mode means the menu is invisible when closed and lays over the content when open. Note that the hamburger button is not included in the SplitView, so it will always display. This state also sets the nav pane to closed by default, so only the hamburger button will be visible when the user arrives at the page.
+    This state sets the SplitView pane to **Overlay** mode. Overlay mode means the menu is invisible when closed and lays over the content when open. Note that the hamburger button is not included in the SplitView, so it will always display. This state also sets the nav pane to closed by default, so only the hamburger button will be visible when the user arrives at the page.
 
     #### XAML
     ```XAML
@@ -293,9 +293,9 @@ Now that we’ve explored the fixed UI in the SightsToSee starter app, we can ad
     </VisualState>
     ```
 
-1. Open __Views > TripDetailPage.xaml__.
+1. Open **Views > TripDetailPage.xaml**.
 
-1. Expand the __M1_TripMobile__ snippet into the ```<!--Mobile State -->``` section in the VisualStateGroup.
+1. Expand the **M1_TripMobile** snippet into the ```<!--Mobile State -->``` section in the VisualStateGroup.
 
     This state sets the map to full-bleed width with no margins. The large page title from the Tablet and Desktop states is hidden, and the Mobile header is shown instead. Some of the setters are set to the empty string to clear out conflicting RelativePanel properties from other states.
 
@@ -356,16 +356,16 @@ With the new Visual States, we’ve seen how the app is adaptive on Desktop for 
 
 1. Now that the app is installed on the Mobile device, we can use Continuum to browse an enhanced experience.
 
-    >__Note:__ Continuum gives your Mobile device the power to behave like a PC when connected to an external display. Your Mobile device must be Continuum-enabled, connected to a Microsoft Display Dock, and the app you are running needs an adaptive UI.  Continuum can display one running app at a time. For more information, visit https://www.microsoft.com/en-us/windows/Continuum
+    >**Note:** Continuum gives your Mobile device the power to behave like a PC when connected to an external display. Your Mobile device must be Continuum-enabled, connected to a Microsoft Display Dock, and the app you are running needs an adaptive UI.  Continuum can display one running app at a time. For more information, visit https://www.microsoft.com/en-us/windows/Continuum
 
 1. Plug your Continuum-enabled Mobile device into Microsoft display dock, and plug the display dock into the external display.
 
-1. Tap the __Tap to control &lt;device name&gt;__ bar at top of Mobile screen.
+1. Tap the **Tap to control &lt;device name&gt;** bar at top of Mobile screen.
 
 
     *__Figure 9__: Tap the bar at the top of the screen to use the Mobile device as a touchpad.*
 
-    >__Note:__ Do not tap the big finger icon – it only serves to point to the control bar; it doesn’t navigate to the touchpad.
+    >**Note:** Do not tap the big finger icon – it only serves to point to the control bar; it doesn’t navigate to the touchpad.
 
 1. When the touchpad opens, follow the directions on the screen and use one finger to move the mouse, a tap to select, and two fingers to scroll.
 
@@ -373,7 +373,7 @@ With the new Visual States, we’ve seen how the app is adaptive on Desktop for 
 
 1. Using the phone as a touchpad, open the app from the list of all apps in the Mobile Start Menu. You can also pin the app to the Start menu as a tile.
 
-    >__Note:__ If you already had the app running when you connected to an external display through Continuum, the running instance of the app will open on Continuum.
+    >**Note:** If you already had the app running when you connected to an external display through Continuum, the running instance of the app will open on Continuum.
 
     If you pin the app to the Start Menu while viewing it in Continuum, it will remain pinned to the Mobile Start Menu when you disconnect from Continuum.
 
@@ -395,11 +395,11 @@ Providing assets for default tiles is a quick and easy way to brand your app, an
 
 In this task, we will add a logo asset to the project, install the UWP Tile Generator, and use it to generate default tiles and splash assets.
 
-1. Open __Tools > Extensions and Updates__ in Visual Studio and browse to the __Online__ tab.
+1. Open **Tools > Extensions and Updates** in Visual Studio and browse to the **Online** tab.
 
-1. Use the search box to search the Visual Studio Gallery for __UWP Tile Generator__.
+1. Use the search box to search the Visual Studio Gallery for **UWP Tile Generator**.
 
-1. Use the __Download__ button to download and install the extension. Follow the prompts in the dialog.
+1. Use the **Download** button to download and install the extension. Follow the prompts in the dialog.
 
     ![Install the UWP Tile Generator extension](Images/uwp_tile_extension.png?raw=true "Install the UWP Tile Generator extension")
 
@@ -409,23 +409,23 @@ In this task, we will add a logo asset to the project, install the UWP Tile Gene
 
 1. Now that the extension is installed, we can add a logo asset to the project and use the extension to generate default tile and splash assets.
 
-    First, open the __Package.appxmanifest__ and browse to the __Visual Assets__ tab. Select __All Image Assets__ to view the current tiles and splash assets. You’ll see that the placeholder UWP app tile appears for the recommended tile sizes.
+    First, open the **Package.appxmanifest** and browse to the **Visual Assets** tab. Select **All Image Assets** to view the current tiles and splash assets. You’ll see that the placeholder UWP app tile appears for the recommended tile sizes.
 
-1. Right-click on the __Assets__ directory in the Solution Explorer and choose __Add > Existing Item__. Add the logo asset from __&lt;LabRoot&gt;\Module 1\Begin\Assets\Tile_Logo.png__.
+1. Right-click on the **Assets** directory in the Solution Explorer and choose **Add > Existing Item**. Add the logo asset from **&lt;LabRoot&gt;\Module 1\Begin\Assets\Tile_Logo.png**.
 
-    >__Note:__ The new assets that will be generated using the extension will appear in the same folder as the original image. You may choose to add a subfolder to the Assets directory and place the new logo image in the subfolder for better organization.
+    >**Note:** The new assets that will be generated using the extension will appear in the same folder as the original image. You may choose to add a subfolder to the Assets directory and place the new logo image in the subfolder for better organization.
 
     >When using a generator extension, it is a good idea to use a seed image with sufficient resolution for the largest tile and splash assets.
 
-1. Right-click on the __Tile_Logo.png__ asset in the Solution Explorer and select __Generate UWP Tiles__ from the context menu.
+1. Right-click on the **Tile_Logo.png** asset in the Solution Explorer and select **Generate UWP Tiles** from the context menu.
 
-1. Right-click the asset again. This time, select __Generate UWP Splash__ from the context menu. You will see the new assets appear in the same folder as the original logo image.
+1. Right-click the asset again. This time, select **Generate UWP Splash** from the context menu. You will see the new assets appear in the same folder as the original logo image.
 
 1. Return to the package manifest editor. The Visual Assets tab should now be filled out with the new default tile and splash assets.
 
     The Tile_Logo asset has a transparent background, so we’ll need to define the brand color in the app manifest. If we don’t define a background color, it will default to the user’s system theme color.
 
-1. Under __All Image Assets__, set the __Tile background color__ and the __Splash background color__ to __#2dA092__ in hex notation.
+1. Under **All Image Assets**, set the **Tile background color** and the **Splash background color** to **#2dA092** in hex notation.
 
 1. Run the app on the Local Machine. You’ll see the new splash screen show up. Pin the app to the Start Menu to view the default tiles. Resize to view the Wide and Large tiles.
 
@@ -436,7 +436,7 @@ In this task, we will add a logo asset to the project, install the UWP Tile Gene
 
 While default tiles are a great way to start branding your app, adaptive tiles take the user experience to the next level. There are tools available that can help you design and implement adaptive tiles in your UWP app. We will use the Notifications Visualizer app to preview and build adaptive tile XML and the NotificationsExtension NuGet package to generate the XML in the app using code.
 
-1. The __Notifications Visualizer__ app is available from the Windows Store. You can install this and use it to help you design tiles and notifications.
+1. The **Notifications Visualizer** app is available from the Windows Store. You can install this and use it to help you design tiles and notifications.
 
     ![The Notifications Visualizer app is available from the Windows Store](Images/notifications_visualizer_store2.png?raw=true "The Notifications Visualizer app is available from the Windows Store")
 
@@ -444,45 +444,45 @@ While default tiles are a great way to start branding your app, adaptive tiles t
 
 	Do not install it from the store now - it is pre-installed on your computer.
 
-1. Open the Notifications Visualizer app. Use the __Payloads__ dropdown menu to browse through the sample tile XML.
+1. Open the Notifications Visualizer app. Use the **Payloads** dropdown menu to browse through the sample tile XML.
 
     ![Browse sample XML for adaptive tiles in the Notifications Visualizer app](Images/notifications_visualizer.png?raw=true "Browse sample XML for adaptive tiles in the Notifications Visualizer app")
 
     *__Figure 13__: Browse sample XML for adaptive tiles in the Notifications Visualizer app.*
 
-    >__Note:__ The image path in the sample XML is defined as a relative path from the Notifications Visualizer app folder.
+    >**Note:** The image path in the sample XML is defined as a relative path from the Notifications Visualizer app folder.
 
-1. Use the __Pick Folder of XML Files__ button to select the __&lt;Lab Root&gt;\Module 1\Begin\Assets__ folder in the file explorer. The __AdaptiveTiles.xml__ file will automatically load into the XML Payload window.
+1. Use the **Pick Folder of XML Files** button to select the **&lt;Lab Root&gt;\Module 1\Begin\Assets** folder in the file explorer. The **AdaptiveTiles.xml** file will automatically load into the XML Payload window.
 
-    >__Note:__ For more on adaptive tile and toast schema and implementation, check out the __Help (?)__ section of the Notifications Visualizer app or visit https://msdn.microsoft.com/en-us/library/windows/apps/xaml/mt185606.aspx
+    >**Note:** For more on adaptive tile and toast schema and implementation, check out the **Help (?)** section of the Notifications Visualizer app or visit https://msdn.microsoft.com/en-us/library/windows/apps/xaml/mt185606.aspx
 
-1. Open the __Settings__ pane in the Notifications Visualizer app. Set the tile background color to __#2da092__.
+1. Open the **Settings** pane in the Notifications Visualizer app. Set the tile background color to **#2da092**.
 
-1. Click the placeholder __Square44x44Logo__ and use the file picker to replace it with the __Square44x44Logo.scale-100.png__ asset from the SightsToSee app Assets folder. Repeat the process with the other logos declared in the Settings pane.
+1. Click the placeholder **Square44x44Logo** and use the file picker to replace it with the **Square44x44Logo.scale-100.png** asset from the SightsToSee app Assets folder. Repeat the process with the other logos declared in the Settings pane.
 
-1. Change the app preview name to __SightsToSee__.
+1. Change the app preview name to **SightsToSee**.
 
 1. Return to the tile preview. Pin the tile to the Start Menu.
 
 1. Now that we’ve examined the structure of the adaptive tile XML, let’s add adaptive tiles to the SightsToSee app.
 
-    The __Notifications Extensions__ NuGet package helps to generate tile, toast, and badge notifications for Windows 10 using code instead of XML, which gives you access to Intellisense.
+    The **Notifications Extensions** NuGet package helps to generate tile, toast, and badge notifications for Windows 10 using code instead of XML, which gives you access to Intellisense.
 
     The structure of the XML we’re going to generate with code will reflect the structure of the XML file we just previewed in the Notifications Visualizer app.
 
-1. Return to Visual Studio and right-click on the __SightsToSee__ project name in the Solution Explorer. Select __Manage NuGet packages__ from the context menu.
+1. Return to Visual Studio and right-click on the **SightsToSee** project name in the Solution Explorer. Select **Manage NuGet packages** from the context menu.
 
-1. On the __Browse__ tab of the NuGet Package Manager, search for __Notifications Extensions__.
+1. On the **Browse** tab of the NuGet Package Manager, search for **Notifications Extensions**.
 
-1. Install the __NotificationsExtensions.Win10__ NuGet Package.
+1. Install the **NotificationsExtensions.Win10** NuGet Package.
 
-1. In the Solution Explorer, right-click on the __Services > TileNotificationService__ folder and choose __Add > Existing Item__. Browse to the __&lt;LabRoot&gt;\Module 1\Begin\Assets__ folder and add __TileHelper.cs__.
+1. In the Solution Explorer, right-click on the **Services > TileNotificationService** folder and choose **Add > Existing Item**. Browse to the **&lt;LabRoot&gt;\Module 1\Begin\Assets** folder and add **TileHelper.cs**.
 
-    >__Note:__ The TileHelper generates XML similar to the XML we previewed in the Notifications Visualizer app. It looks for the first five Sights added to a Trip, and displays a peek image from each Sight along with the Sight name and description on an adaptive tile. The TileHelper also generates the tile notification.
+    >**Note:** The TileHelper generates XML similar to the XML we previewed in the Notifications Visualizer app. It looks for the first five Sights added to a Trip, and displays a peek image from each Sight along with the Sight name and description on an adaptive tile. The TileHelper also generates the tile notification.
 
-1. Now that the tile helper is part of the project, we can call it from our code. Open __ViewModels > TripDetailPageViewModel.cs__.
+1. Now that the tile helper is part of the project, we can call it from our code. Open **ViewModels > TripDetailPageViewModel.cs**.
 
-1. Create a new line after line __113__ and expand the __M1_CreateTiles__ snippet.
+1. Create a new line after line **113** and expand the **M1_CreateTiles** snippet.
 
     #### C&#35;
     ```C#
@@ -510,7 +510,7 @@ Maps provide a great way to add visual interaction with the Sights in the app. W
 
 In this task, we will display the Sights as PushPins on the map, enable Aerial3D Map View, and enable ShowStreet mode.
 
-1. Open TripDetailPage.xaml. Expand the __M1_MapItems__ snippet inside the MapControl. The Map items in the MapItemsControl are bound to the list of Sights. Sights added to __My Sights__ will display as larger PushPins with borders. __Suggested Sights__ will display as smaller PushPins without borders.
+1. Open TripDetailPage.xaml. Expand the **M1_MapItems** snippet inside the MapControl. The Map items in the MapItemsControl are bound to the list of Sights. Sights added to **My Sights** will display as larger PushPins with borders. **Suggested Sights** will display as smaller PushPins without borders.
 
     #### XAML
     ```XAML
@@ -571,7 +571,7 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
     </maps:MapControl>
     ```
 
-1. Open __TripDetailPage.xaml__. Expand the __M1_Flyout__ snippet immediately after the GridViewHeaderItem style. This Flyout will pop up when a map PushPin is selected and show icons to enable Aerial3D and ShowStreet modes.
+1. Open **TripDetailPage.xaml**. Expand the **M1_Flyout** snippet immediately after the GridViewHeaderItem style. This Flyout will pop up when a map PushPin is selected and show icons to enable Aerial3D and ShowStreet modes.
 
     #### XAML
     ```XAML
@@ -640,7 +640,7 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
     </Flyout>
     ```
 
-1. Add the __FlyoutBase__ attribute to the Grid in the DataTemplate for the MapItemsControl.ItemTemplate. There is no code snippet for this attribute, but you can use Intellisense or copy it from the code sample below.
+1. Add the **FlyoutBase** attribute to the Grid in the DataTemplate for the MapItemsControl.ItemTemplate. There is no code snippet for this attribute, but you can use Intellisense or copy it from the code sample below.
 
     #### XAML
     ```XAML
@@ -650,7 +650,7 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
                                               Tapped="MapPinTapped">
     ```
 
-1. We will need a button to close the Aerial3D interface and return to the previous Map view. Expand the snippet __M1_Close3DX__ immediately after the closing tag of the MapControl.
+1. We will need a button to close the Aerial3D interface and return to the previous Map view. Expand the snippet **M1_Close3DX** immediately after the closing tag of the MapControl.
 
     #### XAML
     ```XAML
@@ -671,13 +671,13 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
     </Button>
     ```
 
-    >__Note:__ Streetside has a close button in its interface, but Aerial3D does not.
+    >**Note:** Streetside has a close button in its interface, but Aerial3D does not.
 
-1. Open __ViewModels > TripDetailPageViewModel.cs__. Expand the __M1_Close3D__ and __M1_Show3D__ snippets anywhere within the view model.
+1. Open **ViewModels > TripDetailPageViewModel.cs**. Expand the **M1_Close3D** and **M1_Show3D** snippets anywhere within the view model.
 
-    The __Show3D()__ method hides the flyout and sets the Map style to __Aerial3DWithRoads__. It also sets the scene by controlling the pitch, direction, and radius of the 3D view.
+    The **Show3D()** method hides the flyout and sets the Map style to **Aerial3DWithRoads**. It also sets the scene by controlling the pitch, direction, and radius of the 3D view.
 
-    The __Close3D()__ method sets the Map style back to __Road__ and centers the map around the selected location.
+    The **Close3D()** method sets the Map style back to **Road** and centers the map around the selected location.
 
     #### C&#35;
     ```C#
@@ -729,7 +729,7 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
     }
     ```
 
-    >__Note:__ The M1_Show3D code snippet includes a stubbed method for ShowStreet(). We will add the contents of the ShowStreet method in a later step.
+    >**Note:** The M1_Show3D code snippet includes a stubbed method for ShowStreet(). We will add the contents of the ShowStreet method in a later step.
 
 1. Build and run the app. The PushPins will animate in with Bow animation. Click on a PushPin to view its flyout. Use the building icon to open Aerial3D mode.
 
@@ -739,7 +739,7 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
 
 1. Stop debugging and return to Visual Studio.
 
-1. Let’s add the code to enable Streetside mode. The button in the XAML flyout and the stubbed method in the view model are already in place. Expand the __M1_ShowStreet__ code snippet inside the __ShowStreet()__ method in the view model.
+1. Let’s add the code to enable Streetside mode. The button in the XAML flyout and the stubbed method in the view model are already in place. Expand the **M1_ShowStreet** code snippet inside the **ShowStreet()** method in the view model.
 
     This method hides the flyout and turns on the Streetside overlay if it is available.
 
