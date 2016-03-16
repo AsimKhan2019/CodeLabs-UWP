@@ -60,9 +60,7 @@ namespace Microsoft.Labs.SightsToSee
 
             ExtensionManager.Initialize();
 
-#if SQLITE
             await SQLiteService.InitDb();
-#endif
 
             SetupShell(args);
 

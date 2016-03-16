@@ -24,17 +24,8 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             }
         }
 
-        public async void CreateTrip()
+        public void CreateTrip()
         {
-
-#if !SQLITE
-            await AppShell.Current.SetBusyAsync("Synchronising");
-
-            await SeedDataFactory.LoadDataAsync();
-
-            await AppShell.Current.ClearBusyAsync();
-#endif
-
             // NOTE: SeedDatafactory sets AppSettings.LastTripId to the trip Id value generated from the Seed Data
             AppShell.Current.AddTrip("San Francisco", AppSettings.LastTripId);
             AppSettings.HasRun = true;

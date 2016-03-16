@@ -47,7 +47,6 @@ namespace Microsoft.Labs.SightsToSee
                 NavMenuList.SelectedIndex = 0;
                 var dm = DataModelServiceFactory.CurrentDataModelService();
 
-#if SQLITE
                 var trips = await dm.LoadTripsAsync();
 
                 if (AppSettings.HasRun && trips.Any())
@@ -65,45 +64,6 @@ namespace Microsoft.Labs.SightsToSee
                 {
                     LandingPage.ShowCreateFirstTrip = true;
                 }
-#else
-                // When connecting to Azure, this is where we authenticate and then load the seed data into the local tables.
-                // Then sync to the cloud
-                bool isAuthenticated = false;
-                while (!isAuthenticated)
-                {
-                    var authResponse = await dm.AuthenticateAsync();
-
-                    isAuthenticated = authResponse.Item1;
-                    if (!isAuthenticated)
-                    {
-                        var dialog = new MessageDialog(authResponse.Item2);
-                        dialog.Commands.Add(new UICommand("OK"));
-                        await dialog.ShowAsync();
-                    }
-                }
-
-                await SetBusyAsync("Synchronising");
-                var trips = await dm.LoadTripsAsync();
-                await ClearBusyAsync();
-
-                if (trips.Any())
-                {
-                    AppSettings.HasRun = true;
-
-                    // Load trips from DB
-                    foreach (var trip in trips)
-                    {
-                        AddTrip(trip.Name, trip.Id);
-                    }
-                    var parameter = new TripNavigationParameter {TripId = trips.First().Id}.GetJson();
-                    NavigateToPage(typeof (TripDetailPage), parameter);
-                    LandingPage.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    LandingPage.ShowCreateFirstTrip = true;
-                }
-#endif
             };
 
                 RootSplitView.RegisterPropertyChangedCallback(

@@ -8,11 +8,7 @@
         {
             if (_dataModelService == null)
             {
-#if SQLITE
                 _dataModelService = new SqliteDataModelService();
-#else
-                _dataModelService = new AzureDataModelService();
-#endif
             }
 
             return _dataModelService;

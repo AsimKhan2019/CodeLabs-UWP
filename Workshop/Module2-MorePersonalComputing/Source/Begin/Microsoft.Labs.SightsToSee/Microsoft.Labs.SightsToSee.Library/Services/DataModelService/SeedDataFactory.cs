@@ -22,7 +22,6 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
         /// <param name="force">Optional parameter - if set to <code>true</code> will delete existing data and then reload.</param>
         public static async Task LoadDataAsync(SQLiteConnection connection = null, bool force = false)
         {
-#if SQLITE
             var tripCount = connection.Table<Trip>().Any();
             // Only load seed data if we need to
             if (connection.Table<Trip>().Any() && !force)
@@ -63,40 +62,6 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
 
             TripId = trip.Id;
 
-#else
-            var dm = DataModelServiceFactory.CurrentDataModelService();
-
-            var trips = await dm.LoadTripsAsync();
-            // Only load seed data if we need to
-            if (trips.Any() && !force)
-            {
-                TripId = AppSettings.LastTripId;
-                return;
-            }
-
-            if (force)
-            {
-                var tripsComplete = await dm.LoadTripsWithAttractionsAsync();
-                // Deleting children first 
-                foreach (var trip in tripsComplete)
-                {
-                    foreach (var sight in trip.Sights)
-                    {
-                        await dm.DeleteSightAsync(sight);
-                    }
-                    await dm.DeleteTripAsync(trip);
-                }
-            }
-
-            StorageFolder models = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Models");
-            StorageFile demoDataFile = await models.GetFileAsync(@"DemoSights.json");
-            var sampletrip = await CreateSampleTrip(demoDataFile);
-            
-            TripId = sampletrip.Id;
-            AppSettings.LastTripId = TripId;
-
-            await dm.InsertTripAsync(sampletrip);
-#endif
             AppSettings.LastTripId = TripId;
 
         }

@@ -4,17 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Media.Imaging;
 using SQLite.Net.Attributes;
-using Newtonsoft.Json;
-
-#if !SQLITE
-using Microsoft.WindowsAzure.MobileServices.Files;
-#endif
 
 namespace Microsoft.Labs.SightsToSee.Library.Models
 {
     public class SightFile : IGuidTable, INotifyPropertyChanged
     {
-#if SQLITE
 
         private Guid _id;
 
@@ -30,42 +24,6 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
             }
         }
 
-#else
-        private Guid _id = Guid.Empty;
-        [JsonIgnore]
-        public Guid Id
-        {
-            get
-            {
-                return _id;
-            }
-            set
-            {
-                if (_id == value) return;
-                _id = value;
-                OnPropertyChanged();
-            }
-        }
-
-        // string version required by cloud sync
-        [JsonProperty(PropertyName = "id")]
-        public string DTOId
-        {
-            get
-            {
-                return _id.ToString();
-            }
-            set
-            {
-                Id = Guid.Parse(value);
-            }
-        }
-
-        [JsonIgnore]
-        public MobileServiceFile File { get; set; }
-
-
-#endif
 
         // 0: Image   1: Inking input
         private int _fileType;
@@ -123,13 +81,11 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
             }
         }
 
-        [JsonIgnore]
         [Ignore]
         public Sight Sight { get; set; }
 
         public Guid SightId { get; set; }
 
-        [JsonIgnore]
         [Ignore]
         public BitmapImage ImageUri => new BitmapImage(new Uri(Uri, UriKind.Absolute));
 

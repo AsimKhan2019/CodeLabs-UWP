@@ -5,13 +5,11 @@ using System.Runtime.CompilerServices;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Media.Imaging;
 using SQLite.Net.Attributes;
-using Newtonsoft.Json;
 
 namespace Microsoft.Labs.SightsToSee.Library.Models
 {
     public class Sight : IGuidTable, INotifyPropertyChanged
     {
-#if SQLITE
         private Guid _id;
 
         [PrimaryKey]
@@ -25,38 +23,6 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
                 OnPropertyChanged();
             }
         }
-#else
-        private Guid _id = Guid.Empty;
-        [JsonIgnore]
-        public Guid Id
-        {
-            get
-            {
-                return _id;
-            }
-            set
-            {
-                if (_id == value) return;
-                _id = value;
-                OnPropertyChanged();
-            }
-        }
-
-        // string version required by cloud sync
-        [JsonProperty(PropertyName = "id")]
-        public string DTOId
-        {
-            get
-            {
-                return _id.ToString();
-            }
-            set
-            {
-                Id = Guid.Parse(value);
-            }
-        }
-
-#endif
 
         private string _name;
 
@@ -111,7 +77,6 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
             }
         }
 
-        [JsonIgnore]
         [Ignore]
         public Geopoint Location => new Geopoint(new BasicGeoposition {Latitude = Latitude, Longitude = Longitude});
 
@@ -154,7 +119,6 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
             }
         }
 
-        [JsonIgnore]
         [Ignore]
         public BitmapImage ImageUri => new BitmapImage(new Uri(ImagePath, UriKind.Absolute));
 
@@ -215,13 +179,11 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
             }
         }
 
-        [JsonIgnore]
         [Ignore]
         public Trip Trip { get; set; }
 
         public Guid TripId { get; set; }
 
-        [JsonIgnore]
         [Ignore]
         public List<SightFile> SightFiles { get; set; }
 
