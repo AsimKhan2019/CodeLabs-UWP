@@ -10,7 +10,6 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
         [PrimaryKey]
         public Guid Id { get; set; }
 
-
         [System.ComponentModel.DataAnnotations.MaxLength(200)]
         public string Name { get; set; }
 

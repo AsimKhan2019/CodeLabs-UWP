@@ -11,9 +11,6 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
 {
     public class SettingsPageViewModel : ViewModelBase
     {
-        public ObservableCollection<Extension> Extensions
-        {
-            get { return (App.Current as App).ExtensionManager.Extensions; }
-        }
+
     }
 }

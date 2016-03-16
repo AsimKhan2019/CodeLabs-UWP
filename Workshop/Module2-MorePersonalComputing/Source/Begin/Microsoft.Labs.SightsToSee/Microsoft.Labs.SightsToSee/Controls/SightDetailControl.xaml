@@ -69,7 +69,7 @@
                         <Setter Target="HeaderSpacer.Height" Value="85" />
                         <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Column1Content.Padding" Value="0" />
-                        <!--<Setter Target="ImageInkToolbar.Margin" Value="8,0" />-->
+                        <Setter Target="ImageInkToolbar.Margin" Value="8,0" />
                         <Setter Target="GalleryGrid.Padding" Value="0" />
                         <Setter Target="GalleryGrid.Height" Value="82" />
                         <Setter Target="GalleryGrid.Style" Value="{StaticResource HorizontalGridView}" />
@@ -134,11 +134,8 @@
                                Text="{x:Bind ViewModel.CurrentSight.LongDescription, Mode=OneWay}"
                                Margin="0,0,0,28" />
                     
-                    <!--DatePicker for toast notification reminder-->
-                    <StackPanel Orientation="Horizontal" Grid.Row="0">
-                        <CalendarDatePicker Date="{x:Bind ViewModel.CurrentSightDate, Mode=TwoWay}" />
-                        <TimePicker Time="{x:Bind ViewModel.CurrentSightTime, Mode=TwoWay}" />
-                    </StackPanel>
+                    <!-- M2: Insert M2_DatePicker snippet here for toast notification reminder-->
+                    
                     
                     <Grid>
                         <Grid.RowDefinitions>
@@ -151,36 +148,9 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" VerticalAlignment="Center" FontSize="20">Notes</TextBlock>
-                            
-                            <!--Enable Ink button-->
-                            <Button x:Name="InkButton" Grid.Column="1" Background="Transparent" Click="{x:Bind ViewModel.EnableInk}"
-                                    Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
-                                <FontIcon Glyph="&#xEC87;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
-                            </Button>
+                            <!--Insert the M2_EnableInkButton snippet here-->
 
-                            <!--Ink Toolbar-->
-                            <c:InkToolbar x:Name="NoteInkToolbar" Grid.Column="1"
-                                          AutoPopulate="None"
-                                          TargetInkCanvas="{x:Bind NotesInkCanvas}"
-                                          Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                          EraserClearAllInvoked="EraserClearAll">
-
-
-                                <c:InkToolbarEraserButton />
-                                <c:InkToolbarBallpointPenButton />
-
-                                <c:InkToolbarCustomToggleButton Click="TryOCR">
-                                    <FontIcon Glyph="&#xE8E9;" FontFamily="Segoe MDL2 Assets" />
-                                </c:InkToolbarCustomToggleButton>
-
-                                <c:InkToolbarCustomToggleButton Click="NotesSaveButton_Click">
-                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE001;" />
-                                </c:InkToolbarCustomToggleButton>
-                                <c:InkToolbarCustomToggleButton Click="NotesUndoButton_Click">
-                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
-                                </c:InkToolbarCustomToggleButton>
-
-                            </c:InkToolbar>
+                            <!--Insert the M2_InkToolbar snippet here-->
 
                         </Grid>
                         <TextBox Grid.Row="1" x:Name="Notes"
@@ -192,16 +162,8 @@
                                  AcceptsReturn="True"
                                  PlaceholderText="Enter your notes here"
                                  Text="{Binding CurrentSight.Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <!--Insert the M2_NotesInkCanvas snippet here-->
                         
-                        <!--Notes Ink Grid with InkCanvas-->
-                        <Grid x:Name="InkGrid" 
-                              Grid.Row="1" 
-                              Background="White" 
-                              Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            Margin="0,8,0,0">
-                            <InkCanvas x:Name="NotesInkCanvas" 
-                                       MinHeight="500" />
-                        </Grid>
                     </Grid>
 
                 </StackPanel>
@@ -232,7 +194,7 @@
                         <c:InkToolbarCustomToggleButton Click="ImageUndoButton_Click">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
                         </c:InkToolbarCustomToggleButton>
-
+                        
                     </c:InkToolbar>
 
 
@@ -260,9 +222,6 @@
 
                     <GridView x:Name="GalleryGrid"
                               Grid.Row="2"
-                              AllowDrop="True"
-                              Drop="{x:Bind ViewModel.SightFile_DropAsync}"
-                              DragOver="{x:Bind ViewModel.SightFile_DragOver}"
                               ItemsSource="{Binding CurrentSightFiles, Mode=TwoWay}"
                               ItemContainerStyle="{StaticResource GalleryGridViewItemExpanded}"
                               SelectedItem="{Binding SelectedSightFile, Mode=TwoWay}"
@@ -289,24 +248,8 @@
             </RelativePanel>
         </ScrollViewer>
         
-        <ContentDialog x:Name="OCRDialog"
-                       PrimaryButtonText="Accept"
-                       SecondaryButtonText="Cancel"
-                       IsPrimaryButtonEnabled="False"
-                       Title="Text Recognition"
-                       d:IsHidden="True">
-            <StackPanel>
-                <ComboBox x:Name="RecoName" 
-                          Header="Choose a recognizer:"
-                          MaxWidth="500" 
-                          SelectionChanged="OnRecognizerChanged" 
-                          Margin="0,4"/>
-                <Button Click="OnRecognizeAsync"
-                        Margin="0,4">Recognize text</Button>
-                <TextBox x:Name="Status"
-                         Header="Recognition Output:"
-                         Margin="0,4"/>
-            </StackPanel>
-        </ContentDialog>
+        <!--Insert the M2_OcrDialog snippet here-->
+        
+        
     </Grid>
 </UserControl>

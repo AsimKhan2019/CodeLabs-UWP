@@ -26,23 +26,7 @@
                    TextWrapping="WrapWholeWords"
                        FontSize="20"/>
             </Grid>
-            <ListView ItemsSource="{x:Bind ViewModel.Extensions}" Margin="0,20,0,0">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <RelativePanel BorderBrush="Gray" BorderThickness="0,0,0,1">
-                            <Image x:Name="ExtensionLogo" Source="{Binding Logo}" Width="90"  Stretch="Uniform" />
-                            <TextBlock x:Name="ExtensionName" Text="{Binding AppExtension.DisplayName}" RelativePanel.RightOf="ExtensionLogo" RelativePanel.AlignTopWithPanel="True"/>
-                            <TextBlock x:Name="ExtensionDescription" Text="{Binding AppExtension.Description}" RelativePanel.RightOf="ExtensionLogo" RelativePanel.Below="ExtensionName"/>
-                            <ToggleSwitch Margin="0,10,0,0" x:Name="ExtensionToggle" RelativePanel.Below="ExtensionDescription" RelativePanel.RightOf="ExtensionLogo" IsOn="{Binding Enabled, Mode=TwoWay}" />
-                        </RelativePanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            
         </StackPanel>
     </StackPanel>
 </Page>

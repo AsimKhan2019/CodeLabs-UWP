@@ -13,6 +13,13 @@ using Windows.UI.Xaml.Media.Imaging;
 using InkToolbarPreview;
 using Microsoft.Labs.SightsToSee.Services.FileService;
 using Microsoft.Labs.SightsToSee.ViewModels;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage.Pickers;
+using Windows.Foundation.Collections;
+using Windows.System;
+using Windows.UI.Popups;
+using Microsoft.Labs.SightsToSee.Library.Models;
+using Microsoft.Labs.SightsToSee.Library.Services.DataModelService;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -21,7 +28,7 @@ namespace Microsoft.Labs.SightsToSee.Controls
     public sealed partial class SightDetailControl : UserControl
     {
         public static readonly DependencyProperty BackgroundImageProperty = DependencyProperty.Register(
-            "BackgroundImage", typeof (BitmapImage), typeof (SightDetailControl),
+            "BackgroundImage", typeof(BitmapImage), typeof(SightDetailControl),
             new PropertyMetadata(default(BitmapImage), BackgroundImagePropertyChanged));
 
 
@@ -30,45 +37,22 @@ namespace Microsoft.Labs.SightsToSee.Controls
         #region InkToolBar
 
         private readonly InkBitmapRenderer _inkBitmapRenderer = new InkBitmapRenderer();
-
         #endregion
 
-        // Backing variables for the InkRecognizerContainer and list of recognizers
-        private readonly InkRecognizerContainer _inkRecognizerContainer;
-        private readonly IReadOnlyList<InkRecognizer> _recoView;
+        // Insert the M2_Recognizers snippet here
+
 
         public SightDetailControl()
         {
             InitializeComponent();
+            // Insert the M2_NotesInputs snippet here
 
-            // Set up the NotesInkCanvas input types
-            NotesInkCanvas.InkPresenter.InputDeviceTypes = CoreInputDeviceTypes.Mouse |
-                                                           CoreInputDeviceTypes.Pen |
-                                                           CoreInputDeviceTypes.Touch;
-            #region SetupRecognizers
-
-            _inkRecognizerContainer = new InkRecognizerContainer();
-            _recoView = _inkRecognizerContainer.GetRecognizers();
-            if (_recoView != null)
-            {
-                if (_recoView.Count > 0)
-                {
-                    foreach (var recognizer in _recoView)
-                    {
-                        RecoName?.Items?.Add(recognizer.Name);
-                    }
-                }
-                else
-                {
-                    RecoName.IsEnabled = false;
-                    RecoName?.Items?.Add("No Recognizer Available");
-                }
-            }
-            RecoName.SelectedIndex = 0;
+            #region Setup Recognizers
+            // Insert the M2_SetupRecognizers snippet here
 
             #endregion
 
-            #region InkToolbarControl
+            #region ImageInkToolbarControl
 
             _imageInkPresenter = ImageInkCanvas.InkPresenter;
             _imageInkPresenter.InputDeviceTypes =
@@ -80,30 +64,34 @@ namespace Microsoft.Labs.SightsToSee.Controls
 
         public BitmapImage BackgroundImage
         {
-            get { return (BitmapImage) GetValue(BackgroundImageProperty); }
+            get { return (BitmapImage)GetValue(BackgroundImageProperty); }
             set { SetValue(BackgroundImageProperty, value); }
         }
 
         public SightDetailPageViewModel ViewModel => DataContext as SightDetailPageViewModel;
 
-        // Restore Notes Ink if notes have been saved as Ink
         public async Task SetupNotesInkAsync()
         {
-            // Check to see if we are in ink mode
-            if (ViewModel.CurrentSight.NotesAreInk)
-            {
-                ViewModel.IsNotesInking = true;
+            // Insert the M2_SetupNotes snippet here
 
-                if (!string.IsNullOrWhiteSpace(ViewModel.CurrentSight.InkFilePath))
-                {
-                    var file = await StorageFile.GetFileFromPathAsync(ViewModel.CurrentSight.InkFilePath);
-                    using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
-                    {
-                        await NotesInkCanvas.InkPresenter.StrokeContainer.LoadAsync(stream);
-                    }
-                }
-            }
+            
         }
+
+        #region OCR
+        
+        // Insert the M2_RecognizerMethods snippet here
+
+        private void OnRecognizerChanged(object sender, RoutedEventArgs e)
+        {
+            //Insert the M2_RecognizerChanged snippet here
+        }
+        private async void OnRecognizeAsync(object sender, RoutedEventArgs e)
+        {
+            // Insert the M2_OnRecognize snippet here
+
+        }
+
+        #endregion
 
         private static void BackgroundImagePropertyChanged(DependencyObject dependencyObject,
             DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -119,114 +107,13 @@ namespace Microsoft.Labs.SightsToSee.Controls
             }
         }
 
-        #region OCR
-        private async void TryOCR(object sender, RoutedEventArgs e)
-        {
-            var result = await OCRDialog.ShowAsync();
-            if (result == ContentDialogResult.Primary)
-            {
-                ViewModel.IsNotesInking = false;
-                ViewModel.CurrentSight.NotesAreInk = false;
-
-                // The last note is followed by a space.
-                ViewModel.CurrentSight.Notes += $" {Status.Text}";
-                await ViewModel.UpdateSightAsync(ViewModel.CurrentSight);
-                Status.Text = string.Empty;
-                NotesInkCanvas.InkPresenter.StrokeContainer.Clear();
-            }
-        }
-
-        private void OnRecognizerChanged(object sender, RoutedEventArgs e)
-        {
-            var selectedValue = (string) RecoName.SelectedValue;
-            Status.Text = string.Empty;
-            SetRecognizerByName(selectedValue);
-        }
-
-        private bool SetRecognizerByName(string recognizerName)
-        {
-            var recognizerFound = false;
-
-            foreach (var reco in _recoView)
-            {
-                if (recognizerName == reco.Name)
-                {
-                    _inkRecognizerContainer.SetDefaultRecognizer(reco);
-                    recognizerFound = true;
-                    break;
-                }
-
-                if (!recognizerFound)
-                {
-                    Status.Text = $"Could not find target recognizer: {recognizerName}.";
-                }
-            }
-            return recognizerFound;
-        }
-
-        private async void OnRecognizeAsync(object sender, RoutedEventArgs e)
-        {
-            var currentStrokes =
-                NotesInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
-            if (currentStrokes.Count > 0)
-            {
-                RecoName.IsEnabled = false;
-
-                var recognitionResults = await _inkRecognizerContainer.RecognizeAsync(
-                    NotesInkCanvas.InkPresenter.StrokeContainer,
-                    InkRecognitionTarget.All);
-
-                if (recognitionResults.Count > 0)
-                {
-                    // Display recognition result
-                    var str = string.Empty;
-                    foreach (var r in recognitionResults)
-                    {
-                        str += $"{r.GetTextCandidates()[0]} ";
-                    }
-                    Status.Text = str;
-                    OCRDialog.IsPrimaryButtonEnabled = true;
-                }
-                else
-                {
-                    Status.Text = "No text recognized.";
-                }
-
-                RecoName.IsEnabled = true;
-            }
-            else
-            {
-                Status.Text = "Must first write something.";
-            }
-        }
-
-        #endregion
-
         #region NotesInkToolbar
-        private async void NotesSaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.CurrentSight.NotesAreInk = true;
-            var file = await ViewModel.GenerateStorageFileForInk();
-            ViewModel.CurrentSight.InkFilePath = file.Path;
-            using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
-            {
-                await NotesInkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
-            }
-            await ViewModel.UpdateSightAsync(ViewModel.CurrentSight);
-        }
-
-        private async void NotesUndoButton_Click(object sender, RoutedEventArgs e)
-        {
-            NotesInkCanvas.InkPresenter.StrokeContainer.Clear();
-            ViewModel.CurrentSight.NotesAreInk = false;
-            ViewModel.IsNotesInking = false;
-            await ViewModel.UpdateSightAsync(ViewModel.CurrentSight);
-        }
+        // Insert the M2_SaveUndo snippet here
 
         #endregion
 
 
-        #region InkToolBarControl
+        #region ImageToolbar
 
         private async void ImageSaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -269,8 +156,8 @@ namespace Microsoft.Labs.SightsToSee.Controls
                         encoder.SetPixelData(
                             BitmapPixelFormat.Bgra8,
                             BitmapAlphaMode.Ignore,
-                            (uint) renderTargetBitmap.PixelWidth,
-                            (uint) renderTargetBitmap.PixelHeight,
+                            (uint)renderTargetBitmap.PixelWidth,
+                            (uint)renderTargetBitmap.PixelHeight,
                             currentDpi,
                             currentDpi,
                             pixelData.ToArray()
@@ -302,5 +189,6 @@ namespace Microsoft.Labs.SightsToSee.Controls
         }
 
         #endregion
+
     }
 }

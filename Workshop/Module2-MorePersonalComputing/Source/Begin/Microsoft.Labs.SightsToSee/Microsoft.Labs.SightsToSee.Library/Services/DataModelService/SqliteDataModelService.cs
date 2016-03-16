@@ -52,7 +52,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
         public async Task InsertSights(IEnumerable<Sight> sights)
         {
             var connection = SQLiteService.CreateAsyncConnection();
-            await connection.InsertAllAsync(sights);
+            var result = await connection.InsertAllAsync(sights);
 
             foreach(var sight in sights)
             {

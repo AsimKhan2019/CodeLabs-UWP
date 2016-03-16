@@ -92,7 +92,11 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             SightImage = CurrentSight.ImageUri;
             foreach (var sightFile in CurrentSight.SightFiles)
             {
-                CurrentSightFiles.Add(sightFile);
+                // Only add Image files to the CurrentSightFiles list, not inking
+                if (sightFile.FileType == SightFileType.Image)
+                {
+                    CurrentSightFiles.Add(sightFile);
+                }
             }
 
             SelectedSightFile = CurrentSightFiles.FirstOrDefault();
@@ -110,65 +114,26 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             await LoadSightAsync(sight.Id);
         }
 
-        public void SightFile_DragOver(object sender, DragEventArgs e)
-        {
-            e.AcceptedOperation = DataPackageOperation.Copy;
-
-            // Customize the look of the DragUI
-            if (e.DragUIOverride != null)
-            {
-                e.DragUIOverride.Caption = "Attach photo";
-                e.DragUIOverride.IsCaptionVisible = true;
-                e.DragUIOverride.IsContentVisible = true;
-                e.DragUIOverride.IsGlyphVisible = true;
-            }
-        }
-
-        public async void SightFile_DropAsync(object sender, DragEventArgs e)
-        {
-            if (e.DataView.Contains(StandardDataFormats.StorageItems))
-            {
-                var items = await e.DataView.GetStorageItemsAsync();
-
-                if (items.Any())
-                {
-                    foreach (var storageFile in items.Select(file => file as StorageFile))
-                    {
-                        await AddSightFileAsync(storageFile);
-                    }
-                }
-            }
-        }
 
         /// <summary>
-        /// Adds a new Image to the Sight, in response to drag and drop onto the Sight detail page
+        /// Adds a new Image or Inking File to the Sight
         /// </summary>
         /// <param name="file"></param>
+        /// <param name="fileType">0: Image, 1: Inking</param>
         /// <returns></returns>
-        private async Task AddSightFileAsync(StorageFile file)
+        private async Task AddSightFileAsync(StorageFile file, Guid sightFileId, SightFileType fileType)
         {
             // add to record
+            var id = sightFileId;
             var sightFile = new SightFile
             {
-                Id = Guid.NewGuid(),
-                FileType = 0,
+                Id = id,
+                FileType = fileType,
                 Sight = CurrentSight,
                 SightId = CurrentSight.Id,
+                FileName = file.Name,
+                Uri = "ms-appdata:///local/" + SightFilesPath + "/" + id.ToString() + "/" + file.Name,
             };
-
-            // Physical file needs to go to {localfolder}/SightFiles/{sightFileId}/
-            var sightFilesFolder = await
-                    ApplicationData.Current.LocalFolder.CreateFolderAsync(SightFilesPath,
-                        CreationCollisionOption.OpenIfExists);
-            var sightFileFolder = await sightFilesFolder.CreateFolderAsync(sightFile.Id.ToString(),
-                CreationCollisionOption.OpenIfExists);
-            var copiedFile = await file.CopyAsync(
-                sightFileFolder,
-                file.Name,
-                NameCollisionOption.ReplaceExisting);
-
-            sightFile.FileName = copiedFile.Name;
-            sightFile.Uri = "ms-appdata:///local/" + SightFilesPath + "/" + sightFile.Id + "/" + copiedFile.Name;
 
             CurrentSight.SightFiles.Add(sightFile);
             CurrentSightFiles.Add(sightFile);
@@ -196,52 +161,13 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
 
         public async void AddSightAsync()
         {
-            // Add CurrentSightTime and schedule toast notification
-            if (CurrentSightDate.HasValue)
-                CurrentSight.VisitDate = CurrentSightDate.Value.Date.Add(CurrentSightTime);
-
-            ScheduledNotificationService.AddToastReminder(CurrentSight);
+            // Insert the M2_ScheduleToast snippet here
+            
 
             CurrentSight.IsMySight = true;
             await UpdateSightAsync(CurrentSight);
         }
 
-
-        public void ShareSight()
-        {
-            var dataTransferManager = DataTransferManager.GetForCurrentView();
-            dataTransferManager.DataRequested += DataTransferManager_DataRequested;
-
-            DataTransferManager.ShowShareUI();
-        }
-
-        private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
-        {
-            var request = args.Request;
-            request.Data.Properties.Title = $"I'm visiting the {CurrentSight.Name}";
-            request.Data.Properties.Description = $"{CurrentSight.Description}";
-            request.Data.SetText($"{CurrentSight.Description}");
-
-            var localImage = SightImage.UriSource.AbsoluteUri;
-            string htmlPayload = $"<img src=\"{localImage}\" width=\"200\"/><p>{CurrentSight.Description}</p>";
-            var htmlFormat = HtmlFormatHelper.CreateHtmlFormat(htmlPayload);
-            request.Data.SetHtmlFormat(htmlFormat);
-
-            // Because the HTML contains a local image, we need to add it to the ResourceMap.
-            var streamRef = RandomAccessStreamReference.CreateFromUri(new Uri(localImage));
-            request.Data.ResourceMap[localImage] = streamRef;
-        }
-
-        public async void GetDirectionsAsync()
-        {
-            var mapsUri =
-                new Uri($@"bingmaps:?rtp=~pos.{CurrentSight.Latitude}_{CurrentSight.Longitude}_{CurrentSight.Name}");
-
-            // Launch the Windows Maps app
-            var launcherOptions = new LauncherOptions();
-            launcherOptions.TargetApplicationPackageFamilyName = "Microsoft.WindowsMaps_8wekyb3d8bbwe";
-            await Launcher.LaunchUriAsync(mapsUri, launcherOptions);
-        }
 
         /// <summary>
         /// Create the file to store inked notes on the main Sight
@@ -249,16 +175,25 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
         /// <returns></returns>
         public async Task<StorageFile> GenerateStorageFileForInk()
         {
-            var sightFilesFolder =
-                await
-                    ApplicationData.Current.LocalFolder.CreateFolderAsync(SightFilesPath,
-                        CreationCollisionOption.OpenIfExists);
-            var sightFolder = await sightFilesFolder.CreateFolderAsync(CurrentSight.Id.ToString("D"),
-                CreationCollisionOption.OpenIfExists);
-            return
-                await
+            Guid newSightFileId = Guid.NewGuid();
+            StorageFolder sightFolder = await CreateStorageFolderForSightFile(newSightFileId);
+            var inkFile = await
                     sightFolder.CreateFileAsync($"{Guid.NewGuid().ToString("D")}.png",
                         CreationCollisionOption.GenerateUniqueName);
+            await AddSightFileAsync(inkFile, newSightFileId, SightFileType.General);
+
+            return inkFile;
+        }
+
+        private async Task<StorageFolder> CreateStorageFolderForSightFile(Guid sightFileId)
+        {
+            // Physical file needs to go to {localfolder}/SightFiles/{sightFileId}/
+            var sightFilesFolder = await
+                    ApplicationData.Current.LocalFolder.CreateFolderAsync(SightFilesPath,
+                        CreationCollisionOption.OpenIfExists);
+            var sightFolder = await sightFilesFolder.CreateFolderAsync(sightFileId.ToString("D"),
+                CreationCollisionOption.OpenIfExists);
+            return sightFolder;
         }
 
         public async Task UpdateSightFileImageUriAsync(Uri imageUri)
@@ -285,10 +220,7 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             SightImage = SelectedSightFile.ImageUri;
         }
 
-        // Enable Ink mode in the Notes field
-        public void EnableInk()
-        {
-            IsNotesInking = true;
-        }
+        // Insert the M2_EnableInk snippet here
+
     }
 }

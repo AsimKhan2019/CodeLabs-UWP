@@ -53,12 +53,9 @@ namespace Microsoft.Labs.SightsToSee
                 //this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
-            // Install the Voice Command Definition File
+            // Insert the M2_LoadVCD snippet here
 
-            var storageFile = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommands.xml"));
-            await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(storageFile);
 
-            ExtensionManager.Initialize();
 
             await SQLiteService.InitDb();
 
@@ -92,12 +89,6 @@ namespace Microsoft.Labs.SightsToSee
             Window.Current.Content = shell;
         }
 
-        public ExtensionManager ExtensionManager
-        {
-            get { return _extensionManager; }
-        }
-        private ExtensionManager _extensionManager = new Facts.ExtensionManager("SanFranPack.1.0");
-
         protected override async void OnActivated(IActivatedEventArgs args)
         {
             SetupShell(args);
@@ -120,27 +111,11 @@ namespace Microsoft.Labs.SightsToSee
                     AppShell.Current.NavigateToPage(typeof(TripDetailPage), parameter);
                     break;
 
-                // Voice activation behavior
-                case ActivationKind.VoiceCommand:
-                    VoiceCommandActivatedEventArgs voiceArgs = args as VoiceCommandActivatedEventArgs;
-                    HandleVoiceCommand(args);
-                    break;
-
-                case ActivationKind.ToastNotification:
-                    var toast = args as ToastNotificationActivatedEventArgs;
-
-                    var props = toast.Argument.Split(':');
-                    if (props[0] == "View")
-                    {
-                        var tripParam = new TripNavigationParameter { TripId = AppSettings.LastTripId, SightId = Guid.ParseExact(props[1], "D") }.GetJson();
-                        AppShell.Current.NavigateToPage(typeof(TripDetailPage), tripParam);
-                    }
-                    else if(props[0] == "Remove")
-                    {
-                        var tripParam = new TripNavigationParameter { TripId = AppSettings.LastTripId, SightId = Guid.ParseExact(props[1], "D"), DeleteSight = true }.GetJson();
-                        AppShell.Current.NavigateToPage(typeof(TripDetailPage), tripParam);
-                    }
-                    break;
+                // Insert M2_VoiceActivation snippet here
+                
+              
+                // Insert the M2_ToastActivation snippet here
+                
 
                 default:
                     break;
@@ -150,37 +125,9 @@ namespace Microsoft.Labs.SightsToSee
             Window.Current.Activate();
         }
 
-        private void HandleVoiceCommand(IActivatedEventArgs args)
-        {
-            var commandArgs = args as VoiceCommandActivatedEventArgs;
-            var speechRecognitionResult = commandArgs.Result;
-            var command = speechRecognitionResult.Text;
+        // Insert the M2_HandleVoiceCommand snippet here
+       
 
-            var voiceCommandName = speechRecognitionResult.RulePath[0];
-            var textSpoken = speechRecognitionResult.Text;
-
-            Debug.WriteLine("Command: " + command);
-            Debug.WriteLine("Text spoken: " + textSpoken);
-
-            string parameter;
-            switch (voiceCommandName)
-            {
-                case "LaunchApp":
-                    parameter = new TripNavigationParameter { TripId = AppSettings.LastTripId }.GetJson();
-                    AppShell.Current.NavigateToPage(typeof(TripDetailPage), parameter);
-
-                    break;
-
-                case "NearbySights":
-                    parameter = new TripNavigationParameter { TripId = AppSettings.LastTripId }.GetJson();
-                    AppShell.Current.NavigateToPage(typeof(TripDetailPage), parameter);
-
-                    break;
-
-                default:
-                    break;
-            }
-        }
         private void SetupTitleBarColors()
         {
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;

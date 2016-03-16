@@ -89,19 +89,22 @@
                                           ItemContainerStyle="{StaticResource NavMenuItemContainerStyle}"
                                           ItemTemplate="{StaticResource NavMenuItemTemplate}"
                                           ItemInvoked="NavMenuList_ItemInvoked" />
-                    <Grid VerticalAlignment="Bottom">
-                        <Button Click="{x:Bind GoToSettings}">
+                    <!--<Grid VerticalAlignment="Bottom">
+                        <Button Click="{x:Bind GoToSettings}" Background="Transparent">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="48" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="48" />
+                                </Grid.RowDefinitions>
 
-                                <FontIcon FontSize="15" Glyph="Settings" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <TextBlock Grid.Column="1" Text="Settings" Style="{StaticResource BodyTextBlockStyle}" />
+                                <FontIcon FontSize="15" Glyph="&#xE713;" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" />
+                                <TextBlock Grid.Column="1" Text="Settings" FontSize="15" VerticalAlignment="Center" FontFamily="Segoe UI" FontWeight="Light" Foreground="White" />
                             </Grid>
                         </Button>
-                    </Grid>
+                    </Grid>-->
                 </Grid>
             </SplitView.Pane>
 

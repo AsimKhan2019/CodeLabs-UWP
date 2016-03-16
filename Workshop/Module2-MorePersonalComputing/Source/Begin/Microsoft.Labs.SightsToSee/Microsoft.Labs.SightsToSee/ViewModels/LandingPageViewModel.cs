@@ -24,9 +24,10 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             }
         }
 
-        public void CreateTrip()
+        public async void CreateTrip()
         {
-            // NOTE: SeedDatafactory sets AppSettings.LastTripId to the trip Id value generated from the Seed Data
+
+           // NOTE: SeedDatafactory sets AppSettings.LastTripId to the trip Id value generated from the Seed Data
             AppShell.Current.AddTrip("San Francisco", AppSettings.LastTripId);
             AppSettings.HasRun = true;
 

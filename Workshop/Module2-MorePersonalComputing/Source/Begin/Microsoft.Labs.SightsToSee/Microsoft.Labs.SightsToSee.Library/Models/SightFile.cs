@@ -7,9 +7,14 @@ using SQLite.Net.Attributes;
 
 namespace Microsoft.Labs.SightsToSee.Library.Models
 {
+    public enum SightFileType
+    {
+        General,
+        Image
+    }
+
     public class SightFile : IGuidTable, INotifyPropertyChanged
     {
-
         private Guid _id;
 
         [PrimaryKey]
@@ -25,10 +30,10 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
         }
 
 
-        // 0: Image   1: Inking input
-        private int _fileType;
+        // 0: General, such as Inking   1: Image
+        private SightFileType _fileType;
 
-        public int FileType
+        public SightFileType FileType
         {
             get { return _fileType; }
             set

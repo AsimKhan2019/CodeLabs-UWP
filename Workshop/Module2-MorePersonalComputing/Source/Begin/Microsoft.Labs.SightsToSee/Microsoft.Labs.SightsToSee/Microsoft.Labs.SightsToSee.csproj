@@ -138,10 +138,8 @@
     <Content Include="Assets\DemoImages\GettyImages-90934685.jpg" />
     <Content Include="Assets\Images\DialogBackground.jpg" />
     <None Include="Package.StoreAssociation.xml" />
-    <Content Include="VoiceCommands.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="app.config" />
+    <None Include="Microsoft.Labs.SightsToSee_TemporaryKey.pfx" />
     <Content Include="Models\DemoSights.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

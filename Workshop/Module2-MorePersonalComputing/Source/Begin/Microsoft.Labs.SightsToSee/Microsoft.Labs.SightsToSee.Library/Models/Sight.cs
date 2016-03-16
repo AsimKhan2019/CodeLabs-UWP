@@ -6,6 +6,7 @@ using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Media.Imaging;
 using SQLite.Net.Attributes;
 
+
 namespace Microsoft.Labs.SightsToSee.Library.Models
 {
     public class Sight : IGuidTable, INotifyPropertyChanged

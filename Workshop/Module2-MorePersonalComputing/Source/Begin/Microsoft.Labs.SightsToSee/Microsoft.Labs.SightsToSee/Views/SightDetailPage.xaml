@@ -107,20 +107,7 @@
         <CommandBar Grid.Row="0"
                     x:Name="TitleCommandBar"
                     Background="Transparent">
-            <AppBarButton x:Name="Share"
-                          Label="Share Sight"
-                          Click="{x:Bind ViewModel.ShareSight}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton x:Name="Directions"
-                          Label="Directions to Sight"
-                          Click="{x:Bind ViewModel.GetDirectionsAsync}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE707;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+            
             <AppBarButton x:Name="DesktopDeleteFlyout"
                           Label="Delete from Trip"
                           Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -162,18 +149,7 @@
 
         <CommandBar Grid.Row="2" 
                     x:Name="MobileCommandBar">
-            <AppBarButton Click="{x:Bind ViewModel.ShareSight}"
-                          Label="Share Sight">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton Click="{x:Bind ViewModel.GetDirectionsAsync}"
-                          Label="Directions to Sight">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE707;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+
             <AppBarButton x:Name="MobileDeleteFlyout"
                           Label="Delete from Trip"
                           Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"

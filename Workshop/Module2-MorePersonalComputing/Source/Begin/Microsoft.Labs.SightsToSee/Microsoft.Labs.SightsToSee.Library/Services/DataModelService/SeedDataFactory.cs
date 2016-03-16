@@ -103,7 +103,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
             //        {
             //            Id = Guid.NewGuid(),
             //            FileName = tuple.Item2,
-            //            FileType = 1,
+            //            FileType = SightFileType.Image,
             //            Uri = tuple.Item1,
             //        });
             //    }
@@ -122,7 +122,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
                         {
                             Id = Guid.NewGuid(),
                             FileName = "GettyImages-547979731.jpg",
-                            FileType = 1,
+                            FileType = SightFileType.Image,
                             Uri = "ms-appx:///Assets/DemoImages/GettyImages-547979731.jpg",
                             SightId = sight.Id,
                             Sight = sight
@@ -132,7 +132,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
                         {
                             Id = Guid.NewGuid(),
                             FileName = "GettyImages-462144413.jpg",
-                            FileType = 1,
+                            FileType = SightFileType.Image,
                             Uri = "ms-appx:///Assets/DemoImages/GettyImages-462144413.jpg",
                             SightId = sight.Id,
                             Sight = sight
@@ -142,7 +142,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
                         {
                             Id = Guid.NewGuid(),
                             FileName = "GettyImages-578441735.jpg",
-                            FileType = 1,
+                            FileType = SightFileType.Image,
                             Uri = "ms-appx:///Assets/DemoImages/GettyImages-578441735.jpg",
                             SightId = sight.Id,
                             Sight = sight
@@ -152,7 +152,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
                         {
                             Id = Guid.NewGuid(),
                             FileName = "GettyImages-587409351.jpg",
-                            FileType = 1,
+                            FileType = SightFileType.Image,
                             Uri = "ms-appx:///Assets/DemoImages/GettyImages-587409351.jpg",
                             SightId = sight.Id,
                             Sight = sight
@@ -168,7 +168,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
                     {
                         Id = Guid.NewGuid(),
                         FileName = "GettyImages-475046491.jpg",
-                        FileType = 1,
+                        FileType = SightFileType.Image,
                         Uri = "ms-appx:///Assets/DemoImages/GettyImages-475046491.jpg",
                         SightId = sight.Id,
                         Sight = sight
@@ -177,7 +177,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
                     {
                         Id = Guid.NewGuid(),
                         FileName = "GettyImages-512468667.jpg",
-                        FileType = 1,
+                        FileType = SightFileType.Image,
                         Uri = "ms-appx:///Assets/DemoImages/GettyImages-512468667.jpg",
                         SightId = sight.Id,
                         Sight = sight
@@ -186,7 +186,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
                     {
                         Id = Guid.NewGuid(),
                         FileName = "GettyImages-568537447.jpg",
-                        FileType = 1,
+                        FileType = SightFileType.Image,
                         Uri = "ms-appx:///Assets/DemoImages/GettyImages-568537447.jpg",
                         SightId = sight.Id,
                         Sight = sight
@@ -201,7 +201,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
                 {
                     Id = Guid.NewGuid(),
                     FileName = Path.GetFileName(sight.ImagePath),
-                    FileType = 1,
+                    FileType = SightFileType.Image,
                     Uri = sight.ImagePath,
                     SightId = sight.Id,
                     Sight = sight
@@ -266,21 +266,21 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
                         {
                             Id = Guid.NewGuid(),
                             FileName ="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Glencan.JPG/800px-Glencan.JPG",
-                            FileType = 1,
+                            FileType = SightFileType.Image,
                             Uri = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Glencan.JPG/800px-Glencan.JPG",
                         },
                         new SightFile
                         {
                             Id = Guid.NewGuid(),
                             FileName ="http://internetbrothers.org/images/hanging_lake_falls.jpg",
-                            FileType = 1,
+                            FileType = SightFileType.Image,
                             Uri = "http://internetbrothers.org/images/hanging_lake_falls.jpg",
                         },
                         new SightFile
                         {
                             Id = Guid.NewGuid(),
                             FileName ="http://media-cdn.tripadvisor.com/media/photo-o/0a/14/a2/da/20160117-131839-largejpg.jpg",
-                            FileType = 1,
+                            FileType = SightFileType.Image,
                             Uri = "http://media-cdn.tripadvisor.com/media/photo-o/0a/14/a2/da/20160117-131839-largejpg.jpg",
                         },
                     });
@@ -309,7 +309,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
             //        {
             //            Id = Guid.NewGuid(),
             //            FileName = tuple.Item2,
-            //            FileType = 1,
+            //            FileType = SightFileType.Image,
             //            Uri = tuple.Item1,
             //        });
             //    }
