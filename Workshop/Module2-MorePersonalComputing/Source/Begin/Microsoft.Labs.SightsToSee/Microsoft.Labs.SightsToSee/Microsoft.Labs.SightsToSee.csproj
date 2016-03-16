@@ -142,7 +142,6 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="app.config" />
-    <None Include="Microsoft.Labs.SightsToSee_TemporaryKey.pfx" />
     <Content Include="Models\DemoSights.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -320,14 +319,6 @@
     <SDKReference Include="SQLite.UWP.2015, Version=3.11.1">
       <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.WindowsAzure.Mobile.Files">
-      <HintPath>..\libs\Microsoft.WindowsAzure.Mobile.Files.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Mobile.Files.Ext">
-      <HintPath>..\libs\Microsoft.WindowsAzure.Mobile.Files.Ext.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" IgnorableNamespaces="uap uap3 mp">
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
   <Identity Name="Applicious.Build2016UWPCodeLab" Publisher="CN=426AFF0D-09CF-438E-8140-1F79DD469DD6" Version="1.1.0.0" />
   <mp:PhoneIdentity PhoneProductId="0510a906-1df6-46bd-a940-87e62655d218" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
@@ -25,11 +25,6 @@
         <uap:Extension Category="windows.appService" EntryPoint="BackgroundTasks.VoiceCommandService">
           <uap:AppService Name="VoiceCommandService" />
         </uap:Extension>
-          <uap3:Extension Category="windows.appExtensionHost">
-            <uap3:AppExtensionHost>
-              <uap3:Name>SanFranPack.1.0</uap3:Name>
-            </uap3:AppExtensionHost>
-          </uap3:Extension>
       </Extensions>
     </Application>
   </Applications>
