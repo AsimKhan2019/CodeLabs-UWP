@@ -1,37 +1,49 @@
-# Hands-On Lab: More Personal Computing and Shell Integration
-## Instructor Guide
-March 2016
+<a name="HOLTop" ></a>
 
-# Contents
+# More Personal Computing and Shell Integration #
+---
 
-### [Overview](#overview)
+<a name="Overview"></a>
+## Overview ##
 
-### [Part 1: Inking](#part1)
-- [Task 1 – Add the ability for users to enter written notes](#task1)
-- [Task 2 – Add the Redstone Ink control](#task2)
-- [Task 3 – Add OCR Ink to text capability](#task3)
+Windows 10 is the first step to an era of more personal computing. UWP and the Windows 10 platform enables development of apps that interact with users in more human, natural ways, through speech, pen and touch.
 
-### [Part 2: Cortana Integration and Speech Commands](#part2)
-- [Task 4 – Voice commands](#task4)
+In this lab, we will enhance the Sights2See Travel app that was created in Module 1 of this UWP code lab. We will add inking and speech support to allow users to interact with the app in more natural ways. We will add an Interactive Toast which allows the user deeper integration with your app right from the Notification pane.
 
-### [Part 3: Interactive Toast](#part3)
-- [Task 5 – Implement an interactive toast](#task6)
+<a name="Objectives"></a>
+### Objectives ###
 
-### [Summary](#summary)
+In this module, we’re going to get hands-on experience implementing more personal ways for your C# UWP app to interact with the user. You will see how to:
 
-<a name="overview"></a>
-# Overview
-
-__Module 2 – More Personal Computing and Shell Integration (Instructor)__
-
-In this module, we’re going to get hands-on experience implementing more personal ways for your C# UWP app to interact with the user. We will
--	Add inking support
+- Add inking support
 - Provide speech integration through Cortana
 - Build an interactive notification that enables direct user actions.
 
-Let’s get started with Inking.
+<a name="Prerequisites"></a>
+### Prerequisites ###
 
-# Part 1: Inking
+The following is required to complete this module:
+
+- Microsoft Windows 10 Build 14279 or later
+- Microsoft Visual Studio 2015 with Update 2 or later
+
+---
+
+<a name="Exercises" ></a>
+
+## Exercises ##
+
+This module includes the following exercises:
+
+1.	[Inking](#Exercise1)
+1.	[Cortana Integration and Speech Commands](#Exercise2)
+1.	[Implement an interactive toast](#Exercise3)
+
+
+Estimated time to complete this module:  **40 to 50 minutes**
+
+<a name="Exercise1"></a>
+### Exercise 1: Inking ###
 
 We will be implementing the following Inking features:
 - Notes recorded using a simplified OneNote model
@@ -39,12 +51,12 @@ We will be implementing the following Inking features:
 - Ink Toolbar (preview of the RS1 Ink Toolbar for color and pen selection)
 - Optical character recognition
 
-<a name="task1"></a>
-### Task 1 - Add the ability for users to enter written notes
+<a name="Ex1Task1"></a>
+#### Task 1 - Add the ability for users to enter written notes ####
 
 We'll start by adding an InkCanvas that can be used for taking notes.
 
-#### Steps
+##### Steps
 
 1. Open the starter project at __&lt;Lab Root&gt;\Module 2\Begin\__.
 
@@ -86,8 +98,8 @@ We'll start by adding an InkCanvas that can be used for taking notes.
     
     In the next task, we're going to set up an Ink Toolbar to handle pen color, saving, and clearing the Notes Ink Canvas.
 
-<a name="task2"></a>
-### Task 2 – Add the Redstone Ink Toolbar
+<a name="Ex1Task2"></a>
+####  Task 2 – Add the Redstone Ink Toolbar ####
 
 In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any InkCanvas. We're going to use a preview of the toolbar for our Notes InkCanvas. The toolbar is customizable, so we'll also add our custom Save button to it.
 
@@ -120,8 +132,8 @@ __Steps__
     
 1. Build and run the app. Use the Notes InkToolbar to change properties for the Ink canvas, save the Ink, and undo.
 
-<a name="task3"></a>
-### Task 3 - Add OCR Ink to text capability
+<a name="Ex1Task3"></a>
+#### Task 3 - Add OCR Ink to text capability ####
 
 Now that we've added the ability to record notes with Ink, it would be useful to recognize those notes as text. In this task, we're going to add the ability to use Optical Character Recognition to convert Ink notes to text.
 
@@ -173,11 +185,11 @@ __Steps__
 
     When you receive a result from the recognizer, accept the results to return to a Notes TextBox with the new results appended.
 
-<a name="part2"></a>
-#Part 2: Cortana Integration and Speech Commands
+<a name="Exercise2"></a>
+### Exercise 2: Cortana Integration and Speech Commands ###
 
-<a name="task4"></a>
-### Task 4 -  Voice Commands
+<a name="Ex2Task1"></a>
+#### Task 1 -  Voice Commands to launch App in the foreground ####
 
 Voice commands give your users a convenient, hands-free way to interact with your app. We're going to begin by adding a simple voice command that launches the app. Then we'll explore more advanced scenarios with a voice command service that returns results in the Cortana window without launching the app.
 
@@ -233,6 +245,9 @@ Let's get started.
 1. Build and run the app to register the VCD. Close the app.
 
 1. Speak a variation of the launch command. The app should launch and navigate to the main page. 
+
+<a name="Ex2Task2"></a>
+#### Task 2 -  Voice Commands to interact with your App in the background ####
 
 1. Now that we've created a typical launch scenario, let's take a look at more advanced scenarios.
 
@@ -338,12 +353,11 @@ Let's get started.
 
 1. Ask Cortana to show nearby Sights. Cortana will display the closest Sights as content tiles.
 
+<a name="Exercise3"></a>
+### Exercise 3: Interactive Toast Notifications ###
 
-<a name="part3"></a>
-#Part 3: Interactive Toast Notifications
-
-<a name="task5"></a>
-### Task 5 – Implement an interactive toast
+<a name="Ex3Task1"></a>
+#### Task 1 – Implement an interactive toast ####
 
 Toast notifications are a great way to quickly interact with a user outside of an app. In this task, we're going to build and trigger a toast notification for a Sight when it is added to My Sights.
 
