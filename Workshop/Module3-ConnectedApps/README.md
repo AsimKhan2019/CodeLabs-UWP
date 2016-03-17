@@ -123,7 +123,7 @@ You can install and uninstall extension apps while the host app is running, and 
 
     We've provided this helper to manage the loading and unloading of extensions. 
     
-    #### __Initialize()__
+    ##### __Initialize()__ #####
 
     - We're going to call __Initialize__ from __App.xaml.cs__.
      
@@ -133,13 +133,13 @@ You can install and uninstall extension apps while the host app is running, and 
     
     - By default, when you call __Initialize__ on app startup, it will load extensions that have already been installed. The event handlers handle loading and unloading of extensions that are installed or uninstalled after that point.
     
-    #### Scroll down to the __Load__ task. 
+    ##### Scroll down to the __Load__ task. #####
     
-        - If an extension is enabled but not yet loaded, this task will check to make sure it is OK to load.
+    - If an extension is enabled but not yet loaded, this task will check to make sure it is OK to load.
     
-        - It will then create a local copy of the json file from the extension app and load the new Sights into the trip.
+    - It will then create a local copy of the json file from the extension app and load the new Sights into the trip.
     
-    #### Unload
+    ##### Unload #####
     
     - The __Unload__ task first gets the data again from the extension app
     
