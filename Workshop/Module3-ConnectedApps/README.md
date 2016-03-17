@@ -1,60 +1,80 @@
-# Connected Apps: Across Devices and App-to-App
-## Hands-on Lab - Instructor Guide
-March 2016
+<a name="HOLTop" ></a>
 
-# Contents
+# Connected Apps: Across Devices and App-to-App #
+---
 
-### [Overview](#overview)
+<a name="Overview"></a>
+## Overview ##
 
-### [Part 1: Azure App Service Mobile Apps](#part1)
-- [Task 1 – Connect the app to the cloud](#task1)
+Windows 10 Redstone comes with more ways than ever before to create great user experiences across devices and across apps. 
+In this lab, you will learn how to connect your app to the cloud so users can get their data on whichever device they pick up. You will enhance the app to load additional app data through an App Extension. You will use the LaunchUri and LaunchForResults APIs to get directions from BingMaps and to connect to a photo processing apps to add effects to pictures.
 
-### [Part 2: App Extensions](#part2)
-- [Task 2 – Fetch resources from an App Extension](#task2)
+You will add capabilities to the app to share files and content with other apps by adding support for Drag and Drop and the Share contract.
 
-### [Part 3: Launch URI and Launch for Results](#part3)
-- [Task 3 – Launch another app using LaunchUri](#task3)
-- [Task 4 – Connect to another app using LaunchUriForResults](#task4)
+<a name="Objectives"></a>
+### Objectives ###
 
-### [Part 4: Additional Features](#part4)
-- [Task 5 – Add drag and drop support to the app](#task5)
-- [Task 6 – Use the Share contract to share content with other apps](#task6)
+In this module, you will see how to:
 
-### [Summary](#summary)
+- Connect the app to the cloud
+- Fetch resources from an App Extension
+- Launch another app using LaunchUri
+- Connect to another app using LaunchUriForResults
+- Add drag and drop support to the app
+- Use the Share contract to share content with other apps
 
-<a name="overview"></a>
-# Overview
+<a name="Prerequisites"></a>
+### Prerequisites ###
 
-__Module 3 – More Personal Computing and Shell Integration (Instructor)__
+The following is required to complete this module:
 
-Windows 10 Redstone comes with more ways than ever before to create great user experiences across devices and across apps. Get hands-on experience connecting your app to the cloud so users can get their data on whichever device they pick up, connecting your app to other apps using protocol associations, Launch for Results, and the new App Extensions.
+- Microsoft Windows 10 Build 14279 or later
+- Microsoft Visual Studio 2015 Update 2 or later
+- Windows SDK Build 14279 or later
+
+---
+
+<a name="Exercises" ></a>
+
+## Exercises ##
+
+This module includes the following exercises:
+
+1.	[Connect the app to an Azure App Service Mobile Apps cloud backend](#Exercise1)
+1.	[Load resources from App Extensions](#Exercise2)
+1.	[Launch other apps using Launch Uri and Launch for Results](#Exercise3)
+1.  [Share files and content with other apps](#Exercise4)
+
+
+Estimated time to complete this module:  **40 to 50 minutes**
+
 
 Let’s get started with Azure.
 
-<a name="part1"></a>
-# Part 1: Azure App Service Mobile Apps
+<a name="Exercise1"></a>
+### Exercise 1: Azure App Service Mobile Apps ###
 
-<a name="task1"></a>
-### Task 1 - Connect the app to the cloud
+<a name="Ex1Task1"></a>
+#### Task 1 - Connect the app to the cloud ####
 
 Introduction
 
-#### Steps
+##### Steps #####
 
-1. Step
+1. tbd
 
 
-<a name="part2"></a>
-#Part 2: App Extensions
+<a name="Exercise2"></a>
+### Exercise 2: App Extensions ###
 
-<a name="task2"></a>
-### Task 2 – Fetch resources from an App Extension
+<a name="Ex2Task1"></a>
+#### Task 1 – Fetch resources from an App Extension ####
 
 App Extensions allow you to add data to your application from other UWP Store apps. An extension app exposes its extension in the app manifest and indicates the available data. The host app indicates in its manifest that it is looking to consume that type of data.
 
 You can install and uninstall extension apps while the host app is running, and it will raise appropriate events to add and remove data as required without relaunching.
 
-#### Steps
+##### Steps #####
 
 1.	For this module, we've added a project called __AdditionalSights__ to the solution. The AdditionalSights app is an extension app that provides six more Sights in a __json__ file. 
 
@@ -165,8 +185,8 @@ You can install and uninstall extension apps while the host app is running, and 
 
 1. Return to the San Francisco trip. Any additional Sights that weren't added to My Sights will have been removed.
 
-<a name="part3"></a>
-#Part 3: Launch URI and Launch for Results
+<a name="Exercise3"></a>
+### Exercise 3: Launch URI and Launch for Results ###
 
 Inter-app communication can be used to
 
@@ -182,8 +202,8 @@ Your system has default programs set to open certain URI protocols. You can also
 
 We're going launch the Maps app and use it to get directions to a Sight. Then we'll use a custom URI protocol and package family name to launch a specific app, pass in a photo, and return the processed photo to one of our Sights.
 
-<a name="task3"></a>
-### Task 3 - Launch another app using LaunchUri
+<a name="Ex3Task1"></a>
+#### Task 1 - Launch another app using LaunchUri ####
 
 Let's start with a simple LaunchUri scenario.
 
@@ -215,8 +235,8 @@ __Steps__
     
 1. Build and run your app. Open a Sight detail page and use the directions button on the app bar to launch the Maps app.
 
-<a name="task4"></a>
-### Task 4 -  Connect to another app using LaunchUriForResults
+<a name="Ex3Task2"></a>
+#### Task 2 -  Connect to another app using LaunchUriForResults ####
 
 Beyond launching a target app and passing it data, we can launch an app and receive results back. 
 
@@ -224,7 +244,7 @@ Beyond launching a target app and passing it data, we can launch an app and rece
 
 - The photoprocessing app will apply a Lumia filter to the image and return the altered version to our SightsToSee app.
 
-#### Steps
+##### Steps #####
 
 1. Before we can launch the photoprocessing app, we need to install it on the system.
 
@@ -277,11 +297,11 @@ Beyond launching a target app and passing it data, we can launch an app and rece
     You will see the modified image appear in the Sight gallery.
 
 
-<a name="part4"></a>
-#Part 4: Additional Features
+<a name="Exercise4"></a>
+### Exercise 4: Additional Sharing Features ###
 
-<a name="task5"></a>
-### Task 5 – Add drag and drop suppport to the app
+<a name="Ex4Task1"></a>
+#### Task 1 – Add drag and drop suppport to the app ####
 
 Adding drag and drop is a quick way to make your app more user-friendly. We're going to add drag and drop capability to the gallery grid in the SightDetailControl so users can easily add new photos to a Sight.
 
@@ -325,8 +345,8 @@ Adding drag and drop is a quick way to make your app more user-friendly. We're g
     
     >__Note:__ You can drag and drop multiple images at once.
 
-<a name="task6"></a>
-### Task 6 – Use the Share contract to share content with other apps
+<a name="Ex4Task2"></a>
+#### Task 2 – Use the Share contract to share content with other apps ####
 
 The Share contract is an easy way to share data between apps. You can share links, text, photos, and videos. We're going to add a Share button to the Sight detail app bar to share the sight name, photo, and description in HTML format.
 
@@ -369,9 +389,9 @@ The Share contract is an easy way to share data between apps. You can share link
 1. Build and run the app. Open a Sight detail view and use the Share button to initiate the Share process.
 
 
-<a name="summary"></a>
-#Summary
+<a name="Summary"></a>
+## Summary ##
 
-In this lab, we learned how to interact with users in a personal way. We connected the app to the cloud and loaded additional app data through an App Extension. We also added LaunchUri and LaunchForResults scenarios to get directions from BingMaps and process photos that we added to the Sights.
+In this lab, we connected the app to the cloud and loaded additional app data through an App Extension. We also added LaunchUri and LaunchForResults scenarios to get directions from BingMaps and process photos that we added to the Sights.
 
 Finally, we enhanced the user experience by adding Drag and Drop and the Share contract.
