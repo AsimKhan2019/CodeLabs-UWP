@@ -107,7 +107,7 @@ In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any In
     
 1. Scroll down to the `#region NotesInkToolbar` and expand the **M2_SaveUndo** snippet in the region.
 
-1. Locate and review the **The NotesSaveButton_Click** method which sets the **NotesAreInk** property on the Sight to true and saves the ink strokes in a storage file.
+1. Locate and review the **NotesSaveButton_Click** method which sets the **NotesAreInk** property on the Sight to true and saves the ink strokes in a storage file.
     
 1. Locate and review the **NotesUndoButton_Click** method  which clears all strokes, sets **NotesAreInk** and **IsNotesInking** to false, and returns to the text input method for Notes.
     
@@ -170,19 +170,19 @@ Now that we've added the ability to record notes with Ink, it would be useful to
 
 Voice commands give your users a convenient, hands-free way to interact with your app. We're going to begin by adding a simple voice command that launches the app. Then we'll explore more advanced scenarios with a voice command service that returns results in the Cortana window without launching the app.
 
-1. You'll notice that there is a new **BackgroundTasks** project in the solution. We'll be using that later on for the VoiceCommandService, but for now we'll be working in the **SightsToSee** project.
+1. You'll notice that there is a new **BackgroundTasks** project in the solution. We'll be using that later on for the **VoiceCommandService**, but for now we'll be working in the **SightsToSee** project.
 
-1. Create a new XML file in the main directory of the SightsToSee project and give it the name **VoiceCommands.xml**. This file is the voice command definition file that will define the voice command schema. We're going to create a simple schema with a voice command that launches the app.
+1. Create a new XML file in the main directory of the **SightsToSee** project and give it the name **VoiceCommands.xml**. This file is the voice command definition file that will define the voice command schema. We're going to create a simple schema with a voice command that launches the app.
 
 1. Expand the **M2_LaunchCommand** snippet below the XML namespace declaration. This code creates a voice command set for en-us.
     
-    > **Note:** We have added en-us as the language for this example, but you can add additional command sets within the same VCD. For instance, the language tag for Germany would be xml:lang="de-de". The list of regions and languages that Cortana supports is at http://windows.microsoft.com/en-us/windows-10/cortanas-regions-and-languages.
+    > **Note:** We have added en-us as the language for this example, but you can add additional command sets within the same VCD. For instance, the language tag for Germany would be `xml:lang="de-de"`. The list of regions and languages that Cortana supports is at http://windows.microsoft.com/en-us/windows-10/cortanas-regions-and-languages.
     
     > If you choose to add another command set in a supported language, make sure to add an equivalent command in that language every time you add one to the en-us command set throughout this demo.
     
     We've given the command set the prefix "Sights To See." This prefix tells Cortana to listen for commands related to the app.
     
-    The explicitly specifed `<AppName>`
+    The explicitly specified `<AppName>`
     
     - Acts as a command prefix
     
@@ -204,16 +204,9 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
     > **Note:** You will need to launch the app once normally to register the VCD each time you make changes to it.
 
-1. Expand the **M2_VoiceActivation** snippet below the `// Insert the M2_VoiceActivation snippet here` comment in the OnActivated() method. 
-    
-    What it does:
-    - Creates a switch based on ActivationKind.VoiceCommand
+1. Expand the **M2_VoiceActivation** snippet below the `// Insert the M2_VoiceActivation snippet here` comment in the **OnActivated()** method. This creates a switch based on **ActivationKind.VoiceCommand**.
 
-1. Expand the **M2_HandleVoiceCommand** snippet anywhere in App.xaml.cs. 
-
-    What it does:
-    - Creates a switch based on the voice command as it is understood by Cortana
-    - Writes the recognized command and the spoken text to the console
+1. Expand the **M2_HandleVoiceCommand** snippet anywhere in **App.xaml.cs**. This snippet creates a switch based on the voice command as it is understood by Cortana. Additionally, it writes the recognized command and the spoken text to the console.
 
 1. Build and run the app to register the VCD. Close the app.
 
@@ -228,11 +221,11 @@ Voice commands give your users a convenient, hands-free way to interact with you
     
     - The project is a Windows Runtime Component
     
-    - It contains a class called VoiceCommandService, which serves as the entry point to the background task
+    - It contains a class called **VoiceCommandService**, which serves as the entry point to the background task
     
-    - The VoiceCommandService is registered in the app manifest as an app service.
+    - The **VoiceCommandService** is registered in the app manifest as an app service.
 
-1. Let's take a look at the app service declaration. Open the **Package.appxmanifest**. On the **Declarations** tab, the VoiceCommandService is declared as an app service with the entrypoint **BackgroundTasks.VoiceCommandService**.
+1. Let's take a look at the app service declaration. Open the **Package.appxmanifest**. On the **Declarations** tab, the **VoiceCommandService** is declared as an app service with the entrypoint **BackgroundTasks.VoiceCommandService**.
 
    The **BackgroundTasks** project has also been added as a reference in the **SightsToSee** project.
    
@@ -250,11 +243,11 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
 1. Open **App.xaml.cs** and expand the **M2_NearbyCase** snippet in the **voiceCommandName** switch under the **LaunchApp** case.
 
-    Now we are ready to handle the incoming voice command in the VoiceCommandService.
+    Now we are ready to handle the incoming voice command in the **VoiceCommandService**.
 
 1. Open **Background Tasks > VoiceCommandService.cs**.
 
-    - We've set up the VoiceCommandService to implement the IBackgroundTask interface and handle task cancellation.
+    - We've set up the **VoiceCommandService** to implement the **IBackgroundTask** interface and handle task cancellation.
     
     - The deferral in the background task ensures that the task will run uninterrupted to completion.
     
@@ -264,7 +257,7 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
     We'll be adding code that relies on these dependencies.
 
-1. Expand the **M2_ServiceConnection** snippet as the first item in the VoiceCommandService class.
+1. Expand the **M2_ServiceConnection** snippet as the first item in the VoiceCommandService class.VoiceCommandService
 
     > **Note:** The voice service connection is maintained for the lifetime of a Cortana session.
 
@@ -280,13 +273,13 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
 1. Our voice service connection is set up and we are handling completion and cancellation. Now we can handle the particular case of the NearbySights command.
 
-    We've added a SightsHelper to the Services directory in the SightsToSee.Library project to assist with locating nearby sights. Let's take a look at the helper.
+    We've added a **SightsHelper** to the **Services** directory in the **SightsToSee.Library** project to assist with locating nearby sights. Let's take a look at the helper.
     
     What this helper does:
     
     - Finds the shortest route from the current location to a sight based on walking distance or driving distance
     
-    - Privides tasks that iterate through the Sights in the trip to find the closest Sight or Sights
+    - Provides tasks that iterate through the Sights in the trip to find the closest Sight or Sights
 
 1. Expand the **M2_GetNearest** snippet after the **Run()** method.
 
@@ -332,15 +325,11 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
 Toast notifications are a great way to quickly interact with a user outside of an app. In this task, we're going to build and trigger a toast notification for a Sight when it is added to My Sights.
 
-1.	Open **SightDetailControl.xaml** and expand the **M2_DatePicker** snippet after the **Caption** TextBlock.
-
-    This snippet includes a **CalendarDatePicker** and **TimePicker**.
+1.	Open **SightDetailControl.xaml** and expand the **M2_DatePicker** snippet after the **Caption** TextBlock. This snippet includes a **CalendarDatePicker** and **TimePicker**.
   
     We've created variables in the ViewModel for **CurrentSightTime** and **CurrentSightDate** that return the visit date and time stored for the sight. If the date is null, it will return **DateTime.Now**.
     
-1. In the **Services > TileNotificationsService** folder, open **ScheduledNotificationService.cs**.
-
-    We've provided this class to help build the notification.
+1. In the **Services > TileNotificationsService** folder, open **ScheduledNotificationService.cs**. We've provided this class to help build the notification.
 
     What it does:
 
@@ -354,30 +343,23 @@ Toast notifications are a great way to quickly interact with a user outside of a
     
     > **Note:** The toast is set to always display 30 seconds from the time it is triggered to make it easy to test.
     
-1. Open the **SightDetailPageViewModel**. In the **AddSightAsync()** method, expand the **M2_ScheduleToast** snippet as the first item in the method.
-
-    What it does:
+1. Open the **SightDetailPageViewModel**. In the **AddSightAsync()** method, expand the **M2_ScheduleToast** snippet as the first item in the method. This snippet calls the **ScheduledNotificationService** to create and send a toast notification and it passes it the current Sight.
     
-    - Calls the **ScheduledNotificationService** to create and send a toast notification
-    - Passes it the current Sight
-    
-1. When the toast arrives, it would be useful if the user could go straight into the Sight Details from the toast.
+1. When the toast arrives, it would be useOnActivatedful if the user could go straight into the Sight Details from the toast.
 
-    Open **App.xaml.cs**. Expand the **M2_ToastActivation** snippet as a case in the `switch (args.Kind)` in the **OnActivated()** override.
+1. Open **App.xaml.cs**. Expand the **M2_ToastActivation** snippet as a case in the `switch (args.Kind)` in the **OnActivated()** override.
 
 1. Build and run your app. Open the Sight details for a sight that has not been added to My Sights. 
 
-1. Use the + button in the app bar to add the sight to your sights. 
-
-    This action will trigger the ScheduleNotificationService to send a toast notification. The notification will appear in 30 seconds with the Sight details.
+1. Use the **+** button in the app bar to add the sight to your sights. This action will trigger the **ScheduleNotificationService** to send a toast notification. The notification will appear in 30 seconds with the Sight details.
     
-    Click the toast to launch the app.
+1. Click the toast to launch the app.
 
 
 <a name="Summary"></a>
 ## Summary ##
 
-By completing this module you should have:
+By completing this module, you should have:
 
 - Added inking support
 - Provided speech integration through Cortana
