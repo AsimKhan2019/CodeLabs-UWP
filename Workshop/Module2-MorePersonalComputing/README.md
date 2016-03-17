@@ -1,4 +1,4 @@
-<a name="HOLTop" ></a>
+﻿<a name="HOLTop" ></a>
 
 # More Personal Computing and Shell Integration #
 ---
@@ -25,7 +25,9 @@ In this module, we’re going to get hands-on experience implementing more perso
 The following is required to complete this module:
 
 - Microsoft Windows 10 Build 14279 or later
-- Microsoft Visual Studio 2015 with Update 2 or later
+- [Microsoft Visual Studio 2015 with Update 2 or later][1]
+
+[1]: https://www.visualstudio.com/products/visual-studio-community-vs
 
 ---
 
@@ -56,79 +58,64 @@ We will be implementing the following Inking features:
 
 We'll start by adding an InkCanvas that can be used for taking notes.
 
-##### Steps
+1. Open the starter project at **&lt;Lab Root&gt;\Module 2\Begin\**.
 
-1. Open the starter project at __&lt;Lab Root&gt;\Module 2\Begin\__.
-
-1.	Run the project
-
-    -	Run the starter project on the __Local Machine__.
-
-    -	Exit the application.
+1. Run the starter project on the **Local Machine** and then exit the application.
     
-    >__Note:__ You may notice there is a new prompt for location as well as a BackgroundTasks project in the Solution. We'll be using these features later in the Module.
+	> **Note:** You may notice there is a new prompt for location as well as a BackgroundTasks project in the Solution. We'll be using these features later in the Module.
     
 1.	We're going to enable Inking as an alternative to typing notes in the Sight Detail view.
 
-   To that end, we've already added the boolean property __NotesAreInk__ to the __Sight__ model in the starter code to keep track of whether the user saved  the Notes field as text or Ink.
+	To that end, we've already added the boolean property **NotesAreInk** to the **Sight** model in the starter code to keep track of whether the user saved  the Notes field as text or Ink.
    
-   We've also added an __IsNotesInking__ boolean to the ViewModel to determine if we should display the notes entry field as text or Ink.
+	We've also added an **IsNotesInking** boolean to the ViewModel to determine if we should display the notes entry field as text or Ink.
    
-   Let's get started by added a simple InkCanvas to the Notes field.
+	Let's get started by added a simple InkCanvas to the Notes field.
 
-1. Open __SightsDetailControl.xaml__.
+1. Open **SightsDetailControl.xaml**.
    
-1. Expand the __M2_EnableInkButton__ snippet below the __Notes__ title TextBlock. The button will go in the second column of the grid.
+1. Expand the **M2_EnableInkButton** snippet below the **Notes** title TextBlock. The button will go in the second column of the grid.
 
-    >__Note:__ The visibility of this button is tied to the __NotesAreInking__ boolean through a __BooleanToVisibility__ converter.
+	> **Note:** The visibility of this button is tied to the **NotesAreInking** boolean through a **BooleanToVisibility** converter.
 
-1. Expand the __M2_EnableInk__ snippet in the __SightsDetailPageViewModel__. This method will set the __IsNotesInking__ bool to true. We're going to use this property to handle visibility for the Ink and Text elements.
+1. Expand the **M2_EnableInk** snippet in the **SightsDetailPageViewModel**. This method will set the **IsNotesInking** bool to true. We're going to use this property to handle visibility for the Ink and Text elements.
 
-1. Return to __SightsDetailControl.xaml__. Expand the __M2_NotesInkCanvas__ snippet below the Notes TextBox.
+1. Return to **SightsDetailControl.xaml**. Expand the **M2_NotesInkCanvas** snippet below the Notes TextBox.
 
-    >__Note:__ The InkCanvas is contained in a Grid with a white background, because the InkCanvas on its own would display with a transparent background.
+	> **Note:** The InkCanvas is contained in a Grid with a white background, because the InkCanvas on its own would display with a transparent background.
     
-1. In the SightsDetailControl code-behind, expand the __M2_NotesInputs__ snippet after ```InitializeComponent()``` in the constructor.
+1. In the **SightsDetailControl** code-behind, expand the **M2_NotesInputs** snippet after `InitializeComponent()` in the constructor.
 
 1. Build and run your app. 
 
-    - Open the SightDetailControl for a Sight and use the EnableInkButton to change the Notes field to an InkCanvas. 
+1. Open the **SightDetailControl** for a Sight and use the **EnableInkButton** to change the Notes field to an InkCanvas. 
 
-    - The default pen for the InkCanvas is a simple black line. Right now, we are also not saving the Ink. 
-    
-    In the next task, we're going to set up an Ink Toolbar to handle pen color, saving, and clearing the Notes Ink Canvas.
+	The default pen for the InkCanvas is a simple black line. Right now, we are also not saving the Ink. In the next task, we're going to set up an Ink Toolbar to handle pen color, saving, and clearing the Notes Ink Canvas.
 
 <a name="Ex1Task2"></a>
 ####  Task 2 – Add the Redstone Ink Toolbar ####
 
 In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any InkCanvas. We're going to use a preview of the toolbar for our Notes InkCanvas. The toolbar is customizable, so we'll also add our custom Save button to it.
 
-__Steps__
-
-1. Notice that the ```xmlns:c="using:InkToolbarPreview"``` namespace has been added to the top-level UserControl in __SightDetailControl.xaml__. We've added an InkToolbar example for image annotation, and it is also using this namespace.
-
-    We've also added the ```using InkToolbarPreview``` namespace to the SightsDetailControl code-behind.
+1. Notice that the `xmlns:c="using:InkToolbarPreview"` namespace has been added to the top-level **UserControl** in **SightDetailControl.xaml**. We've added an **InkToolbar** example for image annotation, and it is also using this namespace. We've also added the `using InkToolbarPreview` namespace to the **SightsDetailControl** code-behind.
     
-1. Expand the __M2_InkToolbar__ snippet after the EnableInkButton in SightDetailControl.xaml.
+1. Expand the **M2_InkToolbar** snippet after the EnableInkButton in **SightDetailControl.xaml**.
 
-    >__Notes:__ One of the buttons on the Toolbar is commented out. We'll enable it in the next task. For now, you can ignore it.
+    > **Notes:** One of the buttons on the Toolbar is commented out. We'll enable it in the next task. For now, you can ignore it.
 
+1. Open the **SightDetailControl** code-behind.
+    
+1. Scroll down to the `#region NotesInkToolbar` and expand the **M2_SaveUndo** snippet in the region.
 
-1. Open the __SightDetailControl__ code-behind.
+1. Locate and review the **The NotesSaveButton_Click** method which sets the **NotesAreInk** property on the Sight to true and saves the ink strokes in a storage file.
     
-1. Scroll down to the ```#region NotesInkToolbar```. Expand the __M2_SaveUndo__ snippet in the region.
-
-    - __The NotesSaveButton_Click__ method sets the __NotesAreInk__ property on the Sight to true and saves the ink strokes in a storage file.
+1. Locate and review the **NotesUndoButton_Click** method  which clears all strokes, sets **NotesAreInk** and **IsNotesInking** to false, and returns to the text input method for Notes.
     
-    - The __NotesUndoButton_Click__ method clears all strokes, sets __NotesAreInk__ and __IsNotesInking__ to false, and returns to the text input method for Notes.
+    > **Note:** The **EraserClearAll()** method already exists for the image annotation InkToolbar, so we are reusing it for the Notes Ink Toolbar clear method as well.
     
-    >__Note:__ The __EraserClearAll()__ method already exists for the image annotation InkToolbar, so we are reusing it for the Notes Ink Toolbar clear method as well.
+    > There is also a style already defined for the image annotation InkToolbar, which makes Red, Green, and Blue ink available. The style is defined in **SightDetailControl.xaml**.
     
-    There is also a style already defined for the image annotation InkToolbar, which makes Red, Green, and Blue ink available. The style is defined in __SightDetailControl.xaml__.
-    
-1. Expand the __M2_SetupNotes__ snippet inside the __SetupNotesInkAsync__ task in the code-behind.
-
-    This method restores Ink that has been saved to the Sight.
+1. Expand the **M2_SetupNotes** snippet inside the **SetupNotesInkAsync** task in the code-behind. This method restores Ink that has been saved to the Sight.
     
 1. Build and run the app. Use the Notes InkToolbar to change properties for the Ink canvas, save the Ink, and undo.
 
@@ -137,43 +124,33 @@ __Steps__
 
 Now that we've added the ability to record notes with Ink, it would be useful to recognize those notes as text. In this task, we're going to add the ability to use Optical Character Recognition to convert Ink notes to text.
 
-__Steps__
+1. Uncomment the remaining **InkToolbarCustomToggleButton** on the Notes InkToolbar in **SightDetailControl.xaml**. This button will pop open a dialog where the user can complete the speech recognition process.
 
-1. Uncomment the remaining __InkToolbarCustomToggleButton__ on the Notes InkToolbar in __SightDetailControl.xaml__.
-
-    This button will pop open a dialog where the user can complete the speech recognition process.
-    
-    Next, let's create the dialog.
-
-1. Expand the __M2_OcrDialog__ snippet at the bottom of the main Grid in the SightsDetailControl XAML.
+1. Next, let's create the dialog. Expand the **M2_OcrDialog** snippet at the bottom of the main Grid in the **SightsDetailControl** XAML.
 
     This dialog lets the user choose a speech recognizer from those installed on the machine and use it to parse the Ink to text.
     
     If the result is acceptable, the user can select the primary key on the dialog to finalize the conversion. If not acceptable, the user can cancel and return to the InkCanvas.
     
-1. Open the SightDetailControl code-behind.
+1. Open the **SightDetailControl** code-behind and expand the **M2_Recognizers** snippet above the constructor.
     
-    Expand the __M2_Recognizers__ snippet above the constructor.
+1. In the constructor, find the `#region SetupRecognizers` and expand the **M2_SetupRecognizers** snippet inside of it. This code gets the list of all available recognizers on the device.
     
-1. In the constructor, find the ```#region SetupRecognizers``` and expand the __M2_SetupRecognizers__ snippet inside of it.
+1. Scroll down to the `#region OCR`. Expand the **M2_RecognizerMethods** snippet inside the region.
 
-    This code gets the list of all available recognizers on the device.
-    
-1. Scroll down to the ```#region OCR```. Expand the __M2_RecognizerMethods__ snippet inside the region.
+1. Then expand the **M2_RecognizerChanged** snippet inside the **OnRecognizerChanged** method.
 
-1. Then expand the __M2_RecognizerChanged__ snippet inside the __OnRecognizerChanged__ method.
+    - The **TryOCR** method opens the **OCRDialog** when the user selects the button from the Notes InkToolbar. It awaits the result from the dialog: will the user accept the recognized text or cancel?
 
-    - The __TryOCR__ method opens the __OCRDialog__ when the user selects the button from the Notes InkToolbar. It awaits the result from the dialog: will the user accept the recognized text or cancel?
+    - The **OnRecognizerChanged** method clears the Status TextBlock in the OCRDialog and calls the SetRecognizerByName method.
+    
+    - The **SetRecognizerByNameMethod** sets the default recognizer to the user's selection if it exists on the device.
+    
+1. Expand the **M2_OnRecognize** snippet inside the **OnRecognizeAsync** method.
 
-    - The __OnRecognizerChanged__ method clears the Status TextBlock in the OCRDialog and calls the SetRecognizerByName method.
+    - The **OnRecognizeAsync** method sends the ink strokes (if any) to the ink recognizer container and awaits the results of **RecognizeAsync**.
     
-    - The __SetRecognizerByNameMethod__ sets the default recognizer to the user's selection if it exists on the device.
-    
-1. Expand the __M2_OnRecognize__ snippet inside the __OnRecognizeAsync__ method.
-
-    - The __OnRecognizeAsync__ method sends the ink strokes (if any) to the ink recognizer container and awaits the results of __RecognizeAsync__.
-    
-    - If results are returned, they are built into a string and displayed in the __Status__ TextBlock in the OCR Dialog.
+    - If results are returned, they are built into a string and displayed in the **Status** TextBlock in the OCR Dialog.
     
     - Results also enable the Primary dialog button, which allows the user to accept the conversion.
     
@@ -183,7 +160,7 @@ __Steps__
     
 1. Build and run the app. Write text on the Notes InkCanvas, and try converting it with the recognizer.
 
-    When you receive a result from the recognizer, accept the results to return to a Notes TextBox with the new results appended.
+1. When you receive a result from the recognizer, accept the results to return to a Notes TextBox with the new results appended.
 
 <a name="Exercise2"></a>
 ### Exercise 2: Cortana Integration and Speech Commands ###
@@ -193,23 +170,19 @@ __Steps__
 
 Voice commands give your users a convenient, hands-free way to interact with your app. We're going to begin by adding a simple voice command that launches the app. Then we'll explore more advanced scenarios with a voice command service that returns results in the Cortana window without launching the app.
 
-Let's get started.
+1. You'll notice that there is a new **BackgroundTasks** project in the solution. We'll be using that later on for the VoiceCommandService, but for now we'll be working in the **SightsToSee** project.
 
-1. You'll notice that there is a new __BackgroundTasks__ project in the solution. We'll be using that later on for the VoiceCommandService, but for now we'll be working in the __SightsToSee__ project.
+1. Create a new XML file in the main directory of the SightsToSee project and give it the name **VoiceCommands.xml**. This file is the voice command definition file that will define the voice command schema. We're going to create a simple schema with a voice command that launches the app.
 
-1. Create a new XML file in the main directory of the SightsToSee project and give it the name __VoiceCommands.xml__. This file is the voice command definition file that will define the voice command schema. We're going to create a simple schema with a voice command that launches the app.
-
-1. Expand the __M2_LaunchCommand__ snippet below the XML namespace declaration.
-
-    This code creates a voice command set for en-us.
+1. Expand the **M2_LaunchCommand** snippet below the XML namespace declaration. This code creates a voice command set for en-us.
     
-    >__Note:__ We have added en-us as the language for this example, but you can add additional command sets within the same VCD. For instance, the language tag for Germany would be xml:lang="de-de". The list of regions and languages that Cortana supports is at http://windows.microsoft.com/en-us/windows-10/cortanas-regions-and-languages.
+    > **Note:** We have added en-us as the language for this example, but you can add additional command sets within the same VCD. For instance, the language tag for Germany would be xml:lang="de-de". The list of regions and languages that Cortana supports is at http://windows.microsoft.com/en-us/windows-10/cortanas-regions-and-languages.
     
-    >If you choose to add another command set in a supported language, make sure to add an equivalent command in that language every time you add one to the en-us command set throughout this demo.
+    > If you choose to add another command set in a supported language, make sure to add an equivalent command in that language every time you add one to the en-us command set throughout this demo.
     
     We've given the command set the prefix "Sights To See." This prefix tells Cortana to listen for commands related to the app.
     
-    The explicitly specifed ```<AppName>```
+    The explicitly specifed `<AppName>`
     
     - Acts as a command prefix
     
@@ -223,20 +196,20 @@ Let's get started.
     
     - The curly {} brackets act as a placeholder for a phrase list. Any item in the phrase list can be used in the command.
     
-    - The ```RequireAppName="BeforeOrAfterPhrase"``` attribute means the app name can be spoken at the beginning or end of the command.
+    - The `RequireAppName="BeforeOrAfterPhrase"` attribute means the app name can be spoken at the beginning or end of the command.
  
-    >__Note:__ The Navigate element signifies that the app will launch in the foreground. The alternative to launching in the foreground is to define a WinRT component to handle behind-the-scenes interactions with app data through Cortana. You can learn more about Voice Command Definitions at https://msdn.microsoft.com/en-us/library/windows/apps/dn722331.aspx
+    > **Note:** The Navigate element signifies that the app will launch in the foreground. The alternative to launching in the foreground is to define a WinRT component to handle behind-the-scenes interactions with app data through Cortana. You can learn more about Voice Command Definitions at https://msdn.microsoft.com/en-us/library/windows/apps/dn722331.aspx
 
-1. Open __App.xaml.cs__. We are going to register the VCD file. Expand the __M2_LoadVCD__ snippet below the ```// Insert the M2_LoadVCD snippet here``` comment in the __OnLaunched()__ method.
+1. Open **App.xaml.cs**. We are going to register the VCD file. Expand the **M2_LoadVCD** snippet below the `// Insert the M2_LoadVCD snippet here` comment in the **OnLaunched()** method.
 
-    >__Note:__ You will need to launch the app once normally to register the VCD each time you make changes to it.
+    > **Note:** You will need to launch the app once normally to register the VCD each time you make changes to it.
 
-1. Expand the __M2_VoiceActivation__ snippet below the ```// Insert the M2_VoiceActivation snippet here``` comment in the OnActivated() method. 
+1. Expand the **M2_VoiceActivation** snippet below the `// Insert the M2_VoiceActivation snippet here` comment in the OnActivated() method. 
     
     What it does:
     - Creates a switch based on ActivationKind.VoiceCommand
 
-1. Expand the __M2_HandleVoiceCommand__ snippet anywhere in App.xaml.cs. 
+1. Expand the **M2_HandleVoiceCommand** snippet anywhere in App.xaml.cs. 
 
     What it does:
     - Creates a switch based on the voice command as it is understood by Cortana
@@ -251,61 +224,59 @@ Let's get started.
 
 1. Now that we've created a typical launch scenario, let's take a look at more advanced scenarios.
 
-    We've added a BackgroundTasks project to the starting code.
+    We've added a **BackgroundTasks** project to the starting code.
     
     - The project is a Windows Runtime Component
     
     - It contains a class called VoiceCommandService, which serves as the entry point to the background task
     
     - The VoiceCommandService is registered in the app manifest as an app service.
-    
-    Let's take a look at the app service declaration.
-    
-1. Open the __Package.appxmanifest__. On the __Declarations__ tab, the VoiceCommandService is declared as an app service with the entrypoint __BackgroundTasks.VoiceCommandService__.
 
-   The BackgroundTasks project has also been added as a reference in the SightsToSee project.
+1. Let's take a look at the app service declaration. Open the **Package.appxmanifest**. On the **Declarations** tab, the VoiceCommandService is declared as an app service with the entrypoint **BackgroundTasks.VoiceCommandService**.
+
+   The **BackgroundTasks** project has also been added as a reference in the **SightsToSee** project.
    
-   The __SightsToSee.Library__ project is referenced in the BackgroundTasks project.
+   The **SightsToSee.Library** project is referenced in the BackgroundTasks project.
 
 1. We're going to add a second voice command to the VCD. This command will be handled by the service.
 
-    Open __VoiceCommands.xml__. Expand the __M2_NearbyCommand__ snippet below the __LaunchApp__ command.
+    Open **VoiceCommands.xml**. Expand the **M2_NearbyCommand** snippet below the **LaunchApp** command.
     
-    This command uses phrase lists and several ```<ListenFor>``` nodes to provide a variety of options for the user to access the command.
+    This command uses phrase lists and several `<ListenFor>` nodes to provide a variety of options for the user to access the command.
     
-    The ```RequireAppName="ExplicitlySpecified"``` attribute allows you to place the app name within the voice command instead of at the beginning or end.
+    The `RequireAppName="ExplicitlySpecified"` attribute allows you to place the app name within the voice command instead of at the beginning or end.
     
-    >__Note:__ The app name is defined in the ```<AppName>``` tag at the top of the VCD file. The app name is required for the __RequireAppName__ attribute to work. Reference the placement of the app name within the command using ```{builtin:AppName}```.
+    > **Note:** The app name is defined in the `<AppName>` tag at the top of the VCD file. The app name is required for the **RequireAppName** attribute to work. Reference the placement of the app name within the command using `{builtin:AppName}`.
 
-1. Open __App.xaml.cs__ and expand the __M2_NearbyCase__ snippet in the __voiceCommandName__ switch under the __LaunchApp__ case.
+1. Open **App.xaml.cs** and expand the **M2_NearbyCase** snippet in the **voiceCommandName** switch under the **LaunchApp** case.
 
     Now we are ready to handle the incoming voice command in the VoiceCommandService.
 
-1. Open __Background Tasks > VoiceCommandService.cs__.
+1. Open **Background Tasks > VoiceCommandService.cs**.
 
     - We've set up the VoiceCommandService to implement the IBackgroundTask interface and handle task cancellation.
     
     - The deferral in the background task ensures that the task will run uninterrupted to completion.
     
-    - The __Run()__ method is the entry point to the task.
+    - The **Run()** method is the entry point to the task.
     
-1. Expand the __M2_Using__ snippet below the existing using statements.
+1. Expand the **M2_Using** snippet below the existing using statements.
 
     We'll be adding code that relies on these dependencies.
 
-1. Expand the __M2_ServiceConnection__ snippet as the first item in the VoiceCommandService class.
+1. Expand the **M2_ServiceConnection** snippet as the first item in the VoiceCommandService class.
 
-    >__Note:__ The voice service connection is maintained for the lifetime of a Cortana session.
+    > **Note:** The voice service connection is maintained for the lifetime of a Cortana session.
 
-1. Make the __Run()__ method __async__.
+1. Make the **Run()** method **async**.
 
-1. Expand the __M2_TriggerDetails__ snippet inside the __Run()__ method. 
+1. Expand the **M2_TriggerDetails** snippet inside the **Run()** method. 
 
     - We are checking the trigger details to see if the name matches the name of the App Service registration from the app manifest. If so, we implement a try-catch block.
     
-    >__Note:__ The subscription to the __VoiceCommandCompleted__ event is in this code block, because it must take place after the __voiceServiceConnection__ is set.
+    > **Note:** The subscription to the **VoiceCommandCompleted** event is in this code block, because it must take place after the **voiceServiceConnection** is set.
     
-1. Expand the __M2_CommandCompleted__ snippet above the __OnTaskCanceled__ method.
+1. Expand the **M2_CommandCompleted** snippet above the **OnTaskCanceled** method.
 
 1. Our voice service connection is set up and we are handling completion and cancellation. Now we can handle the particular case of the NearbySights command.
 
@@ -317,29 +288,29 @@ Let's get started.
     
     - Privides tasks that iterate through the Sights in the trip to find the closest Sight or Sights
 
-1. Expand the __M2_GetNearest__ snippet after the __Run()__ method.
+1. Expand the **M2_GetNearest** snippet after the **Run()** method.
 
-    - The __GetNearestSights__ task loads the default trip and passes it to the SightsHelper to find the closest Sights
+    - The **GetNearestSights** task loads the default trip and passes it to the SightsHelper to find the closest Sights
     
-    - __ReportFailureToGetCurrentLocation()__ task returns a message to the user when the user hasn't granted location permissions to the app
+    - **ReportFailureToGetCurrentLocation()** task returns a message to the user when the user hasn't granted location permissions to the app
     
-    >__Note:__ In the starter project, location is enabled in the app manifest and we ask the user on startup to confirm location access for the app. We'll use the result from that user dialog to determine if we have location access.
+    >**Note:** In the starter project, location is enabled in the app manifest and we ask the user on startup to confirm location access for the app. We'll use the result from that user dialog to determine if we have location access.
     
-    - The __ReportFailureToGetSights()__ task returns a message to the user when there are no Sights in the trip.
+    - The **ReportFailureToGetSights()** task returns a message to the user when there are no Sights in the trip.
     
-1. Expand the __M2_ShowNearest__ snippet after the tasks you just added.
+1. Expand the **M2_ShowNearest** snippet after the tasks you just added.
 
-    The __ShowNearestResults__ task 
+    The **ShowNearestResults** task 
     
     - Returns a written and spoken message to the user
     
-    - Creates __VoiceCommandContentTiles__ that display the name, description, and image for the nearest Sights
+    - Creates **VoiceCommandContentTiles** that display the name, description, and image for the nearest Sights
     
     - Displays the content tiles to the user in the Cortana pane
     
-1. Now we can set up the switch to handle the __NearbySights__ case in the __Run()__ method. We're going to call the tasks we just added.
+1. Now we can set up the switch to handle the **NearbySights** case in the **Run()** method. We're going to call the tasks we just added.
     
-    Expand the __M2_HandleNearbySights__ snippet inside the __Try__ block in the __Run()__ method.
+    Expand the **M2_HandleNearbySights** snippet inside the **Try** block in the **Run()** method.
     
     What it does:
     
@@ -347,7 +318,7 @@ Let's get started.
     
     - If we have permission, get the location and use it to get the nearest Sights
     
-    - If nearby Sights are returned, call the __ShowNearestResults__ task to display them to the user.
+    - If nearby Sights are returned, call the **ShowNearestResults** task to display them to the user.
 
 1. Build and run your app to register the new VCD. Close the app.
 
@@ -361,13 +332,13 @@ Let's get started.
 
 Toast notifications are a great way to quickly interact with a user outside of an app. In this task, we're going to build and trigger a toast notification for a Sight when it is added to My Sights.
 
-1.	Open __SightDetailControl.xaml__ and expand the __M2_DatePicker__ snippet after the __Caption__ TextBlock.
+1.	Open **SightDetailControl.xaml** and expand the **M2_DatePicker** snippet after the **Caption** TextBlock.
 
-    This snippet includes a CalendarDatePicker and TimePicker.
+    This snippet includes a **CalendarDatePicker** and **TimePicker**.
   
-    We've created variables in the ViewModel for __CurrentSightTime__ and __CurrentSightDate__ that return the visit date and time stored for the sight. If the date is null, it will return __DateTime.Now__.
+    We've created variables in the ViewModel for **CurrentSightTime** and **CurrentSightDate** that return the visit date and time stored for the sight. If the date is null, it will return **DateTime.Now**.
     
-1. In the __Services > TileNotificationsService__ folder, open __ScheduledNotificationService.cs__.
+1. In the **Services > TileNotificationsService** folder, open **ScheduledNotificationService.cs**.
 
     We've provided this class to help build the notification.
 
@@ -381,18 +352,18 @@ Toast notifications are a great way to quickly interact with a user outside of a
     
     - Defines four actions the user can take
     
-    >__Note:__ The toast is set to always display 30 seconds from the time it is triggered to make it easy to test.
+    > **Note:** The toast is set to always display 30 seconds from the time it is triggered to make it easy to test.
     
-1. Open the __SightDetailPageViewModel__. In the __AddSightAsync()__ method, expand the __M2_ScheduleToast__ snippet as the first item in the method.
+1. Open the **SightDetailPageViewModel**. In the **AddSightAsync()** method, expand the **M2_ScheduleToast** snippet as the first item in the method.
 
     What it does:
     
-    - Calls the __ScheduledNotificationService__ to create and send a toast notification
+    - Calls the **ScheduledNotificationService** to create and send a toast notification
     - Passes it the current Sight
     
 1. When the toast arrives, it would be useful if the user could go straight into the Sight Details from the toast.
 
-    Open __App.xaml.cs__. Expand the __M2_ToastActivation__ snippet as a case in the ```switch (args.Kind)``` in the __OnActivated()__ override.
+    Open **App.xaml.cs**. Expand the **M2_ToastActivation** snippet as a case in the `switch (args.Kind)` in the **OnActivated()** override.
 
 1. Build and run your app. Open the Sight details for a sight that has not been added to My Sights. 
 
@@ -401,3 +372,13 @@ Toast notifications are a great way to quickly interact with a user outside of a
     This action will trigger the ScheduleNotificationService to send a toast notification. The notification will appear in 30 seconds with the Sight details.
     
     Click the toast to launch the app.
+
+
+<a name="Summary"></a>
+## Summary ##
+
+By completing this module you should have:
+
+- Added inking support
+- Provided speech integration through Cortana
+- Built an interactive notification that enables direct user actions.
