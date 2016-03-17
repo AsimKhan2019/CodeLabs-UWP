@@ -12,7 +12,6 @@ using Windows.UI.Xaml.Shapes;
 using Microsoft.Labs.SightsToSee.Common;
 using Microsoft.Labs.SightsToSee.Models;
 using Microsoft.Labs.SightsToSee.ViewModels;
-using Microsoft.UI.Composition.Toolkit;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 

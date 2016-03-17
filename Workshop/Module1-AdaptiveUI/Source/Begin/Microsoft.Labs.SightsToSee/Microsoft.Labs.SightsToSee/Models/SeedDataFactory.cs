@@ -82,33 +82,33 @@ namespace Microsoft.Labs.SightsToSee.Models
             };
 
             // Copy files to local storage
-            var localStorage = ApplicationData.Current.LocalFolder;
-            var fileList = new List<Tuple<string, string>>();
+            //var localStorage = ApplicationData.Current.LocalFolder;
+            //var fileList = new List<Tuple<string, string>>();
 
-            for (var i = 1; i < 26; i++)
-            {
-                // copy the app file to local storage
-                var resourcePath = $"ms-appx:///Assets/DemoImages/SightImages/{i}.jpg";
-                var original =
-                    await StorageFile.GetFileFromApplicationUriAsync(new Uri(resourcePath));
-                var newFile = await original.CopyAsync(localStorage, original.Name, NameCollisionOption.ReplaceExisting);
-                fileList.Add(new Tuple<string, string>(resourcePath, newFile.Path));
-            }
+            //for (var i = 1; i < 26; i++)
+            //{
+            //    // copy the app file to local storage
+            //    var resourcePath = $"ms-appx:///Assets/DemoImages/SightImages/{i}.jpg";
+            //    var original =
+            //        await StorageFile.GetFileFromApplicationUriAsync(new Uri(resourcePath));
+            //    var newFile = await original.CopyAsync(localStorage, original.Name, NameCollisionOption.ReplaceExisting);
+            //    fileList.Add(new Tuple<string, string>(resourcePath, newFile.Path));
+            //}
 
-            foreach (var sight in trip.Sights)
-            {
-                sight.SightFiles = new List<SightFile>();
-                foreach (var tuple in fileList)
-                {
-                    sight.SightFiles.Add(new SightFile
-                    {
-                        Id = Guid.NewGuid(),
-                        FileName = tuple.Item2,
-                        FileType = 1,
-                        Uri = tuple.Item1,
-                    });
-                }
-            }
+            //foreach (var sight in trip.Sights)
+            //{
+            //    sight.SightFiles = new List<SightFile>();
+            //    foreach (var tuple in fileList)
+            //    {
+            //        sight.SightFiles.Add(new SightFile
+            //        {
+            //            Id = Guid.NewGuid(),
+            //            FileName = tuple.Item2,
+            //            FileType = 1,
+            //            Uri = tuple.Item1,
+            //        });
+            //    }
+            //}
 
             // defaults to including dependents: context.Trips.Add(trip, GraphBehavior.IncludeDependents);
             context.Trips.Add(trip);

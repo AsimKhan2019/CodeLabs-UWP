@@ -93,61 +93,46 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\DemoImages\Alcatraz.jpg" />
-    <Content Include="Assets\DemoImages\AsianArtMuseum.jpg" />
-    <Content Include="Assets\DemoImages\AT&amp;TPark.jpg" />
-    <Content Include="Assets\DemoImages\CableCarMuseum.jpg" />
-    <Content Include="Assets\DemoImages\CaliforniaAcademyofSciences.jpg" />
-    <Content Include="Assets\DemoImages\CoitTower.jpg" />
-    <Content Include="Assets\DemoImages\ConservatoryofFlowers.jpg" />
-    <Content Include="Assets\DemoImages\deYoungMuseum.jpg" />
-    <Content Include="Assets\DemoImages\FerryBuildingMarketplace.jpg" />
-    <Content Include="Assets\DemoImages\GhirardelliSquare.jpg" />
-    <Content Include="Assets\DemoImages\GoldenGateBridge.jpg" />
-    <Content Include="Assets\DemoImages\GoldenGatePark.jpg" />
-    <Content Include="Assets\DemoImages\Haas-LilienthalHouse.jpg" />
-    <Content Include="Assets\DemoImages\JapaneseTeaGarden.jpg" />
-    <Content Include="Assets\DemoImages\LegionofHonor.jpg" />
-    <Content Include="Assets\DemoImages\LombardStreet.jpg" />
-    <Content Include="Assets\DemoImages\MissionDolores.jpg" />
-    <Content Include="Assets\DemoImages\MuséeMecanique.jpg" />
-    <Content Include="Assets\DemoImages\OaklandMuseumofCalifornia.jpg" />
-    <Content Include="Assets\DemoImages\PalaceofFineArts.jpg" />
-    <Content Include="Assets\DemoImages\Pier39.jpg" />
-    <Content Include="Assets\DemoImages\SanFranciscoBotanicalGarden.jpg" />
-    <Content Include="Assets\DemoImages\SanFranciscoCityHall.jpg" />
-    <Content Include="Assets\DemoImages\SanFranciscoMuseumofModernArt.jpg" />
-    <Content Include="Assets\DemoImages\SanFranciscoZoo.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\1.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\2.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\3.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\4.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\5.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\6.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\7.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\8.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\9.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\10.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\11.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\13.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\14.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\15.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\16.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\17.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\18.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\19.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\20.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\21.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\22.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\23.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\24.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\25.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\12.jpg" />
-    <Content Include="Assets\DemoImages\StowLake.jpg" />
-    <Content Include="Assets\DemoImages\TheExploratorium.jpg" />
-    <Content Include="Assets\DemoImages\USSPampanito.jpg" />
-    <Content Include="Assets\DemoImages\WaltDisneyFamilyMuseum.jpg" />
-    <Content Include="Assets\DemoImages\YerbaBuenaCenterfortheArts.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-10169910.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-109735379.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-135524349.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-148658239.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-166266955.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-168644066.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-170412265.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-170719474.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-173098776.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-173759910.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-182059295.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-200247472-001.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-462144413.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-475046491.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-488571377.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-498187957.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-499046284.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-501837729.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-502904432.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-503368047.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-512468667.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-531495531.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-546840759.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-547979731.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-558303947.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-559361139.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-56143534.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-56660689.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-56808247.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-568537447.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-578441735.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-584252393.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-587409351.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-589988749.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-594834299.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-599719111.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-601811063.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-76807600.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-88437679.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-90934685.jpg" />
     <Content Include="Assets\Images\DialogBackground.jpg" />
     <Content Include="vcd.xml" />
     <None Include="Microsoft.Labs.SightsToSee_TemporaryKey.pfx" />
@@ -305,12 +290,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Microsoft.UI.Composition.Toolkit\Microsoft.UI.Composition.Toolkit.vcxproj">
-      <Project>{08a7d060-593a-4978-8dcc-b2029aca7c95}</Project>
-      <Name>Microsoft.UI.Composition.Toolkit</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\TilesNotificationsService\" />
