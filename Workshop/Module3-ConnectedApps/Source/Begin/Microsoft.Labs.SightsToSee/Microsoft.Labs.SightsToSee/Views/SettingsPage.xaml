@@ -1,0 +1,51 @@
+﻿<Page
+    x:Class="Microsoft.Labs.SightsToSee.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Microsoft.Labs.SightsToSee"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:Microsoft.Labs.SightsToSee.ViewModels"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <viewModels:SettingsPageViewModel />
+    </Page.DataContext>
+
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock Style="{ThemeResource SubheaderTextBlockStyle}"
+                   Text="Settings"
+                   TextWrapping="WrapWholeWords"
+                   RelativePanel.AlignLeftWithPanel="True"
+                   Margin="10"
+                   FontSize="30"/>
+        <StackPanel Margin="10">
+            <Grid>
+                <TextBlock x:Name="Title"
+                   Style="{ThemeResource SubheaderTextBlockStyle}"
+                   Text="Extensions"
+                   TextWrapping="WrapWholeWords"
+                       FontSize="20"/>
+            </Grid>
+            
+            <!--M3: Uncomment the ListView below to view app extensions -->
+            
+            <!--<ListView ItemsSource="{x:Bind ViewModel.Extensions}" Margin="0,20,0,0">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <RelativePanel BorderBrush="Gray" BorderThickness="0,0,0,1">
+                            <Image x:Name="ExtensionLogo" Source="{Binding Logo}" Width="90"  Stretch="Uniform" />
+                            <TextBlock x:Name="ExtensionName" Text="{Binding AppExtension.DisplayName}" RelativePanel.RightOf="ExtensionLogo" RelativePanel.AlignTopWithPanel="True"/>
+                            <TextBlock x:Name="ExtensionDescription" Text="{Binding AppExtension.Description}" RelativePanel.RightOf="ExtensionLogo" RelativePanel.Below="ExtensionName"/>
+                            <ToggleSwitch Margin="0,10,0,0" x:Name="ExtensionToggle" RelativePanel.Below="ExtensionDescription" RelativePanel.RightOf="ExtensionLogo" IsOn="{Binding Enabled, Mode=TwoWay}" />
+                        </RelativePanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>-->
+        </StackPanel>
+    </StackPanel>
+</Page>

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" IgnorableNamespaces="uap uap3 mp">
+  <Identity Name="Applicious.Build2016UWPCodeLab" Publisher="CN=426AFF0D-09CF-438E-8140-1F79DD469DD6" Version="1.1.0.0" />
+  <mp:PhoneIdentity PhoneProductId="0510a906-1df6-46bd-a940-87e62655d218" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>Build2016UWPCodeLab</DisplayName>
+    <PublisherDisplayName>Applicious</PublisherDisplayName>
+    <Logo>Assets\Images\NewStoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="12.0.0.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Microsoft.Labs.SightsToSee.App">
+      <uap:VisualElements DisplayName="Sights2See" Square150x150Logo="Assets\Images\Square150x150Logo.png" Square44x44Logo="Assets\Images\Square44x44Logo.png" Description="Microsoft.Labs.SightsToSee" BackgroundColor="#2dA092">
+        <uap:DefaultTile Wide310x150Logo="Assets\Images\Wide310x150Logo.png" Square310x310Logo="Assets\Images\Square310x310Logo.png" Square71x71Logo="Assets\Images\Square71x71Logo.png">
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#2da092" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.personalAssistantLaunch" />
+        <uap:Extension Category="windows.appService" EntryPoint="BackgroundTasks.VoiceCommandService">
+          <uap:AppService Name="VoiceCommandService" />
+        </uap:Extension>
+        
+        <!--M3: Insert the M3_ExtensionHost snippet here-->
+      
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <DeviceCapability Name="location" />
+  </Capabilities>
+</Package>

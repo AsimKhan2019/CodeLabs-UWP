@@ -1,0 +1,76 @@
+﻿<Application
+    x:Class="Microsoft.Labs.SightsToSee.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Microsoft.Labs.SightsToSee"
+    xmlns:converters="using:Microsoft.Labs.SightsToSee.Converters"
+    RequestedTheme="Light">
+
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="TitleBarBackgroundThemeBrush" Color="{StaticResource TitleBarBackgroundColor}" />
+                    <SolidColorBrush x:Key="TitleBarForegroundThemeBrush" Color="{StaticResource TitleBarForegroundColor}" />
+                    <SolidColorBrush x:Key="TitleBarInactiveBackgroundThemeBrush" Color="{StaticResource TitleBarBackgroundColor}" />
+                    <SolidColorBrush x:Key="TitleBarInactiveForegroundThemeBrush" Color="{StaticResource TitleBarForegroundColor}" />
+
+                    <SolidColorBrush x:Key="TitleBarButtonBackgroundThemeBrush" Color="{StaticResource TitleBarBackgroundColor}" />
+                    <SolidColorBrush x:Key="TitleBarButtonForegroundThemeBrush" Color="{StaticResource TitleBarForegroundColor}" />
+                    <SolidColorBrush x:Key="TitleBarButtonHoverBackgroundThemeBrush" Color="{StaticResource NavMenuForegroundHoverColor}" />
+                    <SolidColorBrush x:Key="TitleBarButtonHoverForegroundThemeBrush" Color="{StaticResource NavMenuForegroundRestColor}" />
+                    <SolidColorBrush x:Key="TitleBarButtonPressedBackgroundThemeBrush" Color="{StaticResource NavMenuForegroundSelectedColor}" />
+                    <SolidColorBrush x:Key="TitleBarButtonPressedForegroundThemeBrush" Color="{StaticResource NavMenuForegroundRestColor}" />
+
+                    <SolidColorBrush x:Key="TitleBarButtonInactiveBackgroundThemeBrush" Color="{StaticResource TitleBarBackgroundColor}" />
+                    <SolidColorBrush x:Key="TitleBarButtonInactiveForegroundThemeBrush" Color="{StaticResource NavMenuForegroundDisabledColor}" />
+                </ResourceDictionary>
+                
+                <ResourceDictionary x:Key="HighContrast">
+                    <SolidColorBrush x:Key="TitleBarBackgroundThemeBrush" Color="#FF000000" />
+                    <SolidColorBrush x:Key="TitleBarForegroundThemeBrush" Color="#FFFFFFFF" />
+                    <SolidColorBrush x:Key="TitleBarInactiveBackgroundThemeBrush" Color="#FF343434" />
+                    <SolidColorBrush x:Key="TitleBarInactiveForegroundThemeBrush" Color="#FFFFFFFF" />
+
+                    <SolidColorBrush x:Key="TitleBarButtonBackgroundThemeBrush" Color="#FF000000" />
+                    <SolidColorBrush x:Key="TitleBarButtonForegroundThemeBrush" Color="#FFFFFFFF" />
+                    <SolidColorBrush x:Key="TitleBarButtonHoverBackgroundThemeBrush" Color="#FF343434" />
+                    <SolidColorBrush x:Key="TitleBarButtonHoverForegroundThemeBrush" Color="#FFFFFFFF" />
+                    <SolidColorBrush x:Key="TitleBarButtonPressedBackgroundThemeBrush" Color="#FF4C4C4C" />
+                    <SolidColorBrush x:Key="TitleBarButtonPressedForegroundThemeBrush" Color="#FFFFFFFF" />
+
+                    <SolidColorBrush x:Key="TitleBarButtonInactiveBackgroundThemeBrush" Color="#FF343434" />
+                    <SolidColorBrush x:Key="TitleBarButtonInactiveForegroundThemeBrush" Color="#FFFFFFFF" />
+
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="TitleBarBackgroundThemeBrush" Color="{StaticResource TitleBarBackgroundColor}" />
+                    <SolidColorBrush x:Key="TitleBarForegroundThemeBrush" Color="{StaticResource TitleBarForegroundColor}" />
+                    <SolidColorBrush x:Key="TitleBarInactiveBackgroundThemeBrush" Color="{StaticResource TitleBarBackgroundColor}" />
+                    <SolidColorBrush x:Key="TitleBarInactiveForegroundThemeBrush" Color="{StaticResource TitleBarForegroundColor}" />
+
+                    <SolidColorBrush x:Key="TitleBarButtonBackgroundThemeBrush" Color="{StaticResource TitleBarBackgroundColor}" />
+                    <SolidColorBrush x:Key="TitleBarButtonForegroundThemeBrush" Color="{StaticResource TitleBarForegroundColor}" />
+                    <SolidColorBrush x:Key="TitleBarButtonHoverBackgroundThemeBrush" Color="{StaticResource NavMenuForegroundHoverColor}" />
+                    <SolidColorBrush x:Key="TitleBarButtonHoverForegroundThemeBrush" Color="{StaticResource NavMenuForegroundRestColor}" />
+                    <SolidColorBrush x:Key="TitleBarButtonPressedBackgroundThemeBrush" Color="{StaticResource NavMenuForegroundSelectedColor}" />
+                    <SolidColorBrush x:Key="TitleBarButtonPressedForegroundThemeBrush" Color="{StaticResource NavMenuForegroundRestColor}" />
+
+                    <SolidColorBrush x:Key="TitleBarButtonInactiveBackgroundThemeBrush" Color="{StaticResource TitleBarBackgroundColor}" />
+                    <SolidColorBrush x:Key="TitleBarButtonInactiveForegroundThemeBrush" Color="{StaticResource NavMenuForegroundDisabledColor}" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+
+        </ResourceDictionary>
+
+    </Application.Resources>
+
+</Application>
