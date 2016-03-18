@@ -363,4 +363,4 @@ By completing this module, you should have:
 
 - Added inking support
 - Provided speech integration through Cortana
-- Built an interactive notification that enables direct user actions.
+- Built an interactive notification that enables direct user actions
