@@ -15,10 +15,10 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
     public enum SightFileType
     {
         General,
-        Image
+        ImageGallery
     }
 
-    public class SightFile : IGuidTable, INotifyPropertyChanged
+    public class SightFile : INotifyPropertyChanged
     {
 #if SQLITE
 
@@ -73,7 +73,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
 
 #endif
 
-        // 0: General, such as Inking   1: Image
+        // 0: General, such as Inking   1: ImageGallery, an attached image file
         private SightFileType _fileType;
 
         public SightFileType FileType

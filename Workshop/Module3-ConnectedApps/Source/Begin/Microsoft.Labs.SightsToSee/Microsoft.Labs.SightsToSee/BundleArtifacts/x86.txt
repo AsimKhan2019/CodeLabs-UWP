@@ -1,0 +1,2 @@
+MainPackage=C:\Users\anwigley\Documents\buildlabs\SourceCode\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\bin\x86\Debug\Microsoft.Labs.SightsToSee_1.1.0.0_x86_Debug.appx
+SymbolPackage=C:\Users\anwigley\Documents\buildlabs\SourceCode\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\AppPackages\Microsoft.Labs.SightsToSee_1.1.0.0_Debug_Test\Microsoft.Labs.SightsToSee_1.1.0.0_x86_Debug.appxsym

@@ -145,7 +145,7 @@
     "RankInDestination": 1
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 4,
     "Telephone": "(415) 673-1101",
     "Website": "www.sfswanoysterdepot.com",
     "Reviews": [
@@ -282,7 +282,7 @@
     "RankInDestination": 2
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 5,
     "Telephone": "(415) 552-2522",
     "Website": "http://www.zunicafe.com/",
     "Reviews": [
@@ -669,7 +669,7 @@
     "RankInDestination": 4
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 6,
     "Telephone": "(415) 752-2222",
     "Website": "http://www.aziza-sf.com/",
     "Reviews": [
@@ -1161,7 +1161,7 @@
     "RankInDestination": 9
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 5,
     "Telephone": "(415) 864-8643",
     "Website": "http://www.nopasf.com/",
     "Reviews": [
@@ -1298,7 +1298,7 @@
     "RankInDestination": 11
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 7,
     "Telephone": "(415) 775-8500",
     "Website": "http://quincerestaurant.com/",
     "Reviews": [
@@ -1419,7 +1419,7 @@
     "RankInDestination": 10
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 8,
     "Telephone": "(415) 776-5577",
     "Website": "http://www.lafolie.com/",
     "Reviews": [
@@ -1516,7 +1516,7 @@
     "RankInDestination": 16
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 7,
     "Telephone": "(415) 567-5432",
     "Website": "http://www.acquerello.com/",
     "Reviews": [
@@ -1758,7 +1758,7 @@
     "RankInDestination": 18
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 7,
     "Telephone": "(415) 771-7779",
     "Website": "www.spqrsf.com",
     "Reviews": [
@@ -2065,7 +2065,7 @@
     "RankInDestination": 13
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 8,
     "Telephone": "(415) 861-5555",
     "Website": "http://www.jardiniere.com/",
     "Reviews": [
@@ -2202,7 +2202,7 @@
     "RankInDestination": 14
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 9,
     "Telephone": "(415) 981-0983",
     "Website": "http://www.kokkari.com/home/",
     "Reviews": [
@@ -2452,7 +2452,7 @@
     "RankInDestination": 21
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 10,
     "Telephone": "(415) 861-8032",
     "Website": "http://www.slanteddoor.com/",
     "Reviews": [
@@ -2589,7 +2589,7 @@
     "RankInDestination": 20
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 11,
     "Telephone": "(415) 771-2216",
     "Website": "http://www.a16sf.com/",
     "Reviews": [
@@ -2726,7 +2726,7 @@
     "RankInDestination": 24
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 7,
     "Telephone": "",
     "Website": "http://www.flourandwater.com/",
     "Reviews": [
@@ -2847,7 +2847,7 @@
     "RankInDestination": 22
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 5,
     "Telephone": "(415) 648-7600",
     "Website": "www.foreigncinema.com",
     "Reviews": [
@@ -2976,7 +2976,7 @@
     "RankInDestination": 23
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 7,
     "Telephone": "(415) 284-4040",
     "Website": "http://www.amerestaurant.com/",
     "Reviews": [
@@ -3081,7 +3081,7 @@
     "RankInDestination": 26
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 1,
     "Telephone": "",
     "Website": "http://www.tonkiang.net/",
     "Reviews": [
@@ -3307,7 +3307,7 @@
     "RankInDestination": 27
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 12,
     "Telephone": "(415) 282-8283",
     "Website": "http://www.rangesf.com/",
     "Reviews": [
@@ -3646,7 +3646,7 @@
     "RankInDestination": 28
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 1,
     "Telephone": "(415) 781-1111",
     "Website": "www.yanksing.com",
     "Reviews": [
@@ -3767,7 +3767,7 @@
     "RankInDestination": 29
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 7,
     "Telephone": "(415) 695-1199",
     "Website": "http://berettasf.com/",
     "Reviews": [
@@ -3969,7 +3969,7 @@
     "RankInDestination": 33
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 13,
     "Telephone": "",
     "Website": "www.millenniumrestaurant.com",
     "Reviews": [
@@ -4082,7 +4082,7 @@
     "RankInDestination": 34
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 1,
     "Telephone": "",
     "Website": "http://www.betelnutrestaurant.com/",
     "Reviews": [
@@ -4268,7 +4268,7 @@
     "RankInDestination": 35
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 13,
     "Telephone": "(415) 661-6140",
     "Website": "http://outerlandssf.com/",
     "Reviews": [
@@ -4349,7 +4349,7 @@
     "RankInDestination": 36
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 5,
     "Telephone": "(415) 252-9289",
     "Website": "http://www.suppenkuche.com/welcome.html",
     "Reviews": [
@@ -4454,7 +4454,7 @@
     "RankInDestination": 37
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 4,
     "Telephone": "(415) 391-1849",
     "Website": "http://www.tadichgrill.com/",
     "Reviews": [
@@ -4559,7 +4559,7 @@
     "RankInDestination": 38
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 5,
     "Telephone": "(415) 391-2555",
     "Website": "http://www.piperade.com/",
     "Reviews": [
@@ -4672,7 +4672,7 @@
     "RankInDestination": 39
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 2,
     "Telephone": "(415) 285-7117",
     "Website": "http://eatingoutwell.com/en/san-francisco/v/la-taqueria/",
     "Reviews": [
@@ -4777,7 +4777,7 @@
     "RankInDestination": 40
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 8,
     "Telephone": "(415) 487-2600",
     "Website": "http://www.tartinebakery.com/",
     "Reviews": [
@@ -4874,7 +4874,7 @@
     "RankInDestination": 41
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 10,
     "Telephone": "(415) 826-7004",
     "Website": "www.centralkitchensf.com",
     "Reviews": [
@@ -4963,7 +4963,7 @@
     "RankInDestination": 42
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 5,
     "Telephone": "(415) 982-2622",
     "Website": "http://www.bocasf.com/",
     "Reviews": [
@@ -5076,7 +5076,7 @@
     "RankInDestination": 54
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 14,
     "Telephone": "(415) 369-9955",
     "Website": "http://www.epicroasthouse.com/",
     "Reviews": [
@@ -5165,7 +5165,7 @@
     "RankInDestination": 55
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 8,
     "Telephone": "(415) 345-8100",
     "Website": "http://frenchsoulfood.com/",
     "Reviews": [
@@ -5262,7 +5262,7 @@
     "RankInDestination": 44
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 15,
     "Telephone": "(415) 673-1888",
     "Website": "http://www.harrisrestaurant.com/",
     "Reviews": [
@@ -5351,7 +5351,7 @@
     "RankInDestination": 45
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 11,
     "Telephone": "(415) 835-9888",
     "Website": "http://tonyspizzanapoletana.com/",
     "Reviews": [
@@ -5529,7 +5529,7 @@
     "RankInDestination": 47
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 16,
     "Telephone": "(415) 431-2526",
     "Website": "http://www.thepphanom.com/",
     "Reviews": [
@@ -5626,7 +5626,7 @@
     "RankInDestination": 48
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 4,
     "Telephone": "(415) 908-3900",
     "Website": "http://townhallsf.com/",
     "Reviews": [
@@ -5739,7 +5739,7 @@
     "RankInDestination": 49
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 1,
     "Telephone": "(415) 982-7877",
     "Website": "http://www.rnglounge.com/",
     "Reviews": [
@@ -5852,7 +5852,7 @@
     "RankInDestination": 51
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 7,
     "Telephone": "",
     "Website": "http://www.losteriadelforno.com/",
     "Reviews": [
@@ -5941,7 +5941,7 @@
     "RankInDestination": 52
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 8,
     "Telephone": "",
     "Website": "http://cafeclaude.com/",
     "Reviews": [
@@ -6038,7 +6038,7 @@
     "RankInDestination": 53
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 8,
     "Telephone": "(510) 655-6469",
     "Website": "http://acoterestaurant.com/",
     "Reviews": [
@@ -6135,7 +6135,7 @@
     "RankInDestination": 56
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 12,
     "Telephone": "",
     "Website": "http://sushiran.com/",
     "Reviews": [
@@ -6208,7 +6208,7 @@
     "RankInDestination": 57
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 2,
     "Telephone": "(415) 233-9966",
     "Website": "http://www.nopalitosf.com/",
     "Reviews": [
@@ -6289,7 +6289,7 @@
     "RankInDestination": 62
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 8,
     "Telephone": "(415) 955-0663",
     "Website": "http://www.perbaccosf.com/",
     "Reviews": [
@@ -6386,7 +6386,7 @@
     "RankInDestination": 63
   },
   {
-    "RestaurantType": 0,
+    "RestaurantType": 4,
     "Telephone": "(415) 284-9922",
     "Website": "http://www.waterbarsf.com/",
     "Reviews": [

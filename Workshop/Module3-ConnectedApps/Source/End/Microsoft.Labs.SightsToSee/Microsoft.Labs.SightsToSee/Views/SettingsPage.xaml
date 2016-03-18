@@ -26,6 +26,8 @@
                    TextWrapping="WrapWholeWords"
                        FontSize="20"/>
             </Grid>
+            <!--M3: Uncomment the Extensions ListView below-->
+            
             <ListView ItemsSource="{x:Bind ViewModel.Extensions}" Margin="0,20,0,0">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">

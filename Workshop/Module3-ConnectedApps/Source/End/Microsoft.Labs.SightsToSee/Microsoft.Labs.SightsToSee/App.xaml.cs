@@ -58,6 +58,7 @@ namespace Microsoft.Labs.SightsToSee
             var storageFile = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommands.xml"));
             await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(storageFile);
 
+            // Insert the M3_Initialize snippet here
             ExtensionManager.Initialize();
 
 #if SQLITE
@@ -93,6 +94,8 @@ namespace Microsoft.Labs.SightsToSee
             // Place our app shell in the current Window
             Window.Current.Content = shell;
         }
+
+        // Insert the M3_ExtensionManager snippet here
 
         public ExtensionManager ExtensionManager
         {

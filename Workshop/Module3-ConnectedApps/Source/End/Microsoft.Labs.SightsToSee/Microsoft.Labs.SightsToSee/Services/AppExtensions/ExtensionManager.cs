@@ -396,8 +396,6 @@ namespace Microsoft.Labs.SightsToSee.Facts
                 var dataModelService = new SqliteDataModelService();
 
                 await dataModelService.InsertSights(trip.Sights);
-
-                var myTrip = await new SqliteDataModelService().LoadTripAsync(trip.Id);
             }
             _loaded = true;
             _offline = false;

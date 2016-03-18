@@ -13,6 +13,10 @@ namespace Microsoft.Labs.SightsToSee.Models
             set { LocalSettings.Values[nameof(HasRun)] = value; }
         }
 
+        public static string MapServiceToken =>
+        "7H7lMjEkAfP3PeOrrPVO~IRTU1f4lP6GTdpBxi4gqoQ~AvvbAnSGbHtsowQ98zRfwvaw6PdCgo2vq3x75R3_SbvN2zb7-YcaM_UIPNtNWOWK";
+
+
         public static Guid LastTripId
         {
             get { return GetTyped<Guid>(nameof(LastTripId)); }

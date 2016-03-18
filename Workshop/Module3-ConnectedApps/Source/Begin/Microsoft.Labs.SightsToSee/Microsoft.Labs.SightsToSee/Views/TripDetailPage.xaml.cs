@@ -66,6 +66,19 @@ namespace Microsoft.Labs.SightsToSee.Views
                         ViewModel.ShowSight(parameter.SightId);
                     }
                 }
+
+                // Set the current Pivot
+                switch (parameter.ShowPivotName)
+                {
+                    case TripPivots.Sights:
+                        LayoutPanel.SelectedIndex = 0;
+                        break;
+                    case TripPivots.Eats:
+                        LayoutPanel.SelectedIndex = 1;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException("parameter.ShowPivotName has an unexpected value");
+                }
             }
             await AppShell.Current.ClearBusyAsync();
 

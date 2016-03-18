@@ -58,9 +58,8 @@ namespace Microsoft.Labs.SightsToSee
             var storageFile = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommands.xml"));
             await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(storageFile);
 
-            // M3: Insert the M3_Initialize snippet here
+            // Insert the M3_Initialize snippet here
 
-            
 
 #if SQLITE
             await SQLiteService.InitDb();
@@ -96,8 +95,8 @@ namespace Microsoft.Labs.SightsToSee
             Window.Current.Content = shell;
         }
 
-        // M3: Insert the M3_ExtensionManager snippet here
-        
+        // Insert the M3_ExtensionManager snippet here
+
 
         protected override async void OnActivated(IActivatedEventArgs args)
         {

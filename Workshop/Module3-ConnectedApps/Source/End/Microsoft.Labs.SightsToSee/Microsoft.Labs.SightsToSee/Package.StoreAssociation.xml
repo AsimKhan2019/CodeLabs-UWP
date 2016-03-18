@@ -392,6 +392,7 @@
     <MainPackageIdentityName>Applicious.W10JumpStartTest</MainPackageIdentityName>
     <MainPackageIdentityName>Applicious.W10MVAPushDemo</MainPackageIdentityName>
     <MainPackageIdentityName>Applicious.W10MVAPushTriggerDemo</MainPackageIdentityName>
+    <MainPackageIdentityName>Applicious.WAMtest</MainPackageIdentityName>
   </AccountPackageIdentityNames>
   <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH4QZFQ" />
 </StoreAssociation>

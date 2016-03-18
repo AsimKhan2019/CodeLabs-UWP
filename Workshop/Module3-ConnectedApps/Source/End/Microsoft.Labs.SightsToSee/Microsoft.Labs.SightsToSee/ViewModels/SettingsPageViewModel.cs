@@ -11,6 +11,9 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
 {
     public class SettingsPageViewModel : ViewModelBase
     {
+
+        // M3: Uncomment the Extensions Observable Collection below
+
         public ObservableCollection<Extension> Extensions
         {
             get { return (App.Current as App).ExtensionManager.Extensions; }

@@ -3,12 +3,20 @@ using Newtonsoft.Json;
 
 namespace Microsoft.Labs.SightsToSee.Models
 {
+    public enum TripPivots
+    {
+        Sights,
+        Eats
+    }
     public class TripNavigationParameter
     {
         public Guid TripId { get; set; }
         public Guid SightId { get; set; }
         public bool DisplayClosestSight { get; set; }
         public bool DeleteSight { get; set; }
+
+        // Setting the default to Sights
+        public TripPivots ShowPivotName { get; set; } = TripPivots.Sights;
 
         public string GetJson()
         {

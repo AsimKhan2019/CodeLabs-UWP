@@ -257,7 +257,19 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
             try
             {
                 await InitializeAsync();
+                // Get unaltered one
+                var sightFileOriginal = await sightFileTable.LookupAsync(sightFile.Id.ToString());
                 await sightFileTable.UpdateAsync(sightFile);
+
+                if (sightFileOriginal?.Uri != sightFile.Uri)
+                {
+                    // Image file has changed - upload the new file
+                    if (sightFile.Uri?.StartsWith("ms-appdata") ?? false)
+                    {
+                        // So we only care about files with ms-appdata uri which have been created by the user - these we sync to the cloud
+                        sightFile.File = await sightFileTable.AddFileAsync(sightFile, sightFile.FileName);
+                    }
+                }
 
                 await SyncAsync(); // offline sync     
             }
@@ -294,6 +306,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
             {
                 await client.SyncContext.PushAsync();
                 await sightTable.PushFileChangesAsync();
+                await sightFileTable.PushFileChangesAsync();
                 await tripTable.PullAsync("tripItems", tripTable.CreateQuery());
                 await sightTable.PullAsync("attractionItems", sightTable.CreateQuery());
                 await sightFileTable.PullAsync("attractionFileItems", sightFileTable.CreateQuery());

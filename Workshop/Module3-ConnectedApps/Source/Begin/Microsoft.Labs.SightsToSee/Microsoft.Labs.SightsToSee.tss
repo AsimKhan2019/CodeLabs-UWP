@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\daren\source\repos\buildlabs\sourcecode\microsoft.labs.sightstosee\microsoft.labs.sightstosee.library\models\sight.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\daren\source\repos\buildlabs\sourcecode\microsoft.labs.sightstosee\microsoft.labs.sightstosee.library\models\sightfile.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\daren\source\repos\buildlabs\sourcecode\microsoft.labs.sightstosee\microsoft.labs.sightstosee.library\models\trip.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>c:\users\daren\source\repos\buildlabs\sourcecode\microsoft.labs.sightstosee\microsoft.labs.sightstosee\views\sightdetailpage.xaml.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Users\daren\Source\Repos\BuildLabs\SourceCode\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\Services\FileService\FileHelper.cs</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+</ArrayOfArrayOfArrayOfString>

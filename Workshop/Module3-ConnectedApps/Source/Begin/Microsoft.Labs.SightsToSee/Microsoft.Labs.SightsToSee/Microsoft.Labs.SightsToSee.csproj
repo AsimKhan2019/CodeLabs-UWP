@@ -16,16 +16,16 @@
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>Microsoft.Labs.SightsToSee_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>CC5962E556B2D023E0C5F31D0EC3205CCDAA82E3</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>Microsoft.Labs.SightsToSee_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>58A8CCC5C1AA5FD3EC0A0D3B2FCF50FC773B2D89</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;SQLITE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;SQLITE;CODE_ANALYSIS</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -48,7 +48,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\ARM\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;SQLITE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>ARM</PlatformTarget>
@@ -137,6 +137,10 @@
     <Content Include="Assets\DemoImages\GettyImages-88437679.jpg" />
     <Content Include="Assets\DemoImages\GettyImages-90934685.jpg" />
     <Content Include="Assets\Images\DialogBackground.jpg" />
+    <None Include="Microsoft.Labs.SightsToSee_StoreKey.pfx" />
+    <Content Include="Models\DemoRestaurants.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="VoiceCommands.xml">
       <SubType>Designer</SubType>
@@ -155,16 +159,21 @@
     <Compile Include="Common\AccountsHelper.cs" />
     <Compile Include="Common\ContinuityHelper.cs" />
     <Compile Include="Common\PopupHelper.cs" />
+    <Compile Include="Common\XamlUtils.cs" />
     <Compile Include="Controls\BlurredBackgroundControl.xaml.cs">
       <DependentUpon>BlurredBackgroundControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EatsControl.xaml.cs">
+      <DependentUpon>EatsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\InkBitmapRenderer.cs" />
     <Compile Include="Controls\NavMenuListView.cs" />
     <Compile Include="Controls\PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SightDetailControl.xaml.cs">
-      <DependentUpon>SightDetailControl.xaml</DependentUpon>
+    <Compile Include="Controls\PivotAutoHeightHeader.cs" />
+    <Compile Include="Controls\TabHeader.xaml.cs">
+      <DependentUpon>TabHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
@@ -180,6 +189,7 @@
     <Compile Include="Services\NavigationService\NavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigationFacade.cs" />
     <Compile Include="Services\NavigationService\NavigationService.cs" />
+    <Compile Include="Services\RestaurantDataService\RestaurantDataService.cs" />
     <Compile Include="Services\TilesNotificationsService\ScheduledNotificationService.cs" />
     <Compile Include="Services\TilesNotificationsService\TileHelper.cs" />
     <Compile Include="ViewModels\LandingPageViewModel.cs" />
@@ -189,6 +199,7 @@
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\SightDetailPageViewModel.cs" />
     <Compile Include="ViewModels\TripDetailPageViewModel.cs" />
+    <Compile Include="Views\EatsControlViewModel.cs" />
     <Compile Include="Views\NewTripPage.xaml.cs">
       <DependentUpon>NewTripPage.xaml</DependentUpon>
     </Compile>
@@ -263,13 +274,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\EatsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\PageHeader.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\SightDetailControl.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Controls\TabHeader.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\Styles.xaml">
       <Generator>MSBuild:Compile</Generator>

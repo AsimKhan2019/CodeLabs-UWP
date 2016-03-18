@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Microsoft.Labs.SightsToSee.Library.Models
 {
-    public class Sight : IGuidTable, INotifyPropertyChanged
+    public class Sight : INotifyPropertyChanged
     {
 #if SQLITE
         private Guid _id;
@@ -141,15 +141,15 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
             }
         }
 
-        private string _inkFilePath;
+        private string _inkFileUri;
 
-        public string InkFilePath
+        public string InkFileUri
         {
-            get { return _inkFilePath; }
+            get { return _inkFileUri; }
             set
             {
-                if (_inkFilePath == value) return;
-                _inkFilePath = value;
+                if (_inkFileUri == value) return;
+                _inkFileUri = value;
                 OnPropertyChanged();
             }
         }

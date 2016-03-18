@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" IgnorableNamespaces="uap uap3 mp">
-  <Identity Name="Applicious.Build2016UWPCodeLab" Publisher="CN=426AFF0D-09CF-438E-8140-1F79DD469DD6" Version="1.1.0.0" />
+  <Identity Name="Applicious.Build2016UWPCodeLab" Publisher="CN=anwigley" Version="1.1.0.0" />
   <mp:PhoneIdentity PhoneProductId="0510a906-1df6-46bd-a940-87e62655d218" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Build2016UWPCodeLab</DisplayName>
@@ -21,13 +21,13 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#2da092" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.personalAssistantLaunch" />
         <uap:Extension Category="windows.appService" EntryPoint="BackgroundTasks.VoiceCommandService">
           <uap:AppService Name="VoiceCommandService" />
         </uap:Extension>
+        <uap:Extension Category="windows.personalAssistantLaunch" />
+        <!--Insert the M3_ExtensionHost snippet here-->
         
-        <!--M3: Insert the M3_ExtensionHost snippet here-->
-      
+    
       </Extensions>
     </Application>
   </Applications>

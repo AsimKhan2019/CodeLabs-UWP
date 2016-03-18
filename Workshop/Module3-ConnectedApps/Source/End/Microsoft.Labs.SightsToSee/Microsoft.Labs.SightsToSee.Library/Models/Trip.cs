@@ -5,7 +5,7 @@ using SQLite.Net.Attributes;
 
 namespace Microsoft.Labs.SightsToSee.Library.Models
 {
-    public class Trip : IGuidTable
+    public class Trip 
     {
 #if SQLITE
         [PrimaryKey]

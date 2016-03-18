@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Services.Maps;
 using Microsoft.Labs.SightsToSee.Library.Models;
+using Microsoft.Labs.SightsToSee.Models;
 
 namespace Microsoft.Labs.SightsToSee.Library.Services.SightsService
 {
@@ -12,16 +13,14 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.SightsService
     {
         private static async Task<double> GetWalkingDistanceAsync(Geopoint currentLocation, Sight sight)
         {
-            MapService.ServiceToken =
-                "7H7lMjEkAfP3PeOrrPVO~IRTU1f4lP6GTdpBxi4gqoQ~AvvbAnSGbHtsowQ98zRfwvaw6PdCgo2vq3x75R3_SbvN2zb7-YcaM_UIPNtNWOWK";
+            MapService.ServiceToken = AppSettings.MapServiceToken;
             var mapRouteFinderResult = await MapRouteFinder.GetWalkingRouteAsync(currentLocation, sight.Location);
             return mapRouteFinderResult.Route.LengthInMeters;
         }
 
         private static async Task<double> GetDrivingDistanceAsync(Geopoint currentLocation, Sight sight)
         {
-            MapService.ServiceToken =
-                "7H7lMjEkAfP3PeOrrPVO~IRTU1f4lP6GTdpBxi4gqoQ~AvvbAnSGbHtsowQ98zRfwvaw6PdCgo2vq3x75R3_SbvN2zb7-YcaM_UIPNtNWOWK";
+            MapService.ServiceToken = AppSettings.MapServiceToken;
             var mapRouteFinderResult = await MapRouteFinder.GetDrivingRouteAsync(currentLocation, sight.Location);
             return mapRouteFinderResult.Route.LengthInMeters;
         }
