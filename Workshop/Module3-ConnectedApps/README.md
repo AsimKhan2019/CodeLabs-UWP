@@ -84,6 +84,10 @@ You can install and uninstall extension apps while the host app is running, and 
    
    >__Note:__ The extension type we're using is in preview, so it isn't yet available in the Manifest Editor.
    
+   ![View the Package manifest as code](Images/open_as_code.png "View the Package manifest as code")
+    
+    *__Figure__: View the Package manifest as code.*
+   
    The extension is declared in the manifest with the category __windows.appExtension__. It exposes up a name, display name, description, and __Public__ folder. The Public folder is where we'll find the consumable data.
    
    #### XML
@@ -172,6 +176,10 @@ You can install and uninstall extension apps while the host app is running, and 
     You can see that the Extensions list is empty.
 
     Before we can load the extension, it first needs to be installed on the machine. You can install an extension app directly from the Windows Store, sideload it, or deploy it if you have the source code.
+    
+    ![The Empty Extensions List](Images/empty_extensions_list.png "The Empty Extensions List")
+    
+    *__Figure__: The extensions list is empty until an extension app is installed.*
 
 1. Since we have the source code, Deploy the __AdditionalSights__ project to install it. Keep the __Settings__ page open as it deploys.
     
@@ -179,9 +187,17 @@ You can install and uninstall extension apps while the host app is running, and 
     
     - As soon as the __AddtionalSights__ app is installed, it appears in the __Extensions__ list. Use the toggle to enable it.
     
+    ![Enable the extension app](Images/enable_extension.png "Enable the extension app")
+    
+    *__Figure__: Enable the extension app.*
+    
     - Open your San Francisco trip to see the new Sights that have been added. Add one to __My Sights__.
     
 1. Find the AdditionalSights app in the Start Menu. Right-click and uninstall it.
+
+    ![Uninstall the extension app](Images/uninstall_extension.png "Uninstall the extension app")
+    
+    *__Figure__: Uninstall the extension app.*
 
 1. Return to the San Francisco trip. Any additional Sights that weren't added to My Sights will have been removed.
 
@@ -235,6 +251,10 @@ __Steps__
     
 1. Build and run your app. Open a Sight detail page and use the directions button on the app bar to launch the Maps app.
 
+    ![The Directions Button](Images/directions_button.png "The Directions Button")
+    
+    *__Figure__: Use the Directions button on the app bar to launch the Maps app and get directions to the Sight.*
+
 <a name="Ex3Task2"></a>
 #### Task 2 -  Connect to another app using LaunchUriForResults ####
 
@@ -254,11 +274,15 @@ Beyond launching a target app and passing it data, we can launch an app and rece
 
 1. Build and deploy the __QuickStart__ app.
 
-1. Return to the __SightsToSee__ Module 3 solution and open __SightDetailControl.xaml__.
+    ![The QuickStart App](Images/quickstart_app.png "The QuickStart App")
+    
+    *__Figure__: The QuickStart app.*
+
+1. Return to the __SightsToSee__ Module 3 solution and open __SightDetailPage.xaml__.
 
     Add a new button to the ImageInkToolbar by expanding the __M3_LaunchButton__ snippet after the Undo button.
     
-1. Open the __SightDetailControl__ code-behind. Find the __OnLaunchForResults__ event handler.
+1. Open the __SightDetailPage__ code-behind. Find the __OnLaunchForResults__ event handler.
 
 1. Expand the __M3_OpenPicker__ snippet inside the event handler.
 
@@ -288,7 +312,11 @@ Beyond launching a target app and passing it data, we can launch an app and rece
     
     - If the response status is Success, we copy the new image file to the local folder and add it to the Sight record.
 
-1. Build and run your app. Open a Sight detail page and use the LaunchForResults button on the ImageInkToolbar to launch the file picker.
+1. Build and run your app. Open a Sight detail page and use the __LaunchForResults__ button on the ImageInkToolbar to launch the file picker.
+
+    ![The LaunchForResults Button](Images/launchforresults_button.png "The LaunchForResults Button")
+    
+    *__Figure__: The LaunchForResults Button.*
 
 1. Select an image from the filesystem. When the QuickStart app opens, set a brightness level for the modified image.
 
@@ -301,11 +329,11 @@ Beyond launching a target app and passing it data, we can launch an app and rece
 ### Exercise 4: Additional Sharing Features ###
 
 <a name="Ex4Task1"></a>
-#### Task 1 – Add drag and drop suppport to the app ####
+#### Task 1 – Add drag and drop support to the app ####
 
-Adding drag and drop is a quick way to make your app more user-friendly. We're going to add drag and drop capability to the gallery grid in the SightDetailControl so users can easily add new photos to a Sight.
+Adding drag and drop is a quick way to make your app more user-friendly. We're going to add drag and drop capability to the gallery grid in the SightDetailPage so users can easily add new photos to a Sight.
 
-1. Open __SightDetailControl.xaml__ and find the __GalleryGrid__.
+1. Open __SightDetailPage.xaml__ and find the __GalleryGrid__.
 
 1. Add the __AllowDrop__, __Drop__, and __DragOver__ attributes to the opening tag of the GalleryGrid (type or copy/paste):
 
@@ -345,6 +373,12 @@ Adding drag and drop is a quick way to make your app more user-friendly. We're g
     
     >__Note:__ You can drag and drop multiple images at once.
 
+1. Build and run the app. Drag and drop an image or multiple images onto the gallery grid in a Sight detail view.
+
+    ![Drag and Drop](Images/drag_and_drop.png "Drag and Drop")
+    
+    *__Figure__: Drag and drop to add images to the Sight gallery.*
+
 <a name="Ex4Task2"></a>
 #### Task 2 – Use the Share contract to share content with other apps ####
 
@@ -370,7 +404,7 @@ The Share contract is an easy way to share data between apps. You can share link
     
     - __ShowShareUI__ opens the system Share flyout.
     
-1. With the ShareSight() method, we've initiated the share operation. Next, we'll handle the DataRequested event.
+1. With the __ShareSight()__ method, we've initiated the share operation. Next, we'll handle the __DataRequested__ event.
 
     Expand the __M3_DataRequested__ snippet below the __ShareSight__ method.
     
@@ -385,8 +419,13 @@ The Share contract is an easy way to share data between apps. You can share link
     - Formats the payload string as HTML
     
     - Adds the localImage to the ResourceMap
+
     
 1. Build and run the app. Open a Sight detail view and use the Share button to initiate the Share process.
+
+    ![The Share Contract](Images/share_button.png "The Share Contract")
+    
+    *__Figure__: Use the Share button to open the Share contract.*
 
 
 <a name="Summary"></a>
