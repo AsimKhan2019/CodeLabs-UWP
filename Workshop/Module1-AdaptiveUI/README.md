@@ -6,7 +6,7 @@
 <a name="Overview"></a>
 ## Overview ##
 
-UWP apps may run on a number of device families that differ significantly in screen size and features. To give a great user experience on all devices, the design must adapt to the device. An adaptive UI can detect information about the device it is running on and deliver a layout based on the characteristics of that device.
+**Universal Windows Platform** (UWP) apps may run on a number of device families that differ significantly in screen size and features. To give a great user experience on all devices, the design must adapt to the device. An adaptive UI can detect information about the device it is running on and deliver a layout based on the characteristics of that device.
 
 An adaptive UI differs from a responsive UI, because it can deliver an individualized layout for each device family or screen size snap point. A responsive UI typically takes a single, flexible design and displays it gracefully on all devices. One drawback to responsive UI can be a slower load time – elements are loaded for all devices and resolutions even though they may not be needed.
 
