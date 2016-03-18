@@ -76,15 +76,56 @@ We'll start by adding an InkCanvas that can be used for taking notes.
    
 1. Expand the **M2_EnableInkButton** snippet below the **Notes** title TextBlock. The button will go in the second column of the grid.
 
+	(Code Snippet - _M2_EnableInkButton_)
+	<!--mark:1-5-->
+	````C#
+	<Button x:Name="InkButton" Grid.Column="1" Background="Transparent" Click="{x:Bind ViewModel.EnableInk}"
+		Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+
+		<FontIcon Glyph="&#xEC87;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+	</Button>
+	````
+
 	> **Note:** The visibility of this button is tied to the **NotesAreInking** boolean through a **BooleanToVisibility** converter.
 
 1. Expand the **M2_EnableInk** snippet in the **SightsDetailPageViewModel**. This method will set the **IsNotesInking** bool to true. We're going to use this property to handle visibility for the Ink and Text elements.
 
+	(Code Snippet - _M2_EnableInk_)
+	<!--mark:1-3-->
+	````C#
+	public void EnableInk()
+	{
+		IsNotesInking = true;
+	}
+	````
+
 1. Return to **SightsDetailControl.xaml**. Expand the **M2_NotesInkCanvas** snippet below the Notes TextBox.
+
+	(Code Snippet - _M2_NotesInkCanvas_)
+	<!--mark:1-8-->
+	````C#
+	<Grid x:Name="InkGrid" 
+		Grid.Row="1" 
+		Background="White" 
+		Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+		Margin="0,8,0,0">
+
+		<InkCanvas x:Name="NotesInkCanvas" MinHeight="500" />
+	</Grid>
+	````
 
 	> **Note:** The InkCanvas is contained in a Grid with a white background, because the InkCanvas on its own would display with a transparent background.
     
 1. In the **SightsDetailControl** code-behind, expand the **M2_NotesInputs** snippet after `InitializeComponent()` in the constructor.
+
+	(Code Snippet - _M2_NotesInputs_)
+	<!--mark:1-4-->
+	````C#
+	// Set up the NotesInkCanvas input types
+	NotesInkCanvas.InkPresenter.InputDeviceTypes = CoreInputDeviceTypes.Mouse |
+			CoreInputDeviceTypes.Pen |
+			CoreInputDeviceTypes.Touch;
+	````
 
 1. Build and run your app. 
 
@@ -101,11 +142,62 @@ In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any In
     
 1. Expand the **M2_InkToolbar** snippet after the EnableInkButton in **SightDetailControl.xaml**.
 
+	(Code Snippet - _M2_InkToolbar_)
+	<!--mark:1-21-->
+	````C#
+	<c:InkToolbar x:Name="NoteInkToolbar" Grid.Column="1"
+					AutoPopulate="None"
+					TargetInkCanvas="{x:Bind NotesInkCanvas}"
+					Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+					EraserClearAllInvoked="EraserClearAll">
+
+
+		<c:InkToolbarEraserButton />
+		<c:InkToolbarBallpointPenButton />
+
+		<!--<c:InkToolbarCustomToggleButton Click="TryOCR">
+			<FontIcon Glyph="&#xE8E9;" FontFamily="Segoe MDL2 Assets" />
+		</c:InkToolbarCustomToggleButton>-->
+
+		<c:InkToolbarCustomToggleButton Click="NotesSaveButton_Click">
+			<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE001;" />
+		</c:InkToolbarCustomToggleButton>
+		<c:InkToolbarCustomToggleButton Click="NotesUndoButton_Click">
+			<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
+		</c:InkToolbarCustomToggleButton>
+
+	</c:InkToolbar>
+	````
+
     > **Notes:** One of the buttons on the Toolbar is commented out. We'll enable it in the next task. For now, you can ignore it.
 
 1. Open the **SightDetailControl** code-behind.
     
 1. Scroll down to the `#region NotesInkToolbar` and expand the **M2_SaveUndo** snippet in the region.
+
+	(Code Snippet - _M2_SaveUndo_)
+	<!--mark:1-19-->
+	````C#
+	private async void NotesSaveButton_Click(object sender, RoutedEventArgs e)
+	{
+		 ViewModel.CurrentSight.NotesAreInk = true;
+		 var file = await ViewModel.GenerateStorageFileForInk();
+		 ViewModel.CurrentSight.InkFilePath = file.Path;
+		 using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+		 {
+			  await NotesInkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
+		 }
+		 await ViewModel.UpdateSightAsync(ViewModel.CurrentSight);
+	}
+
+	private async void NotesUndoButton_Click(object sender, RoutedEventArgs e)
+	{
+		 NotesInkCanvas.InkPresenter.StrokeContainer.Clear();
+		 ViewModel.CurrentSight.NotesAreInk = false;
+		 ViewModel.IsNotesInking = false;
+		 await ViewModel.UpdateSightAsync(ViewModel.CurrentSight);
+	}
+	````
 
 1. Locate and review the **NotesSaveButton_Click** method which sets the **NotesAreInk** property on the Sight to true and saves the ink strokes in a storage file.
     
@@ -116,6 +208,25 @@ In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any In
     > There is also a style already defined for the image annotation InkToolbar, which makes Red, Green, and Blue ink available. The style is defined in **SightDetailControl.xaml**.
     
 1. Expand the **M2_SetupNotes** snippet inside the **SetupNotesInkAsync** task in the code-behind. This method restores Ink that has been saved to the Sight.
+
+	(Code Snippet - _M2_SetupNotes_)
+	<!--mark:1-14-->
+	````C#
+	// Check to see if we are in ink mode
+	if (ViewModel.CurrentSight.NotesAreInk)
+	{
+		 ViewModel.IsNotesInking = true;
+
+		 if (!string.IsNullOrWhiteSpace(ViewModel.CurrentSight.InkFilePath))
+		 {
+			  var file = await StorageFile.GetFileFromPathAsync(ViewModel.CurrentSight.InkFilePath);
+			  using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+			  {
+					await NotesInkCanvas.InkPresenter.StrokeContainer.LoadAsync(stream);
+			  }
+		 }
+	}
+	````
     
 1. Build and run the app. Use the Notes InkToolbar to change properties for the Ink canvas, save the Ink, and undo.
 
@@ -128,17 +239,121 @@ Now that we've added the ability to record notes with Ink, it would be useful to
 
 1. Next, let's create the dialog. Expand the **M2_OcrDialog** snippet at the bottom of the main Grid in the **SightsDetailControl** XAML.
 
+	(Code Snippet - _M2_OcrDialog_)
+	<!--mark:1-19-->
+	````C#
+	<ContentDialog x:Name="OCRDialog"
+						PrimaryButtonText="Accept"
+						SecondaryButtonText="Cancel"
+						IsPrimaryButtonEnabled="False"
+						Title="Text Recognition"
+						d:IsHidden="True">
+		 <StackPanel>
+			  <ComboBox x:Name="RecoName"
+							Header="Choose a recognizer:"
+							MaxWidth="500"
+							SelectionChanged="OnRecognizerChanged"
+							Margin="0,4"/>
+			  <Button Click="OnRecognizeAsync"
+						 Margin="0,4">Recognize text</Button>
+			  <TextBox x:Name="Status"
+						  Header="Recognition Output:"
+						  Margin="0,4"/>
+		 </StackPanel>
+	</ContentDialog>
+	````
+
     This dialog lets the user choose a speech recognizer from those installed on the machine and use it to parse the Ink to text.
     
     If the result is acceptable, the user can select the primary key on the dialog to finalize the conversion. If not acceptable, the user can cancel and return to the InkCanvas.
     
 1. Open the **SightDetailControl** code-behind and expand the **M2_Recognizers** snippet above the constructor.
+
+    (Code Snippet - _M2_Recognizers_)
+    <!--mark:1-2-->
+    ````C#
+	private readonly InkRecognizerContainer _inkRecognizerContainer;
+	private readonly IReadOnlyList<InkRecognizer> _recoView;
+    ````
     
 1. In the constructor, find the `#region SetupRecognizers` and expand the **M2_SetupRecognizers** snippet inside of it. This code gets the list of all available recognizers on the device.
+
+    (Code Snippet - _M2_SetupRecognizers_)
+    <!--mark:1-19-->
+    ````C#
+	_inkRecognizerContainer = new InkRecognizerContainer();
+	_recoView = _inkRecognizerContainer.GetRecognizers();
+	if (_recoView != null)
+	{
+		 if (_recoView.Count > 0)
+		 {
+			  foreach (var recognizer in _recoView)
+			  {
+					RecoName?.Items?.Add(recognizer.Name);
+			  }
+		 }
+		 else
+		 {
+			  RecoName.IsEnabled = false;
+			  RecoName?.Items?.Add("No Recognizer Available");
+		 }
+	}
+
+	RecoName.SelectedIndex = 0;
+    ````
     
 1. Scroll down to the `#region OCR`. Expand the **M2_RecognizerMethods** snippet inside the region.
 
+    (Code Snippet - _M2_RecognizerMethods_)
+    <!--mark:1-36-->
+    ````C#
+	private async void TryOCR(object sender, RoutedEventArgs e)
+	{
+		 var result = await OCRDialog.ShowAsync();
+		 if (result == ContentDialogResult.Primary)
+		 {
+			  ViewModel.IsNotesInking = false;
+			  ViewModel.CurrentSight.NotesAreInk = false;
+
+			  // The last note is followed by a space.
+			  ViewModel.CurrentSight.Notes += $" {Status.Text}";
+			  await ViewModel.UpdateSightAsync(ViewModel.CurrentSight);
+			  Status.Text = string.Empty;
+			  NotesInkCanvas.InkPresenter.StrokeContainer.Clear();
+		 }
+	}
+
+	private bool SetRecognizerByName(string recognizerName)
+	{
+		 var recognizerFound = false;
+
+		 foreach (var reco in _recoView)
+		 {
+			  if (recognizerName == reco.Name)
+			  {
+					_inkRecognizerContainer.SetDefaultRecognizer(reco);
+					recognizerFound = true;
+					break;
+			  }
+
+			  if (!recognizerFound)
+			  {
+					Status.Text = $"Could not find target recognizer: {recognizerName}.";
+			  }
+		 }
+		 return recognizerFound;
+	}
+    ````
+
 1. Then expand the **M2_RecognizerChanged** snippet inside the **OnRecognizerChanged** method.
+
+    (Code Snippet - _M2_RecognizerChanged_)
+    <!--mark:1-3-->
+    ````C#
+	var selectedValue = (string)RecoName.SelectedValue;
+	Status.Text = string.Empty;
+	SetRecognizerByName(selectedValue);
+    ````
 
     - The **TryOCR** method opens the **OCRDialog** when the user selects the button from the Notes InkToolbar. It awaits the result from the dialog: will the user accept the recognized text or cancel?
 
@@ -147,6 +362,43 @@ Now that we've added the ability to record notes with Ink, it would be useful to
     - The **SetRecognizerByNameMethod** sets the default recognizer to the user's selection if it exists on the device.
     
 1. Expand the **M2_OnRecognize** snippet inside the **OnRecognizeAsync** method.
+
+    (Code Snippet - _M2_OnRecognize_)
+    <!--mark:1-32-->
+    ````C#
+	var currentStrokes =
+		 NotesInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
+	if (currentStrokes.Count > 0)
+	{
+		 RecoName.IsEnabled = false;
+
+		 var recognitionResults = await _inkRecognizerContainer.RecognizeAsync(
+			  NotesInkCanvas.InkPresenter.StrokeContainer,
+			  InkRecognitionTarget.All);
+
+		 if (recognitionResults.Count > 0)
+		 {
+			  // Display recognition result
+			  var str = string.Empty;
+			  foreach (var r in recognitionResults)
+			  {
+					str += $"{r.GetTextCandidates()[0]} ";
+			  }
+			  Status.Text = str;
+			  OCRDialog.IsPrimaryButtonEnabled = true;
+		 }
+		 else
+		 {
+			  Status.Text = "No text recognized.";
+		 }
+
+		 RecoName.IsEnabled = true;
+	}
+	else
+	{
+		 Status.Text = "Must first write something.";
+	}
+    ````
 
     - The **OnRecognizeAsync** method sends the ink strokes (if any) to the ink recognizer container and awaits the results of **RecognizeAsync**.
     
@@ -175,6 +427,33 @@ Voice commands give your users a convenient, hands-free way to interact with you
 1. Create a new XML file in the main directory of the **SightsToSee** project and give it the name **VoiceCommands.xml**. This file is the voice command definition file that will define the voice command schema. We're going to create a simple schema with a voice command that launches the app.
 
 1. Expand the **M2_LaunchCommand** snippet below the XML namespace declaration. This code creates a voice command set for en-us.
+
+    (Code Snippet - _M2_LaunchCommand_)
+    <!--mark:1-22-->
+    ````C#
+	<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+	  <CommandSet xml:lang="en-us" Name="SightsToSeeCommandSet_en-us">
+		 <AppName>Sights to See</AppName>
+		 <Example>Sights to see, Show me my sights</Example>
+
+		 <Command Name="LaunchApp">
+			<Example>show me my sights</Example>
+			<ListenFor RequireAppName="BeforeOrAfterPhrase">Show me my [selected] [chosen] {destinations}</ListenFor>
+			<Feedback>Opening your Sights To See app</Feedback>
+			<Navigate />
+		 </Command>
+
+		 <PhraseList Label="destinations">
+			<Item>sights</Item>
+			<Item>sightseeing</Item>
+			<Item>sightseeing attraction</Item>
+			<Item>sightseeing attractions</Item>
+			<Item>Sights To See destination</Item>
+		 </PhraseList>
+
+	  </CommandSet>
+	</VoiceCommands>
+    ````
     
     > **Note:** We have added en-us as the language for this example, but you can add additional command sets within the same VCD. For instance, the language tag for Germany would be `xml:lang="de-de"`. The list of regions and languages that Cortana supports is at http://windows.microsoft.com/en-us/windows-10/cortanas-regions-and-languages.
     
@@ -202,11 +481,59 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
 1. Open **App.xaml.cs**. We are going to register the VCD file. Expand the **M2_LoadVCD** snippet below the `// Insert the M2_LoadVCD snippet here` comment in the **OnLaunched()** method.
 
+    (Code Snippet - _M2_LoadVCD_)
+    <!--mark:1-2-->
+    ````C#
+	var storageFile = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommands.xml"));
+	await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(storageFile);
+    ````
+
     > **Note:** You will need to launch the app once normally to register the VCD each time you make changes to it.
 
 1. Expand the **M2_VoiceActivation** snippet below the `// Insert the M2_VoiceActivation snippet here` comment in the **OnActivated()** method. This creates a switch based on **ActivationKind.VoiceCommand**.
 
+    (Code Snippet - _M2_VoiceActivation_)
+    <!--mark:1-4-->
+    ````C#
+	case ActivationKind.VoiceCommand:
+		 VoiceCommandActivatedEventArgs voiceArgs = args as VoiceCommandActivatedEventArgs;
+		 HandleVoiceCommand(args);
+		 break;
+    ````
+
 1. Expand the **M2_HandleVoiceCommand** snippet anywhere in **App.xaml.cs**. This snippet creates a switch based on the voice command as it is understood by Cortana. Additionally, it writes the recognized command and the spoken text to the console.
+
+    (Code Snippet - _M2_HandleVoiceCommand_)
+    <!--mark:1-27-->
+    ````C#
+	private void HandleVoiceCommand(IActivatedEventArgs args)
+	{
+		 var commandArgs = args as VoiceCommandActivatedEventArgs;
+		 var speechRecognitionResult = commandArgs.Result;
+		 var command = speechRecognitionResult.Text;
+
+		 var voiceCommandName = speechRecognitionResult.RulePath[0];
+		 var textSpoken = speechRecognitionResult.Text;
+
+		 Debug.WriteLine("Command: " + command);
+		 Debug.WriteLine("Text spoken: " + textSpoken);
+
+		 string parameter;
+		 switch (voiceCommandName)
+		 {
+			  case "LaunchApp":
+					parameter = new TripNavigationParameter { TripId = AppSettings.LastTripId }.GetJson();
+					AppShell.Current.NavigateToPage(typeof(TripDetailPage), parameter);
+
+					break;
+
+			  // Insert the M2_NearbyCase snippet here
+
+			  default:
+					break;
+		 }
+	}
+    ````
 
 1. Build and run the app to register the VCD. Close the app.
 
@@ -234,6 +561,33 @@ Voice commands give your users a convenient, hands-free way to interact with you
 1. We're going to add a second voice command to the VCD. This command will be handled by the service.
 
     Open **VoiceCommands.xml**. Expand the **M2_NearbyCommand** snippet below the **LaunchApp** command.
+
+    (Code Snippet - _M2_NearbyCommand_)
+    <!--mark:1-22-->
+    ````C#
+	<Command Name="NearbySights">
+	  <Example>Show me the closest sightseeing attractions</Example>
+	  <ListenFor>Show me nearby sights</ListenFor>
+	  <ListenFor>{where} [my] [the] {nearby} {destinations}</ListenFor>
+	  <ListenFor>What's my nearest sightseeing attraction</ListenFor>
+	  <ListenFor>Which of my sights are near here</ListenFor>
+	  <ListenFor RequireAppName="ExplicitlySpecified">Show me the {nearby} {builtin:AppName} attractions</ListenFor>
+	  <Feedback>Hold on, let me check</Feedback>
+	  <VoiceCommandService Target="VoiceCommandService" />
+	</Command>
+
+	<PhraseList Label="where">
+	  <Item>Show me</Item>
+	  <Item>Where's</Item>
+	  <Item>Where is</Item>
+	</PhraseList>
+
+	<PhraseList Label="nearby">
+	  <Item>nearest</Item>
+	  <Item>closest</Item>
+	  <Item>nearby</Item>
+	</PhraseList>
+    ````
     
     This command uses phrase lists and several `<ListenFor>` nodes to provide a variety of options for the user to access the command.
     
@@ -245,6 +599,16 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
     Now we are ready to handle the incoming voice command in the **VoiceCommandService**.
 
+    (Code Snippet - _M2_NearbyCase_)
+    <!--mark:1-5-->
+    ````C#
+	case "NearbySights":
+		 parameter = new TripNavigationParameter { TripId = AppSettings.LastTripId }.GetJson();
+		 AppShell.Current.NavigateToPage(typeof(TripDetailPage), parameter);
+
+		 break;
+    ````
+
 1. Open **Background Tasks > VoiceCommandService.cs**.
 
     - We've set up the **VoiceCommandService** to implement the **IBackgroundTask** interface and handle task cancellation.
@@ -253,11 +617,28 @@ Voice commands give your users a convenient, hands-free way to interact with you
     
     - The **Run()** method is the entry point to the task.
     
-1. Expand the **M2_Using** snippet below the existing using statements.
+1. Expand the **M2_Using** snippet below the existing using statements. We'll be adding code that relies on these dependencies.
 
-    We'll be adding code that relies on these dependencies.
+    (Code Snippet - _M2_Using_)
+    <!--mark:1-8-->
+    ````C#
+	using Windows.ApplicationModel.VoiceCommands;
+	using Windows.ApplicationModel.AppService;
+	using Windows.Devices.Geolocation;
+	using Windows.Storage;
+	using Microsoft.Labs.SightsToSee.Library.Models;
+	using Microsoft.Labs.SightsToSee.Library.Services.DataModelService;
+	using Microsoft.Labs.SightsToSee.Library.Services.SightsService;
+	using Microsoft.Labs.SightsToSee.Models;
+    ````
 
 1. Expand the **M2_ServiceConnection** snippet as the first item in the VoiceCommandService class.VoiceCommandService
+
+    (Code Snippet - _M2_ServiceConnection_)
+    <!--mark:1-->
+    ````C#
+	VoiceCommandServiceConnection _voiceServiceConnection;
+    ````
 
     > **Note:** The voice service connection is maintained for the lifetime of a Cortana session.
 
@@ -265,11 +646,52 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
 1. Expand the **M2_TriggerDetails** snippet inside the **Run()** method. 
 
+    (Code Snippet - _M2_TriggerDetails_)
+    <!--mark:1-26-->
+    ````C#
+	var triggerDetails = taskInstance.TriggerDetails as AppServiceTriggerDetails;
+
+	if (triggerDetails != null && triggerDetails.Name == "VoiceCommandService")
+	{
+		 try
+		 {
+			  _voiceServiceConnection = VoiceCommandServiceConnection.FromAppServiceTriggerDetails(triggerDetails);
+
+			  _voiceServiceConnection.VoiceCommandCompleted += OnVoiceCommandCompleted;
+
+			  // Insert the M2_HandleNearbySights snippet here
+
+		 }
+		 catch (Exception ex)
+		 {
+			  var userMessage = new VoiceCommandUserMessage();
+			  userMessage.SpokenMessage = "Sorry, I can't do that right now - something went wrong.";
+			  // useful for debugging
+			  userMessage.DisplayMessage = ex.Message;
+
+			  var response = VoiceCommandResponse.CreateResponse(userMessage);
+
+			  response.AppLaunchArgument = "LaunchApp";
+			  await _voiceServiceConnection.ReportFailureAsync(response);
+		 }
+	}
+    ````
+
     - We are checking the trigger details to see if the name matches the name of the App Service registration from the app manifest. If so, we implement a try-catch block.
     
     > **Note:** The subscription to the **VoiceCommandCompleted** event is in this code block, because it must take place after the **voiceServiceConnection** is set.
     
 1. Expand the **M2_CommandCompleted** snippet above the **OnTaskCanceled** method.
+
+    (Code Snippet - _M2_CommandCompleted_)
+    <!--mark:1-4-->
+    ````C#
+	private void OnVoiceCommandCompleted(VoiceCommandServiceConnection sender, VoiceCommandCompletedEventArgs args)
+	{
+		 // Complete the service deferral
+		 this._serviceDeferral?.Complete();
+	}
+    ````
 
 1. Our voice service connection is set up and we are handling completion and cancellation. Now we can handle the particular case of the NearbySights command.
 
@@ -283,6 +705,42 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
 1. Expand the **M2_GetNearest** snippet after the **Run()** method.
 
+    (Code Snippet - _M2_GetNearest_)
+    <!--mark:1-31-->
+    ````C#
+	private static async Task<List<Sight>> GetNearestSights(Geoposition pos)
+	{
+		 var datamodelService = DataModelServiceFactory.CurrentDataModelService();
+
+		 // we are just loading the default trip here
+		 var trip = await datamodelService.LoadTripAsync(AppSettings.LastTripId);
+		 var nearest = await SightsHelper.FindClosestSightsAsync(pos.Coordinate.Point, trip, false);
+		 return nearest;
+	}
+
+	private async Task ReportFailureToGetCurrentLocation()
+	{
+		 var userMessage = new VoiceCommandUserMessage();
+		 userMessage.DisplayMessage = userMessage.SpokenMessage = "Sorry, I can't access your location at the moment.";
+
+		 var response = VoiceCommandResponse.CreateResponse(userMessage);
+
+		 response.AppLaunchArgument = "LaunchApp";
+		 await _voiceServiceConnection.ReportFailureAsync(response);
+	}
+
+	private async Task ReportFailureToGetSights()
+	{
+		 var userMessage = new VoiceCommandUserMessage();
+		 userMessage.DisplayMessage = userMessage.SpokenMessage = "Sorry, I can't find any sights in your trip.";
+
+		 var response = VoiceCommandResponse.CreateResponse(userMessage);
+
+		 response.AppLaunchArgument = "LaunchApp";
+		 await _voiceServiceConnection.ReportFailureAsync(response);
+	}
+    ````
+
     - The **GetNearestSights** task loads the default trip and passes it to the SightsHelper to find the closest Sights
     
     - **ReportFailureToGetCurrentLocation()** task returns a message to the user when the user hasn't granted location permissions to the app
@@ -293,7 +751,46 @@ Voice commands give your users a convenient, hands-free way to interact with you
     
 1. Expand the **M2_ShowNearest** snippet after the tasks you just added.
 
-    The **ShowNearestResults** task 
+    (Code Snippet - _M2_ShowNearest_)
+    <!--mark:1-33-->
+    ````C#
+	private async Task ShowNearestResults(List<Sight> nearest)
+	{
+		 var userMessage = new VoiceCommandUserMessage
+		 {
+			  DisplayMessage = "Here are your closest Sights:",
+			  SpokenMessage = "Here are your closest sights"
+		 };
+
+		 var sightsContentTiles = new List<VoiceCommandContentTile>();
+
+		 foreach (var sight in nearest)
+		 {
+			  var sightTile = new VoiceCommandContentTile();
+			  sightTile.ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText;
+			  if (sight.ImagePath.StartsWith("ms-appx"))
+			  {
+					sightTile.Image =
+						 await StorageFile.GetFileFromApplicationUriAsync(new Uri(sight.ImagePath));
+			  }
+			  else
+			  {
+					sightTile.Image = await StorageFile.GetFileFromPathAsync(sight.ImagePath);
+			  }
+			  sightTile.Title = sight.Name;
+			  sightTile.TextLine1 = sight.Description;
+			  sightTile.AppContext = sight.Id;
+			  sightTile.AppLaunchArgument = sight.Id.ToString("D");
+			  sightsContentTiles.Add(sightTile);
+		 }
+
+
+		 var response = VoiceCommandResponse.CreateResponse(userMessage, sightsContentTiles);
+		 await _voiceServiceConnection.ReportSuccessAsync(response);
+	}
+    ````
+
+    The **ShowNearestResults** task:
     
     - Returns a written and spoken message to the user
     
@@ -304,6 +801,57 @@ Voice commands give your users a convenient, hands-free way to interact with you
 1. Now we can set up the switch to handle the **NearbySights** case in the **Run()** method. We're going to call the tasks we just added.
     
     Expand the **M2_HandleNearbySights** snippet inside the **Try** block in the **Run()** method.
+
+    (Code Snippet - _M2_HandleNearbySights_)
+    <!--mark:1-46-->
+    ````C#
+	VoiceCommand voiceCommand = await _voiceServiceConnection.GetVoiceCommandAsync();
+
+	switch (voiceCommand.CommandName)
+	{
+		 case "NearbySights":
+			  GeolocationAccessStatus accessStatus;
+			  try
+			  {
+					// If we call this before the app has granted access, we get an exception
+					accessStatus = await Geolocator.RequestAccessAsync();
+			  }
+			  catch
+			  {
+					// ensure we have a value
+					accessStatus = GeolocationAccessStatus.Unspecified;
+			  }
+			  if (accessStatus == GeolocationAccessStatus.Allowed)
+			  {
+
+					var geolocator = new Geolocator();
+					var pos = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(5));
+					if (pos != null)
+					{
+						 var nearest = await GetNearestSights(pos);
+						 if (nearest != null && nearest.Any())
+						 {
+							  await ShowNearestResults(nearest);
+						 }
+						 else
+						 {
+							  await ReportFailureToGetSights();
+						 }
+					}
+					else
+					{
+						 await ReportFailureToGetCurrentLocation();
+					}
+			  }
+			  else
+			  {
+					await ReportFailureToGetCurrentLocation();
+			  }
+			  break;
+		 default:
+			  break;
+	}
+    ````
     
     What it does:
     
@@ -326,6 +874,15 @@ Voice commands give your users a convenient, hands-free way to interact with you
 Toast notifications are a great way to quickly interact with a user outside of an app. In this task, we're going to build and trigger a toast notification for a Sight when it is added to My Sights.
 
 1.	Open **SightDetailControl.xaml** and expand the **M2_DatePicker** snippet after the **Caption** TextBlock. This snippet includes a **CalendarDatePicker** and **TimePicker**.
+
+    (Code Snippet - _M2_DatePicker_)
+    <!--mark:1-4-->
+    ````C#
+	<StackPanel Orientation="Horizontal" Grid.Row="0">
+		 <CalendarDatePicker Date="{x:Bind ViewModel.CurrentSightDate, Mode=TwoWay}" />
+		 <TimePicker Time="{x:Bind ViewModel.CurrentSightTime, Mode=TwoWay}" />
+	</StackPanel>
+    ````
   
     We've created variables in the ViewModel for **CurrentSightTime** and **CurrentSightDate** that return the visit date and time stored for the sight. If the date is null, it will return **DateTime.Now**.
     
@@ -344,10 +901,40 @@ Toast notifications are a great way to quickly interact with a user outside of a
     > **Note:** The toast is set to always display 30 seconds from the time it is triggered to make it easy to test.
     
 1. Open the **SightDetailPageViewModel**. In the **AddSightAsync()** method, expand the **M2_ScheduleToast** snippet as the first item in the method. This snippet calls the **ScheduledNotificationService** to create and send a toast notification and it passes it the current Sight.
+
+    (Code Snippet - _M2_ScheduleToast_)
+    <!--mark:1-5-->
+    ````C#
+	// Add CurrentSightTime and schedule toast notification
+	if (CurrentSightDate.HasValue)
+		 CurrentSight.VisitDate = CurrentSightDate.Value.Date.Add(CurrentSightTime);
+
+	ScheduledNotificationService.AddToastReminder(CurrentSight);
+    ````
     
 1. When the toast arrives, it would be useOnActivatedful if the user could go straight into the Sight Details from the toast.
 
 1. Open **App.xaml.cs**. Expand the **M2_ToastActivation** snippet as a case in the `switch (args.Kind)` in the **OnActivated()** override.
+
+    (Code Snippet - _M2_ToastActivation_)
+    <!--mark:1-15-->
+    ````C#
+	case ActivationKind.ToastNotification:
+		 var toast = args as ToastNotificationActivatedEventArgs;
+
+		 var props = toast.Argument.Split(':');
+		 if (props[0] == "View")
+		 {
+			  var tripParam = new TripNavigationParameter { TripId = AppSettings.LastTripId, SightId = Guid.ParseExact(props[1], "D") }.GetJson();
+			  AppShell.Current.NavigateToPage(typeof(TripDetailPage), tripParam);
+		 }
+		 else if(props[0] == "Remove")
+		 {
+			  var tripParam = new TripNavigationParameter { TripId = AppSettings.LastTripId, SightId = Guid.ParseExact(props[1], "D"), DeleteSight = true }.GetJson();
+			  AppShell.Current.NavigateToPage(typeof(TripDetailPage), tripParam);
+		 }
+		 break;
+    ````
 
 1. Build and run your app. Open the Sight details for a sight that has not been added to My Sights. 
 
