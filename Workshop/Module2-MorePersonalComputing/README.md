@@ -17,7 +17,7 @@ In this module, we’re going to get hands-on experience implementing more perso
 
 - Add inking support
 - Provide speech integration through Cortana
-- Build an interactive notification that enables direct user actions.
+- Build an interactive notification that enables direct user actions
 
 <a name="Prerequisites"></a>
 ### Prerequisites ###
@@ -39,7 +39,7 @@ This module includes the following exercises:
 
 1.	[Inking](#Exercise1)
 1.	[Cortana Integration and Speech Commands](#Exercise2)
-1.	[Implement an interactive toast](#Exercise3)
+1.	[Implementing interactive toast notifications](#Exercise3)
 
 
 Estimated time to complete this module:  **40 to 50 minutes**
@@ -54,7 +54,7 @@ We will be implementing the following Inking features:
 - Optical character recognition
 
 <a name="Ex1Task1"></a>
-#### Task 1 - Add the ability for users to enter written notes ####
+#### Task 1 - Adding the ability for users to enter written notes ####
 
 We'll start by adding an InkCanvas that can be used for taking notes.
 
@@ -120,7 +120,7 @@ In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any In
 1. Build and run the app. Use the Notes InkToolbar to change properties for the Ink canvas, save the Ink, and undo.
 
 <a name="Ex1Task3"></a>
-#### Task 3 - Add OCR Ink to text capability ####
+#### Task 3 - Adding OCR Ink to text capability ####
 
 Now that we've added the ability to record notes with Ink, it would be useful to recognize those notes as text. In this task, we're going to add the ability to use Optical Character Recognition to convert Ink notes to text.
 
@@ -318,10 +318,10 @@ Voice commands give your users a convenient, hands-free way to interact with you
 1. Ask Cortana to show nearby Sights. Cortana will display the closest Sights as content tiles.
 
 <a name="Exercise3"></a>
-### Exercise 3: Interactive Toast Notifications ###
+### Exercise 3: Implementing interactive toast notifications ###
 
 <a name="Ex3Task1"></a>
-#### Task 1 – Implement an interactive toast ####
+#### Task 1 – Implementing interactive toast notifications ####
 
 Toast notifications are a great way to quickly interact with a user outside of an app. In this task, we're going to build and trigger a toast notification for a Sight when it is added to My Sights.
 
