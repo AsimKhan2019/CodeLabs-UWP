@@ -15,7 +15,6 @@ using Microsoft.Labs.SightsToSee.Library.Services.DataModelService;
 using Microsoft.Labs.SightsToSee.Views;
 using Microsoft.WindowsAzure.MobileServices;
 using Microsoft.Labs.SightsToSee.Models;
-using Microsoft.Labs.SightsToSee.Facts;
 
 namespace Microsoft.Labs.SightsToSee
 {
@@ -56,8 +55,9 @@ namespace Microsoft.Labs.SightsToSee
             // Insert the M2_LoadVCD snippet here
 
 
-
+#if SQLITE
             await SQLiteService.InitDb();
+#endif
 
             SetupShell(args);
 
@@ -111,11 +111,11 @@ namespace Microsoft.Labs.SightsToSee
                     AppShell.Current.NavigateToPage(typeof(TripDetailPage), parameter);
                     break;
 
-                // Insert M2_VoiceActivation snippet here
-                
-              
+                // Insert the M2_VoiceActivation snippet here
+
+
                 // Insert the M2_ToastActivation snippet here
-                
+
 
                 default:
                     break;
@@ -126,7 +126,7 @@ namespace Microsoft.Labs.SightsToSee
         }
 
         // Insert the M2_HandleVoiceCommand snippet here
-       
+
 
         private void SetupTitleBarColors()
         {

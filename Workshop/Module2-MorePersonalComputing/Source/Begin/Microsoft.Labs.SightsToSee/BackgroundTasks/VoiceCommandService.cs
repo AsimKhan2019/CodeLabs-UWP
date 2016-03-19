@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 // Insert the M2_Using snippet here
 
-
 namespace BackgroundTasks
 {
     public sealed class VoiceCommandService : IBackgroundTask
@@ -22,8 +21,16 @@ namespace BackgroundTasks
             taskInstance.Canceled += OnTaskCanceled;
 
             // Insert the M2_TriggerDetails snippet here
-
+            
         }
+
+        // Insert the M2_GetNearest snippet here
+
+
+        // Insert the M2_ShowNearest snippet here
+
+
+        // Insert the M2_CommandCompleted snippet here
 
 
         // Clean up on task cancellation

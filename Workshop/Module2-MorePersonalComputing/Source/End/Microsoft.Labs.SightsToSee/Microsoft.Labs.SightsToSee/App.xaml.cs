@@ -10,10 +10,11 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.ApplicationInsights;
-using Microsoft.Data.Entity;
-using Microsoft.Labs.SightsToSee.Models;
+using Microsoft.Labs.SightsToSee.Library.Models;
+using Microsoft.Labs.SightsToSee.Library.Services.DataModelService;
 using Microsoft.Labs.SightsToSee.Views;
 using Microsoft.WindowsAzure.MobileServices;
+using Microsoft.Labs.SightsToSee.Models;
 
 namespace Microsoft.Labs.SightsToSee
 {
@@ -22,9 +23,6 @@ namespace Microsoft.Labs.SightsToSee
     /// </summary>
     sealed partial class App : Application
     {
-        public static MobileServiceClient MobileService =
-            new MobileServiceClient("http://labs-demo-svc.azurewebsites.net");
-
         private readonly Task _seedDataTask;
 
         /// <summary>
@@ -38,21 +36,6 @@ namespace Microsoft.Labs.SightsToSee
                 WindowsCollectors.Session);
             InitializeComponent();
             Suspending += OnSuspending;
-
-#if EFCORE
-            // Note: 
-            // This will always apply all outstanding migrations on application execution.
-            // This can include:
-            //      Db Creation
-            //      Any updates
-            using (var context = new SightsToSeeDbContext())
-            {
-                context.Database.Migrate();
-
-                // Add seed data here
-                //_seedDataTask = SeedDataFactory.LoadDataAsync(context, true);
-            }
-#endif
         }
 
         /// <summary>
@@ -60,7 +43,7 @@ namespace Microsoft.Labs.SightsToSee
         ///     will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override async void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
 #if DEBUG
             if (Debugger.IsAttached)
@@ -69,36 +52,36 @@ namespace Microsoft.Labs.SightsToSee
                 //this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
-            // Install the Voice Command Definition File
+            // Insert the M2_LoadVCD snippet here
 
             var storageFile = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommands.xml"));
-
             await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(storageFile);
 
+#if SQLITE
+            await SQLiteService.InitDb();
+#endif
 
+            SetupShell(args);
+
+            // Ensure the current window is active
+            Window.Current.Activate();
+        }
+
+        private void SetupShell(IActivatedEventArgs args)
+        {
             SetupTitleBarColors();
 
             var shell = Window.Current.Content as AppShell;
-            using (var context = new SightsToSeeDbContext())
-            {
-                // Add seed data here
-                await SeedDataFactory.LoadDataAsync(context, false);
-            }
-
-
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (shell == null)
             {
                 // Create a AppShell to act as the navigation context and navigate to the first page
-                shell = new AppShell();
-
-                // Set the default language
-                shell.Language = ApplicationLanguages.Languages[0];
+                shell = new AppShell {Language = ApplicationLanguages.Languages[0]};
 
                 shell.AppFrame.NavigationFailed += OnNavigationFailed;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application
                 }
@@ -106,19 +89,96 @@ namespace Microsoft.Labs.SightsToSee
 
             // Place our app shell in the current Window
             Window.Current.Content = shell;
+        }
 
-            // The Shell determines it's initial view.
-            //if (shell.AppFrame.Content == null)
-            //{
-            //    // When the navigation stack isn't restored, navigate to the first page
-            //    // suppressing the initial entrance animation.
-            //    shell.AppFrame.Navigate(typeof (LandingPage), e.Arguments, new SuppressNavigationTransitionInfo());
-            //}
+        protected override async void OnActivated(IActivatedEventArgs args)
+        {
+            SetupShell(args);
+
+            // we need to wait for the shell to load
+            while (AppShell.Current == null)
+            {
+                await Task.Delay(200);
+            }
+            
+
+
+            switch (args.Kind)
+            {
+                case ActivationKind.Protocol:
+                    ProtocolActivatedEventArgs protocolArgs = args as ProtocolActivatedEventArgs;
+                    Windows.Foundation.WwwFormUrlDecoder decoder = new Windows.Foundation.WwwFormUrlDecoder(protocolArgs.Uri.Query);
+                    var siteId = decoder.GetFirstValueByName("LaunchContext");
+                    var parameter = new TripNavigationParameter { TripId = AppSettings.LastTripId, SightId = Guid.ParseExact(siteId, "D")}.GetJson();
+                    AppShell.Current.NavigateToPage(typeof(TripDetailPage), parameter);
+                    break;
+
+                // Insert the M2_VoiceActivation snippet here
+
+                case ActivationKind.VoiceCommand:
+                    VoiceCommandActivatedEventArgs voiceArgs = args as VoiceCommandActivatedEventArgs;
+                    HandleVoiceCommand(args);
+                    break;
+
+                // Insert the M2_ToastActivation snippet here
+
+                case ActivationKind.ToastNotification:
+                    var toast = args as ToastNotificationActivatedEventArgs;
+
+                    var props = toast.Argument.Split(':');
+                    if (props[0] == "View")
+                    {
+                        var tripParam = new TripNavigationParameter { TripId = AppSettings.LastTripId, SightId = Guid.ParseExact(props[1], "D") }.GetJson();
+                        AppShell.Current.NavigateToPage(typeof(TripDetailPage), tripParam);
+                    }
+                    else if (props[0] == "Remove")
+                    {
+                        var tripParam = new TripNavigationParameter { TripId = AppSettings.LastTripId, SightId = Guid.ParseExact(props[1], "D"), DeleteSight = true }.GetJson();
+                        AppShell.Current.NavigateToPage(typeof(TripDetailPage), tripParam);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
 
             // Ensure the current window is active
-
             Window.Current.Activate();
+        }
 
+        // Insert the M2_HandleVoiceCommand snippet here
+
+        private void HandleVoiceCommand(IActivatedEventArgs args)
+        {
+            var commandArgs = args as VoiceCommandActivatedEventArgs;
+            var speechRecognitionResult = commandArgs.Result;
+            var command = speechRecognitionResult.Text;
+
+            var voiceCommandName = speechRecognitionResult.RulePath[0];
+            var textSpoken = speechRecognitionResult.Text;
+
+            Debug.WriteLine("Command: " + command);
+            Debug.WriteLine("Text spoken: " + textSpoken);
+
+            string parameter;
+            switch (voiceCommandName)
+            {
+                case "LaunchApp":
+                    parameter = new TripNavigationParameter { TripId = AppSettings.LastTripId }.GetJson();
+                    AppShell.Current.NavigateToPage(typeof(TripDetailPage), parameter);
+
+                    break;
+
+                // Insert the M2_NearbyCase snippet here
+
+                case "NearbySights":
+                    parameter = new TripNavigationParameter { TripId = AppSettings.LastTripId }.GetJson();
+                    AppShell.Current.NavigateToPage(typeof(TripDetailPage), parameter);
+
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void SetupTitleBarColors()
@@ -165,44 +225,6 @@ namespace Microsoft.Labs.SightsToSee
             titleBar.ButtonInactiveBackgroundColor = titleBarButtonInactiveBackground.Color;
             titleBar.ButtonInactiveForegroundColor = titleBarButtonInactiveForeground.Color;
         }
-
-        protected override void OnActivated(IActivatedEventArgs args)
-        {
-            switch (args.Kind)
-            {
-                case ActivationKind.VoiceCommand:
-                    HandleVoiceCommand(args);
-                    break;
-
-                default:
-                    break;
-            }
-            base.OnActivated(args);
-
-
-        }
-
-        private void HandleVoiceCommand(IActivatedEventArgs args)
-        {
-            var commandArgs = args as VoiceCommandActivatedEventArgs;
-            var speechRecognitionResult = commandArgs.Result;
-            var command = speechRecognitionResult.Text;
-
-            var voiceCommandName = speechRecognitionResult.RulePath[0];
-            var textSpoken = speechRecognitionResult.Text;
-
-            Debug.WriteLine("Command: " + command);
-            Debug.WriteLine("Text spoken: " + textSpoken);
-
-            switch (voiceCommandName)
-            {
-                case "LaunchApp":
-                    break;
-                default:
-                    break;
-            }
-        }
-
 
         /// <summary>
         ///     Invoked when Navigation to a certain page fails

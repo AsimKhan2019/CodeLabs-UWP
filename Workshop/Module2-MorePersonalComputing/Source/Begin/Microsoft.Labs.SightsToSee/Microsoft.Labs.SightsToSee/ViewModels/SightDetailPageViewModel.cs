@@ -12,7 +12,10 @@ using Windows.UI.Xaml.Media.Imaging;
 using Microsoft.Labs.SightsToSee.Library.Models;
 using Microsoft.Labs.SightsToSee.Library.Services.DataModelService;
 using Microsoft.Labs.SightsToSee.Mvvm;
+using Microsoft.Labs.SightsToSee.Services.RestaurantDataService;
 using Microsoft.Labs.SightsToSee.Services.TilesNotificationsService;
+using Microsoft.Labs.SightsToSee.Services.FileService;
+using Microsoft.Labs.SightsToSee.Views;
 
 namespace Microsoft.Labs.SightsToSee.ViewModels
 {
@@ -24,9 +27,10 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
         private DateTimeOffset? _currentSightDate;
         private ObservableCollection<SightFile> _currentSightFiles;
         private TimeSpan _currentSightTime;
+        private bool _isNotesInking;
         private SightFile _selectedSightFile;
         private BitmapImage _sightImage;
-        private bool _isNotesInking;
+        private EatsControlViewModel _eatsControlViewModel;
 
         public bool IsNotesInking
         {
@@ -84,6 +88,12 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             set { Set(ref _sightImage, value); }
         }
 
+        public EatsControlViewModel EatsControlViewModel
+        {
+            get { return _eatsControlViewModel; }
+            set { Set(ref _eatsControlViewModel, value); }
+        }
+
 
         public async Task LoadSightAsync(Guid sightId)
         {
@@ -93,13 +103,26 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             foreach (var sightFile in CurrentSight.SightFiles)
             {
                 // Only add Image files to the CurrentSightFiles list, not inking
-                if (sightFile.FileType == SightFileType.Image)
+                if (sightFile.FileType == SightFileType.ImageGallery)
                 {
                     CurrentSightFiles.Add(sightFile);
                 }
             }
 
             SelectedSightFile = CurrentSightFiles.FirstOrDefault();
+
+            EatsControlViewModel = new EatsControlViewModel { CenterLocation = CurrentSight.Location, Sight = CurrentSight, IsDisplayingSightEats = true};
+            try
+            {
+                EatsControlViewModel.IsLoadingEats = true;
+                EatsControlViewModel.Eats =
+                    new ObservableCollection<Restaurant>(
+                        await RestaurantDataService.Current.GetRestaurantsForSightAsync(CurrentSight));
+            }
+            finally
+            {
+                EatsControlViewModel.IsLoadingEats = false;
+            }
         }
 
         public async void DeleteSightAsync()
@@ -114,26 +137,8 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             await LoadSightAsync(sight.Id);
         }
 
-
-        /// <summary>
-        /// Adds a new Image or Inking File to the Sight
-        /// </summary>
-        /// <param name="file"></param>
-        /// <param name="fileType">0: Image, 1: Inking</param>
-        /// <returns></returns>
-        private async Task AddSightFileAsync(StorageFile file, Guid sightFileId, SightFileType fileType)
+        public async Task SaveSightFileAsync(SightFile sightFile)
         {
-            // add to record
-            var id = sightFileId;
-            var sightFile = new SightFile
-            {
-                Id = id,
-                FileType = fileType,
-                Sight = CurrentSight,
-                SightId = CurrentSight.Id,
-                FileName = file.Name,
-                Uri = "ms-appdata:///local/" + SightFilesPath + "/" + id.ToString() + "/" + file.Name,
-            };
 
             CurrentSight.SightFiles.Add(sightFile);
             CurrentSightFiles.Add(sightFile);
@@ -162,30 +167,36 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
         public async void AddSightAsync()
         {
             // Insert the M2_ScheduleToast snippet here
-            
 
             CurrentSight.IsMySight = true;
             await UpdateSightAsync(CurrentSight);
         }
 
-
-        /// <summary>
-        /// Create the file to store inked notes on the main Sight
-        /// </summary>
-        /// <returns></returns>
-        public async Task<StorageFile> GenerateStorageFileForInk()
+        public async Task<SightFile> CreateSightFileAndAssociatedStorageFileAsync()
         {
-            Guid newSightFileId = Guid.NewGuid();
-            StorageFolder sightFolder = await CreateStorageFolderForSightFile(newSightFileId);
-            var inkFile = await
+            // Id of the new SightFile
+            Guid sightFileId = Guid.NewGuid();
+            StorageFolder sightFolder = await GetStorageFolderForSightFile(sightFileId);
+
+            // Create the physical file
+            var attachedFile = await
                     sightFolder.CreateFileAsync($"{Guid.NewGuid().ToString("D")}.png",
                         CreationCollisionOption.GenerateUniqueName);
-            await AddSightFileAsync(inkFile, newSightFileId, SightFileType.General);
 
-            return inkFile;
+            var sightFile = new SightFile
+            {
+                Id = sightFileId,
+                FileType = SightFileType.General,
+                Sight = CurrentSight,
+                SightId = CurrentSight.Id,
+                FileName = attachedFile.Name,
+                Uri = attachedFile.GetUri().ToString()
+            };
+
+            return sightFile;
         }
 
-        private async Task<StorageFolder> CreateStorageFolderForSightFile(Guid sightFileId)
+        public async Task<StorageFolder> GetStorageFolderForSightFile(Guid sightFileId)
         {
             // Physical file needs to go to {localfolder}/SightFiles/{sightFileId}/
             var sightFilesFolder = await
@@ -198,13 +209,16 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
 
         public async Task UpdateSightFileImageUriAsync(Uri imageUri)
         {
-            // make sure we don't overwrite the original uri
-            if (string.IsNullOrWhiteSpace(SelectedSightFile.OriginalUri))
-            {
-                SelectedSightFile.OriginalUri = SelectedSightFile.Uri;
-            }
+            // Ensure that the original Uri is set, so that the user can revert later on
+            SelectedSightFile.OriginalUri = 
+                (SelectedSightFile.OriginalUri != null ? SelectedSightFile.OriginalUri : SelectedSightFile.Uri);
 
+            // Update details in the SightFile object
             SelectedSightFile.Uri = imageUri.ToString();
+            var file = await StorageFile.GetFileFromApplicationUriAsync(imageUri);
+            SelectedSightFile.FileName = file.Name;
+
+            // Update in the data model
             await UpdateSelectedSightFileAsync();
         }
 
@@ -220,7 +234,23 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             SightImage = SelectedSightFile.ImageUri;
         }
 
+        public async Task ReplaceSelectedSightFileAsync(SightFile replacement)
+        {
+            // Delete in the database
+            await _dataModelService.DeleteSightFileAsync(SelectedSightFile);
+            // And save the replacement
+            await _dataModelService.SaveSightFileAsync(replacement);
+
+
+            // Replace the current version with the updated one
+            int position = CurrentSightFiles.IndexOf(SelectedSightFile);
+            CurrentSightFiles.Insert(position, replacement);
+            CurrentSightFiles.RemoveAt(position + 1);
+            SightImage = replacement.ImageUri;
+        }
+
         // Insert the M2_EnableInk snippet here
+
 
     }
 }

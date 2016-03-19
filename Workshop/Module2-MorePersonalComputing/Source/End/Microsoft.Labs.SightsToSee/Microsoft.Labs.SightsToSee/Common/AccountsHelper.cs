@@ -5,77 +5,77 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Storage;
-using Microsoft.Labs.SightsToSee.Models;
+using Microsoft.Labs.SightsToSee.Library.Models;
 
 namespace Microsoft.Labs.SightsToSee.Common
 {
-    class AccountsHelper
+    internal class AccountsHelper
     {
         private const string USER_LIST_FILE_NAME = "accountlist.txt";
 
         /// <summary>
-        /// Gets the account list file and deserializes it from XML to a list of accounts object.
+        ///     Gets the account list file and deserializes it from XML to a list of accounts object.
         /// </summary>
         /// <returns>List of account objects</returns>
-        static public async Task<List<Account>> LoadAccountList()
+        public static async Task<List<Account>> LoadAccountList()
         {
             try
             {
-                StorageFile accountsFile = await ApplicationData.Current.LocalFolder.GetFileAsync(USER_LIST_FILE_NAME);
-                string accountsXml = await Windows.Storage.FileIO.ReadTextAsync(accountsFile);
-                return AccountsHelper.DeserializeXmlToAccountList(accountsXml);
+                var accountsFile = await ApplicationData.Current.LocalFolder.GetFileAsync(USER_LIST_FILE_NAME);
+                var accountsXml = await FileIO.ReadTextAsync(accountsFile);
+                return DeserializeXmlToAccountList(accountsXml);
             }
-            catch (FileNotFoundException e)
+            catch (FileNotFoundException)
             {
-                List<Account> emptyAccountList = new List<Account>();
+                var emptyAccountList = new List<Account>();
                 return emptyAccountList;
             }
         }
 
         /// <summary>
-        /// Takes a list of accounts and create an account list file. (Replacing the old one)
+        ///     Takes a list of accounts and create an account list file. (Replacing the old one)
         /// </summary>
         /// <param name="accountList">List object of accounts</param>
-        static public async void SaveAccountList(List<Account> accountList)
+        public static async void SaveAccountList(List<Account> accountList)
         {
-            string accountsXml = SerializeAccountListToXml(accountList);
+            var accountsXml = SerializeAccountListToXml(accountList);
 
             try
             {
-                StorageFile accountsFile = await ApplicationData.Current.LocalFolder.GetFileAsync(USER_LIST_FILE_NAME);
-                await Windows.Storage.FileIO.WriteTextAsync(accountsFile, accountsXml);
+                var accountsFile = await ApplicationData.Current.LocalFolder.GetFileAsync(USER_LIST_FILE_NAME);
+                await FileIO.WriteTextAsync(accountsFile, accountsXml);
             }
-            catch (FileNotFoundException e)
+            catch (FileNotFoundException)
             {
-                StorageFile accountsFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(USER_LIST_FILE_NAME);
-                await Windows.Storage.FileIO.WriteTextAsync(accountsFile, accountsXml);
+                var accountsFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(USER_LIST_FILE_NAME);
+                await FileIO.WriteTextAsync(accountsFile, accountsXml);
             }
         }
 
         /// <summary>
-        /// Takes a list of accounts and returns an XML formatted string representing the list
+        ///     Takes a list of accounts and returns an XML formatted string representing the list
         /// </summary>
         /// <param name="list">List object of accounts</param>
         /// <returns>XML formatted list of accounts</returns>
-        static public string SerializeAccountListToXml(List<Account> list)
+        public static string SerializeAccountListToXml(List<Account> list)
         {
-            XmlSerializer xmlizer = new XmlSerializer(typeof(List<Account>));
-            StringWriter writer = new StringWriter();
+            var xmlizer = new XmlSerializer(typeof (List<Account>));
+            var writer = new StringWriter();
             xmlizer.Serialize(writer, list);
             return writer.ToString();
         }
 
         /// <summary>
-        /// Takes an XML formatted string representing a list of accounts and returns a list object of accounts
+        ///     Takes an XML formatted string representing a list of accounts and returns a list object of accounts
         /// </summary>
         /// <param name="listAsXml">XML formatted list of accounts</param>
         /// <returns>List object of accounts</returns>
-        static public List<Account> DeserializeXmlToAccountList(string listAsXml)
+        public static List<Account> DeserializeXmlToAccountList(string listAsXml)
         {
-            XmlSerializer xmlizer = new XmlSerializer(typeof(List<Account>));
-            List<Account> accounts = new List<Account>();
+            var xmlizer = new XmlSerializer(typeof (List<Account>));
+            var accounts = new List<Account>();
             TextReader textreader = new StreamReader(new MemoryStream(Encoding.UTF8.GetBytes(listAsXml)));
-            accounts = (xmlizer.Deserialize(textreader)) as List<Account>;
+            accounts = xmlizer.Deserialize(textreader) as List<Account>;
             return accounts;
         }
     }

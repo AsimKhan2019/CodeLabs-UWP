@@ -183,4 +183,35 @@ namespace Microsoft.Labs.SightsToSee.Services.FileService
             return JsonConvert.DeserializeObject<T>(json);
         }
     }
+
+    public static class StorageFileExtensions
+    {
+        public static Uri GetUri(this IStorageFile file)
+        {
+            return new Uri(string.Format("ms-appdata:///{0}", FindFilePath(file)));
+        }
+
+        private static string FindFilePath(IStorageFile file)
+        {
+            string pathLocalFolder = ApplicationData.Current.LocalFolder.Path;
+            string pathRoamingFolder = ApplicationData.Current.RoamingFolder.Path;
+
+            if (file.Path.StartsWith(pathLocalFolder))
+            {
+                return GeneratePath("local", file.Path, pathLocalFolder);
+            }
+            if (file.Path.StartsWith(pathRoamingFolder))
+            {
+                return GeneratePath("roaming", file.Path, pathLocalFolder);
+            }
+            throw new ArgumentException("file not compatible");
+        }
+
+        private static string GeneratePath(string type, string fullpath, string containerPath)
+        {
+            var path = fullpath.Substring(containerPath.Length);
+            return string.Format("{0}{1}", type, path.Replace('\\', '/'));
+        }
+    }
+
 }

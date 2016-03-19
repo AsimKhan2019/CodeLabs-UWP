@@ -16,7 +16,9 @@ using Microsoft.Labs.SightsToSee.Common;
 using Microsoft.Labs.SightsToSee.Library.Models;
 using Microsoft.Labs.SightsToSee.Library.Services.DataModelService;
 using Microsoft.Labs.SightsToSee.Library.Services.SightsService;
+using Microsoft.Labs.SightsToSee.Models;
 using Microsoft.Labs.SightsToSee.Mvvm;
+using Microsoft.Labs.SightsToSee.Services.RestaurantDataService;
 using Microsoft.Labs.SightsToSee.Services.TilesNotificationsService;
 using Microsoft.Labs.SightsToSee.Views;
 
@@ -35,6 +37,7 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
         private ObservableCollection<SightGroup> _sightGroups;
         private BitmapImage _sightImage;
         private ObservableCollection<Sight> _sights;
+        private EatsControlViewModel _eatsControlViewModel;
 
 
         public TripDetailPageViewModel()
@@ -53,10 +56,7 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
 
         public MapControl Map { get; set; }
 
-        public string MapServiceToken
-            =>
-                "7H7lMjEkAfP3PeOrrPVO~IRTU1f4lP6GTdpBxi4gqoQ~AvvbAnSGbHtsowQ98zRfwvaw6PdCgo2vq3x75R3_SbvN2zb7-YcaM_UIPNtNWOWK"
-            ;
+        public string MapServiceToken => AppSettings.MapServiceToken;
 
         public Trip CurrentTrip
         {
@@ -130,6 +130,12 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             }
         }
 
+        public EatsControlViewModel EatsControlViewModel
+        {
+            get { return _eatsControlViewModel; }
+            set { Set(ref _eatsControlViewModel, value); }
+        }
+
         public async Task ConfirmDeleteSightAsync(Guid sightId)
         {
             var sight = CurrentTrip.Sights.SingleOrDefault(s => s.Id == sightId);
@@ -180,6 +186,19 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
                         MapAnimationKind.None);
                 }
             }
+
+            EatsControlViewModel = new EatsControlViewModel {CenterLocation = CurrentTrip.Location, Trip = CurrentTrip};
+            try
+            {
+                EatsControlViewModel.IsLoadingEats = true;
+                EatsControlViewModel.Eats =
+                    new ObservableCollection<Restaurant>(await RestaurantDataService.Current.GetRestaurantsForTripAsync(CurrentTrip));
+            }
+            finally 
+            {
+                EatsControlViewModel.IsLoadingEats = false;
+            }
+
 
             // Set interactive tiles on load
             TileHelper.SetInteractiveTilesForTrip(CurrentTrip);

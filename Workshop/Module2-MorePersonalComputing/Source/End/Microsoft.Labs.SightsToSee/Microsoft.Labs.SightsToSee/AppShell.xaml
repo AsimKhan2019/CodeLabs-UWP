@@ -40,8 +40,6 @@
         <!-- Adaptive triggers -->
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-
-                <!-- Desktop State -->
                 <VisualState >
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="1024" />
@@ -51,20 +49,15 @@
                         <Setter Target="RootSplitView.IsPaneOpen" Value="True"/>
                     </VisualState.Setters>
                 </VisualState>
-
-                <!-- Tablet State -->
                 <VisualState>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="RootSplitView.DisplayMode" Value="CompactInline"/>
+                        <Setter Target="RootSplitView.DisplayMode" Value="CompactOverlay"/>
                         <Setter Target="RootSplitView.IsPaneOpen" Value="False"/>
                     </VisualState.Setters>
                 </VisualState>
-
-                <!-- Mobile State -->
-
                 <VisualState>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="0" />
@@ -78,7 +71,6 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-
         <!-- Top-level navigation menu + app content -->
         <SplitView x:Name="RootSplitView"
                    DisplayMode="Inline"
@@ -88,7 +80,8 @@
                    IsTabStop="False">
             <SplitView.Pane>
                 <!-- A custom ListView to display the items in the pane.  The automation Name is set in the ContainerContentChanging event. -->
-                <controls:NavMenuListView x:Name="NavMenuList"
+                <Grid>
+                    <controls:NavMenuListView x:Name="NavMenuList"
                                           TabIndex="3"
                                           Style="{StaticResource NavMenuListStyle}"
                                           ItemsSource="{x:Bind NavList, Mode=OneWay}"
@@ -96,10 +89,22 @@
                                           ItemContainerStyle="{StaticResource NavMenuItemContainerStyle}"
                                           ItemTemplate="{StaticResource NavMenuItemTemplate}"
                                           ItemInvoked="NavMenuList_ItemInvoked" />
+
+                    <!--<controls:NavMenuListView x:Name="SecondaryMenuList"
+                                              VerticalAlignment="Bottom"
+                                              TabIndex="4"
+                                              ItemsSource="{x:Bind SecondaryNavList, Mode=OneWay}"
+                                              Style="{StaticResource NavMenuListStyle}"
+                                              ContainerContentChanging="NavMenuItemContainerContentChanging"
+                                              ItemContainerStyle="{StaticResource NavMenuItemContainerStyle}"
+                                              ItemTemplate="{StaticResource NavMenuItemTemplate}"
+                                              ItemInvoked="NavMenuList_ItemInvoked" />-->
+
+                </Grid>
             </SplitView.Pane>
 
             <SplitView.Content>
-            <!-- OnNavigatingToPage we synchronize the selected item in the nav menu with the current page.
+                <!-- OnNavigatingToPage we synchronize the selected item in the nav menu with the current page.
                  OnNavigatedToPage we move keyboard focus to the first item on the page after it's loaded and update the Back button. -->
                 <Frame x:Name="frame"
                    Navigating="OnNavigatingToPage"
@@ -136,10 +141,29 @@
         <Popup x:Name="ParentedPopup">
             <Popup.ChildTransitions>
                 <TransitionCollection>
-                    <EntranceThemeTransition/>
+                    <PopupThemeTransition/>
                 </TransitionCollection>
             </Popup.ChildTransitions>
         </Popup>
 
+        <Grid x:Name="BusyGrid"
+              IsHitTestVisible="True"
+              Background="#9f000000"
+              Visibility="Collapsed">
+            <StackPanel VerticalAlignment="Center"
+                        HorizontalAlignment="Center">
+                <ProgressRing IsActive="False"
+                              x:Name="BusyIndicator"
+                              Width="50"
+                              Height="50"
+                              Foreground="White"/>
+                <TextBlock x:Name="BusyText" 
+                           Foreground="White"
+                           Style="{StaticResource SubheaderTextBlockStyle}"
+                           Text="I am busy"/>
+            </StackPanel>
+        </Grid>
+
     </Grid>
 </Page>
+
