@@ -57,8 +57,8 @@ namespace Microsoft.Labs.SightsToSee
                     {
                         AddTrip(trip.Name, trip.Id);
                     }
-                    var parameter = new TripNavigationParameter {TripId = trips.First().Id}.GetJson();
-                    NavigateToPage(typeof (TripDetailPage), parameter);
+                    var parameter = new TripNavigationParameter { TripId = trips.First().Id }.GetJson();
+                    NavigateToPage(typeof(TripDetailPage), parameter);
                     LandingPage.Visibility = Visibility.Collapsed;
                 }
                 else
@@ -106,14 +106,14 @@ namespace Microsoft.Labs.SightsToSee
 #endif
             };
 
-                RootSplitView.RegisterPropertyChangedCallback(
-                SplitView.DisplayModeProperty,
-                (s, a) =>
-                {
+            RootSplitView.RegisterPropertyChangedCallback(
+            SplitView.DisplayModeProperty,
+            (s, a) =>
+            {
                     // Ensure that we update the reported size of the TogglePaneButton when the SplitView's
                     // DisplayMode changes.
                     CheckTogglePaneButtonSizeChanged();
-                });
+            });
 
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequested;
             PopupManager.Configure(this, ParentedPopup, HitBlocker);
@@ -148,13 +148,30 @@ namespace Microsoft.Labs.SightsToSee
                 }
             });
 
+        public ObservableCollection<NavMenuItem> SecondaryNavList { get; set; } = new ObservableCollection<NavMenuItem>(
+            new[]
+            {
+                //new NavMenuItem
+                //{
+                //    SymbolAsChar = (char) Symbol.Home,
+                //    Label = "Home",
+                //    DestPage = typeof (LandingPage)
+                //},
+                new NavMenuItem
+                {
+                    SymbolAsChar = (char) Symbol.Setting,
+                    Label = "Settings",
+                    DestPage = typeof (SettingsPage)
+                }
+            });
+
         public void AddTrip(string tripName, Guid tripId)
         {
             NavList.Add(new NavMenuItem
             {
                 SymbolAsChar = '\uE709',
                 Label = tripName,
-                DestPage = typeof (TripDetailPage),
+                DestPage = typeof(TripDetailPage),
                 Arguments = new TripNavigationParameter { TripId = tripId }.GetJson()
             });
         }
@@ -209,7 +226,7 @@ namespace Microsoft.Labs.SightsToSee
             }
         }
 
-#region BackRequested Handlers
+        #region BackRequested Handlers
 
         private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
         {
@@ -226,7 +243,7 @@ namespace Microsoft.Labs.SightsToSee
             }
         }
 
-#endregion
+        #endregion
 
         /// <summary>
         ///     An event to notify listeners when the hamburger button may occlude other content in the app.
@@ -282,7 +299,7 @@ namespace Microsoft.Labs.SightsToSee
         {
             if (!args.InRecycleQueue && args.Item != null && args.Item is NavMenuItem)
             {
-                args.ItemContainer.SetValue(AutomationProperties.NameProperty, ((NavMenuItem) args.Item).Label);
+                args.ItemContainer.SetValue(AutomationProperties.NameProperty, ((NavMenuItem)args.Item).Label);
             }
             else
             {
@@ -290,7 +307,7 @@ namespace Microsoft.Labs.SightsToSee
             }
         }
 
-#region Navigation
+        #region Navigation
 
         public void GoToSettings()
         {
@@ -304,7 +321,17 @@ namespace Microsoft.Labs.SightsToSee
         /// <param name="listViewItem"></param>
         private void NavMenuList_ItemInvoked(object sender, ListViewItem listViewItem)
         {
-            var item = (NavMenuItem) ((NavMenuListView) sender).ItemFromContainer(listViewItem);
+            if (sender == NavMenuList)
+            {
+                // ensure nothing is selected in SecondaryNavMenu
+                SecondaryMenuList.SelectedItem = null;
+            }
+            else if (sender == SecondaryMenuList)
+            {
+                NavMenuList.SelectedItem = null;
+            }
+
+            var item = (NavMenuItem)((NavMenuListView)sender).ItemFromContainer(listViewItem);
 
             if (item != null)
             {
@@ -339,7 +366,7 @@ namespace Microsoft.Labs.SightsToSee
                     }
                 }
 
-                var container = (ListViewItem) NavMenuList.ContainerFromItem(item);
+                var container = (ListViewItem)NavMenuList.ContainerFromItem(item);
 
                 // While updating the selection state of the item prevent it from taking keyboard focus.  If a
                 // user is invoking the back button via the keyboard causing the selected nav menu item to change
@@ -355,10 +382,23 @@ namespace Microsoft.Labs.SightsToSee
             // After a successful navigation set keyboard focus to the loaded page
             if (e.Content is Page && e.Content != null)
             {
-                var control = (Page) e.Content;
+                var control = (Page)e.Content;
                 control.Loaded += Page_Loaded;
-            }
 
+                // handle back across both menus
+                var contentType = e.Content.GetType();
+                if (contentType == typeof(SettingsPage))
+                {
+                    // unselect the main nav menu
+                    NavMenuList.SelectedItem = null;
+                    SecondaryMenuList.SelectedItem = SecondaryNavList.First(i => i.DestPage == typeof(SettingsPage));
+                }
+                else
+                {
+                    SecondaryMenuList.SelectedItem = null;
+                }
+
+            }
             // Update the Back button depending on whether we can go Back.
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
                 AppFrame.CanGoBack
@@ -386,8 +426,8 @@ namespace Microsoft.Labs.SightsToSee
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            ((Page) sender).Focus(FocusState.Programmatic);
-            ((Page) sender).Loaded -= Page_Loaded;
+            ((Page)sender).Focus(FocusState.Programmatic);
+            ((Page)sender).Loaded -= Page_Loaded;
             CheckTogglePaneButtonSizeChanged();
         }
 
@@ -411,6 +451,6 @@ namespace Microsoft.Labs.SightsToSee
             });
         }
 
-#endregion
+        #endregion
     }
 }

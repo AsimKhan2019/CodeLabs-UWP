@@ -97,6 +97,7 @@
                     <VisualState.Setters>
                         <Setter Target="Column1Content.(RelativePanel.RightOf)" Value="Column0Content" />
                         <Setter Target="GalleryGrid.ItemsPanel" Value="{StaticResource ItemsPanelTemplate}" />
+                        <Setter Target="MobileCommandBar.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
 

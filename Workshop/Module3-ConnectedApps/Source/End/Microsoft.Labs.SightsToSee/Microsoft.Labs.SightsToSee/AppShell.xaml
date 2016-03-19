@@ -89,19 +89,17 @@
                                           ItemContainerStyle="{StaticResource NavMenuItemContainerStyle}"
                                           ItemTemplate="{StaticResource NavMenuItemTemplate}"
                                           ItemInvoked="NavMenuList_ItemInvoked" />
-                    <Grid VerticalAlignment="Bottom">
-                        <Button Click="{x:Bind GoToSettings}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="48" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
 
-                                <FontIcon FontSize="15" Glyph="Settings" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <TextBlock Grid.Column="1" Text="Settings" Style="{StaticResource BodyTextBlockStyle}" />
-                            </Grid>
-                        </Button>
-                    </Grid>
+                    <controls:NavMenuListView x:Name="SecondaryMenuList"
+                                              VerticalAlignment="Bottom"
+                                              TabIndex="4"
+                                              ItemsSource="{x:Bind SecondaryNavList, Mode=OneWay}"
+                                              Style="{StaticResource NavMenuListStyle}"
+                                              ContainerContentChanging="NavMenuItemContainerContentChanging"
+                                              ItemContainerStyle="{StaticResource NavMenuItemContainerStyle}"
+                                              ItemTemplate="{StaticResource NavMenuItemTemplate}"
+                                              ItemInvoked="NavMenuList_ItemInvoked" />
+
                 </Grid>
             </SplitView.Pane>
 
@@ -168,3 +166,4 @@
 
     </Grid>
 </Page>
+
