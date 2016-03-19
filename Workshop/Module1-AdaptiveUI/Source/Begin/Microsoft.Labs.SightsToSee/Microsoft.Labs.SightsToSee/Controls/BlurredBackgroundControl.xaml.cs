@@ -18,7 +18,7 @@ namespace Microsoft.Labs.SightsToSee.Controls
     public sealed partial class BlurredBackgroundControl : UserControl
     {
         public static readonly DependencyProperty BlurFactorProperty = DependencyProperty.Register(
-            "BlurFactor", typeof (float), typeof (BlurredBackgroundControl), new PropertyMetadata(32.0f));
+            "BlurFactor", typeof (float), typeof (BlurredBackgroundControl), new PropertyMetadata(20.0f));
 
         public static readonly DependencyProperty BackgroundImageSourceProperty = DependencyProperty.Register(
             "BackgroundImageSource", typeof (ImageSource), typeof (BlurredBackgroundControl),
@@ -50,18 +50,49 @@ namespace Microsoft.Labs.SightsToSee.Controls
             DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var control = dependencyObject as BlurredBackgroundControl;
-            if (control == null) return;
+            if (control?.BackgroundImageSource == null) return;
+
+            var imageSource = control.BackgroundImageSource;
+
 
             try
             {
-                if (!control.BlurredImage.ReadyToDraw)
+                while (!control.BlurredImage.ReadyToDraw)
+                {
+                    await Task.Delay(100);
+                }
+
+                if (imageSource == null)
                 {
                     return;
                 }
-                control._backgroundBitmap = 
-                    await
-                        CanvasBitmap.LoadAsync(control.BlurredImage,
-                            ((BitmapImage) control.BackgroundImageSource).UriSource);
+
+                var uriPath = ((BitmapImage) imageSource).UriSource;
+                var path = uriPath.AbsoluteUri;
+                if (path.StartsWith("ms-appx"))
+                {
+                    //Add the Preprocessor directive EFCOREHACK to enable generating migrations
+                    //Pending issue https://github.com/aspnet/EntityFramework/issues/4683
+#if !EFCOREHACK
+                    control._backgroundBitmap =
+                        await CanvasBitmap.LoadAsync(control.BlurredImage, ((BitmapImage) imageSource).UriSource);
+#endif
+                }
+                else if (path.StartsWith("ms-appdata"))
+                {
+#if !EFCOREHACK
+                    control._backgroundBitmap = 
+                        await CanvasBitmap.LoadAsync(control.BlurredImage,((BitmapImage)imageSource).UriSource);
+#endif
+                }
+                else
+                {
+#if !EFCOREHACK
+                    control._backgroundBitmap = 
+                        await CanvasBitmap.LoadAsync(control.BlurredImage, uriPath.AbsolutePath);
+#endif
+                }
+
                 control._blurEffect = new GaussianBlurEffect
                 {
                     Source = control._backgroundBitmap,
@@ -69,7 +100,7 @@ namespace Microsoft.Labs.SightsToSee.Controls
                 };
 
                 var fadeOut = new Storyboard();
-                DoubleAnimation daOut = new DoubleAnimation
+                var daOut = new DoubleAnimation
                 {
                     From = 0.6,
                     To = 1.0,
@@ -80,7 +111,7 @@ namespace Microsoft.Labs.SightsToSee.Controls
                 Storyboard.SetTargetProperty(daOut, "Opacity");
                 fadeOut.Children.Add(daOut);
                 var fadeIn = new Storyboard();
-                DoubleAnimation daIn = new DoubleAnimation
+                var daIn = new DoubleAnimation
                 {
                     From = 1.0,
                     To = 0.6,
@@ -144,6 +175,7 @@ namespace Microsoft.Labs.SightsToSee.Controls
             // Comment the following line when running migrations
             if (BackgroundImageSource != null)
             {
+#if !EFCOREHACK
                 _backgroundBitmap =
                     await CanvasBitmap.LoadAsync(sender, ((BitmapImage) BackgroundImageSource).UriSource);
                 _blurEffect = new GaussianBlurEffect
@@ -151,6 +183,7 @@ namespace Microsoft.Labs.SightsToSee.Controls
                     Source = _backgroundBitmap,
                     BlurAmount = BlurFactor
                 };
+#endif
             }
         }
     }

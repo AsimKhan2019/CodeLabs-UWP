@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Core;
@@ -12,9 +13,11 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Labs.SightsToSee.Common;
 using Microsoft.Labs.SightsToSee.Controls;
-using Microsoft.Labs.SightsToSee.Models;
-using Microsoft.Labs.SightsToSee.Services.DataModelService;
+using Microsoft.Labs.SightsToSee.Library.Models;
+using Microsoft.Labs.SightsToSee.Library.Services.DataModelService;
 using Microsoft.Labs.SightsToSee.Views;
+using Microsoft.Labs.SightsToSee.Models;
+using Windows.UI.Popups;
 
 namespace Microsoft.Labs.SightsToSee
 {
@@ -43,6 +46,8 @@ namespace Microsoft.Labs.SightsToSee
                 //TogglePaneButton.Focus(FocusState.Programmatic);
                 NavMenuList.SelectedIndex = 0;
                 var dm = DataModelServiceFactory.CurrentDataModelService();
+
+#if SQLITE
                 var trips = await dm.LoadTripsAsync();
 
                 if (AppSettings.HasRun && trips.Any())
@@ -52,19 +57,63 @@ namespace Microsoft.Labs.SightsToSee
                     {
                         AddTrip(trip.Name, trip.Id);
                     }
-                    NavigateToPage(typeof (TripDetailPage), trips.First().Id.ToString("D"));
+                    var parameter = new TripNavigationParameter { TripId = trips.First().Id }.GetJson();
+                    NavigateToPage(typeof(TripDetailPage), parameter);
                     LandingPage.Visibility = Visibility.Collapsed;
                 }
+                else
+                {
+                    LandingPage.ShowCreateFirstTrip = true;
+                }
+#else
+                // When connecting to Azure, this is where we authenticate and then load the seed data into the local tables.
+                // Then sync to the cloud
+                bool isAuthenticated = false;
+                while (!isAuthenticated)
+                {
+                    var authResponse = await dm.AuthenticateAsync();
+
+                    isAuthenticated = authResponse.Item1;
+                    if (!isAuthenticated)
+                    {
+                        var dialog = new MessageDialog(authResponse.Item2);
+                        dialog.Commands.Add(new UICommand("OK"));
+                        await dialog.ShowAsync();
+                    }
+                }
+
+                await SetBusyAsync("Synchronising");
+                var trips = await dm.LoadTripsAsync();
+                await ClearBusyAsync();
+
+                if (trips.Any())
+                {
+                    AppSettings.HasRun = true;
+
+                    // Load trips from DB
+                    foreach (var trip in trips)
+                    {
+                        AddTrip(trip.Name, trip.Id);
+                    }
+                    var parameter = new TripNavigationParameter {TripId = trips.First().Id}.GetJson();
+                    NavigateToPage(typeof (TripDetailPage), parameter);
+                    LandingPage.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    LandingPage.ShowCreateFirstTrip = true;
+                }
+#endif
             };
 
             RootSplitView.RegisterPropertyChangedCallback(
-                SplitView.DisplayModeProperty,
-                (s, a) =>
-                {
+            SplitView.DisplayModeProperty,
+            (s, a) =>
+            {
                     // Ensure that we update the reported size of the TogglePaneButton when the SplitView's
                     // DisplayMode changes.
                     CheckTogglePaneButtonSizeChanged();
-                });
+            });
 
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequested;
             PopupManager.Configure(this, ParentedPopup, HitBlocker);
@@ -99,14 +148,31 @@ namespace Microsoft.Labs.SightsToSee
                 }
             });
 
+        //public ObservableCollection<NavMenuItem> SecondaryNavList { get; set; } = new ObservableCollection<NavMenuItem>(
+        //    new[]
+        //    {
+        //        //new NavMenuItem
+        //        //{
+        //        //    SymbolAsChar = (char) Symbol.Home,
+        //        //    Label = "Home",
+        //        //    DestPage = typeof (LandingPage)
+        //        //},
+        //        new NavMenuItem
+        //        {
+        //            SymbolAsChar = (char) Symbol.Setting,
+        //            Label = "Settings",
+        //            DestPage = typeof (SettingsPage)
+        //        }
+        //    });
+
         public void AddTrip(string tripName, Guid tripId)
         {
             NavList.Add(new NavMenuItem
             {
                 SymbolAsChar = '\uE709',
                 Label = tripName,
-                DestPage = typeof (TripDetailPage),
-                Arguments = tripId.ToString("D")
+                DestPage = typeof(TripDetailPage),
+                Arguments = new TripNavigationParameter { TripId = tripId }.GetJson()
             });
         }
 
@@ -233,7 +299,7 @@ namespace Microsoft.Labs.SightsToSee
         {
             if (!args.InRecycleQueue && args.Item != null && args.Item is NavMenuItem)
             {
-                args.ItemContainer.SetValue(AutomationProperties.NameProperty, ((NavMenuItem) args.Item).Label);
+                args.ItemContainer.SetValue(AutomationProperties.NameProperty, ((NavMenuItem)args.Item).Label);
             }
             else
             {
@@ -243,6 +309,11 @@ namespace Microsoft.Labs.SightsToSee
 
         #region Navigation
 
+        public void GoToSettings()
+        {
+            AppFrame.Navigate(typeof(SettingsPage));
+        }
+
         /// <summary>
         ///     Navigate to the Page for the selected <paramref name="listViewItem" />.
         /// </summary>
@@ -250,7 +321,17 @@ namespace Microsoft.Labs.SightsToSee
         /// <param name="listViewItem"></param>
         private void NavMenuList_ItemInvoked(object sender, ListViewItem listViewItem)
         {
-            var item = (NavMenuItem) ((NavMenuListView) sender).ItemFromContainer(listViewItem);
+            //if (sender == NavMenuList)
+            //{
+            //    // ensure nothing is selected in SecondaryNavMenu
+            //    SecondaryMenuList.SelectedItem = null;
+            //}
+            //else if (sender == SecondaryMenuList)
+            //{
+            //    NavMenuList.SelectedItem = null;
+            //}
+
+            var item = (NavMenuItem)((NavMenuListView)sender).ItemFromContainer(listViewItem);
 
             if (item != null)
             {
@@ -285,7 +366,7 @@ namespace Microsoft.Labs.SightsToSee
                     }
                 }
 
-                var container = (ListViewItem) NavMenuList.ContainerFromItem(item);
+                var container = (ListViewItem)NavMenuList.ContainerFromItem(item);
 
                 // While updating the selection state of the item prevent it from taking keyboard focus.  If a
                 // user is invoking the back button via the keyboard causing the selected nav menu item to change
@@ -301,10 +382,23 @@ namespace Microsoft.Labs.SightsToSee
             // After a successful navigation set keyboard focus to the loaded page
             if (e.Content is Page && e.Content != null)
             {
-                var control = (Page) e.Content;
+                var control = (Page)e.Content;
                 control.Loaded += Page_Loaded;
-            }
 
+                // handle back across both menus
+                var contentType = e.Content.GetType();
+                //if (contentType == typeof(SettingsPage))
+                //{
+                //    // unselect the main nav menu
+                //    NavMenuList.SelectedItem = null;
+                //    SecondaryMenuList.SelectedItem = SecondaryNavList.First(i => i.DestPage == typeof(SettingsPage));
+                //}
+                //else
+                //{
+                //    SecondaryMenuList.SelectedItem = null;
+                //}
+
+            }
             // Update the Back button depending on whether we can go Back.
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
                 AppFrame.CanGoBack
@@ -319,16 +413,42 @@ namespace Microsoft.Labs.SightsToSee
                 LandingPage.Visibility = Visibility.Collapsed;
             }
             var navItem = NavList.FirstOrDefault(n => n.DestPage == page);
-            if (navItem == null) return;
-            NavMenuList.SelectedIndex = NavList.IndexOf(navItem);
-            AppFrame.Navigate(navItem.DestPage, parameter);
+            if (navItem != null)
+            {
+                NavMenuList.SelectedIndex = NavList.IndexOf(navItem);
+                AppFrame.Navigate(navItem.DestPage, parameter);
+            }
+            else
+            {
+                AppFrame.Navigate(page, parameter);
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            ((Page) sender).Focus(FocusState.Programmatic);
-            ((Page) sender).Loaded -= Page_Loaded;
+            ((Page)sender).Focus(FocusState.Programmatic);
+            ((Page)sender).Loaded -= Page_Loaded;
             CheckTogglePaneButtonSizeChanged();
+        }
+
+        public async Task SetBusyAsync(string text = "Loading...")
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                BusyIndicator.IsActive = true;
+                BusyText.Text = text;
+                BusyGrid.Visibility = Visibility.Visible;
+            });
+        }
+
+        public async Task ClearBusyAsync()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                BusyIndicator.IsActive = false;
+                BusyText.Text = string.Empty;
+                BusyGrid.Visibility = Visibility.Collapsed;
+            });
         }
 
         #endregion

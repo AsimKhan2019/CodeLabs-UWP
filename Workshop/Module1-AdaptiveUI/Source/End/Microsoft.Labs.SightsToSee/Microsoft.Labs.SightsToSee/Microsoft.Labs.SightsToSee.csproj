@@ -11,18 +11,21 @@
     <AssemblyName>Microsoft.Labs.SightsToSee</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.14279.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.14279.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>Microsoft.Labs.SightsToSee_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>CC5962E556B2D023E0C5F31D0EC3205CCDAA82E3</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>Microsoft.Labs.SightsToSee_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>58A8CCC5C1AA5FD3EC0A0D3B2FCF50FC773B2D89</PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;EFCORE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;SQLITE;CODE_ANALYSIS</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -32,7 +35,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;SQLITE</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -45,7 +48,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\ARM\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;EFCORE;CODE_ANALYSIS;EFCORE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>ARM</PlatformTarget>
@@ -55,7 +58,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <OutputPath>bin\ARM\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;SQLITE</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -68,7 +71,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;SQLITE</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -78,7 +81,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;SQLITE</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -93,63 +96,100 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\DemoImages\Alcatraz.jpg" />
-    <Content Include="Assets\DemoImages\AsianArtMuseum.jpg" />
-    <Content Include="Assets\DemoImages\AT&amp;TPark.jpg" />
-    <Content Include="Assets\DemoImages\CableCarMuseum.jpg" />
-    <Content Include="Assets\DemoImages\CaliforniaAcademyofSciences.jpg" />
-    <Content Include="Assets\DemoImages\CoitTower.jpg" />
-    <Content Include="Assets\DemoImages\ConservatoryofFlowers.jpg" />
-    <Content Include="Assets\DemoImages\deYoungMuseum.jpg" />
-    <Content Include="Assets\DemoImages\FerryBuildingMarketplace.jpg" />
-    <Content Include="Assets\DemoImages\GhirardelliSquare.jpg" />
-    <Content Include="Assets\DemoImages\GoldenGateBridge.jpg" />
-    <Content Include="Assets\DemoImages\GoldenGatePark.jpg" />
-    <Content Include="Assets\DemoImages\Haas-LilienthalHouse.jpg" />
-    <Content Include="Assets\DemoImages\JapaneseTeaGarden.jpg" />
-    <Content Include="Assets\DemoImages\LegionofHonor.jpg" />
-    <Content Include="Assets\DemoImages\LombardStreet.jpg" />
-    <Content Include="Assets\DemoImages\MissionDolores.jpg" />
-    <Content Include="Assets\DemoImages\MuséeMecanique.jpg" />
-    <Content Include="Assets\DemoImages\OaklandMuseumofCalifornia.jpg" />
-    <Content Include="Assets\DemoImages\PalaceofFineArts.jpg" />
-    <Content Include="Assets\DemoImages\Pier39.jpg" />
-    <Content Include="Assets\DemoImages\SanFranciscoBotanicalGarden.jpg" />
-    <Content Include="Assets\DemoImages\SanFranciscoCityHall.jpg" />
-    <Content Include="Assets\DemoImages\SanFranciscoMuseumofModernArt.jpg" />
-    <Content Include="Assets\DemoImages\SanFranciscoZoo.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\1.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\2.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\3.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\4.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\5.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\6.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\7.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\8.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\9.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\10.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\11.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\13.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\14.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\15.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\16.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\17.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\18.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\19.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\20.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\21.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\22.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\23.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\24.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\25.jpg" />
-    <Content Include="Assets\DemoImages\SightImages\12.jpg" />
-    <Content Include="Assets\DemoImages\StowLake.jpg" />
-    <Content Include="Assets\DemoImages\TheExploratorium.jpg" />
-    <Content Include="Assets\DemoImages\USSPampanito.jpg" />
-    <Content Include="Assets\DemoImages\WaltDisneyFamilyMuseum.jpg" />
-    <Content Include="Assets\DemoImages\YerbaBuenaCenterfortheArts.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-10169910.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-109735379.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-135524349.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-148658239.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-166266955.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-168644066.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-170412265.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-170719474.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-173098776.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-173759910.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-182059295.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-200247472-001.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-462144413.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-475046491.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-488571377.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-498187957.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-499046284.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-501837729.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-502904432.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-503368047.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-512468667.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-531495531.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-546840759.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-547979731.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-558303947.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-559361139.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-56143534.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-56660689.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-56808247.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-568537447.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-578441735.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-584252393.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-587409351.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-589988749.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-594834299.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-599719111.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-601811063.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-76807600.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-88437679.jpg" />
+    <Content Include="Assets\DemoImages\GettyImages-90934685.jpg" />
     <Content Include="Assets\Images\DialogBackground.jpg" />
-    <Content Include="vcd.xml" />
+    <None Include="Microsoft.Labs.SightsToSee_StoreKey.pfx" />
+    <Content Include="Assets\Images\NewStoreLogo.scale-100.png" />
+    <Content Include="Assets\Images\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Images\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Images\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\Images\Tile_Logo.png" />
+    <Content Include="Assets\Images\Wide310x150Logo.scale-200.png" />
+    <Content Include="Assets\NewStoreLogo.scale-100.png" />
+    <Content Include="Assets\NewStoreLogo.scale-125.png" />
+    <Content Include="Assets\NewStoreLogo.scale-150.png" />
+    <Content Include="Assets\NewStoreLogo.scale-200.png" />
+    <Content Include="Assets\NewStoreLogo.scale-400.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-125.png" />
+    <Content Include="Assets\SplashScreen.scale-150.png" />
+    <Content Include="Assets\SplashScreen.scale-400.png" />
+    <Content Include="Assets\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Square150x150Logo.scale-125.png" />
+    <Content Include="Assets\Square150x150Logo.scale-150.png" />
+    <Content Include="Assets\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\Square310x310Logo.scale-100.png" />
+    <Content Include="Assets\Square310x310Logo.scale-125.png" />
+    <Content Include="Assets\Square310x310Logo.scale-150.png" />
+    <Content Include="Assets\Square310x310Logo.scale-200.png" />
+    <Content Include="Assets\Square310x310Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.scale-100.png" />
+    <Content Include="Assets\Square44x44Logo.scale-125.png" />
+    <Content Include="Assets\Square44x44Logo.scale-150.png" />
+    <Content Include="Assets\Square44x44Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-16.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-16_altform-unplated.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-256.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-256_altform-unplated.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-32.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-32_altform-unplated.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-48.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-48_altform-unplated.png" />
+    <Content Include="Assets\Square71x71Logo.scale-100.png" />
+    <Content Include="Assets\Square71x71Logo.scale-125.png" />
+    <Content Include="Assets\Square71x71Logo.scale-150.png" />
+    <Content Include="Assets\Square71x71Logo.scale-200.png" />
+    <Content Include="Assets\Square71x71Logo.scale-400.png" />
+    <Content Include="Assets\Tile_Logo.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-125.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-150.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="Models\DemoRestaurants.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Package.StoreAssociation.xml" />
+    <None Include="app.config" />
     <None Include="Microsoft.Labs.SightsToSee_TemporaryKey.pfx" />
     <Content Include="Models\DemoSights.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -163,59 +203,58 @@
     <Compile Include="Common\AccountsHelper.cs" />
     <Compile Include="Common\ContinuityHelper.cs" />
     <Compile Include="Common\PopupHelper.cs" />
+    <Compile Include="Common\XamlUtils.cs" />
     <Compile Include="Controls\BlurredBackgroundControl.xaml.cs">
       <DependentUpon>BlurredBackgroundControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EatsControl.xaml.cs">
+      <DependentUpon>EatsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\InkBitmapRenderer.cs" />
     <Compile Include="Controls\NavMenuListView.cs" />
     <Compile Include="Controls\PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SightDetailControl.xaml.cs">
-      <DependentUpon>SightDetailControl.xaml</DependentUpon>
+    <Compile Include="Controls\PivotAutoHeightHeader.cs" />
+    <Compile Include="Controls\TabHeader.xaml.cs">
+      <DependentUpon>TabHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Migrations\20160212005952_Initial.cs" />
-    <Compile Include="Migrations\20160212005952_Initial.designer.cs">
-      <DependentUpon>20160212005952_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\SightsToSeeDbContextModelSnapshot.cs" />
-    <Compile Include="Models\Account.cs" />
-    <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\NavMenuItem.cs" />
-    <Compile Include="Models\SightFile.cs" />
-    <Compile Include="Models\SightGroup.cs" />
-    <Compile Include="Models\SightVisualMapper.cs" />
+    <Compile Include="Models\TripNavigationParameter.cs" />
     <Compile Include="Mvvm\BindableBase.cs" />
     <Compile Include="Mvvm\Command.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
-    <Compile Include="Services\DataModelService\AzureDataModelService.cs" />
-    <Compile Include="Services\DataModelService\DataModelServiceFactory.cs" />
     <Compile Include="Services\FileService\FileHelper.cs" />
     <Compile Include="Services\FileService\FileService.cs" />
     <Compile Include="Services\NavigationService\INavigatable.cs" />
     <Compile Include="Services\NavigationService\NavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigationFacade.cs" />
     <Compile Include="Services\NavigationService\NavigationService.cs" />
+    <Compile Include="Services\RestaurantDataService\RestaurantDataService.cs" />
+    <Compile Include="Services\TilesNotificationsService\TileHelper.cs" />
     <Compile Include="ViewModels\LandingPageViewModel.cs" />
-    <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\SettingsPageViewModel.cs" />
+    <Compile Include="ViewModels\SightDetailPageViewModel.cs" />
     <Compile Include="ViewModels\TripDetailPageViewModel.cs" />
+    <Compile Include="Views\EatsControlViewModel.cs" />
     <Compile Include="Views\NewTripPage.xaml.cs">
       <DependentUpon>NewTripPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\LandingControl.xaml.cs">
       <DependentUpon>LandingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Sight.cs" />
-    <Compile Include="Models\SeedDataFactory.cs" />
-    <Compile Include="Models\SightsToSeeDbContext.cs" />
-    <Compile Include="Models\Trip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DataModelService\EfCoreDataModelService.cs" />
-    <Compile Include="Services\DataModelService\IDataModelService.cs" />
+    <Compile Include="Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SightDetailPage.xaml.cs">
+      <DependentUpon>SightDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TripDetailPage.xaml.cs">
       <DependentUpon>TripDetailPage.xaml</DependentUpon>
     </Compile>
@@ -226,39 +265,8 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Images\NewStoreLogo.scale-100.png" />
-    <Content Include="Assets\Images\NewStoreLogo.scale-125.png" />
-    <Content Include="Assets\Images\NewStoreLogo.scale-150.png" />
-    <Content Include="Assets\Images\NewStoreLogo.scale-200.png" />
-    <Content Include="Assets\Images\NewStoreLogo.scale-400.png" />
-    <Content Include="Assets\Images\Square150x150Logo.scale-100.png" />
-    <Content Include="Assets\Images\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Images\Square150x150Logo.scale-400.png" />
-    <Content Include="Assets\Images\Square310x310Logo.scale-100.png" />
-    <Content Include="Assets\Images\Square310x310Logo.scale-200.png" />
-    <Content Include="Assets\Images\Square310x310Logo.scale-400.png" />
-    <Content Include="Assets\Images\Square44x44Logo.scale-100.png" />
-    <Content Include="Assets\Images\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Images\Square44x44Logo.scale-400.png" />
-    <Content Include="Assets\Images\Square44x44Logo.targetsize-16.png" />
-    <Content Include="Assets\Images\Square44x44Logo.targetsize-16_altform-unplated.png" />
-    <Content Include="Assets\Images\Square44x44Logo.targetsize-24.png" />
-    <Content Include="Assets\Images\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\Images\Square44x44Logo.targetsize-256.png" />
-    <Content Include="Assets\Images\Square44x44Logo.targetsize-256_altform-unplated.png" />
-    <Content Include="Assets\Images\Square44x44Logo.targetsize-32.png" />
-    <Content Include="Assets\Images\Square44x44Logo.targetsize-32_altform-unplated.png" />
-    <Content Include="Assets\Images\Square44x44Logo.targetsize-48.png" />
-    <Content Include="Assets\Images\Square44x44Logo.targetsize-48_altform-unplated.png" />
-    <Content Include="Assets\Images\Square71x71Logo.scale-100.png" />
-    <Content Include="Assets\Images\Square71x71Logo.scale-200.png" />
-    <Content Include="Assets\Images\Square71x71Logo.scale-400.png" />
-    <Content Include="Assets\Images\Tile_Logo.png" />
     <Content Include="Assets\Images\ValleyPortrait.jpg" />
     <Content Include="Assets\Images\ValleyLandscape.jpg" />
-    <Content Include="Assets\Images\Wide310x150Logo.scale-100.png" />
-    <Content Include="Assets\Images\Wide310x150Logo.scale-200.png" />
-    <Content Include="Assets\Images\Wide310x150Logo.scale-400.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -277,13 +285,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\EatsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\PageHeader.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\SightDetailControl.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Controls\TabHeader.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -301,20 +313,45 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SightDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TripDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.UI.Composition.Toolkit\Microsoft.UI.Composition.Toolkit.vcxproj">
-      <Project>{08a7d060-593a-4978-8dcc-b2029aca7c95}</Project>
-      <Name>Microsoft.UI.Composition.Toolkit</Name>
+    <ProjectReference Include="..\Microsoft.Labs.SightsToSee.Library\Microsoft.Labs.SightsToSee.Library.csproj">
+      <Project>{EA610101-0CC3-496D-A3AA-446F669C614E}</Project>
+      <Name>Microsoft.Labs.SightsToSee.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\TilesNotificationsService\" />
+    <SDKReference Include="InkToolbarPreview, Version=0.5">
+      <Name>InkToolbar Preview</Name>
+    </SDKReference>
+    <SDKReference Include="Microsoft.VCLibs, Version=14.0">
+      <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
+    </SDKReference>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.11.1">
+      <Name>SQLite for Universal Windows Platform</Name>
+    </SDKReference>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.WindowsAzure.Mobile.Files">
+      <HintPath>..\libs\Microsoft.WindowsAzure.Mobile.Files.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Mobile.Files.Ext">
+      <HintPath>..\libs\Microsoft.WindowsAzure.Mobile.Files.Ext.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

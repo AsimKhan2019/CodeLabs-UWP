@@ -8,7 +8,7 @@
     xmlns:controls="using:Microsoft.Labs.SightsToSee.Controls"
     xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
     xmlns:viewModels="using:Microsoft.Labs.SightsToSee.ViewModels"
-    xmlns:models="using:Microsoft.Labs.SightsToSee.Models"
+    xmlns:models="using:Microsoft.Labs.SightsToSee.Library.Models"
     mc:Ignorable="d">
 
     <Page.DataContext>
@@ -83,6 +83,9 @@
             </Setter>
         </Style>
 
+        <!--Insert the M1_Flyout snippet here-->
+        
+        
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -97,15 +100,15 @@
                     <VisualState.Setters>
                         <Setter Target="title.Visibility" Value="Visible" />
                         <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
-                        
+
                         <Setter Target="LayoutPanel.Padding" Value="24,0,16,24" />
-                        
+
                         <Setter Target="MapGrid.(RelativePanel.RightOf)" Value="SightsGrid" />
                         <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="SightsGrid" />
                         <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.Padding" Value="0,33,0,0" />
-                        
+                        <Setter Target="MapGrid.Padding" Value="0,33,24,0" />
+
                         <Setter Target="SightsGrid.Width" Value="404" />
                     </VisualState.Setters>
 
@@ -117,7 +120,8 @@
 
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
+
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -126,7 +130,7 @@
         <TextBlock x:Name="title"
                    Style="{ThemeResource SubheaderTextBlockStyle}"
                    Grid.Row="0"
-                   Margin="24,12,0,28"
+                   Margin="24,12,0,4"
                    Text="{x:Bind ViewModel.CurrentTrip.Name, Mode=OneWay}" />
 
         <Border Background="{StaticResource NavMenuBackgroundBrush}"
@@ -141,8 +145,15 @@
                        Text="{x:Bind ViewModel.CurrentTrip.Name, Mode=OneWay}" />
         </Border>
         <Grid Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True">
-            <RelativePanel x:Name="LayoutPanel">
-                <GridView x:Name="SightsGrid"
+
+            <Pivot x:Name="LayoutPanel">
+                <PivotItem Style="{StaticResource SelectedPivotItem}">
+                    <PivotItem.Header>
+                        <controls:TabHeader Label="Sights" Glyph="&#xE052;" />
+                    </PivotItem.Header>
+                    
+                    <RelativePanel>
+                        <GridView x:Name="SightsGrid"
                           ItemsSource="{x:Bind CvsSights.View, Mode=OneWay}"
                           ScrollViewer.IsVerticalScrollChainingEnabled="False"
                           MinHeight="124"
@@ -151,29 +162,42 @@
                           SelectionMode="None"
                           IsItemClickEnabled="True"
                           ItemClick="{x:Bind ViewModel.SightClicked}">
-                    <GridView.GroupStyle>
-                        <GroupStyle HeaderTemplate="{StaticResource SightGroupHeaderTemplate}"
+                            <GridView.GroupStyle>
+                                <GroupStyle HeaderTemplate="{StaticResource SightGroupHeaderTemplate}"
                                     HeaderContainerStyle="{StaticResource SightGridViewHeaderItem}" />
-                    </GridView.GroupStyle>
-                </GridView>
+                            </GridView.GroupStyle>
+                        </GridView>
 
-                <Grid x:Name="MapGrid">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <maps:MapControl x:Name="Map"
+                        <Grid x:Name="MapGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <maps:MapControl x:Name="Map"
                                      Grid.Row="1"
                                      MapServiceToken="{x:Bind ViewModel.MapServiceToken}"
                                      ZoomInteractionMode="GestureAndControl"
                                      TiltInteractionMode="GestureAndControl">
-                    </maps:MapControl>
+                                <!--Insert the M1_MapItems snippet here-->
+                                
+                                
+                            </maps:MapControl>
 
-                    <!--Insert M1_Close3DX snippet here-->
-                    
+                            <!--Insert the M1_Close3DX snippet here-->
+                            
 
-                </Grid>
-            </RelativePanel>
+                        </Grid>
+                    </RelativePanel>
+                </PivotItem>
+                <PivotItem Style="{StaticResource SelectedPivotItem}">
+                    <PivotItem.Header>
+                        <controls:TabHeader Label="Eats" Glyph="&#xEC06;" />
+                    </PivotItem.Header>
+                    <Grid>
+                        <controls:EatsControl DataContext="{x:Bind ViewModel.EatsControlViewModel, Mode=OneWay}"/>
+                    </Grid>
+                </PivotItem>
+            </Pivot>
         </Grid>
     </Grid>
 </Page>

@@ -19,5 +19,13 @@ namespace Microsoft.Labs.SightsToSee.Controls
         }
 
         public LandingPageViewModel ViewModel => DataContext as LandingPageViewModel;
+
+        public bool ShowCreateFirstTrip
+        {
+            set
+            {
+                (DataContext as LandingPageViewModel).ShowCreateFirstTrip = value;
+            }
+        }
     }
 }

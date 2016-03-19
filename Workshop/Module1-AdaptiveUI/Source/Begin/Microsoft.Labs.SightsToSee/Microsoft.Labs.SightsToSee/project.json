@@ -1,16 +1,16 @@
 ﻿{
   "dependencies": {
-    "EntityFramework.Commands": "7.0.0-rc1-final",
-    "EntityFramework.SQLite": "7.0.0-rc1-final",
     "Microsoft.ApplicationInsights": "1.2.3",
     "Microsoft.ApplicationInsights.PersistenceChannel": "1.2.3",
     "Microsoft.ApplicationInsights.WindowsApps": "1.1.1",
     "Microsoft.Azure.Mobile.Client": "2.0.1",
     "Microsoft.Azure.Mobile.Client.SQLiteStore": "2.0.1",
+    "Microsoft.Bcl.Build": "1.0.21",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "Newtonsoft.Json": "8.0.2",
     "NotificationsExtensions.Win10": "10586.0.2",
-    "Win2D.uwp": "1.15.0"
+    "Win2D.uwp": "1.16.0",
+    "WindowsAzure.Storage": "6.9.9-preview"
   },
   "frameworks": {
     "uap10.0": {}

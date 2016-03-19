@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.Devices.Geolocation;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media.Imaging;
 using Microsoft.Labs.SightsToSee.Common;
-using Microsoft.Labs.SightsToSee.Controls;
+using Microsoft.Labs.SightsToSee.Library.Models;
+using Microsoft.Labs.SightsToSee.Library.Services.DataModelService;
+using Microsoft.Labs.SightsToSee.Library.Services.SightsService;
 using Microsoft.Labs.SightsToSee.Models;
 using Microsoft.Labs.SightsToSee.Mvvm;
-using Microsoft.Labs.SightsToSee.Services.DataModelService;
+using Microsoft.Labs.SightsToSee.Services.RestaurantDataService;
 using Microsoft.Labs.SightsToSee.Views;
 
 namespace Microsoft.Labs.SightsToSee.ViewModels
@@ -22,21 +27,35 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
     {
         private readonly IDataModelService _dataModelService = DataModelServiceFactory.CurrentDataModelService();
         private Sight _currentSight;
+        private DateTimeOffset? _currentSightDate;
+        private ObservableCollection<SightFile> _currentSightFiles;
+        private TimeSpan _currentSightTime;
         private Trip _currentTrip;
         private bool _isDisplay3D;
         private SightFile _selectedSightFile;
-        private SightDetailControl _sightDetailControl;
         private ObservableCollection<SightGroup> _sightGroups;
         private BitmapImage _sightImage;
         private ObservableCollection<Sight> _sights;
+        private EatsControlViewModel _eatsControlViewModel;
 
+
+        public TripDetailPageViewModel()
+        {
+            if (DesignMode.DesignModeEnabled)
+            {
+                CurrentTrip = SeedDataFactory.CreateDesignTrip();
+                CurrentSight = CurrentTrip.Sights[0];
+                Sights =
+                    new ObservableCollection<Sight>(
+                        CurrentTrip.Sights.OrderBy(s => s.RankInDestination));
+                BuildSightGroups();
+                Debug.WriteLine("Debug mode for the model");
+            }
+        }
 
         public MapControl Map { get; set; }
 
-        public string MapServiceToken
-            =>
-                "7H7lMjEkAfP3PeOrrPVO~IRTU1f4lP6GTdpBxi4gqoQ~AvvbAnSGbHtsowQ98zRfwvaw6PdCgo2vq3x75R3_SbvN2zb7-YcaM_UIPNtNWOWK"
-            ;
+        public string MapServiceToken => AppSettings.MapServiceToken;
 
         public Trip CurrentTrip
         {
@@ -48,6 +67,18 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
         {
             get { return _currentSight; }
             set { Set(ref _currentSight, value); }
+        }
+
+        public DateTimeOffset? CurrentSightDate
+        {
+            get { return _currentSightDate ?? (_currentSightDate = DateTime.Now); }
+            set { Set(ref _currentSightDate, value); }
+        }
+
+        public TimeSpan CurrentSightTime
+        {
+            get { return _currentSightTime; }
+            set { Set(ref _currentSightTime, value); }
         }
 
         public bool IsDisplay3D
@@ -79,16 +110,101 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
         public SightFile SelectedSightFile
         {
             get { return _selectedSightFile; }
-            set { Set(ref _selectedSightFile, value); }
+            set
+            {
+                if (value == _selectedSightFile) return;
+                Set(ref _selectedSightFile, value);
+            }
         }
 
-        public async Task LoadTripAsync(Guid tripId)
+        public ObservableCollection<SightFile> CurrentSightFiles
         {
+            get { return _currentSightFiles; }
+
+            set
+            {
+                if (value == _currentSightFiles)
+                    return;
+                Set(ref _currentSightFiles, value);
+            }
+        }
+
+        public EatsControlViewModel EatsControlViewModel
+        {
+            get { return _eatsControlViewModel; }
+            set { Set(ref _eatsControlViewModel, value); }
+        }
+
+        public async Task ConfirmDeleteSightAsync(Guid sightId)
+        {
+            var sight = CurrentTrip.Sights.SingleOrDefault(s => s.Id == sightId);
+            var cd = new ContentDialog
+            {
+                Title = "Sights2See",
+                Content = $"\nAre you sure you wish to remove {sight.Name} from this trip?",
+                PrimaryButtonText = "Yes",
+                SecondaryButtonText = "No"
+            };
+
+            var result = await cd.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                sight.IsMySight = false;
+                await UpdateSightAsync(sight);
+            }
+        }
+
+        public async Task LoadTripAsync(Guid tripId, bool animateMap = true)
+        {
+            // As we need to have requested this permission for our background task, ask here
+            await Geolocator.RequestAccessAsync();
             CurrentTrip = await _dataModelService.LoadTripAsync(tripId);
             Sights =
                 new ObservableCollection<Sight>(
                     CurrentTrip.Sights.OrderBy(s => s.RankInDestination));
 
+            BuildSightGroups();
+
+            if (Map != null)
+            {
+                var boundingBox = GeoboundingBox.TryCompute(GetSightsPositions());
+                if (animateMap)
+                {
+                    // We actually don't want to wait for the map to stop animating
+                    // so we assign the task to a variable to remove the warning about await
+                    var task = Map.TrySetViewBoundsAsync(boundingBox,
+                        new Thickness { Left = 48, Top = 48, Right = 48, Bottom = 48 },
+                        MapAnimationKind.Bow);
+                }
+                else
+                {
+                    // We actually don't want to wait for the map to stop animating
+                    // so we assign the task to a variable to remove the warning about await
+                    var task = Map.TrySetViewBoundsAsync(boundingBox,
+                        new Thickness { Left = 48, Top = 48, Right = 48, Bottom = 48 },
+                        MapAnimationKind.None);
+                }
+            }
+
+            EatsControlViewModel = new EatsControlViewModel {CenterLocation = CurrentTrip.Location, Trip = CurrentTrip};
+            try
+            {
+                EatsControlViewModel.IsLoadingEats = true;
+                EatsControlViewModel.Eats =
+                    new ObservableCollection<Restaurant>(await RestaurantDataService.Current.GetRestaurantsForTripAsync(CurrentTrip));
+            }
+            finally 
+            {
+                EatsControlViewModel.IsLoadingEats = false;
+            }
+            
+            // Insert the M1_CreateTiles snippet here
+
+
+        }
+
+        private void BuildSightGroups()
+        {
             var grouped = from sight in Sights
                 group sight by sight.IsMySight
                 into grp
@@ -100,51 +216,12 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
                 };
 
             SightGroups = new ObservableCollection<SightGroup>(grouped.ToList());
-            if (Map != null)
-            {
-                var boundingBox = GeoboundingBox.TryCompute(GetSightsPositions());
-                await
-                    Map.TrySetViewBoundsAsync(boundingBox,
-                        new Thickness {Left = 48, Top = 48, Right = 48, Bottom = 48},
-                        MapAnimationKind.Bow);
-            }
-
-            // Set interactive tiles on load
         }
 
-
-        public void GalleryItemClicked(object sender, SelectionChangedEventArgs e)
+        public void ShowDetail(object sender, RoutedEventArgs e)
         {
-            SelectedSightFile = ((GridView) sender).SelectedItem as SightFile;
-            if (SelectedSightFile == null) return;
-
-            SightImage = SelectedSightFile.ImageUri;
-            if (_sightDetailControl != null)
-            {
-                _sightDetailControl.BackgroundImage = SightImage;
-            }
-        }
-
-        public async void ShowDetail(object sender, RoutedEventArgs e)
-        {
-            Flyout?.Hide();
-            // sender is the button - and the data context is the Sight
-            _currentSight = ((Button) sender).DataContext as Sight;
-
-            if (_currentSight == null)
-                return;
-
-            await ShowDetailDialog();
-        }
-
-        private async Task ShowDetailDialog()
-        {
-            _sightDetailControl = new SightDetailControl
-            {
-                BackgroundImage = _currentSight.ImageUri,
-                DataContext = this
-            };
-            PopupManager.ShowContent(_sightDetailControl);
+            CurrentSight = ((Button) sender).DataContext as Sight;
+            AppShell.Current.NavigateToPage(typeof (SightDetailPage), CurrentSight.Id.ToString("D"));
         }
 
         private IEnumerable<BasicGeoposition> GetSightsPositions()
@@ -152,44 +229,84 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             return CurrentTrip.Sights.Select(sight => sight.Location.Position);
         }
 
-        public async void DeleteSight()
+        public async void DeleteSightAsync()
         {
             PopupManager.HideContent();
-            _currentSight.IsMySight = false;
-            await UpdateSight(_currentSight);
+            CurrentSight.IsMySight = false;
+            await UpdateSightAsync(CurrentSight);
         }
 
-        public async void AddSight()
+        public async void AddSightAsync()
         {
             PopupManager.HideContent();
-            _currentSight.IsMySight = true;
-            await UpdateSight(_currentSight);
+            CurrentSight.IsMySight = true;
+            await UpdateSightAsync(CurrentSight);
         }
 
-
-        public async void ShareSight()
+        public async void GetDirectionsFromFlyoutAsync(object sender, RoutedEventArgs e)
         {
+            var sight = ((Button) sender).DataContext as Sight;
+            var mapsUri = new Uri($@"bingmaps:?rtp=~pos.{sight.Latitude}_{sight.Longitude}_{sight.Name}");
+
+            // Launch the Windows Maps app
+            var launcherOptions = new LauncherOptions();
+            launcherOptions.TargetApplicationPackageFamilyName = "Microsoft.WindowsMaps_8wekyb3d8bbwe";
+            await Launcher.LaunchUriAsync(mapsUri, launcherOptions);
         }
 
-        public async void SightClicked(object sender, ItemClickEventArgs args)
+        // Insert the M1_Close3D snippet here
+
+
+        // Insert the M1_Show3D snippet here
+
+
+        public void SightClicked(object sender, ItemClickEventArgs args)
         {
-            _currentSight = args.ClickedItem as Sight;
-            await ShowSight();
+            CurrentSight = args.ClickedItem as Sight;
+            AppShell.Current.NavigateToPage(typeof (SightDetailPage), CurrentSight.Id.ToString("D"));
         }
 
-        private async Task ShowSight()
-        {
-            if (_currentSight == null)
-                return;
-            Flyout?.Hide();
-            SightImage = _currentSight.ImageUri;
-            await ShowDetailDialog();
-        }
 
-        public async Task UpdateSight(Sight sight)
+        public async Task UpdateSightAsync(Sight sight)
         {
             await _dataModelService.SaveSightAsync(sight);
             await LoadTripAsync(_currentTrip.Id);
+        }
+
+        public async Task DisplayClosestSightAsync()
+        {
+            var accessStatus = await Geolocator.RequestAccessAsync();
+            if (accessStatus == GeolocationAccessStatus.Allowed)
+            {
+                // using default accuracy
+                var geolocator = new Geolocator();
+                var pos = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(5));
+                if (pos != null)
+                {
+                    CurrentSight = await SightsHelper.FindClosestSightAsync(pos.Coordinate.Point, CurrentTrip, false);
+                }
+                else
+                {
+                    // If we can't use the location, we'll just use the first Sight
+                    CurrentSight = CurrentTrip.Sights.FirstOrDefault(s => s.IsMySight);
+                }
+            }
+            else
+            {
+                // If we can't use the location, we'll just use the first Sight
+                CurrentSight = CurrentTrip.Sights.FirstOrDefault(s => s.IsMySight);
+            }
+
+            if (CurrentSight != null)
+            {
+                AppShell.Current.NavigateToPage(typeof (SightDetailPage), CurrentSight.Id.ToString("D"));
+            }
+        }
+
+        public void ShowSight(Guid sightId)
+        {
+            CurrentSight = CurrentTrip.Sights.SingleOrDefault(s => s.Id == sightId);
+            AppShell.Current.NavigateToPage(typeof (SightDetailPage), CurrentSight.Id.ToString("D"));
         }
     }
 }
