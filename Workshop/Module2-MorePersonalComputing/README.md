@@ -130,6 +130,11 @@ We'll start by adding an InkCanvas that can be used for taking notes.
 
 
 1. Open the **SightDetailControl** for a Sight and use the **EnableInkButton** to change the Notes field to an InkCanvas.
+    
+    ![The Simple InkCanvas](Images/notes_inkcanvas.png "The Simple InkCanvas")
+    
+    *__Figure__: The simple Notes InkCanvas.*
+
 
 	The default pen for the InkCanvas is a simple black line. Right now, we are also not saving the Ink. In the next task, we're going to set up an Ink Toolbar to handle pen color, saving, and clearing the Notes Ink Canvas.
 
@@ -229,6 +234,10 @@ In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any In
 	````
     
 1. Build and run the app. Use the Notes InkToolbar to change properties for the Ink canvas, save the Ink, and undo.
+
+    ![The InkToolbar](Images/notes_inktoolbar.png "The InkToolbar")
+    
+    *__Figure__: The InkToolbar.*
 
 <a name="Ex1Task3"></a>
 #### Task 3 - Adding OCR Ink to text capability ####
@@ -413,7 +422,11 @@ Now that we've added the ability to record notes with Ink, it would be useful to
 1. Build and run the app. Write text on the Notes InkCanvas, and try converting it with the recognizer.
 
 1. When you receive a result from the recognizer, accept the results to return to a Notes TextBox with the new results appended.
-
+    
+    ![Recognize handwritten text with OCR](Images/handwriting.png "Recognize handwritten text with OCR")
+    
+    *__Figure__: Recognize handwritten text with OCR.*
+    
 <a name="Exercise2"></a>
 ### Exercise 2: Cortana Integration and Speech Commands ###
 
@@ -865,6 +878,10 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
 1. Ask Cortana to show nearby Sights. Cortana will display the closest Sights as content tiles.
 
+    ![Nearby Sights](Images/nearby_sights.png "Nearby Sights")
+    
+    *__Figure__: Nearby Sights display as content tiles in the Cortana pane.*
+    
 <a name="Exercise3"></a>
 ### Exercise 3: Implementing interactive toast notifications ###
 
@@ -943,6 +960,9 @@ Toast notifications are a great way to quickly interact with a user outside of a
 
 1. Click the toast to launch the app.
 
+    ![Interactive Toast Notification](Images/toast.png "Interactive Toast Notification")
+    
+    *__Figure__: The interactive toast notification.*
 
 <a name="Summary"></a>
 ## Summary ##
