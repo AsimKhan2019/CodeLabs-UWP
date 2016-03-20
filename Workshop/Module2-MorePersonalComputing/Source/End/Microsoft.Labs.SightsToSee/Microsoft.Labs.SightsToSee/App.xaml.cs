@@ -13,7 +13,6 @@ using Microsoft.ApplicationInsights;
 using Microsoft.Labs.SightsToSee.Library.Models;
 using Microsoft.Labs.SightsToSee.Library.Services.DataModelService;
 using Microsoft.Labs.SightsToSee.Views;
-using Microsoft.WindowsAzure.MobileServices;
 using Microsoft.Labs.SightsToSee.Models;
 
 namespace Microsoft.Labs.SightsToSee
