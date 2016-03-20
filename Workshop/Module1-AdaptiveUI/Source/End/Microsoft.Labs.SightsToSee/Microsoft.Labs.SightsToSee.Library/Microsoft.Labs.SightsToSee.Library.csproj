@@ -95,9 +95,6 @@
     <Compile Include="Models\Restaurant.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\IGuidTable.cs" />
-    <Compile Include="Services\AzureService\AuthenticationService.cs" />
-    <Compile Include="Services\AzureService\FileHelper.cs" />
-    <Compile Include="Services\DataModelService\AzureDataModelService.cs" />
     <Compile Include="Services\DataModelService\DataModelServiceFactory.cs" />
     <Compile Include="Services\DataModelService\SeedDataFactory.cs" />
     <Compile Include="Services\DataModelService\SqliteDataModelService.cs" />
@@ -110,9 +107,7 @@
     <Compile Include="Models\SightVisualMapper.cs" />
     <Compile Include="Models\Trip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AzureService\AzureFileSyncHandler.cs" />
     <Compile Include="Services\SightsService\SightsHelper.cs" />
-    <Compile Include="Utilities\AsyncLock.cs" />
     <EmbeddedResource Include="Properties\Microsoft.Labs.SightsToSee.Library.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -123,17 +118,7 @@
       <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Sqlite\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.WindowsAzure.Mobile.Files">
-      <HintPath>..\libs\Microsoft.WindowsAzure.Mobile.Files.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Mobile.Files.Ext">
-      <HintPath>..\libs\Microsoft.WindowsAzure.Mobile.Files.Ext.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
