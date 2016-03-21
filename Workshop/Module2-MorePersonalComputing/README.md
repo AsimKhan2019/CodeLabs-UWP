@@ -133,7 +133,7 @@ We'll start by adding an InkCanvas that can be used for taking notes.
     
     ![The Simple InkCanvas](Images/notes_inkcanvas.png "The Simple InkCanvas")
     
-    *__Figure__: The simple Notes InkCanvas.*
+    _The simple Notes InkCanvas_
 
 
 	The default pen for the InkCanvas is a simple black line. Right now, we are also not saving the Ink. In the next task, we're going to set up an Ink Toolbar to handle pen color, saving, and clearing the Notes Ink Canvas.
@@ -237,7 +237,7 @@ In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any In
 
     ![The InkToolbar](Images/notes_inktoolbar.png "The InkToolbar")
     
-    *__Figure__: The InkToolbar.*
+    _The InkToolbar_
 
 <a name="Ex1Task3"></a>
 #### Task 3 - Adding OCR Ink to text capability ####
@@ -425,7 +425,7 @@ Now that we've added the ability to record notes with Ink, it would be useful to
     
     ![Recognize handwritten text with OCR](Images/handwriting.png "Recognize handwritten text with OCR")
     
-    *__Figure__: Recognize handwritten text with OCR.*
+    _Recognize handwritten text with OCR_
     
 <a name="Exercise2"></a>
 ### Exercise 2: Cortana Integration and Speech Commands ###
@@ -880,7 +880,7 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
     ![Nearby Sights](Images/nearby_sights.png "Nearby Sights")
     
-    *__Figure__: Nearby Sights display as content tiles in the Cortana pane.*
+    _Nearby Sights display as content tiles in the Cortana pane_
     
 <a name="Exercise3"></a>
 ### Exercise 3: Implementing interactive toast notifications ###
@@ -962,7 +962,7 @@ Toast notifications are a great way to quickly interact with a user outside of a
 
     ![Interactive Toast Notification](Images/toast.png "Interactive Toast Notification")
     
-    *__Figure__: The interactive toast notification.*
+    _The interactive toast notification_
 
 <a name="Summary"></a>
 ## Summary ##
