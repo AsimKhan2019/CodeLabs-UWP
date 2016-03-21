@@ -183,9 +183,20 @@
                                 
                             </maps:MapControl>
 
-                            <!--Insert the M1_Close3DX snippet here-->
-                            
-
+                            <Button Style="{StaticResource CircleButtonStyle}"
+                            Grid.Row="1"
+                            Click="{x:Bind ViewModel.Close3D}"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Right"
+                            Margin="24"
+                            Visibility="{x:Bind ViewModel.IsDisplay3D, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <FontIcon
+                            x:Name="CloseView3D"
+                            VerticalAlignment="Center"
+                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                            FontSize="16"
+                            Glyph="&#xE10A;" />
+                            </Button>
                         </Grid>
                     </RelativePanel>
                 </PivotItem>

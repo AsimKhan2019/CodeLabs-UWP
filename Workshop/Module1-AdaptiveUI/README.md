@@ -33,7 +33,7 @@ In this module, you will see how to:
 The following is required to complete this module:
 
 - Microsoft Windows 10
-- Microsoft Visual Studio 2015
+- Microsoft Visual Studio 2015 Update 1 or later
 
 ---
 
@@ -64,7 +64,7 @@ We’re going to begin with a version of the SightsToSee app that has a fixed la
 
 Let’s take a look at how the app is set up and plan an adaptive layout. We’ll begin by walking through the starter project.
 
-1.	In a new instance of Visual Studio 2015, choose **File > Open> Project/Solution**. Browse to **&lt;Lab Root&gt;\Module 1\Begin\Microsoft.Labs.SightsToSee** and open the solution file.
+1.	In a new instance of Visual Studio 2015, choose **File > Open> Project/Solution**. Browse to **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Begin\Microsoft.Labs.SightsToSee** and open the solution file.
 
 1.	Once the project has opened, set your Solution Configuration to **Debug** and your Solution Platform to **x86**. Select **Local Machine** from the Debug Target dropdown menu.
 
@@ -395,31 +395,29 @@ In the next two tasks, we will explore tools that make it easier to design and g
 <a name="Ex2Task1"></a>
 #### Task 1 – Generate default tiles ####
 
-Providing assets for default tiles is a quick and easy way to brand your app, and there are tools that can make it even easier. The UWP Tile Generator extension takes a single logo asset and generates all the different assets you need for a range of default tiles.
+Providing assets for default tiles is a quick and easy way to brand your app, and there are tools that can make it even easier. The UWP Tile Generator is a Visual Studio extension that takes a single logo asset and generates all the different assets you need for a range of default tiles.
 
-In this task, we will add a logo asset to the project, install the UWP Tile Generator, and use it to generate default tiles and splash assets.
+In this task, we will add a logo asset to the project, and use the UWP Tile Generator to generate default tiles and splash assets.
 
-1. Open **Tools > Extensions and Updates** in Visual Studio and browse to the **Online** tab.
+1. Open **Tools > Extensions and Updates** in Visual Studio and browse to the **Installed** tab.
 
-1. Use the search box to search the Visual Studio Gallery for **UWP Tile Generator**.
+1. Use the search box to search for **UWP Tile Generator**.
 
-1. Use the **Download** button to download and install the extension. Follow the prompts in the dialog.
+1. The UWP Tile Generator extension is already installed on the workshop machines. If you need to install it on a dev machine, you can switch to the Online tab, find the extension and then use the **Download** button to download and install the extension. 
 
-	![Install the UWP Tile Generator extension](Images/uwp_tile_extension.png?raw=true "Install the UWP Tile Generator extension")
+	![The UWP Tile Generator extension](Images/uwp_tile_extension.png?raw=true "The UWP Tile Generator extension")
 
-	_Install the UWP Tile Generator extension_
+	_The UWP Tile Generator extension_
 
-1. Once the install process is complete, restart Visual Studio. When Visual Studio reopens, the extension will be available for use.
-
-1. Now that the extension is installed, we can add a logo asset to the project and use the extension to generate default tile and splash assets.
+1. The UWP Tile Generator extension is a tool to quickly and easily create Tile assets for a UWP project. We can add a logo asset to the project and use the extension to generate default tile and splash assets.
 
 	First, open the **Package.appxmanifest** and browse to the **Visual Assets** tab. Select **All Image Assets** to view the current tiles and splash assets. You’ll see that the placeholder UWP app tile appears for the recommended tile sizes.
 
-1. Right-click on the **Assets** directory in the Solution Explorer and choose **Add > Existing Item**. Add the logo asset from **&lt;LabRoot&gt;\Module 1\Begin\Assets\Tile_Logo.png**.
+1. Right-click on the **Assets** directory in the Solution Explorer and choose **Add > Existing Item**. Add the logo asset from **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Begin\Assets\Tile_Logo.png**.
 
 	> **Note:** The new assets that will be generated using the extension will appear in the same folder as the original image. You may choose to add a subfolder to the Assets directory and place the new logo image in the subfolder for better organization.
 	> 
-	> When using a generator extension, it is a good idea to use a seed image with sufficient resolution for the largest tile and splash assets.
+	> When using a generator extension, it is a good idea to use a high resolution seed image in order to generate good quality results for the largest tile and splash assets.
 
 1. Right-click on the **Tile_Logo.png** asset in the Solution Explorer and select **Generate UWP Tiles** from the context menu.
 
@@ -435,18 +433,22 @@ In this task, we will add a logo asset to the project, install the UWP Tile Gene
 
 1. Stop debugging and return to Visual Studio.
 
+> **Note:** The UWP Tile Generator tool is a quick and easy way to generate Tile assets. In many cases, a designer might well want to use professional image editing tools to create customized artwork for different sizes.
+
 <a name="Ex2Task2"></a>
 #### Task 2 – Create adaptive tiles ####
 
 While default tiles are a great way to start branding your app, adaptive tiles take the user experience to the next level. There are tools available that can help you design and implement adaptive tiles in your UWP app. We will use the Notifications Visualizer app to preview and build adaptive tile XML and the NotificationsExtension NuGet package to generate the XML in the app using code.
 
-1. The **Notifications Visualizer** app is available from the Windows Store. You can install this and use it to help you design tiles and notifications.
+The **Notifications Visualizer** app is available from the Windows Store. You can install this and use it to help you design tiles and notifications.
 
-	![The Notifications Visualizer app is available from the Windows Store](Images/notifications_visualizer_store2.png?raw=true "The Notifications Visualizer app is available from the Windows Store")
+![The Notifications Visualizer app is available from the Windows Store](Images/notifications_visualizer_store2.png?raw=true "The Notifications Visualizer app is available from the Windows Store")
 
-	_The Notifications Visualizer app is available from the Windows Store_
+_The Notifications Visualizer app is available from the Windows Store_
 
-	Do not install it from the store now - it is pre-installed on your computer.
+Do not install it from the store now - it is pre-installed on your computer.
+
+#### Instructor Demo: Using the Notifications Visualizer app
 
 1. Open the Notifications Visualizer app. Use the **Payloads** dropdown menu to browse through the sample tile XML.
 
@@ -456,23 +458,25 @@ While default tiles are a great way to start branding your app, adaptive tiles t
 
 	> **Note:** The image path in the sample XML is defined as a relative path from the Notifications Visualizer app folder.
 
-1. Use the **Pick Folder of XML Files** button to select the **&lt;Lab Root&gt;\Module 1\Begin\Assets** folder in the file explorer. The **AdaptiveTiles.xml** file will automatically load into the XML Payload window.
+1. Use the **Pick Folder of XML Files** button to select the **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Begin\Microsoft.Labs.SightsToSee\Assets** folder in the file explorer. The **AdaptiveTiles.xml** file will automatically load into the XML Payload window.
 
     > **Note:** For more on adaptive tile and toast schema and implementation, check out the **Help (?)** section of the Notifications Visualizer app or visit https://msdn.microsoft.com/en-us/library/windows/apps/xaml/mt185606.aspx
 
 1. Open the **Settings** pane in the Notifications Visualizer app. Set the tile background color to **#2da092**.
 
-1. Click the placeholder **Square44x44Logo** and use the file picker to replace it with the **Square44x44Logo.scale-100.png** asset from the SightsToSee app Assets folder. Repeat the process with the other logos declared in the Settings pane.
+1. Click the placeholder **Square44x44Logo** and use the file picker to replace it with the **Square44x44Logo.scale-100.png** asset from the SightsToSee app Assets folder. You can repeat the process with the other logos declared in the Settings pane.
 
 1. Change the app preview name to **SightsToSee**.
 
-1. Return to the tile preview. Pin the tile to the Start Menu.
+1. Return to the tile preview. 
 
-1. Now that we’ve examined the structure of the adaptive tile XML, let’s add adaptive tiles to the SightsToSee app.
+    ##### End of Instructor Demo #####
+    
+#### Workshop Steps ####
 
-	The **Notifications Extensions** NuGet package helps to generate tile, toast, and badge notifications for Windows 10 using code instead of XML, which gives you access to Intellisense.
+Now that we’ve examined the structure of the adaptive tile XML, let’s add adaptive tiles to the SightsToSee app. We will use the **Notifications Extensions** NuGet package to help to generate tile, toast, and badge notifications for Windows 10 using code instead of XML, which also gives you access to Intellisense.
 
-	The structure of the XML we’re going to generate with code will reflect the structure of the XML file we just previewed in the Notifications Visualizer app.
+The structure of the XML we’re going to generate with code will reflect the structure of the XML file we just previewed in the Notifications Visualizer app.
 
 1. Return to Visual Studio and right-click on the **SightsToSee** project name in the Solution Explorer. Select **Manage NuGet packages** from the context menu.
 
@@ -480,7 +484,7 @@ While default tiles are a great way to start branding your app, adaptive tiles t
 
 1. Install the **NotificationsExtensions.Win10** NuGet Package.
 
-1. In the Solution Explorer, right-click on the **Services > TileNotificationService** folder and choose **Add > Existing Item**. Browse to the **&lt;LabRoot&gt;\Module 1\Begin\Assets** folder and add **TileHelper.cs**.
+1. In the Solution Explorer, right-click on the **Services > TileNotificationService** folder and choose **Add > Existing Item**. Browse to the **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Begin\Assets** folder and add **TileHelper.cs**.
 
     > **Note:** The TileHelper generates XML similar to the XML we previewed in the Notifications Visualizer app. It looks for the first five Sights added to a Trip, and displays a peek image from each Sight along with the Sight name and description on an adaptive tile. The TileHelper also generates the tile notification.
 
@@ -650,43 +654,11 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
 														 Tapped="MapPinTapped">
 	````
 
-1. We will need a button to close the Aerial3D interface and return to the previous Map view. Expand the snippet **M1_Close3DX** immediately after the closing tag of the MapControl.
-
-	````XAML
-	<Button Style="{StaticResource CircleButtonStyle}"
-					  Grid.Row="1"
-					  Click="{x:Bind ViewModel.Close3D}"
-					  VerticalAlignment="Top"
-					  HorizontalAlignment="Right"
-					  Margin="24"
-					  Visibility="{x:Bind ViewModel.IsDisplay3D,
-					  Mode=OneWay, Converter={StaticResource
-					  BooleanToVisibilityConverter}}">
-		<FontIcon x:Name="CloseView3D"
-					VerticalAlignment="Center"
-					FontFamily="{ThemeResource SymbolThemeFontFamily}"
-					FontSize="16"
-					Glyph="&#xE10A;" />
-	</Button>
-	````
-
-	> **Note:** Streetside has a close button in its interface, but Aerial3D does not.
-
 1. Open **ViewModels > TripDetailPageViewModel.cs**. Expand the **M1_Close3D** and **M1_Show3D** snippets anywhere within the view model.
 
 	The **Show3D()** method hides the flyout and sets the Map style to **Aerial3DWithRoads**. It also sets the scene by controlling the pitch, direction, and radius of the 3D view.
 
-	The **Close3D()** method sets the Map style back to **Road** and centers the map around the selected location.
-
-	````C#
-	public async void Close3D()
-	{
-		IsDisplay3D = false;
-		Map.Style = MapStyle.Road;
-		await Map.TrySetViewAsync(_currentSight.Location, 13, 0, 0);
-	}
-
-	public async void Show3D(object sender, RoutedEventArgs e)
+		public async void Show3D(object sender, RoutedEventArgs e)
 	{
 		Flyout?.Hide();
 		// sender is the button - and the data context is the Sight

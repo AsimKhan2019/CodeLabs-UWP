@@ -254,10 +254,17 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             await Launcher.LaunchUriAsync(mapsUri, launcherOptions);
         }
 
-        // Insert the M1_Close3D snippet here
-
 
         // Insert the M1_Show3D snippet here
+
+        
+
+        public async void Close3D()
+        {
+            IsDisplay3D = false;
+            Map.Style = MapStyle.Road;
+            await Map.TrySetViewAsync(_currentSight.Location, 13, 0, 0);
+        }
 
 
         public void SightClicked(object sender, ItemClickEventArgs args)
