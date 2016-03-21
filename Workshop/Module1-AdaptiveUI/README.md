@@ -131,6 +131,8 @@ Now that we’ve explored the fixed UI in the SightsToSee starter app, we can ad
 
     This state will control the behavior of the navigation pane for mid-size windows and tablets. It will set the SplitView pane to closed by default and keep the SplitView in **CompactInline** mode.
 
+	(Code Snippet - _M1_ShellTablet_)
+
     ````XAML
     <!-- Tablet State -->
 
@@ -300,6 +302,8 @@ Now that we’ve explored the fixed UI in the SightsToSee starter app, we can ad
 1. Expand the **M1_TripMobile** snippet into the `<!--Mobile State -->` section in the VisualStateGroup.
 
 	This state sets the map to full-bleed width with no margins. The large page title from the Tablet and Desktop states is hidden, and the Mobile header is shown instead. Some of the setters are set to the empty string to clear out conflicting RelativePanel properties from other states.
+
+	(Code Snippet - _M1_TripMobile_)
 
 	````XAML
 	<!-- Mobile State -->
@@ -492,6 +496,8 @@ The structure of the XML we’re going to generate with code will reflect the st
 
 1. Create a new line after line **113** and expand the **M1_CreateTiles** snippet.
 
+	(Code Snippet - _M1_CreateTiles_)
+
 	````C#
 	TileHelper.SetInteractiveTilesForTrip(CurrentTrip);
 	// Also whenever the MySights collection changes
@@ -518,6 +524,8 @@ Maps provide a great way to add visual interaction with the Sights in the app. W
 In this task, we will display the Sights as PushPins on the map, enable Aerial3D Map View, and enable ShowStreet mode.
 
 1. Open TripDetailPage.xaml. Expand the **M1_MapItems** snippet inside the MapControl. The Map items in the MapItemsControl are bound to the list of Sights. Sights added to **My Sights** will display as larger PushPins with borders. **Suggested Sights** will display as smaller PushPins without borders.
+
+	(Code Snippet - _M1_MapItems_)
 
 	````XAML
 	<maps:MapControl x:Name="Map"
@@ -578,6 +586,8 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
 	````
 
 1. Open **TripDetailPage.xaml**. Expand the **M1_Flyout** snippet immediately after the GridViewHeaderItem style. This Flyout will pop up when a map PushPin is selected and show icons to enable Aerial3D and ShowStreet modes.
+
+	(Code Snippet - _M1_Flyout_)
 
 	````XAML
 	<Flyout x:Key="SightMapFlyout"
@@ -658,7 +668,10 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
 
 	The **Show3D()** method hides the flyout and sets the Map style to **Aerial3DWithRoads**. It also sets the scene by controlling the pitch, direction, and radius of the 3D view.
 
-		public async void Show3D(object sender, RoutedEventArgs e)
+	(Code Snippet - _M1_Show3D_)
+
+	````C#
+	public async void Show3D(object sender, RoutedEventArgs e)
 	{
 		Flyout?.Hide();
 		// sender is the button - and the data context is the Sight
@@ -712,6 +725,8 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
 1. Let’s add the code to enable Streetside mode. The button in the XAML flyout and the stubbed method in the view model are already in place. Expand the **M1_ShowStreet** code snippet inside the **ShowStreet()** method in the view model.
 
 	This method hides the flyout and turns on the Streetside overlay if it is available.
+
+	(Code Snippet - _M1_ShowStreet_)
 
 	````C#
 	public async void ShowStreet(object sender, RoutedEventArgs e)
