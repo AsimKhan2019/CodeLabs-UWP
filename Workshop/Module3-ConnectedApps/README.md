@@ -142,7 +142,24 @@ Let's take a look at how the extension app is set up.
 
 1. Expand the **M3_ExtensionManager** snippet anywhere in the **App** class. This code creates a new ExtensionManager to handle extensions with the name **SanFranPack.1.0** and sets up an ExtensionManager property that we can access.
 
+	(Code Snippet - _M3_ExtensionManager_)
+
+	````C#
+	public ExtensionManager ExtensionManager
+	{
+		 get { return _extensionManager; }
+	}
+
+	private ExtensionManager _extensionManager = new Facts.ExtensionManager("SanFranPack.1.0");
+	````
+
 1. In the **OnLaunched** method, expand the **M3_Initialize** snippet after the VCD load. This line will call the **Initialize()** method in the ExtensionManager helper on app startup.
+
+	(Code Snippet - _M3_Initialize_)
+
+	````C#
+	ExtensionManager.Initialize();
+	````
 
 1. We've added some basic options to the app settings page to support loading and unloading of app extensions. Open **Views > SettingsPage.xaml**. Uncomment the **Extensions ListView**. This list will populate when extensions are available.
 
@@ -198,13 +215,51 @@ Let's start with a simple LaunchUri scenario.
 
 1.	Open **SightDetailPage.xaml** and expand the **M3_DirectionsButton** snippet in the **TitleCommandBar**.
 
+	(Code Snippet - _M3_DirectionsButton_)
+
+	````C#
+	<AppBarButton x:Name="Directions"
+					  Label="Directions to Sight"
+					  Click="{x:Bind ViewModel.GetDirectionsAsync}">
+		 <AppBarButton.Icon>
+			  <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE707;" />
+		 </AppBarButton.Icon>
+	</AppBarButton>
+	````
+
 1. Expand the **M3_MobileDirectionsButton** snippet in the **MobileCommandBar**.
 
     > **Note:** There are two command bars because of the adaptive design of the app. Current design guidelines recommend that Mobile command bars appear at the bottom of the page and that Desktop command bars appear at the top.
 
+	(Code Snippet - _M3_MobileDirectionsButton_)
+
+	````C#
+	<AppBarButton Click="{x:Bind ViewModel.GetDirectionsAsync}"
+					  Label="Directions to Sight">
+		 <AppBarButton.Icon>
+			  <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE707;" />
+		 </AppBarButton.Icon>
+	</AppBarButton>
+	````
+
 1. The app bar buttons you just added are hooked up to a **GetDirectionsAsync** method in the view model. In the next step, we'll create that method.
 
 1. Open the **SightDetailPageViewModel**. Expand the **M3_GetDirections** snippet anywhere in the view model.
+
+	(Code Snippet - _M3_GetDirections_)
+
+	````C#
+	public async void GetDirectionsAsync()
+	{
+		 var mapsUri =
+			  new Uri($@"bingmaps:?rtp=~pos.{CurrentSight.Latitude}_{CurrentSight.Longitude}_{CurrentSight.Name}");
+
+		 // Launch the Windows Maps app
+		 var launcherOptions = new LauncherOptions();
+		 launcherOptions.TargetApplicationPackageFamilyName = "Microsoft.WindowsMaps_8wekyb3d8bbwe";
+		 await Launcher.LaunchUriAsync(mapsUri, launcherOptions);
+	}
+	````
 
 	What it does:
 
@@ -245,9 +300,30 @@ Beyond launching a target app and passing it data, we can launch an app and rece
 
 1. Add a new button to the ImageInkToolbar by expanding the **M3_LaunchButton** snippet after the Undo button.
 
+	(Code Snippet - _M3_LaunchButton_)
+
+	````C#
+	<inkToolbarPreview:InkToolbarCustomToggleButton Click="OnLaunchForResults">
+		 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE2AC;" />
+	</inkToolbarPreview:InkToolbarCustomToggleButton>
+	````
+
 1. Open the **SightDetailPage** code-behind. Find the **OnLaunchForResults** event handler.
 
 1. Expand the **M3_OpenPicker** snippet inside the event handler.
+
+	(Code Snippet - _M3_OpenPicker_)
+
+	````C#
+	FileOpenPicker openPicker = new FileOpenPicker();
+	openPicker.ViewMode = PickerViewMode.Thumbnail;
+	openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+	openPicker.FileTypeFilter.Add(".jpg");
+	openPicker.FileTypeFilter.Add(".jpeg");
+	openPicker.FileTypeFilter.Add(".png");
+
+	StorageFile file = await openPicker.PickSingleFileAsync();
+	````
 
     What it does:
 
@@ -310,6 +386,24 @@ Adding drag and drop is a quick way to make your app more user-friendly. We're g
 
 1. Open the **SightDetailPageViewModel**. Expand the **M3_DragOver** snippet anywhere in the view model.
 
+	(Code Snippet - _M3_DragOver_)
+
+	````C#
+	public void SightFile_DragOver(object sender, DragEventArgs e)
+	{
+		 e.AcceptedOperation = DataPackageOperation.Copy;
+
+		 // Customize the look of the DragUI
+		 if (e.DragUIOverride != null)
+		 {
+			  e.DragUIOverride.Caption = "Attach photo";
+			  e.DragUIOverride.IsCaptionVisible = true;
+			  e.DragUIOverride.IsContentVisible = true;
+			  e.DragUIOverride.IsGlyphVisible = true;
+		 }
+	}
+	````
+
     What it does:
 
     - Enables the **Copy** operation for the originator of the drag event
@@ -347,9 +441,46 @@ The Share contract is an easy way to share data between apps. You can share link
 
     - Expand the **M3_ShareButton** snippet into the **TitleCommandBar**.
 
+		(Code Snippet - _M3_ShareButton_)
+
+		````C#
+		<AppBarButton x:Name="Share"
+						  Label="Share Sight"
+						  Click="{x:Bind ViewModel.ShareSight}">
+			 <AppBarButton.Icon>
+				  <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
+			 </AppBarButton.Icon>
+		</AppBarButton>
+		````
+
+
     - Expand the **M3_MobileShareButton** snippet into the **MobileCommandBar**.
 
+		(Code Snippet - _M3_MobileShareButton_)
+
+		````C#
+		<AppBarButton Click="{x:Bind ViewModel.ShareSight}"
+						  Label="Share Sight">
+			 <AppBarButton.Icon>
+				  <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
+			 </AppBarButton.Icon>
+		</AppBarButton>
+		````
+
 1. Now let's add the code to support the share button. Open the **SightDetailPageViewModel** and expand the **M3_ShareSight** snippet anywhere in the ViewModel.
+
+	(Code Snippet - _M3_ShareSight_)
+
+	````C#
+	public void ShareSight()
+	{
+		 var dataTransferManager = DataTransferManager.GetForCurrentView();
+		 dataTransferManager.DataRequested += DataTransferManager_DataRequested;
+
+		 DataTransferManager.ShowShareUI();
+	}
+	````
+
 
     **What it does:**
 
@@ -361,11 +492,30 @@ The Share contract is an easy way to share data between apps. You can share link
 
     - **ShowShareUI** opens the system Share flyout.
 
-1. With the **ShareSight()** method, we've initiated the share operation. Next, we'll handle the **DataRequested** event.
-
-    Expand the **M3_DataRequested** snippet below the **ShareSight** method.
+1. With the **ShareSight()** method, we've initiated the share operation. Next, we'll handle the **DataRequested** event. Expand the **M3_DataRequested** snippet below the **ShareSight** method.
 
     > **Note:** The Request property lets you access the DataRequest object and give it data or a failure message.
+
+	(Code Snippet - _M3_DataRequested_)
+
+	````C#
+	private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
+	{
+		 var request = args.Request;
+		 request.Data.Properties.Title = $"I'm visiting the {CurrentSight.Name}";
+		 request.Data.Properties.Description = $"{CurrentSight.Description}";
+		 request.Data.SetText($"{CurrentSight.Description}");
+
+		 var localImage = SightImage.UriSource.AbsoluteUri;
+		 string htmlPayload = $"<img src=\"{localImage}\" width=\"200\"/><p>{CurrentSight.Description}</p>";
+		 var htmlFormat = HtmlFormatHelper.CreateHtmlFormat(htmlPayload);
+		 request.Data.SetHtmlFormat(htmlFormat);
+
+		 // Because the HTML contains a local image, we need to add it to the ResourceMap.
+		 var streamRef = RandomAccessStreamReference.CreateFromUri(new Uri(localImage));
+		 request.Data.ResourceMap[localImage] = streamRef;
+	}
+	````
 
     **What it does:**
 
@@ -377,7 +527,7 @@ The Share contract is an easy way to share data between apps. You can share link
 
     - Adds the localImage to the ResourceMap
 
-1. Build and run the app. Open a Sight detail view and use the Share button to initiate the Share process.
+1. Build and run the app. Open a Sight detail view and use the **Share** button to initiate the Share process.
 
     ![The Share Contract](Images/share_button.png "The Share Contract")
 
