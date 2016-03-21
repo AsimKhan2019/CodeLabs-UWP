@@ -147,197 +147,125 @@ Now that we’ve explored the fixed UI in the SightsToSee starter app, we can ad
     </VisualState>
     ````
 
-1. The snippet we just added will control the Tablet state for the navigation pane, but we also need to add a tablet state for the content. We will add this state interactively using Blend. Right-click on **Views > TripDetailPage.xaml** and choose **Design in Blend**.
+1. The snippet we just added will control the Tablet state for the navigation pane, but we also need to add a tablet state for the content. but we also need to add a tablet state for the content. Open __Views > TripDetailPage.xaml__.
 
-1. When Blend opens, display the **States Window** to view the existing visual states.
+1.	Look for the `<!--Tablet State -->` section in the VisualStateGroup. Type M1_TripTablet below the comment and hit the Tab key to expand the snippet.
+This state moves the Map control above the Sights GridViews, and it anchors the top, left, and right sides of the Map to the panel.
 
-	> **Note:** The States Window usually shares a pane with the Solution Editor in the default layout in Blend. If you can’t find the States Window, use the Quick Launch search field to find it by searching for States Window. Select the States Window search result to open it.
+    ````XAML
+    <!-- Tablet State -->
 
-	![The States Window in Blend](Images/states_window_initial.png?raw=true "The States Window in Blend")
+    <VisualState>
+        <VisualState.StateTriggers>
+            <AdaptiveTrigger MinWindowWidth="720" />
+        </VisualState.StateTriggers>
+        <VisualState.Setters>
+            <Setter Target="title.Visibility" Value="Visible" />
 
-	_The States Window in Blend_
+            <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
 
-1. Rename the existing visual state to **DesktopState** by clicking on the state name to enable editing. Edit its adaptive trigger by clicking on the lightning button to open the State Trigger editor. Change the **MinWindowWidth** on the existing adaptive trigger to **800**.
+            <Setter Target="MapGrid.Height" Value="360" />
+            <Setter Target="MapGrid.(RelativePanel.RightOf)" Value="" />
+            <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="" />
+            <Setter Target="MapGrid.(RelativePanel.AlignTopWithPanel)" 
+                Value="True" />
+            <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" 
+                Value="True" />
+            <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" 
+                Value="True" />
+            <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" 
+                Value="False" />
+            <Setter Target="MapGrid.Margin" Value="24,0,24,28" />
+            <Setter Target="MapGrid.Padding" Value="0" />
 
-1. To make changing the UI easier, select the SightsGrid in the Objects and Timelines Window. Give it a temporary background color in the Properties Window. We don’t have design time data turned on for this control, so a background color will make its position more obvious.
+            <Setter Target="SightsGrid.(RelativePanel.Below)" Value="MapGrid" />
+            <Setter Target="SightsGrid.(RelativePanel.AlignRightWithPanel)" 
+                Value="True" />
+            <Setter Target="SightsGrid.(RelativePanel.AlignLeftWithPanel)" 
+                Value="True" />
+            <Setter Target="SightsGrid.Width" Value="Auto" />
+            <Setter Target="SightsGrid.Margin" Value="24,0,0,0" />
 
-1. In the Design Window, select the **8” Tablet** as the display device and put it in **Portrait** mode.
+            <Setter Target="LayoutPanel.Padding" Value="0" />
 
-1. Use the **Add State** button inside the existing VisualStateGroup in the **States Window** to add another visual state called **TabletState**.
+        </VisualState.Setters>
+    </VisualState>
+    ````
+> **Note**:  Visual states sometimes conflict with each other if certain properties aren’t cleared or overridden. With RelativePanels, it is easy to inadvertently set up a circular reference. Explicit layouts and properties directly on controls can also cause conflicts in visual states.
+You can override properties in a visual state by setting them to different values. To clear out a RelativePanel alignment state without setting it to a new value, set it to the empty string.
 
-1. Next, you’ll need to give the Tablet state an adaptive trigger. Use the lightning bolt button next to the TabletState name to open the StateTriggerBase Collection Editor. When the editor is open, select **AdaptiveTrigger** from the dropdown menu and choose **Add**. Set the **MinWindowWidth** to **720** and close the State Trigger editor with the **OK** button.
-
-	![Adding an Adaptive Trigger in the State Trigger Editor in Blend](Images/state-trigger-editor.png?raw=true "Adding an Adaptive Trigger in the State Trigger Editor in Blend")
-
-	_Adding an Adaptive Trigger in the State Trigger Editor in Blend_
-
-1. Select the **TabletState** in the States Window. When you see a red dot next to the state name, recording is turned on. While recording in Blend, any property changes you make to properties on the XAML controls will be saved to the selected visual state.
-
-    > **Note:** Recording in Blend is a quick and easy way to make a number of changes at once and save them as a visual state.
-
-1. Let’s build the Tablet visual state. Use the **Objects and Timeline** Window to select the **title** TextBlock. Once the title is selected, move over to the **Properties Window**. Right-click on the box to the right of the **Visibility** field to open its context menu. Select **Record Current Value** from the context menu. The box to the right of the field will turn solid to indicate that the property is recorded in the visual state.
-
-    > **Note:** Even though some properties already appear to have values in the Properties Window, the new visual state will remain empty until those values are recorded.
-
-1. Select the **MobileHeader** Border element in the **Objects and Timeline Window**. The **Visibility** property should already be set to **Collapsed**. Record the current value.
-
-1. Use the **Objects and Timeline Window** to select the **MapGrid**. You may need to drill down into the Visual Tree to find it.
-
-1. Once the **MapGrid** is expanded, move over to the **Properties Window**. Expand the **RelativePanel** section.
-
-1. In the Tablet state, we will position the Map above the Sights grid to make better use of space and show content responsively on the screen. We will use the attached RelativePanel properties to position the Map and the Sights grid in relation to each other and the panel.
-
-	Check the checkboxes in the MapGrid RelativePanel properties for **AlignTopWithPanel**, **AlignLeftWithPanel**, and **AlignRightWithPanel**.
-
-	> **Note:** Visual states sometimes conflict with each other if certain properties aren’t cleared or overridden. With RelativePanels, it is easy to inadvertently set up a circular reference. Explicit layouts and properties directly on controls can also cause conflicts in visual states.
-	>
-	> You can override properties in a visual state by setting them to different values. To clear out a RelativePanel alignment state without setting it to a new value, set it to the empty string. However, it is recommended that you avoid explicit RelativePanel layouts on controls if you are using visual states.
-
-1. Set the **Height** property on the **MapGrid** to **360**.
-
-1. Set the **Margins** on the MapGrid to **24, 0, 24, 28**. Record the MapGrid **Padding** as **0** on all sides.
-
-	> **Note:** Margins and Padding in XAML are set in the clockwise order **left**, **top**, **right**, **bottom**. When four Margin or Padding values are written in a comma-delimited list, you can assume they follow this order. When two values are given, for instance **12, 16**, the values will be interpreted as **12, 16, 12, 16**. When one value is given, it will be applied to all four values on the element.
-
-1. Select the **LayoutPanel** in the Objects and Timelines Window and set its **Padding** to **0**.
-
-1. Select the **SightsGrid** in the Objects and Timelines Window. Using the Properties Window, set its **Width** to **Auto**. Set its **Margins** to **24, 0, 0, 0** and its **Padding** to **0**.
-
-1. Expand the **SightsGrid** RelativePanel properties in the Properties Window. Set the SightsGrid RelativePanel **Below** property to **MapGrid**.
-
-1. Check the **AlignRightWithPanel** and **AlignLeftWithPanel** checkboxes to stretch the SightsGrid to full width across the screen.
-
-1. View the XAML for the TabletState and check that the correct Setters have been added. View the Designer to check that the state looks appropriate visually.
-
-	> **Note:** You may notice that Setter Targets generated by Blend use attached properties—for example, element.(UIElement.Visibility)—instead of dependency properties such as element.Visibility. The attached properties are more type correct, but the end result is the same. Either target can be used to achieve the same result.
-
-	Your XAML for the TabletState should look similar to the code sample below.
-
-	````XAML
-	<VisualState x:Name="TabletState">
-		<VisualState.Setters>
-			<Setter Target="title.(UIElement.Visibility)" Value="Visible"/>
-			<Setter Target="MobileHeader.(UIElement.Visibility)"
-				 Value="Collapsed"/>
-			<Setter Target="MapGrid.(RelativePanel.AlignTopWithPanel)"
-				 Value="True"/>
-			<Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)"
-				 Value="True"/>
-			<Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)"
-				 Value="True"/>
-			<Setter Target="MapGrid.(FrameworkElement.Height)" Value="360"/>
-			<Setter Target="MapGrid.(FrameworkElement.Margin)">
-				 <Setter.Value>
-					  <Thickness>24,0,24,28</Thickness>
-				 </Setter.Value>
-			</Setter>
-			<Setter Target="MapGrid.(Grid.Padding)">
-				 <Setter.Value>
-					  <Thickness>0</Thickness>
-				 </Setter.Value>
-			</Setter>
-			<Setter Target="LayoutPanel.(RelativePanel.Padding)">
-				 <Setter.Value>
-					  <Thickness>0</Thickness>
-				 </Setter.Value>
-			</Setter>
-			<Setter Target="SightsGrid.(FrameworkElement.Margin)">
-				<Setter.Value>
-					  <Thickness>24,0,0,0</Thickness>
-				 </Setter.Value>
-			</Setter>
-			<Setter Target="SightsGrid.(Control.Padding)">
-				 <Setter.Value>
-					  <Thickness>0</Thickness>
-				 </Setter.Value>
-			</Setter>
-			<Setter Target="SightsGrid.(RelativePanel.Below)" Value="MapGrid"/>
-			<Setter Target="SightsGrid.(RelativePanel.AlignRightWithPanel)"
-				 Value="True"/>
-			<Setter Target="SightsGrid.(RelativePanel.AlignLeftWithPanel)"
-				 Value="True"/>
-		</VisualState.Setters>
-		<VisualState.StateTriggers>
-			<AdaptiveTrigger MinWindowWidth="720"/>
-		</VisualState.StateTriggers>
-	</VisualState>
-	````
-
-1. Select the **SightsGrid** in the Objects and Timeline Window. Remove the background color from the SightsGrid by selecting **Reset** from the Background property context menu.
-
-1. Build and run the app. Resize the window to view the new Tablet visual state. Take a look at the menu behavior and Sight detail popup behavior. If you are using a device that has Tablet Mode, enable it in the Action Center. Although the adaptive layout may not change, because it is triggered by screen size rather than device type, the back button experience will change from the shell back button to the global back button.
-
-1. Save your work, exit Blend, and return to Visual Studio. When prompted to reload **TripDetailPage.xaml** in Visual Studio, choose **Yes** to update to the version you recorded in Blend.
-
-	> **Note:** If your Tablet visual state does not display properly, you may delete it in XAML and replace it by expanding the M1_TripTablet snippet.
+1.	Build and run the app. Resize the window to view the new Tablet visual state. Take a look at the menu behavior and Sight detail popup behavior. If you are using a device with Tablet mode, turn it on. Although the adaptive layout may not change, since it is triggered by screen size, the back button experience will change from the shell back button to the global back button.
 
 	![The Tablet visual state in the SightsToSee app](Images/tablet_state.png?raw=true "The Tablet visual state in the SightsToSee app")
 
-	_The Tablet visual state in the SightsToSee app_
+	_The Tablet visual state in the SightsToSee app_ 
 
-	You may notice that the UI is still cut off for window sizes smaller than the Tablet state we’ve defined. In the following steps, we will add the Mobile state.
+    You may notice that the UI is still cut off for window sizes smaller than the Tablet state we’ve defined. In the following steps, we will add the Mobile state.
+    
+1.	Stop debugging and return to Visual Studio.
+1.	Return to __AppShell.xaml__. 
+1.	Expand the __M1_ShellMobile__ snippet into the `<!-- Mobile State -->` section in the VisualStateGroup.
+    
+    This state sets the SplitView pane to Overlay mode. Overlay mode means the menu is invisible when closed and lays over the content when open. Note that the hamburger button is not included in the SplitView, so it will always display. This state also sets the nav pane to closed by default, so only the hamburger button will be visible when the user arrives at the page.
 
-1. Stop debugging and return to Visual Studio.
+    ````XAML
+    <!-- Mobile State -->
 
-1. Open **AppShell.xaml**. Expand the **M1_ShellMobile** snippet into the `<!-- Mobile State -->` section in the **VisualStateGroup**.
+    <VisualState>
+        <VisualState.StateTriggers>
+            <AdaptiveTrigger MinWindowWidth="0" />
+        </VisualState.StateTriggers>
+        <VisualState.Setters>
+            <Setter Target="RootSplitView.DisplayMode" Value="Overlay"/>
+            <Setter Target="RootSplitView.IsPaneOpen" Value="False"/>
+        </VisualState.Setters>
+    </VisualState>
+    ````
+    
+1.	Open __Views > TripDetailPage.xaml__. 
+1.	Expand the __M1_TripMobile__ snippet into the `<!--Mobile State -->` section in the VisualStateGroup.
 
-	This state sets the SplitView pane to **Overlay** mode. Overlay mode means the menu is invisible when closed and lays over the content when open. Note that the hamburger button is not included in the SplitView, so it will always display. This state also sets the nav pane to closed by default, so only the hamburger button will be visible when the user arrives at the page.
-
-	````XAML
-	<!-- Mobile State -->
-
-	<VisualState>
-		<VisualState.StateTriggers>
-			<AdaptiveTrigger MinWindowWidth="0" />
-		</VisualState.StateTriggers>
-		<VisualState.Setters>
-			<Setter Target="RootSplitView.DisplayMode" Value="Overlay"/>
-			<Setter Target="RootSplitView.IsPaneOpen" Value="False"/>
-		</VisualState.Setters>
-	</VisualState>
-	````
-
-1. Open **Views > TripDetailPage.xaml**.
-
-1. Expand the **M1_TripMobile** snippet into the `<!--Mobile State -->` section in the VisualStateGroup.
-
-	This state sets the map to full-bleed width with no margins. The large page title from the Tablet and Desktop states is hidden, and the Mobile header is shown instead. Some of the setters are set to the empty string to clear out conflicting RelativePanel properties from other states.
+    This state sets the map to full-bleed width with no margins. The large page title from the Tablet and Desktop states is hidden, and the Mobile header is shown instead. Some of the setters are set to the empty string to clear out conflicting RelativePanel properties from other states.
 
 	(Code Snippet - _M1_TripMobile_)
 
 	````XAML
 	<!-- Mobile State -->
 
-	<VisualState>
-		<VisualState.StateTriggers>
-			<AdaptiveTrigger MinWindowWidth="0" />
-		</VisualState.StateTriggers>
-		<VisualState.Setters>
-			<Setter Target="title.Visibility" Value="Collapsed" />
-			<Setter Target="MobileHeader.Visibility" Value="Visible" />
+    <VisualState>
+        <VisualState.StateTriggers>
+            <AdaptiveTrigger MinWindowWidth="0" />
+        </VisualState.StateTriggers>
+        <VisualState.Setters>
+            <Setter Target="title.Visibility" Value="Collapsed" />
 
-			<Setter Target="MapGrid.Height" Value="360" />
-			<Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="" />
-			<Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)"
-				 Value="True" />
-			<Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)"
-				 Value="True" />
-			<Setter Target="MapGrid.Margin" Value="0,0,0,12" />
-			<Setter Target="MapGrid.Padding" Value="0" />
+            <Setter Target="MobileHeader.Visibility" Value="Visible" />
 
-			<Setter Target="SightsGrid.(RelativePanel.Below)" Value="MapGrid" />
-			<Setter Target="SightsGrid.(RelativePanel.AlignRightWithPanel)"
-				 Value="True" />
-			<Setter Target="SightsGrid.(RelativePanel.AlignLeftWithPanel)"
-				 Value="True" />
-			<Setter Target="SightsGrid.Width" Value="Auto" />
-			<Setter Target="SightsGrid.Margin" Value="12,0,0,0" />
+            <Setter Target="MapGrid.Height" Value="300" />
+            <Setter Target="MapGrid.(RelativePanel.RightOf)" Value="" />
+            <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="" />
+            <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" 
+                Value="True" />
+            <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" 
+                Value="True" />
+            <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" 
+                Value="False" />
+            <Setter Target="MapGrid.Margin" Value="0,0,0,12" />
+            <Setter Target="MapGrid.Padding" Value="0" />
 
-			<Setter Target="LayoutPanel.Padding" Value="0" />
-		</VisualState.Setters>
-	</VisualState>
-	````
+            <Setter Target="SightsGrid.(RelativePanel.Below)" Value="MapGrid" />
+            <Setter Target="SightsGrid.(RelativePanel.AlignRightWithPanel)" 
+                Value="True" />
+            <Setter Target="SightsGrid.(RelativePanel.AlignLeftWithPanel)" 
+                Value="True" />
+            <Setter Target="SightsGrid.Width" Value="Auto" />
+            <Setter Target="SightsGrid.Margin" Value="12,0,0,0" />
 
+            <Setter Target="LayoutPanel.Padding" Value="0" />
+        </VisualState.Setters>
+    </VisualState>
+    ````
+    
 1. Build and run the app. Resize the window to see the app adapt from Desktop to Tablet to Mobile states.
 
 	![The Mobile visual state in the SightsToSee app](Images/mobile_state.png?raw=true "The Mobile visual state in the SightsToSee app")
@@ -367,7 +295,7 @@ With the new Visual States, we’ve seen how the app is adaptive on Desktop for 
 
 1. Tap the **Tap to control &lt;device name&gt;** bar at top of Mobile screen.
 
-	![Tap the bar at the top of the screen to use the Mobile device as a touchpad](Images/missing.png?raw=true "Tap the bar at the top of the screen to use the Mobile device as a touchpad")
+	![Tap the bar at the top of the screen to use the Mobile device as a touchpad](Images/continuum.png?raw=true "Tap the bar at the top of the screen to use the Mobile device as a touchpad")
 
 	_Tap the bar at the top of the screen to use the Mobile device as a touchpad_
 
@@ -375,7 +303,7 @@ With the new Visual States, we’ve seen how the app is adaptive on Desktop for 
 
 1. When the touchpad opens, follow the directions on the screen and use one finger to move the mouse, a tap to select, and two fingers to scroll.
 
-	![The Mobile device becomes a touchpad to control the external Continuum display](Images/missing.png?raw=true "The Mobile device becomes a touchpad to control the external Continuum display")
+	![The Mobile device becomes a touchpad to control the external Continuum display](Images/continuum1.png?raw=true "The Mobile device becomes a touchpad to control the external Continuum display")
 
     _The Mobile device becomes a touchpad to control the external Continuum display_
 
@@ -496,8 +424,6 @@ The structure of the XML we’re going to generate with code will reflect the st
 
 1. Create a new line after line **113** and expand the **M1_CreateTiles** snippet.
 
-	(Code Snippet - _M1_CreateTiles_)
-
 	````C#
 	TileHelper.SetInteractiveTilesForTrip(CurrentTrip);
 	// Also whenever the MySights collection changes
@@ -524,8 +450,6 @@ Maps provide a great way to add visual interaction with the Sights in the app. W
 In this task, we will display the Sights as PushPins on the map, enable Aerial3D Map View, and enable ShowStreet mode.
 
 1. Open TripDetailPage.xaml. Expand the **M1_MapItems** snippet inside the MapControl. The Map items in the MapItemsControl are bound to the list of Sights. Sights added to **My Sights** will display as larger PushPins with borders. **Suggested Sights** will display as smaller PushPins without borders.
-
-	(Code Snippet - _M1_MapItems_)
 
 	````XAML
 	<maps:MapControl x:Name="Map"
@@ -586,8 +510,6 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
 	````
 
 1. Open **TripDetailPage.xaml**. Expand the **M1_Flyout** snippet immediately after the GridViewHeaderItem style. This Flyout will pop up when a map PushPin is selected and show icons to enable Aerial3D and ShowStreet modes.
-
-	(Code Snippet - _M1_Flyout_)
 
 	````XAML
 	<Flyout x:Key="SightMapFlyout"
@@ -668,10 +590,7 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
 
 	The **Show3D()** method hides the flyout and sets the Map style to **Aerial3DWithRoads**. It also sets the scene by controlling the pitch, direction, and radius of the 3D view.
 
-	(Code Snippet - _M1_Show3D_)
-
-	````C#
-	public async void Show3D(object sender, RoutedEventArgs e)
+		public async void Show3D(object sender, RoutedEventArgs e)
 	{
 		Flyout?.Hide();
 		// sender is the button - and the data context is the Sight
