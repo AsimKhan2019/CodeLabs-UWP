@@ -147,10 +147,12 @@ Now that we’ve explored the fixed UI in the SightsToSee starter app, we can ad
     </VisualState>
     ````
 
-1. The snippet we just added will control the Tablet state for the navigation pane, but we also need to add a tablet state for the content. but we also need to add a tablet state for the content. Open __Views > TripDetailPage.xaml__.
+1. The snippet we just added will control the Tablet state for the navigation pane, but we also need to add a tablet state for the content. but we also need to add a tablet state for the content. Open **Views > TripDetailPage.xaml**.
 
-1.	Look for the `<!--Tablet State -->` section in the VisualStateGroup. Type M1_TripTablet below the comment and hit the Tab key to expand the snippet.
+1.	Look for the `<!--Tablet State -->` section in the VisualStateGroup. Type **M1_TripTablet** below the comment and hit the Tab key to expand the snippet.
 This state moves the Map control above the Sights GridViews, and it anchors the top, left, and right sides of the Map to the panel.
+
+	(Code Snippet - _M1_TripTablet_)
 
     ````XAML
     <!-- Tablet State -->
@@ -191,7 +193,7 @@ This state moves the Map control above the Sights GridViews, and it anchors the 
         </VisualState.Setters>
     </VisualState>
     ````
-> **Note**:  Visual states sometimes conflict with each other if certain properties aren’t cleared or overridden. With RelativePanels, it is easy to inadvertently set up a circular reference. Explicit layouts and properties directly on controls can also cause conflicts in visual states.
+	> **Note**:  Visual states sometimes conflict with each other if certain properties aren’t cleared or overridden. With RelativePanels, it is easy to inadvertently set up a circular reference. Explicit layouts and properties directly on controls can also cause conflicts in visual states.
 You can override properties in a visual state by setting them to different values. To clear out a RelativePanel alignment state without setting it to a new value, set it to the empty string.
 
 1.	Build and run the app. Resize the window to view the new Tablet visual state. Take a look at the menu behavior and Sight detail popup behavior. If you are using a device with Tablet mode, turn it on. Although the adaptive layout may not change, since it is triggered by screen size, the back button experience will change from the shell back button to the global back button.
@@ -203,10 +205,14 @@ You can override properties in a visual state by setting them to different value
     You may notice that the UI is still cut off for window sizes smaller than the Tablet state we’ve defined. In the following steps, we will add the Mobile state.
     
 1.	Stop debugging and return to Visual Studio.
-1.	Return to __AppShell.xaml__. 
-1.	Expand the __M1_ShellMobile__ snippet into the `<!-- Mobile State -->` section in the VisualStateGroup.
+
+1.	Return to **AppShell.xaml**. 
+
+1.	Expand the **M1_ShellMobile** snippet into the `<!-- Mobile State -->` section in the VisualStateGroup.
     
     This state sets the SplitView pane to Overlay mode. Overlay mode means the menu is invisible when closed and lays over the content when open. Note that the hamburger button is not included in the SplitView, so it will always display. This state also sets the nav pane to closed by default, so only the hamburger button will be visible when the user arrives at the page.
+	
+	(Code Snippet - _M1_ShellMobile_)
 
     ````XAML
     <!-- Mobile State -->
@@ -222,8 +228,8 @@ You can override properties in a visual state by setting them to different value
     </VisualState>
     ````
     
-1.	Open __Views > TripDetailPage.xaml__. 
-1.	Expand the __M1_TripMobile__ snippet into the `<!--Mobile State -->` section in the VisualStateGroup.
+1.	Open **Views > TripDetailPage.xaml**. 
+1.	Expand the **M1_TripMobile** snippet into the `<!--Mobile State -->` section in the VisualStateGroup.
 
     This state sets the map to full-bleed width with no margins. The large page title from the Tablet and Desktop states is hidden, and the Mobile header is shown instead. Some of the setters are set to the empty string to clear out conflicting RelativePanel properties from other states.
 
@@ -424,6 +430,8 @@ The structure of the XML we’re going to generate with code will reflect the st
 
 1. Create a new line after line **113** and expand the **M1_CreateTiles** snippet.
 
+	(Code Snippet - _M1_CreateTiles_)
+
 	````C#
 	TileHelper.SetInteractiveTilesForTrip(CurrentTrip);
 	// Also whenever the MySights collection changes
@@ -450,6 +458,8 @@ Maps provide a great way to add visual interaction with the Sights in the app. W
 In this task, we will display the Sights as PushPins on the map, enable Aerial3D Map View, and enable ShowStreet mode.
 
 1. Open TripDetailPage.xaml. Expand the **M1_MapItems** snippet inside the MapControl. The Map items in the MapItemsControl are bound to the list of Sights. Sights added to **My Sights** will display as larger PushPins with borders. **Suggested Sights** will display as smaller PushPins without borders.
+
+	(Code Snippet - _M1_MapItems_)
 
 	````XAML
 	<maps:MapControl x:Name="Map"
@@ -510,6 +520,8 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
 	````
 
 1. Open **TripDetailPage.xaml**. Expand the **M1_Flyout** snippet immediately after the GridViewHeaderItem style. This Flyout will pop up when a map PushPin is selected and show icons to enable Aerial3D and ShowStreet modes.
+
+	(Code Snippet - _M1_Flyout_)
 
 	````XAML
 	<Flyout x:Key="SightMapFlyout"
@@ -590,7 +602,10 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
 
 	The **Show3D()** method hides the flyout and sets the Map style to **Aerial3DWithRoads**. It also sets the scene by controlling the pitch, direction, and radius of the 3D view.
 
-		public async void Show3D(object sender, RoutedEventArgs e)
+	(Code Snippet - _M1_Show3D_)
+
+	````C#
+	public async void Show3D(object sender, RoutedEventArgs e)
 	{
 		Flyout?.Hide();
 		// sender is the button - and the data context is the Sight
