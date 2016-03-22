@@ -2344,7 +2344,7 @@
                                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="HeaderClipper.HorizontalContentAlignment" Value="Center" />
+                                        <Setter Target="HeaderClipper.HorizontalContentAlignment" Value="Stretch" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Wide">
@@ -2771,6 +2771,9 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
+    
 
     <Thickness x:Key="PivotItemMargin">0</Thickness>
 

@@ -214,7 +214,8 @@
                         <Setter Target="SightsGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="SightsGrid.Width" Value="Auto" />
                         <Setter Target="SightsGrid.Margin" Value="12,0,0,0" />
-                        <Setter Target="LayoutPanel.Padding" Value="0" />
+                        <!--<Setter Target="LayoutPanel.Padding" Value="0" />-->
+                        <Setter Target="LayoutPanel.Padding" Value="24,0,16,24" />
                         <Setter Target="LayoutPanel.Margin" Value="0" />
                     </VisualState.Setters>
                 </VisualState>

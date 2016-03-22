@@ -163,7 +163,6 @@
                         <Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="LayoutRoot.Margin" Value="0" />
-                        <Setter Target="LayoutRoot.HorizontalAlignment" Value="Stretch" />
                         <Setter Target="LayoutRoot.VerticalAlignment" Value="Stretch" />
                         <Setter Target="Content.Padding" Value="15,10,15,72" />
                         <Setter Target="LayoutPanel.Margin" Value="0" />
