@@ -103,7 +103,7 @@
                         <Setter Target="GalleryGrid.Padding" Value="0" />    
                         <Setter Target="InkingRoot.Width" Value="Auto" />
                         <Setter Target="GalleryGrid.ItemsPanel" Value="{StaticResource ItemsPanelTemplate}" />
-
+                        <Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
                         <!--<Setter Target="MobileCommandBar.Visibility" Value="Collapsed" />-->
 
                         <Setter Target="TitleCommandBar.Visibility" Value="Visible" />
@@ -129,7 +129,7 @@
                         <Setter Target="GalleryGrid.Style" Value="{StaticResource HorizontalGridView}" />
                         <Setter Target="Column0Content.(RelativePanel.Below)" Value="Column1Content" />
                         <Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-
+                        <Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
                         <Setter Target="TitleCommandBar.Visibility" Value="Visible" />
                         <Setter Target="TitleArea.Visibility" Value="Visible" />
                         <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
@@ -166,7 +166,7 @@
                         <Setter Target="LayoutRoot.HorizontalAlignment" Value="Stretch" />
                         <Setter Target="LayoutRoot.VerticalAlignment" Value="Stretch" />
                         <Setter Target="Content.Padding" Value="15,10,15,72" />
-
+                        <Setter Target="LayoutPanel.Margin" Value="0" />
                         <Setter Target="TitleCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="TitleArea.Visibility" Value="Collapsed" />
                         <Setter Target="MobileHeader.Visibility" Value="Visible" />
@@ -192,94 +192,7 @@
 
         <!-- Row 0 -->
 
-        <CommandBar x:Name="TitleCommandBar"
-                    Grid.Row="0"
-                    Background="Transparent"
-                    Margin="0,0,0,0" Height="60">
-            <AppBarButton x:Name="Share"
-                          Label="Share"
-                          Click="{x:Bind ViewModel.ShareSight}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton x:Name="Directions"
-                          Label="Directions"
-                          Click="{x:Bind ViewModel.GetDirectionsAsync}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE707;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton x:Name="DesktopDeleteFlyout"
-                          Label="Delete from Trip"
-                          Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                          Flyout="{StaticResource DeleteFlyout}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                          Label="Add to Trip"
-                          Click="{x:Bind ViewModel.AddSightAsync}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-        </CommandBar>
-
-        <Border x:Name="MobileHeader"
-                Background="{StaticResource NavMenuBackgroundBrush}"
-                Height="48"
-                Visibility="Collapsed"
-                Grid.Row="0">
-
-            <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
-                       Foreground="White"
-                       
-                       VerticalAlignment="Center"
-                       Margin="48,0,252,0"
-                       TextTrimming="CharacterEllipsis"
-                       Text="{x:Bind ViewModel.CurrentSight.Name, Mode=OneWay}"
-                       />
-        </Border>
-
-        <CommandBar x:Name="MobileCommandBar" 
-                    Grid.Row="0" 
-                    HorizontalAlignment="Right"
-                    Foreground="White"
-                    Background="{StaticResource NavMenuBackgroundBrush}">
-            <!--Add the app share button-->
-            <AppBarButton Click="{x:Bind ViewModel.ShareSight}"
-                          Label="Share" Foreground="White"
-                          Style="{StaticResource TopCmdBtnStyle}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton Click="{x:Bind ViewModel.GetDirectionsAsync}"
-                          Label="Directions" Foreground="White" Style="{StaticResource TopCmdBtnStyle}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE707;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton x:Name="MobileDeleteFlyout"
-                          Label="Delete from Trip"
-                          Style="{StaticResource TopCmdBtnStyle}"
-                          Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                          Flyout="{StaticResource DeleteFlyout}" Foreground="White">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                          Label="Add to Trip" Foreground="White"
-                          Style="{StaticResource TopCmdBtnStyle}"
-                          Click="{x:Bind ViewModel.AddSightAsync}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-        </CommandBar>
+        
 
         <Border x:Name="TitleArea" Grid.Row="0" HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
@@ -289,10 +202,10 @@
                    Margin="24,0,12,28"
                    Text="{x:Bind ViewModel.CurrentSight.Name, Mode=OneWay}" />
         </Border>
-        <!-- Row 1 -->
 
         <Pivot x:Name="LayoutPanel"
-               Padding="24,-40,24,0"
+               Padding="24,0,24,0"
+               Margin="0,-40,0,0"
                Grid.Row="1">
             <PivotItem Style="{StaticResource SelectedPivotItem}">
                 <PivotItem.Header>
@@ -486,7 +399,94 @@
             </PivotItem>
         </Pivot>
 
-        <!-- Row 2 -->
+        <CommandBar x:Name="TitleCommandBar"
+                    Grid.Row="0"
+                    Background="Transparent"
+                    Margin="0,0,0,0" Height="60">
+            <AppBarButton x:Name="Share"
+                          Label="Share"
+                          Click="{x:Bind ViewModel.ShareSight}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="Directions"
+                          Label="Directions"
+                          Click="{x:Bind ViewModel.GetDirectionsAsync}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE707;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="DesktopDeleteFlyout"
+                          Label="Delete from Trip"
+                          Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Flyout="{StaticResource DeleteFlyout}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                          Label="Add to Trip"
+                          Click="{x:Bind ViewModel.AddSightAsync}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
+
+        <Border x:Name="MobileHeader"
+                Background="{StaticResource NavMenuBackgroundBrush}"
+                Height="48"
+                Visibility="Collapsed"
+                Grid.Row="0">
+
+            <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
+                       Foreground="White"
+                       
+                       VerticalAlignment="Center"
+                       Margin="48,0,252,0"
+                       TextTrimming="CharacterEllipsis"
+                       Text="{x:Bind ViewModel.CurrentSight.Name, Mode=OneWay}"
+                       />
+        </Border>
+
+        <CommandBar x:Name="MobileCommandBar" 
+                    Grid.Row="0" 
+                    HorizontalAlignment="Right"
+                    Foreground="White"
+                    Background="{StaticResource NavMenuBackgroundBrush}">
+            <!--Add the app share button-->
+            <AppBarButton Click="{x:Bind ViewModel.ShareSight}"
+                          Label="Share" Foreground="White"
+                          Style="{StaticResource TopCmdBtnStyle}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Click="{x:Bind ViewModel.GetDirectionsAsync}"
+                          Label="Directions" Foreground="White" Style="{StaticResource TopCmdBtnStyle}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE707;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="MobileDeleteFlyout"
+                          Label="Delete from Trip"
+                          Style="{StaticResource TopCmdBtnStyle}"
+                          Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          Flyout="{StaticResource DeleteFlyout}" Foreground="White">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                          Label="Add to Trip" Foreground="White"
+                          Style="{StaticResource TopCmdBtnStyle}"
+                          Click="{x:Bind ViewModel.AddSightAsync}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
 
         <!-- Content Dialogs -->
 
