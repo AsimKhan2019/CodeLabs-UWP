@@ -48,7 +48,7 @@ Estimated time to complete this module:  **40 to 50 minutes**
 ### Exercise 1: Inking ###
 
 We will be implementing the following Inking features:
-- Notes recorded using a simplified OneNote model
+- Notes recorded using inking
 - Inking on photos
 - Ink Toolbar (preview of the RS1 Ink Toolbar for color and pen selection)
 - Optical character recognition
@@ -58,8 +58,14 @@ We will be implementing the following Inking features:
 
 We'll start by adding an InkCanvas that can be used for taking notes.
 
-1. Open the starter project at **&lt;Lab Root&gt;\Module 2\Begin\**.
+1. Open the starter project at **C:\Labs\CodeLabs-UWP\Workshop\Module 2-MorePersonalComputing\Begin\Microsoft.Labs.SightsToSee** and open the solution file.
 
+1.	Once the project has opened, set your Solution Configuration to **Debug** and your Solution Platform to **x86**. Select **Local Machine** from the Debug Target dropdown menu.
+
+	![Configure your app to run on the Local Machine](Images/debug_mode.png?raw=true "Configure your app to run on the Local Machine")
+
+	_Configure your app to run on the Local Machine_
+    
 1. Run the starter project on the **Local Machine** and then exit the application.
 
 	> **Note:** You may notice there is a new prompt for location as well as a BackgroundTasks project in the Solution. We'll be using these features later in the Module.
@@ -72,7 +78,7 @@ We'll start by adding an InkCanvas that can be used for taking notes.
 
 	Let's get started by added a simple InkCanvas to the Notes field.
 
-1. Open **SightsDetailControl.xaml**.
+1. Open **SightDetailPage.xaml** in the __Views__ folder of project __Microsoft.Labs.SightsToSee__.
 
 1. Expand the **M2_EnableInkButton** snippet below the **Notes** title TextBlock. The button will go in the second column of the grid.
 
