@@ -173,8 +173,7 @@
                         <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="SightsGrid" />
                         <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.Padding" Value="0,0,0,0" />
-
+                        <Setter Target="MapGrid.Padding" Value="0,0,0,0" />    
                         <Setter Target="SightsGrid.Width" Value="404" />
                     </VisualState.Setters>
 
@@ -229,8 +228,6 @@
 
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />

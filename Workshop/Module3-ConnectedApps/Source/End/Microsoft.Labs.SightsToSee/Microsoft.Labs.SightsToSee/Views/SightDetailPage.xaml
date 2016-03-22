@@ -104,6 +104,11 @@
                         <Setter Target="InkingRoot.Width" Value="Auto" />
                         <Setter Target="GalleryGrid.ItemsPanel" Value="{StaticResource ItemsPanelTemplate}" />
 
+                        <!--<Setter Target="MobileCommandBar.Visibility" Value="Collapsed" />-->
+
+                        <Setter Target="TitleCommandBar.Visibility" Value="Visible" />
+                        <Setter Target="TitleArea.Visibility" Value="Visible" />
+                        <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
                         <Setter Target="MobileCommandBar.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
@@ -126,6 +131,7 @@
                         <Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
 
                         <Setter Target="TitleCommandBar.Visibility" Value="Visible" />
+                        <Setter Target="TitleArea.Visibility" Value="Visible" />
                         <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
                         <Setter Target="MobileCommandBar.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
@@ -162,6 +168,7 @@
                         <Setter Target="Content.Padding" Value="15,10,15,72" />
 
                         <Setter Target="TitleCommandBar.Visibility" Value="Collapsed" />
+                        <Setter Target="TitleArea.Visibility" Value="Collapsed" />
                         <Setter Target="MobileHeader.Visibility" Value="Visible" />
                         <Setter Target="MobileCommandBar.Visibility" Value="Visible" />
                     </VisualState.Setters>
@@ -293,7 +300,7 @@
                       Margin="0,12,0,0">
 
                     <RelativePanel x:Name="Content"                           
-                           Padding="24,10,0,48">
+                           Padding="0,10,0,48">
                         <StackPanel Width="472"
                             x:Name="Column0Content">
                             <TextBlock x:Name="Caption"
