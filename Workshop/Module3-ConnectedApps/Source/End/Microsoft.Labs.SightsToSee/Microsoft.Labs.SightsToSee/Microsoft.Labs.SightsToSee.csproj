@@ -138,6 +138,8 @@
     <Content Include="Assets\DemoImages\GettyImages-90934685.jpg" />
     <Content Include="Assets\Images\DialogBackground.jpg" />
     <None Include="Microsoft.Labs.SightsToSee_StoreKey.pfx" />
+    <Content Include="Assets\Sights2SeeLogo.png" />
+    <Content Include="Assets\Tile_Logo.png" />
     <Content Include="Models\DemoRestaurants.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -316,13 +318,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Labs.SightsToSee.Library\Microsoft.Labs.SightsToSee.Library.csproj">
-      <Project>{EA610101-0CC3-496D-A3AA-446F669C614E}</Project>
-      <Name>Microsoft.Labs.SightsToSee.Library</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BackgroundTasks\BackgroundTasks.csproj">
       <Project>{7d062503-e5a7-426f-8984-8cec2f13437f}</Project>
       <Name>BackgroundTasks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.Labs.SightsToSee.Library\Microsoft.Labs.SightsToSee.Library.csproj">
+      <Project>{ea610101-0cc3-496d-a3aa-446f669c614e}</Project>
+      <Name>Microsoft.Labs.SightsToSee.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

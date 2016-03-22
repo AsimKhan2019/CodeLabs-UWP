@@ -25,13 +25,16 @@ namespace Microsoft.Labs.SightsToSee.Controls
             new PropertyMetadata(default(ImageSource), PropertyChangedCallback));
 
         private CanvasBitmap _backgroundBitmap;
+        private CanvasBitmap _altBackBitmap;
         private GaussianBlurEffect _blurEffect;
+        private GaussianBlurEffect _altBlurEffect;
 
         public BlurredBackgroundControl()
         {
             InitializeComponent();
             BlurredImage.CreateResources += BlurredImage_CreateResources;
             BlurredImage.Draw += BlurredImage_Draw;
+            BlurredBackImage.Draw += AltBlurredImage_Draw;
         }
 
         public float BlurFactor
@@ -76,6 +79,8 @@ namespace Microsoft.Labs.SightsToSee.Controls
 #if !EFCOREHACK
                     control._backgroundBitmap =
                         await CanvasBitmap.LoadAsync(control.BlurredImage, ((BitmapImage) imageSource).UriSource);
+                    control._altBackBitmap =
+                        await CanvasBitmap.LoadAsync(control.BlurredBackImage, ((BitmapImage)imageSource).UriSource);
 #endif
                 }
                 else if (path.StartsWith("ms-appdata"))
@@ -83,6 +88,8 @@ namespace Microsoft.Labs.SightsToSee.Controls
 #if !EFCOREHACK
                     control._backgroundBitmap = 
                         await CanvasBitmap.LoadAsync(control.BlurredImage,((BitmapImage)imageSource).UriSource);
+                    control._altBackBitmap =
+                        await CanvasBitmap.LoadAsync(control.BlurredBackImage, ((BitmapImage)imageSource).UriSource);
 #endif
                 }
                 else
@@ -90,6 +97,8 @@ namespace Microsoft.Labs.SightsToSee.Controls
 #if !EFCOREHACK
                     control._backgroundBitmap = 
                         await CanvasBitmap.LoadAsync(control.BlurredImage, uriPath.AbsolutePath);
+                    control._altBackBitmap =
+                        await CanvasBitmap.LoadAsync(control.BlurredBackImage, ((BitmapImage)imageSource).UriSource);
 #endif
                 }
 
@@ -99,28 +108,45 @@ namespace Microsoft.Labs.SightsToSee.Controls
                     BlurAmount = control.BlurFactor
                 };
 
+                control._altBlurEffect = new GaussianBlurEffect
+                {
+                    Source = control._altBackBitmap,
+                    BlurAmount = control.BlurFactor
+                };
+
                 var fadeOut = new Storyboard();
                 var daOut = new DoubleAnimation
                 {
-                    From = 0.6,
-                    To = 1.0,
+                    //From = 0.6,
+                    //To = 1.0,
+                    From = 1.0,
+                    To = 0.0,
                     Duration = new Duration(TimeSpan.FromMilliseconds(300)),
                     AutoReverse = false
                 };
-                Storyboard.SetTarget(daOut, control.OpacityLayer);
+
+                //Storyboard.SetTarget(daOut, control.OpacityLayer);
+                Storyboard.SetTarget(daOut, control.BlurredImage);
                 Storyboard.SetTargetProperty(daOut, "Opacity");
                 fadeOut.Children.Add(daOut);
                 var fadeIn = new Storyboard();
                 var daIn = new DoubleAnimation
                 {
-                    From = 1.0,
-                    To = 0.6,
+                    //From = 0.6,
+                    //To = 1.0,
+                    From = 0.0,
+                    To = 1.0,
                     Duration = new Duration(TimeSpan.FromMilliseconds(300)),
                     AutoReverse = false
                 };
-                Storyboard.SetTarget(daIn, control.OpacityLayer);
+                //Storyboard.SetTarget(daIn, control.OpacityLayer);
+                Storyboard.SetTarget(daIn, control.BlurredImage);
                 Storyboard.SetTargetProperty(daIn, "Opacity");
                 fadeIn.Children.Add(daIn);
+                fadeIn.Completed += (sender, o) =>
+                {
+                    control.BlurredBackImage.Invalidate();
+                };
                 fadeOut.Begin();
                 fadeOut.Completed += (sender, o) =>
                 {
@@ -165,6 +191,37 @@ namespace Microsoft.Labs.SightsToSee.Controls
             }
         }
 
+        private void AltBlurredImage_Draw(CanvasControl sender, CanvasDrawEventArgs args)
+        {
+            if (_altBackBitmap != null)
+            {
+                var imageHeight = _altBackBitmap.Bounds.Height;
+                var imageWidth = _altBackBitmap.Bounds.Width;
+
+                var scale = Math.Min(BlurredImage.ActualWidth / imageWidth, BlurredImage.ActualHeight / imageHeight);
+
+                double xOffset = 0, yOffset = 0;
+                if (Math.Abs(imageWidth * scale - BlurredImage.ActualWidth) < 1)
+                {
+                    // Basically the same width, we need to scale up for the height to fit
+                    var newScale = BlurredImage.ActualHeight / (imageHeight * scale);
+                    scale *= newScale;
+                }
+                else
+                {
+                    var newScale = BlurredImage.ActualWidth / (imageWidth * scale);
+                    scale *= newScale;
+                }
+
+                yOffset = (BlurredImage.ActualHeight - imageHeight * scale) / 2.0;
+                xOffset = (BlurredImage.ActualWidth - imageWidth * scale) / 2.0;
+
+                args.DrawingSession.DrawImage(_blurEffect,
+                    new Rect(xOffset, yOffset, imageWidth * scale, imageHeight * scale),
+                    _altBackBitmap.Bounds);
+            }
+        }
+
         private void BlurredImage_CreateResources(CanvasControl sender, CanvasCreateResourcesEventArgs args)
         {
             args.TrackAsyncAction(CreateResourcesAsync(sender).AsAsyncAction());
@@ -177,10 +234,19 @@ namespace Microsoft.Labs.SightsToSee.Controls
             {
 #if !EFCOREHACK
                 _backgroundBitmap =
-                    await CanvasBitmap.LoadAsync(sender, ((BitmapImage) BackgroundImageSource).UriSource);
+                    await CanvasBitmap.LoadAsync(sender, ((BitmapImage)BackgroundImageSource).UriSource);
                 _blurEffect = new GaussianBlurEffect
                 {
                     Source = _backgroundBitmap,
+                    BlurAmount = BlurFactor
+                };
+
+                _altBackBitmap =
+                    await CanvasBitmap.LoadAsync(sender, ((BitmapImage)BackgroundImageSource).UriSource);
+
+                _altBlurEffect = new GaussianBlurEffect
+                {
+                    Source = _altBackBitmap,
                     BlurAmount = BlurFactor
                 };
 #endif
