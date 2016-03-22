@@ -12,7 +12,7 @@ An adaptive UI differs from a responsive UI, because it can deliver an individua
 
 With adaptive UI, you can deliver a responsive design, but you also have the ability to deliver unique views to devices that have little in common with each other. For example, an Xbox view may be completely distinct from the desktop and mobile views for an app, because the device UI and interactions are so different.
 
-In this lab, we will evolve a fixed layout into an adaptive UI and view it on Desktop, Mobile, and Continuum. We’ll also use some new tools to easily generate default tiles, build adaptive tiles from XML, and enhance the Maps experience.
+In this module, we will evolve a fixed layout into an adaptive UI and view it on Desktop, Mobile, and Continuum. We’ll also use some new tools to easily generate default tiles, build adaptive tiles from XML, and enhance the Maps experience.
 
 <a name="Objectives"></a>
 ### Objectives ###
@@ -90,7 +90,7 @@ Let’s take a look at how the app is set up and plan an adaptive layout. We’l
 
 	_Content in the fixed UI is cut off for smaller window sizes_
 
-1.	Click on the Hamburger to observe the menu behavior. The menu will collapse, and the content moves to the left.
+1.	Click the hamburger to observe the menu behavior. The menu will collapse, and the content moves to the left.
 
 1.	Return to Visual Studio and stop debugging.
 
@@ -121,7 +121,7 @@ Now that we’ve explored the fixed UI in the SightsToSee starter app, we can ad
 
     > **Note**: Code snippets are blocks of reusable code that can be quickly inserted using a unique string, hotkey, or context menu. There are two kinds of snippets: expansion snippets and surround-with snippets.
 
-    > **Note**: Expansion snippets contain contiguous blocks of code that insert at the point of the cursor. Surround-with snippets can wrap around existing code. In this lab, we will use expansion snippets. For more on code snippets, visit https://msdn.microsoft.com/en-us/library/ms165392.aspx
+    > **Note**: Expansion snippets contain contiguous blocks of code that insert at the point of the cursor. Surround-with snippets can wrap around existing code. In this module, we will use expansion snippets. For more on code snippets, visit https://msdn.microsoft.com/en-us/library/ms165392.aspx
 
 1. Open **AppShell.xaml**.
 
@@ -351,13 +351,13 @@ In this task, we will add a logo asset to the project, and use the UWP Tile Gene
 
 	First, open the **Package.appxmanifest** and browse to the **Visual Assets** tab. Select **All Image Assets** to view the current tiles and splash assets. You’ll see that the placeholder UWP app tile appears for the recommended tile sizes.
 
-1. Right-click on the **Assets** directory in the Solution Explorer and choose **Add > Existing Item**. Add the logo asset from **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Begin\Assets\Tile_Logo.png**.
+1. Right-click the **Assets** directory in the Solution Explorer and choose **Add > Existing Item**. Add the logo asset from **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Begin\Assets\Tile_Logo.png**.
 
 	> **Note:** The new assets that will be generated using the extension will appear in the same folder as the original image. You may choose to add a subfolder to the Assets directory and place the new logo image in the subfolder for better organization.
 	> 
 	> When using a generator extension, it is a good idea to use a high resolution seed image in order to generate good quality results for the largest tile and splash assets.
 
-1. Right-click on the **Tile_Logo.png** asset in the Solution Explorer and select **Generate UWP Tiles** from the context menu.
+1. Right-click the **Tile_Logo.png** asset in the Solution Explorer and select **Generate UWP Tiles** from the context menu.
 
 1. Right-click the asset again. This time, select **Generate UWP Splash** from the context menu. You will see the new assets appear in the same folder as the original logo image.
 
@@ -416,13 +416,13 @@ Now that we’ve examined the structure of the adaptive tile XML, let’s add ad
 
 The structure of the XML we’re going to generate with code will reflect the structure of the XML file we just previewed in the Notifications Visualizer app.
 
-1. Return to Visual Studio and right-click on the **SightsToSee** project name in the Solution Explorer. Select **Manage NuGet packages** from the context menu.
+1. Return to Visual Studio and right-click the **SightsToSee** project name in the Solution Explorer. Select **Manage NuGet packages** from the context menu.
 
 1. On the **Browse** tab of the NuGet Package Manager, search for **Notifications Extensions**.
 
 1. Install the **NotificationsExtensions.Win10** NuGet Package.
 
-1. In the Solution Explorer, right-click on the **Services > TileNotificationService** folder and choose **Add > Existing Item**. Browse to the **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Begin\Assets** folder and add **TileHelper.cs**.
+1. In the Solution Explorer, right-click the **Services > TileNotificationService** folder and choose **Add > Existing Item**. Browse to the **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Begin\Assets** folder and add **TileHelper.cs**.
 
     > **Note:** The TileHelper generates XML similar to the XML we previewed in the Notifications Visualizer app. It looks for the first five Sights added to a Trip, and displays a peek image from each Sight along with the Sight name and description on an adaptive tile. The TileHelper also generates the tile notification.
 
@@ -648,7 +648,7 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
 
 	> **Note:** The M1_Show3D code snippet includes a stubbed method for ShowStreet(). We will add the contents of the ShowStreet method in a later step.
 
-1. Build and run the app. The PushPins will animate in with Bow animation. Click on a PushPin to view its flyout. Use the building icon to open Aerial3D mode.
+1. Build and run the app. The PushPins will animate in with Bow animation. Click a PushPin to view its flyout. Use the building icon to open Aerial3D mode.
 
 	![Aerial3D view](Images/aerial3d.png?raw=true "Aerial3D view")
 

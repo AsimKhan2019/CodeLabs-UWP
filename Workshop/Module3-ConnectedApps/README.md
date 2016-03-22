@@ -7,7 +7,7 @@
 ## Overview ##
 
 Windows 10 Redstone comes with more ways than ever before to create great user experiences across devices and across apps.
-In this lab, you will learn how to connect your app to the cloud so users can get their data on whichever device they pick up. 
+In this module, you will learn how to connect your app to the cloud so users can get their data on whichever device they pick up. 
 You will enhance the app to load additional app data through an App Extension, and you will use the LaunchUri and LaunchForResults APIs to get directions from BingMaps and to connect to a photo processing apps to add effects to pictures.
 
 You will add capabilities to the app to share files and content with other apps by adding support for Drag and Drop and the Share contract.
@@ -98,7 +98,7 @@ Unfortunately, time does not allow us to cover creation of the backend service n
     }
 	````
 
-1. Right-click on the **Microsoft.Labs.SightsToSee.Library** Project and then click **Properties** on the context menu to open the Properties window. Select the **Build** tab, and select **All Platforms** in the **Platform** dropdown. Edit the **Conditional compilation symbols** to remove **SQLITE**. 
+1. Right-click the **Microsoft.Labs.SightsToSee.Library** Project and then click **Properties** on the context menu to open the Properties window. Select the **Build** tab, and select **All Platforms** in the **Platform** dropdown. Edit the **Conditional compilation symbols** to remove **SQLITE**. 
  
     ![Remove SQLITE from Conditional compilation symbols](Images/ProjectSettings.png "Remove SQLITE from Conditional compilation symbols")
     
@@ -145,7 +145,7 @@ In this application, you will enable client-directed authentication, where the c
     }
 	````
     
-1. Right-click on **AuthenticationService** in the code line you have just uncommented, and then click **Go to Definition** in the context menu. 
+1. Right-click **AuthenticationService** in the code line you have just uncommented, and then click **Go to Definition** in the context menu. 
 
     Examine the class you have just opened. You will see that it includes code for either server-directed or client-directed authentication, with the latter enabled currently because the SERVER_INITIATED compilation constant is not currently defined. You can uncomment the #define at the top of this class later on in your own time, if you want to see the user experience that offers.
 
