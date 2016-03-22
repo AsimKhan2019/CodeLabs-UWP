@@ -235,6 +235,7 @@
 
             <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
                        Foreground="White"
+                       
                        VerticalAlignment="Center"
                        Margin="48,0,252,0"
                        TextTrimming="CharacterEllipsis"
@@ -280,20 +281,24 @@
             </AppBarButton>
         </CommandBar>
 
-        <Border x:Name="TitleArea" Grid.Row="0" HorizontalAlignment="Stretch" >
+        <Border x:Name="TitleArea" Grid.Row="0" HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                Margin="0,0,0,0">
             <TextBlock
                    Style="{ThemeResource SubheaderTextBlockStyle}"
-                   Margin="24,12,12,28"
+                   Margin="24,0,12,28"
                    Text="{x:Bind ViewModel.CurrentSight.Name, Mode=OneWay}" />
         </Border>
         <!-- Row 1 -->
 
         <Pivot x:Name="LayoutPanel"
-               Padding="24,0,24,24"
+               Padding="24,-40,24,0"
                Grid.Row="1">
             <PivotItem Style="{StaticResource SelectedPivotItem}">
                 <PivotItem.Header>
-                    <controls:TabHeader Label="Sight" Glyph="&#xE052;" />
+                    <TextBlock Text="Sight"/>
+                    <!--<controls:TabHeader Label="Sight" />-->
+                    <!--  Glyph="&#xE052;" -->
                 </PivotItem.Header>
                 <ScrollViewer x:Name="MyScroller"
                       Grid.Row="1"
@@ -470,7 +475,9 @@
             </PivotItem>
             <PivotItem Style="{StaticResource SelectedPivotItem}">
                 <PivotItem.Header>
-                    <controls:TabHeader Label="Eats" Glyph="&#xEC06;" />
+                    <TextBlock Text="Eats"/>
+                    <!--<controls:TabHeader Label="Eats" />-->
+                    <!-- Glyph="&#xEC06;" -->
                 </PivotItem.Header>
                 <Grid>
                     <controls:EatsControl DataContext="{x:Bind ViewModel.EatsControlViewModel, Mode=OneWay}"

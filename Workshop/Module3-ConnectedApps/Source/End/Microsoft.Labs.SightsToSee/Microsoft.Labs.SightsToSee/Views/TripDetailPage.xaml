@@ -157,10 +157,10 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
+            <VisualStateGroup>                 
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="800" />
+                        <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="title.Visibility" Value="Visible" />
@@ -168,22 +168,14 @@
                         <Setter Target="baseBranding.Visibility" Value="Visible" />
                         <Setter Target="narrowBranding.Visibility" Value="Collapsed" />
                         <Setter Target="LayoutPanel.Padding" Value="24,0,16,24" />
-
                         <Setter Target="MapGrid.(RelativePanel.RightOf)" Value="SightsGrid" />
                         <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="SightsGrid" />
                         <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.Padding" Value="0,0,0,0" />    
+                        <Setter Target="MapGrid.Padding" Value="0,0,0,0" />
                         <Setter Target="SightsGrid.Width" Value="404" />
-                    </VisualState.Setters>
-
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="720" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="title.Visibility" Value="Visible" />
+                        
+                        <!--<Setter Target="title.Visibility" Value="Visible" />
                         <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
                         <Setter Target="baseBranding.Visibility" Value="Visible" />
                         <Setter Target="narrowBranding.Visibility" Value="Collapsed" />
@@ -198,7 +190,7 @@
                         <Setter Target="SightsGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="SightsGrid.Width" Value="Auto" />
                         <Setter Target="SightsGrid.Margin" Value="24,0,0,0" />
-                        <Setter Target="LayoutPanel.Padding" Value="0" />
+                        <Setter Target="LayoutPanel.Padding" Value="0" />-->
 
                     </VisualState.Setters>
                 </VisualState>
@@ -241,7 +233,7 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock 
                    Style="{ThemeResource SubheaderTextBlockStyle}"
-                   Margin="24,12,0,28"
+                   Margin="24,0,0,28" VerticalAlignment="Top"
                    Text="{x:Bind ViewModel.CurrentTrip.Name, Mode=OneWay}" />
                 <Image Grid.Column="1" Source="ms-appx:///Assets/Sights2SeeLogo.png" Height="60" Margin="0,6,24,6" HorizontalAlignment="Right" VerticalAlignment="Center" />
 
@@ -266,12 +258,15 @@
             <Image x:Name="narrowBranding" Grid.Column="1" Source="ms-appx:///Assets/Tile_Logo.png" Margin="0,6,24,6" HorizontalAlignment="Right" Visibility="Collapsed" />
         </Grid>
         
-        <Grid Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True">
+        <Grid Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True" Margin="0,-40,0,0">
 
             <Pivot x:Name="LayoutPanel">
                 <PivotItem Style="{StaticResource SelectedPivotItem}">
                     <PivotItem.Header>
-                        <controls:TabHeader Label="Sights" Glyph="&#xE052;" />
+
+                        <TextBlock Text="Sights"/>
+                        <!--<controls:TabHeader Label="Sights"  />-->
+                        <!--  Glyph="&#xE052;" -->
                     </PivotItem.Header>
                     
                     <RelativePanel>
@@ -364,7 +359,9 @@
                 </PivotItem>
                 <PivotItem Style="{StaticResource SelectedPivotItem}">
                     <PivotItem.Header>
-                        <controls:TabHeader Label="Eats" Glyph="&#xEC06;" />
+                        <TextBlock Text="Eats"/>
+                        <!--<controls:TabHeader Label="Eats"  />-->
+                        <!-- Glyph="&#xEC06;"  -->
                     </PivotItem.Header>
                     <Grid>
                         <controls:EatsControl DataContext="{x:Bind ViewModel.EatsControlViewModel, Mode=OneWay}"/>

@@ -83,10 +83,10 @@
 
     <Grid>
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
+            <VisualStateGroup>                
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="800" />
+                        <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="MapGrid.(RelativePanel.RightOf)" Value="EatsGrid" />
@@ -95,14 +95,7 @@
                         <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" Value="True" />
                         <Setter Target="MapGrid.Padding" Value="0,0,0,0" />
                         <Setter Target="EatsGrid.Width" Value="404" />
-                    </VisualState.Setters>       
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="720" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="MapGrid.Height" Value="360" />
+                        <!--<Setter Target="MapGrid.Height" Value="360" />
                         <Setter Target="MapGrid.(RelativePanel.AlignTopWithPanel)" Value="True" />
                         <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
@@ -112,7 +105,7 @@
                         <Setter Target="EatsGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="EatsGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="EatsGrid.Width" Value="Auto" />
-                        <Setter Target="EatsGrid.Margin" Value="24,0,0,0" />
+                        <Setter Target="EatsGrid.Margin" Value="24,0,0,0" />-->
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState>
@@ -193,8 +186,8 @@
         </RelativePanel>
         <!-- Row 0: Header -->
         
-        <TextBlock Text="{x:Bind ViewModel.Title, Mode=OneWay}"
-                   Style="{StaticResource TitleTextBlockStyle}"/>
+        <!--<TextBlock Text="{x:Bind ViewModel.Title, Mode=OneWay}"
+                   Style="{StaticResource TitleTextBlockStyle}"/>-->
 
         <!-- Row 1: Map -->
 

@@ -2232,7 +2232,6 @@
     <x:Double x:Key="NormalMinWidth">720</x:Double>
     <x:Double x:Key="WideMinWidth">1200</x:Double>
 
-
     <!-- Default style for Windows.UI.Xaml.Controls.Pivot -->
     <Style TargetType="Pivot">
         <Setter Property="Margin" Value="0" />
@@ -2595,18 +2594,16 @@
 
     <!-- Default style for Windows.UI.Xaml.Controls.Primitives.PivotHeaderItem -->
     <Style TargetType="PivotHeaderItem">
-        <Setter Property="FontSize" Value="{ThemeResource PivotHeaderItemFontSize}" />
+        <Setter Property="FontSize" Value="20" />
         <Setter Property="FontFamily" Value="{ThemeResource PivotHeaderItemFontFamily}" />
         <Setter Property="FontWeight" Value="{ThemeResource PivotHeaderItemThemeFontWeight}" />
         <Setter Property="CharacterSpacing" Value="{ThemeResource PivotHeaderItemCharacterSpacing}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
         <!--<Setter Property="Padding" Value="{ThemeResource PivotHeaderItemMargin}" />-->
-        <Setter Property="Padding" Value="0,0,0,4" />
-
+        <Setter Property="Padding" Value="0,7,15,4" />      
         <!-- Changed from 48 to Auto -->
-        <Setter Property="Height" Value="Auto" />
-
+        <Setter Property="Height" Value="Auto" />     
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
@@ -2619,7 +2616,7 @@
                             <Style x:Key="BaseContentPresenterStyle" TargetType="ContentPresenter">
                                 <Setter Property="FontFamily" Value="Segoe UI" />
                                 <Setter Property="FontWeight" Value="SemiBold" />
-                                <Setter Property="FontSize" Value="15" />
+                                <Setter Property="FontSize" Value="12" />
                                 <Setter Property="TextWrapping" Value="Wrap" />
                                 <Setter Property="LineStackingStrategy" Value="MaxHeight" />
                                 <Setter Property="TextLineBounds" Value="Full" />
@@ -2667,22 +2664,17 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
                                                                            Storyboard.TargetProperty="Foreground">
                                             <DiscreteObjectKeyFrame KeyTime="0"
-                                                                        Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+                                                                        Value="{StaticResource NavMenuForegroundSelectedBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid"
-                                                                           Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0"
-                                                                        Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
-                                            </ObjectAnimationUsingKeyFrames>-->
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid"
                                                                            Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0"
                                                                         Value="{StaticResource SelectedPivotBackgroundColor}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectionIndicator"
+                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectionIndicator"
                                                                        Storyboard.TargetProperty="Opacity">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
-                                        </ObjectAnimationUsingKeyFrames>
+                                        </ObjectAnimationUsingKeyFrames>-->
 
                                     </Storyboard>
                                 </VisualState>
@@ -2705,17 +2697,17 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
                                                                            Storyboard.TargetProperty="Foreground">
                                             <DiscreteObjectKeyFrame KeyTime="0"
-                                                                        Value="{ThemeResource SystemControlHighlightAltBaseMediumHighBrush}" />
+                                                                        Value="{StaticResource NavMenuForegroundHoverBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid"
                                                                            Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0"
                                                                         Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectionIndicator"
+                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectionIndicator"
                                                                        Storyboard.TargetProperty="Opacity">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
-                                        </ObjectAnimationUsingKeyFrames>
+                                        </ObjectAnimationUsingKeyFrames>-->
 
                                     </Storyboard>
                                 </VisualState>
@@ -2745,10 +2737,10 @@
                                             <DiscreteObjectKeyFrame KeyTime="0"
                                                                         Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectionIndicator"
+                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="SelectionIndicator"
                                                                        Storyboard.TargetProperty="Opacity">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="1" />
-                                        </ObjectAnimationUsingKeyFrames>
+                                        </ObjectAnimationUsingKeyFrames>-->
 
                                     </Storyboard>
                                 </VisualState>
