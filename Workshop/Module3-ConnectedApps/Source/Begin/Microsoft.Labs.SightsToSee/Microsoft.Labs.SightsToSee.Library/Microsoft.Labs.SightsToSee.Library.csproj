@@ -123,9 +123,7 @@
       <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Sqlite\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Mobile.Files">
       <HintPath>..\libs\Microsoft.WindowsAzure.Mobile.Files.dll</HintPath>

@@ -7,7 +7,8 @@
 ## Overview ##
 
 Windows 10 Redstone comes with more ways than ever before to create great user experiences across devices and across apps.
-In this lab, you will learn how to connect your app to the cloud so users can get their data on whichever device they pick up. You will enhance the app to load additional app data through an App Extension. You will use the LaunchUri and LaunchForResults APIs to get directions from BingMaps and to connect to a photo processing apps to add effects to pictures.
+In this lab, you will learn how to connect your app to the cloud so users can get their data on whichever device they pick up. 
+You will enhance the app to load additional app data through an App Extension, and you will use the LaunchUri and LaunchForResults APIs to get directions from BingMaps and to connect to a photo processing apps to add effects to pictures.
 
 You will add capabilities to the app to share files and content with other apps by adding support for Drag and Drop and the Share contract.
 
@@ -59,8 +60,137 @@ Let’s get started with Azure.
 
 Introduction
 
-1. tbd
+<a name="task1"></a>
+### Task 1 - Connect the app to the cloud
 
+The UWP makes it easy to create an app that runs across many different device families, but when designing a mobile app you should think about how you will create a __Connected Mobile Experience__ for your users. Users should enjoy a great experience from your app whichever of their devices they use, and for many apps that means you will need to store some data in the cloud. 
+
+You can store data in the user's OneDrive, or store small amounts of data in the roaming folders and settings, but for a fully featured mobile Backend as a Service, you can use Microsoft Azure App Service Mobile App. In the Azure portal (http://portal.azure.com), you can easily create a mobile REST service backed by cloud storage such as SQL Azure and implement authentication, push notifications and more, with support for cross-platform clients.
+
+Unfortunately, time does not allow us to cover creation of the backend service nor a deep dive on the code to interact with the backend service, but in this task you will connect the app to a pre-built backend service. To learn more about creating and programming an Azure App Service Mobile App, see https://azure.microsoft.com/en-us/documentation/learning-paths/appservice-mobileapps/ . 
+
+#### Steps ####
+
+1. Open the starter project at __C:\Labs\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\Begin\Microsoft.Labs.Sights2See\Microsoft.Labs.Sights2See.sln__.
+
+1.	Once the project has opened, set your Solution Configuration to __Debug__ and your Solution Platform to __x86__. Select __Local Machine__ from the Debug Target dropdown menu.
+ 
+    ![Debug Configuration](Images/debug_mode.png "Debug Configuration")
+    
+    *__Figure__: Configure your app to run on the Local Machine.*
+
+1.  If you have run through modules 1 and 2 of this workshop, you will have been working with an app that only stored data locally, in a SQLite database stored in the local folder for the app. This means that when the user selects sights for their trip, or enters notes or ink annotations, they take effect only on the device where the app is running. If the user opens the same app on a different device, all their work entered on the original device is not visible. This is not a good connected mobile experience.
+
+    You will now switch the app to store data using Azure Mobile Apps APIs. These connect to the cloud service to store data. 
+
+    Switching has been made easy in this app because all data storage operations are encapsulated in a data model service, described by an interface we have created called __IDataModelService__. You can find this interface in the __Microsoft.Labs.SightsToSee.Library__ project, in __Services\DataModelService\IDataModelService.cs__. Up until now in this workshop, the app has been using SqliteDataModelService which implements IDataModelService and which stores data locally. You will now switch to use AzureDataModelService which implements the same interface but which works against the cloud.
+
+1. In the __Services\DataModelService__ folder, open __DataModelServiceFactory.cs__. As you can see, this class selects either SqliteDataModelService or AzureDataModelService dependent on the value of the __SQLITE__ preprocessor directive.
+
+	(Code - _DataModelServiceFactory_)
+	<!--mark:1-18-->
+	````C#
+    public static class DataModelServiceFactory
+    {
+		private static IDataModelService _dataModelService;
+
+		public static IDataModelService CurrentDataModelService()
+		{
+		    if (_dataModelService == null)
+		    {
+#if SQLITE
+		        _dataModelService = new SqliteDataModelService();
+#else
+		        _dataModelService = new AzureDataModelService();
+#endif
+		    }
+
+		    return _dataModelService;
+		}
+    }
+	````   
+1.  Right click on the __Microsoft.Labs.SightsToSee.Library__ Project and then click __Properties__ on the context menu to open the Properties window. Select the __Build__ tab, and select __All Platforms__ in the __Platform__ dropdown. Edit the __Conditional compilation symbols__ to remove __SQLITE__. 
+ 
+    ![Remove SQLITE from Conditional compilation symbols](Images/ProjectSettings.png "Remove SQLITE from Conditional compilation symbols")
+    
+    *__Figure__: Remove SQLITE from Conditional compilation symbols*
+
+1.  Repeat this for the __Microsoft.Labs.Sights2See__ project properties. There are a few changes to the logic in this project to handle initialization of the cloud service storage at the appropriate time of app startup, and these changes  are also conditional on the SQLITE preprocessor directive being undefined.
+
+1.  Rebuild the solution and run the project on the local machine. You will see the app startup and the first thing it does is connects to the cloud to try to synchronize data, but you will see an error message that Sync fails.
+ 
+    ![Sync fails with an Unauthorized error](Images/Unauthorized.png "Sync fails with an Unauthorized error")
+    
+    *__Figure__: Sync fails with an Unauthorized error*
+
+   The sync fails because the Azure App Service Mobile Apps service has been configured to require authentication using Microsoft Account credentials, and we do not have any logic in the app yet to perform authentication and to get an authorization token that it can then pass to the Azure backend in order to get access to the service.
+   
+   Authentication is required to identify each user of the application so that data stored in the SQL Azure database (the cloud data backing store for this service) can be partitioned per user effectively. In the Trip object definition in the cloud service, there is an extra column of __User__ which is set by the backend logic based on the authenticated identity.
+   
+   Note that although this service has been setup to require Microsoft Account authentication, Azure App Service Mobile App also supports authentication against Twitter, Google, facebook, Azure Active Directory or a custom authentication provider.
+
+<a name="task2"></a>
+### Task 2 - Implement authentication 
+
+In this task, you will enable client-directed authentication for this application. With an Azure App Service Mobile App, you can set up your app so that the server handles the authentication process whereby the client calls the backend service and the service displays the login dialog to the end user.
+
+In this application, you will enable client-directed authentication, where the client app handles authentication, gets the authorization token and then passes that to the backend service with every service request. By doing this on the client side, we can use the UWP __WebAuthenticationCoreManager__ API to perform the authentication, which has the advantage that if run on a system where the user has already logged in with a Microsoft Account, the app can get an authentication token without prompting the user for credentials - a true Single Sign On (SSO) experience.
+
+#### Steps ####
+
+1.   In the __Microsoft.Labs.Sights2See.Library__ project, open file __Services\DataModelService\AzureDataModelService.cs__. Find the method __AuthenticateAsync__ and uncomment the call to the AuthenticationService where directed, and remove or comment out the last two lines of this method. It should now look like this:
+
+	````C#
+    public async Task<Tuple<bool, string>> AuthenticateAsync()
+    {
+        await InitializeAsync();
+
+        // Authentication required for the cloud storage
+        // M3_Exercise_1_Task_2
+        // UNCOMMENT the next line
+        return await new AuthenticationService(this.client).AuthenticateAsync();
+
+        // This is the async equivalent of an empty method body
+        // M3_Exercise_1_Task_2
+        // REMOVE the next two lines
+        //await Task.FromResult(true);
+        //return Tuple.Create(true, string.Empty);
+    }
+	````
+    
+1.   Right-click on __AuthenticationService__ in the code line you have just uncommented, and then click __Go to Definition__ in the context menu. 
+
+    Examine the class you have just opened. You will see that it includes code for either server-directed or client-directed authentication, with the latter enabled currently because the SERVER_INITIATED compilation constant is not currently defined. You can uncomment the #define at the top of this class later on in your own time, if you want to see the user expereince that offers.
+
+    However, in this workshop, we are using the client-directed authentication stream which is further down in the class. The __MSAAuthenticationHelper__ class at the bottom of this code file shows how to use the UWP __WebAuthenticationCoreManager__ API to get an authorization token for a Microsoft Account, which it will be able to do silently if the user has already signed onto their Windows 10 device using MSA credentials.
+   
+1.  Before you run the app again, as a precaution UNINSTALL the app from your system. This will ensure that the WebAuthenticationCoreManager identoty provider sees your app as a new one and initializes correctly:
+    -  Click the Windows button bottom left, click __All Apps__ and navigate to the Sights2See app in the apps list. Right-click the Sights2See app and then click __Uninstall__.
+     
+    ![Uninstall the Sights2See app](Images/Uninstall.png "Uninstall the Sights2See app")
+    
+    *__Figure__: Uninstall the Sights2See app*
+    
+1.  Run the app again. This time you will be prompted for credentials if you are logged onto a Windows 10 device and you haven't used Microsoft Account credentials to do so, or if your machine account has already authenticated using MSA credentuals, you will connect to the cloud service silently.
+      
+    ![Synchronising data with the cloud service](Images/synchronising.png "Synchronising data with the cloud service")
+    
+    *__Figure__: Synchronising data with the cloud service*
+    
+1.   Now use the app as normal: select some Sights for your trip, enter some Notes on a sight, use inking to annotate a picture. Next you will view those same changes on a different device!
+
+<a name="task3"></a>
+### Task 3 - Run the connected app on different devices, synchronizing data through the cloud 
+
+With your data stored in the cloud, now the user can enjoy your app whichever of their devices they pick up.
+
+#### Steps ####
+
+1.  Close the app if it is still running.
+
+1.  Now either select the __Mobile Emulator Preview 10.0.14291.0 WVGA 4inch 512MB__ device in the target dropdown, or if you want to use a real phone, connect the phone to your PC usinga USB cable and then change the Solution Platform to __ARM__ and select __Device__ as the output device.
+
+1. Run the app from Visual Studio and it will launch on your mobile emulator or real Windows 10 mobile device. You will have to log in with MSA credentials and then the app will synchronize with the cloud. You will see the same selection of Sights and the same inking annotations you created previously on the PC.
 
 <a name="Exercise2"></a>
 ### Exercise 2: Loading resources from App Extensions ###
