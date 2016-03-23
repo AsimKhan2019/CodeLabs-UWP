@@ -175,23 +175,6 @@
                         <Setter Target="MapGrid.Padding" Value="0,0,0,0" />
                         <Setter Target="SightsGrid.Width" Value="404" />
                         <Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
-                        <!--<Setter Target="title.Visibility" Value="Visible" />
-                        <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
-                        <Setter Target="baseBranding.Visibility" Value="Visible" />
-                        <Setter Target="narrowBranding.Visibility" Value="Collapsed" />
-                        <Setter Target="MapGrid.Height" Value="360" />
-                        <Setter Target="MapGrid.(RelativePanel.AlignTopWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.Margin" Value="24,0,24,28" />
-                        <Setter Target="MapGrid.Padding" Value="0" />
-                        <Setter Target="SightsGrid.(RelativePanel.Below)" Value="MapGrid" />
-                        <Setter Target="SightsGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="SightsGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="SightsGrid.Width" Value="Auto" />
-                        <Setter Target="SightsGrid.Margin" Value="24,0,0,0" />
-                        <Setter Target="LayoutPanel.Padding" Value="0" />-->
-
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState>
