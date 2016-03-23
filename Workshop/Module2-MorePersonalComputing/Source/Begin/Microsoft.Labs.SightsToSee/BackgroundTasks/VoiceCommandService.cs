@@ -4,14 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
-// Insert the M2_Using snippet here
+using Windows.ApplicationModel.VoiceCommands;
+using Windows.ApplicationModel.AppService;
+using Windows.Devices.Geolocation;
+using Windows.Storage;
+using Microsoft.Labs.SightsToSee.Library.Models;
+using Microsoft.Labs.SightsToSee.Library.Services.DataModelService;
+using Microsoft.Labs.SightsToSee.Library.Services.SightsService;
+using Microsoft.Labs.SightsToSee.Models;
 
 namespace BackgroundTasks
 {
     public sealed class VoiceCommandService : IBackgroundTask
     {
-        // Insert the M2_ServiceConnection snippet here
-
+        VoiceCommandServiceConnection _voiceServiceConnection;
 
         BackgroundTaskDeferral _serviceDeferral;
 
@@ -27,11 +33,11 @@ namespace BackgroundTasks
         // Insert the M2_GetNearest snippet here
 
 
-        // Insert the M2_ShowNearest snippet here
-
-
-        // Insert the M2_CommandCompleted snippet here
-
+        private void OnVoiceCommandCompleted(VoiceCommandServiceConnection sender, VoiceCommandCompletedEventArgs args)
+        {
+            // Complete the service deferral
+            this._serviceDeferral?.Complete();
+        }
 
         // Clean up on task cancellation
         private void OnTaskCanceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)

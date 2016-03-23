@@ -442,9 +442,9 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
 1. You'll notice that there is a new **BackgroundTasks** project in the solution. We'll be using that later on for the **VoiceCommandService**, but for now we'll be working in the **SightsToSee** project.
 
-1. Create a new XML file in the main directory of the **SightsToSee** project and give it the name **VoiceCommands.xml**. This file is the voice command definition file that will define the voice command schema. We're going to create a simple schema with a voice command that launches the app.
+1. We've already added a new XML file in the main directory of the **SightsToSee** project called **VoiceCommands.xml**. This file is the voice command definition file that will define the voice command schema. We're going to create a simple schema with a voice command that launches the app.
 
-1. Expand the **M2_LaunchCommand** snippet below the XML namespace declaration. This code creates a voice command set for en-us.
+1. Open **VoiceCommands.xml**. Expand the **M2_LaunchCommand** snippet below the XML namespace declaration. This code creates a voice command set for en-us.
 
     (Code Snippet - _M2_LaunchCommand_)
     <!--mark:1-22-->
@@ -635,31 +635,6 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
     - The **Run()** method is the entry point to the task.
 
-1. Expand the **M2_Using** snippet below the existing using statements. We'll be adding code that relies on these dependencies.
-
-    (Code Snippet - _M2_Using_)
-    <!--mark:1-8-->
-    ````C#
-	using Windows.ApplicationModel.VoiceCommands;
-	using Windows.ApplicationModel.AppService;
-	using Windows.Devices.Geolocation;
-	using Windows.Storage;
-	using Microsoft.Labs.SightsToSee.Library.Models;
-	using Microsoft.Labs.SightsToSee.Library.Services.DataModelService;
-	using Microsoft.Labs.SightsToSee.Library.Services.SightsService;
-	using Microsoft.Labs.SightsToSee.Models;
-    ````
-
-1. Expand the **M2_ServiceConnection** snippet as the first item in the VoiceCommandService class.VoiceCommandService
-
-    (Code Snippet - _M2_ServiceConnection_)
-    <!--mark:1-->
-    ````C#
-	VoiceCommandServiceConnection _voiceServiceConnection;
-    ````
-
-    > **Note:** The voice service connection is maintained for the lifetime of a Cortana session.
-
 1. Make the **Run()** method **async**.
 
 1. Expand the **M2_TriggerDetails** snippet inside the **Run()** method.
@@ -699,18 +674,6 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
     > **Note:** The subscription to the **VoiceCommandCompleted** event is in this code block, because it must take place after the **voiceServiceConnection** is set.
 
-1. Expand the **M2_CommandCompleted** snippet above the **OnTaskCanceled** method.
-
-    (Code Snippet - _M2_CommandCompleted_)
-    <!--mark:1-4-->
-    ````C#
-	private void OnVoiceCommandCompleted(VoiceCommandServiceConnection sender, VoiceCommandCompletedEventArgs args)
-	{
-		 // Complete the service deferral
-		 this._serviceDeferral?.Complete();
-	}
-    ````
-
 1. Our voice service connection is set up and we are handling completion and cancellation. Now we can handle the particular case of the NearbySights command.
 
     We've added a **SightsHelper** to the **Services** directory in the **SightsToSee.Library** project to assist with locating nearby sights. Let's take a look at the helper.
@@ -721,10 +684,10 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
     - Provides tasks that iterate through the Sights in the trip to find the closest Sight or Sights
 
-1. Expand the **M2_GetNearest** snippet after the **Run()** method.
+1. Expand the **M2_GetNearest** snippet after the **Run()** method. This adds a number of methods that implement the logic required to handle this voice command.
 
     (Code Snippet - _M2_GetNearest_)
-    <!--mark:1-31-->
+    <!--mark:1-65-->
     ````C#
 	private static async Task<List<Sight>> GetNearestSights(Geoposition pos)
 	{
@@ -738,73 +701,17 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
 	private async Task ReportFailureToGetCurrentLocation()
 	{
-		 var userMessage = new VoiceCommandUserMessage();
-		 userMessage.DisplayMessage = userMessage.SpokenMessage = "Sorry, I can't access your location at the moment.";
-
-		 var response = VoiceCommandResponse.CreateResponse(userMessage);
-
-		 response.AppLaunchArgument = "LaunchApp";
-		 await _voiceServiceConnection.ReportFailureAsync(response);
+		 ...
 	}
 
 	private async Task ReportFailureToGetSights()
 	{
-		 var userMessage = new VoiceCommandUserMessage();
-		 userMessage.DisplayMessage = userMessage.SpokenMessage = "Sorry, I can't find any sights in your trip.";
-
-		 var response = VoiceCommandResponse.CreateResponse(userMessage);
-
-		 response.AppLaunchArgument = "LaunchApp";
-		 await _voiceServiceConnection.ReportFailureAsync(response);
+		 ...
 	}
-    ````
 
-    - The **GetNearestSights** task loads the default trip and passes it to the SightsHelper to find the closest Sights
-
-    - **ReportFailureToGetCurrentLocation()** task returns a message to the user when the user hasn't granted location permissions to the app
-
-    >**Note:** In the starter project, location is enabled in the app manifest and we ask the user on startup to confirm location access for the app. We'll use the result from that user dialog to determine if we have location access.
-
-    - The **ReportFailureToGetSights()** task returns a message to the user when there are no Sights in the trip.
-
-1. Expand the **M2_ShowNearest** snippet after the tasks you just added.
-
-    (Code Snippet - _M2_ShowNearest_)
-    <!--mark:1-33-->
-    ````C#
 	private async Task ShowNearestResults(List<Sight> nearest)
 	{
-		 var userMessage = new VoiceCommandUserMessage
-		 {
-			  DisplayMessage = "Here are your closest Sights:",
-			  SpokenMessage = "Here are your closest sights"
-		 };
-
-		 var sightsContentTiles = new List<VoiceCommandContentTile>();
-
-		 foreach (var sight in nearest)
-		 {
-			  var sightTile = new VoiceCommandContentTile();
-			  sightTile.ContentTileType = VoiceCommandContentTileType.TitleWith68x68IconAndText;
-			  if (sight.ImagePath.StartsWith("ms-appx"))
-			  {
-					sightTile.Image =
-						 await StorageFile.GetFileFromApplicationUriAsync(new Uri(sight.ImagePath));
-			  }
-			  else
-			  {
-					sightTile.Image = await StorageFile.GetFileFromPathAsync(sight.ImagePath);
-			  }
-			  sightTile.Title = sight.Name;
-			  sightTile.TextLine1 = sight.Description;
-			  sightTile.AppContext = sight.Id;
-			  sightTile.AppLaunchArgument = sight.Id.ToString("D");
-			  sightsContentTiles.Add(sightTile);
-		 }
-
-
-		 var response = VoiceCommandResponse.CreateResponse(userMessage, sightsContentTiles);
-		 await _voiceServiceConnection.ReportSuccessAsync(response);
+		 ...
 	}
     ````
 
@@ -816,7 +723,7 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
     - Displays the content tiles to the user in the Cortana pane
 
-1. Now we can set up the switch to handle the **NearbySights** case in the **Run()** method. We're going to call the tasks we just added.
+1. Now we can set up the switch to handle the **NearbySights** case in the **Run()** method. We're going to call the methods we just added.
 
     Expand the **M2_HandleNearbySights** snippet inside the **Try** block in the **Run()** method.
 
@@ -877,7 +784,7 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
     - If we have permission, get the location and use it to get the nearest Sights
 
-    - If nearby Sights are returned, call the **ShowNearestResults** task to display them to the user.
+    - If nearby Sights are returned, call the **ShowNearestResults** method to display them to the user.
 
 1. Build and run your app to register the new VCD. Close the app.
 

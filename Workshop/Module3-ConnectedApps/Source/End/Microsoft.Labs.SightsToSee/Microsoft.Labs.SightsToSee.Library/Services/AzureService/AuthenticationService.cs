@@ -162,6 +162,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.AzureService
                 // In case interaction is required, either for showing consent or for gathering authentication factors, 
                 // the API will take care to automatically prompt the user with the correct experience.
                 WebTokenRequestResult webTokenRequestResult = await WebAuthenticationCoreManager.RequestTokenAsync(webTokenRequest);
+                //WebTokenRequestResult webTokenRequestResult = await WebAuthenticationCoreManager.GetTokenSilentlyAsync(webTokenRequest);
 
                 if (webTokenRequestResult.ResponseStatus == WebTokenRequestStatus.Success)
                 {

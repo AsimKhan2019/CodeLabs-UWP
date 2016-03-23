@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
-// Insert the M2_Using snippet here
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.ApplicationModel.AppService;
 using Windows.Devices.Geolocation;
@@ -18,10 +17,7 @@ namespace BackgroundTasks
 {
     public sealed class VoiceCommandService : IBackgroundTask
     {
-        // Insert the M2_ServiceConnection snippet here
-
         VoiceCommandServiceConnection _voiceServiceConnection;
-
         BackgroundTaskDeferral _serviceDeferral;
 
         public async void Run(IBackgroundTaskInstance taskInstance)
@@ -29,7 +25,7 @@ namespace BackgroundTasks
             _serviceDeferral = taskInstance.GetDeferral();
             taskInstance.Canceled += OnTaskCanceled;
 
-            // Insert the M2_TriggerDetails snippet here
+            // Get trigger details
 
             var triggerDetails = taskInstance.TriggerDetails as AppServiceTriggerDetails;
 
@@ -40,8 +36,6 @@ namespace BackgroundTasks
                     _voiceServiceConnection = VoiceCommandServiceConnection.FromAppServiceTriggerDetails(triggerDetails);
 
                     _voiceServiceConnection.VoiceCommandCompleted += OnVoiceCommandCompleted;
-
-                    // Insert the M2_HandleNearbySights snippet here
 
                     VoiceCommand voiceCommand = await _voiceServiceConnection.GetVoiceCommandAsync();
 
@@ -63,10 +57,19 @@ namespace BackgroundTasks
                             {
 
                                 var geolocator = new Geolocator();
+#if DEBUG
+                                // For testing, fake a location in San Francisco
+                                Geopoint point = new Geopoint(new BasicGeoposition { Latitude = 37.774930, Longitude = -122.419416 });
+                                if (true)
+                                {
+#else
                                 var pos = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(5));
                                 if (pos != null)
                                 {
-                                    var nearest = await GetNearestSights(pos);
+                                    Geocoordinate coordinate = pos.Coordinate; 
+#endif
+
+                                    var nearest = await GetNearestSights(point);
                                     if (nearest != null && nearest.Any())
                                     {
                                         await ShowNearestResults(nearest);
@@ -105,41 +108,15 @@ namespace BackgroundTasks
             }
         }
 
-        // Insert the M2_GetNearest snippet here
-
-        private static async Task<List<Sight>> GetNearestSights(Geoposition pos)
+        private static async Task<List<Sight>> GetNearestSights(Geopoint point)
         {
             var datamodelService = DataModelServiceFactory.CurrentDataModelService();
 
             // we are just loading the default trip here
             var trip = await datamodelService.LoadTripAsync(AppSettings.LastTripId);
-            var nearest = await SightsHelper.FindClosestSightsAsync(pos.Coordinate.Point, trip, false);
+            var nearest = await SightsHelper.FindClosestSightsAsync(point, trip, false);
             return nearest;
         }
-
-        private async Task ReportFailureToGetCurrentLocation()
-        {
-            var userMessage = new VoiceCommandUserMessage();
-            userMessage.DisplayMessage = userMessage.SpokenMessage = "Sorry, I can't access your location at the moment.";
-
-            var response = VoiceCommandResponse.CreateResponse(userMessage);
-
-            response.AppLaunchArgument = "LaunchApp";
-            await _voiceServiceConnection.ReportFailureAsync(response);
-        }
-
-        private async Task ReportFailureToGetSights()
-        {
-            var userMessage = new VoiceCommandUserMessage();
-            userMessage.DisplayMessage = userMessage.SpokenMessage = "Sorry, I can't find any sights in your trip.";
-
-            var response = VoiceCommandResponse.CreateResponse(userMessage);
-
-            response.AppLaunchArgument = "LaunchApp";
-            await _voiceServiceConnection.ReportFailureAsync(response);
-        }
-
-        // Insert the M2_ShowNearest snippet here
 
         private async Task ShowNearestResults(List<Sight> nearest)
         {
@@ -176,8 +153,29 @@ namespace BackgroundTasks
             await _voiceServiceConnection.ReportSuccessAsync(response);
         }
 
-        // Insert the M2_CommandCompleted snippet here
+        private async Task ReportFailureToGetCurrentLocation()
+        {
+            var userMessage = new VoiceCommandUserMessage();
+            userMessage.DisplayMessage = userMessage.SpokenMessage = "Sorry, I can't access your location at the moment.";
 
+            var response = VoiceCommandResponse.CreateResponse(userMessage);
+
+            response.AppLaunchArgument = "LaunchApp";
+            await _voiceServiceConnection.ReportFailureAsync(response);
+        }
+
+        private async Task ReportFailureToGetSights()
+        {
+            var userMessage = new VoiceCommandUserMessage();
+            userMessage.DisplayMessage = userMessage.SpokenMessage = "Sorry, I can't find any sights in your trip.";
+
+            var response = VoiceCommandResponse.CreateResponse(userMessage);
+
+            response.AppLaunchArgument = "LaunchApp";
+            await _voiceServiceConnection.ReportFailureAsync(response);
+        }
+
+        // Handle the VoiceCommandCompleted event
         private void OnVoiceCommandCompleted(VoiceCommandServiceConnection sender, VoiceCommandCompletedEventArgs args)
         {
             // Complete the service deferral

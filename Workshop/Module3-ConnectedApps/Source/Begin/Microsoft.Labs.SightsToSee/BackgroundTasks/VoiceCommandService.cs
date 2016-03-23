@@ -57,10 +57,19 @@ namespace BackgroundTasks
                             {
 
                                 var geolocator = new Geolocator();
-                                var pos = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(5));
-                                if (pos != null)
+#if DEBUG
+                                // For testing, fake a location in San Francisco
+                                Geopoint point = new Geopoint(new BasicGeoposition { Latitude = 37.774930, Longitude = -122.419416 });
+                                if (true)
                                 {
-                                    var nearest = await GetNearestSights(pos);
+#else
+                                    var pos = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(5));
+                                    if (pos != null)
+                                    {
+                                        Geocoordinate coordinate = pos.Coordinate; 
+#endif
+
+                                    var nearest = await GetNearestSights(point);
                                     if (nearest != null && nearest.Any())
                                     {
                                         await ShowNearestResults(nearest);
@@ -83,6 +92,7 @@ namespace BackgroundTasks
                         default:
                             break;
                     }
+
                 }
                 catch (Exception ex)
                 {
@@ -99,13 +109,13 @@ namespace BackgroundTasks
             }
         }
 
-        private static async Task<List<Sight>> GetNearestSights(Geoposition pos)
+        private static async Task<List<Sight>> GetNearestSights(Geopoint point)
         {
             var datamodelService = DataModelServiceFactory.CurrentDataModelService();
 
             // we are just loading the default trip here
             var trip = await datamodelService.LoadTripAsync(AppSettings.LastTripId);
-            var nearest = await SightsHelper.FindClosestSightsAsync(pos.Coordinate.Point, trip, false);
+            var nearest = await SightsHelper.FindClosestSightsAsync(point, trip, false);
             return nearest;
         }
 

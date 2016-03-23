@@ -137,6 +137,7 @@
     <Content Include="Assets\DemoImages\GettyImages-88437679.jpg" />
     <Content Include="Assets\DemoImages\GettyImages-90934685.jpg" />
     <Content Include="Assets\Images\DialogBackground.jpg" />
+    <Content Include="VoiceCommands.xml" />
     <None Include="Microsoft.Labs.SightsToSee_StoreKey.pfx" />
     <Content Include="Models\DemoRestaurants.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
