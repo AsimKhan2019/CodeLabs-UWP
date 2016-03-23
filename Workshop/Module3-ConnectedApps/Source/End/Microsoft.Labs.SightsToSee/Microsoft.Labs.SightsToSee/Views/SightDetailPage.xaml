@@ -164,7 +164,7 @@
                         <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="LayoutRoot.Margin" Value="0" />
                         <Setter Target="LayoutRoot.VerticalAlignment" Value="Stretch" />
-                        <Setter Target="Content.Padding" Value="0,10,15,72" />
+                        <Setter Target="Content.Padding" Value="15,10,15,72" />
                         <Setter Target="LayoutPanel.Margin" Value="0" />
                         <Setter Target="TitleCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="TitleArea.Visibility" Value="Collapsed" />

@@ -180,7 +180,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
 
         [JsonIgnore]
         [Ignore]
-        public Geopoint Location => new Geopoint(new BasicGeoposition { Latitude = Latitude, Longitude = Longitude });
+        public Geopoint Location => new Geopoint(new BasicGeoposition {Latitude = Latitude, Longitude = Longitude});
 
         [JsonIgnore]
         [Ignore]
@@ -255,11 +255,4 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-
-    public class EatsGroup
-    {
-        public string GroupName { get; set; }
-        public List<Restaurant> ListOfEats { get; set; }
-    }
-
 }

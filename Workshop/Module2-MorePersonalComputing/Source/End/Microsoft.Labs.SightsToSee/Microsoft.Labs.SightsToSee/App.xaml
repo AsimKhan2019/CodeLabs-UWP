@@ -30,7 +30,7 @@
                     <SolidColorBrush x:Key="TitleBarButtonInactiveBackgroundThemeBrush" Color="{StaticResource TitleBarBackgroundColor}" />
                     <SolidColorBrush x:Key="TitleBarButtonInactiveForegroundThemeBrush" Color="{StaticResource NavMenuForegroundDisabledColor}" />
                 </ResourceDictionary>
-
+                
                 <ResourceDictionary x:Key="HighContrast">
                     <SolidColorBrush x:Key="TitleBarBackgroundThemeBrush" Color="#FF000000" />
                     <SolidColorBrush x:Key="TitleBarForegroundThemeBrush" Color="#FFFFFFFF" />
