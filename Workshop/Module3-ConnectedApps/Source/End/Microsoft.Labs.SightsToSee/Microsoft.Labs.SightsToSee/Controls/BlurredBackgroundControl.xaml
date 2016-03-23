@@ -11,8 +11,12 @@
     d:DesignWidth="400">
 
     <Grid>
+        <xaml:CanvasControl x:Name="BlurredBackImage"
+                            ClearColor="Black"/>
+        
         <xaml:CanvasControl x:Name="BlurredImage"
                             ClearColor="White"/>
+        
         <Rectangle Fill="White"
                    x:Name="OpacityLayer"
                    Opacity="0.6"
