@@ -519,7 +519,7 @@ Voice commands give your users a convenient, hands-free way to interact with you
 		 break;
     ````
 
-1. Expand the **M2_HandleVoiceCommand** snippet anywhere in **App.xaml.cs**. This snippet creates a switch based on the voice command as it is understood by Cortana. Additionally, it writes the recognized command and the spoken text to the console.
+1. Expand the **M2_HandleVoiceCommand** snippet below the **OnActivated** method. This snippet creates a switch based on the voice command as it is understood by Cortana. Additionally, it writes the recognized command and the spoken text to the console.
 
     (Code Snippet - _M2_HandleVoiceCommand_)
     <!--mark:1-27-->
@@ -555,7 +555,7 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
 1. Build and run the app to register the VCD. Close the app.
 
-1. Speak a variation of the launch command. The app should launch and navigate to the main page.
+1. Tap the microphone icon to the right of the Cortana pane and speak one of the variations of the launch command, for example say: "Sights to See, Show me my sights". The app should launch and navigate to the main page.
 
 <a name="Ex2Task2"></a>
 #### Task 2 -  Voice Commands to interact with your App in the background ####
@@ -578,7 +578,7 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
 1. We're going to add a second voice command to the VCD. This command will be handled by the service.
 
-    Open **VoiceCommands.xml**. Expand the **M2_NearbyCommand** snippet below the **LaunchApp** command.
+    Open **VoiceCommands.xml**. Expand the **M2_NearbyCommand** snippet immediately below the closing tag of the  **LaunchApp** command.
 
     (Code Snippet - _M2_NearbyCommand_)
     <!--mark:1-22-->
@@ -881,7 +881,7 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
 1. Build and run your app to register the new VCD. Close the app.
 
-1. Ask Cortana to show nearby Sights. Cortana will display the closest Sights as content tiles.
+1. Ask Cortana to show nearby Sights: say "Show me the nearest Sights to See attractions". Cortana will display the closest Sights as content tiles.
 
     ![Nearby Sights](Images/nearby_sights.png "Nearby Sights")
     
