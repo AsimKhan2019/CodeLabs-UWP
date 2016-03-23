@@ -255,10 +255,4 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-
-    public class EatsGroup
-    {
-        public string GroupName { get; set; }
-        public List<Restaurant> ListOfEats { get; set; }
-    }
 }

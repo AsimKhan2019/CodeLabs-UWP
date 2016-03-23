@@ -10,7 +10,6 @@ namespace Microsoft.Labs.SightsToSee.Views
     {
         private Geopoint _centerLocation;
         private ObservableCollection<Restaurant> _eats;
-        private ObservableCollection<EatsGroup> _eatsGroups;
         private bool _isDisplayingSightEats;
         private bool _isLoadingEats;
 
@@ -26,12 +25,6 @@ namespace Microsoft.Labs.SightsToSee.Views
         {
             get { return _eats; }
             set { Set(ref _eats, value); }
-        }
-
-        public ObservableCollection<EatsGroup> EatGroups
-        {
-            get { return _eatsGroups; }
-            set { Set(ref _eatsGroups, value); }
         }
 
         public Geopoint CenterLocation
@@ -50,23 +43,5 @@ namespace Microsoft.Labs.SightsToSee.Views
         public Trip Trip { get; set; }
 
         public string Title => IsDisplayingSightEats ? $"Here are the nearest restaurants to {Sight.Name}" : $"Here are restaurants in {Trip.Name}";
-
-        private void BuildEatGroups()
-        {
-
-            Restaurant r = new Restaurant();
-
-            var grouped = from eat in Eats
-                          group eat by eat.CulinaryStyle
-                          into grp
-                          orderby grp.Key ascending
-                          select new EatsGroup
-                          {
-                              GroupName = grp.Key,
-                              ListOfEats = grp.ToList()
-                          };
-
-            EatGroups = new ObservableCollection<EatsGroup>(grouped.ToList());
-        }
     }
 }

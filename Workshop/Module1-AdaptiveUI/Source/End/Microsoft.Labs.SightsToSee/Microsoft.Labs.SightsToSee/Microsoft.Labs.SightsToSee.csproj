@@ -139,7 +139,6 @@
     <Content Include="Assets\Images\DialogBackground.jpg" />
     <None Include="Microsoft.Labs.SightsToSee_StoreKey.pfx" />
     <Content Include="Assets\Images\NewStoreLogo.scale-100.png" />
-    <Content Include="Assets\Images\Sights2SeeLogo.png" />
     <Content Include="Assets\Images\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Images\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Images\Square44x44Logo.targetsize-24_altform-unplated.png" />

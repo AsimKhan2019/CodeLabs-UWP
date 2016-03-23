@@ -138,8 +138,6 @@
     <Content Include="Assets\DemoImages\GettyImages-90934685.jpg" />
     <Content Include="Assets\Images\DialogBackground.jpg" />
     <None Include="Microsoft.Labs.SightsToSee_StoreKey.pfx" />
-    <Content Include="Assets\Sights2SeeLogo.png" />
-    <Content Include="Assets\Tile_Logo.png" />
     <Content Include="Models\DemoRestaurants.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
