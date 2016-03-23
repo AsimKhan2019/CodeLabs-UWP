@@ -140,6 +140,34 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
         }
 
 
+        public async Task InsertSights(IEnumerable<Sight> sights)
+        {
+            try
+            {
+                await InitializeAsync();
+
+                foreach (var sight in sights)
+                {
+                    await sightTable.InsertAsync(sight);
+
+                    foreach (var sightFile in sight.SightFiles)
+                    {
+                        await sightFileTable.InsertAsync(sightFile);
+                    }
+                }
+
+                await SyncAsync(); // offline sync     
+            }
+            catch (Exception ex)
+            {
+                var errorString = "Insert Sights failed: " + ex.Message +
+                                  "\n\nIf you are still in an offline scenario, " +
+                                  "you can try your Pull again when connected with your Mobile Service.";
+                await ShowError(errorString);
+                throw;
+            }
+        }
+
         public async Task<Trip> LoadTripAsync(Guid tripId)
         {
             var trip = (await tripTable.Where(t => t.Id == tripId).ToListAsync()).Single();

@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Core;
 using Microsoft.Labs.SightsToSee.Library.Services.DataModelService;
+using Microsoft.Labs.SightsToSee.Models;
 
 namespace Microsoft.Labs.SightsToSee.Facts
 {
@@ -391,11 +392,15 @@ namespace Microsoft.Labs.SightsToSee.Facts
                 // load file from extension package
                 String fileName = @"SanFranciscoSights.json";
                 StorageFile file = await folder.GetFileAsync(fileName);
-                var trip = await SeedDataFactory.CreateSampleTrip(file);
+                var extensionsTrip = await SeedDataFactory.CreateSampleTrip(file);
+                foreach (var sight in extensionsTrip.Sights)
+                {
+                    sight.TripId = AppSettings.LastTripId;
+                }
 
-                var dataModelService = new SqliteDataModelService();
+                var dataModelService = DataModelServiceFactory.CurrentDataModelService(); 
 
-                await dataModelService.InsertSights(trip.Sights);
+                await dataModelService.InsertSights(extensionsTrip.Sights);
             }
             _loaded = true;
             _offline = false;
@@ -424,22 +429,21 @@ namespace Microsoft.Labs.SightsToSee.Facts
             // load file from extension package
             string fileName = @"SanFranciscoSights.json";
             StorageFile file = await folder.GetFileAsync(fileName);
-            var trip = await SeedDataFactory.CreateSampleTrip(file);
+            var extensionsTrip = await SeedDataFactory.CreateSampleTrip(file);
 
-            var modelService = new SqliteDataModelService();
-            var currentTrip = await modelService.LoadTripAsync(trip.Id);
+            var modelService = DataModelServiceFactory.CurrentDataModelService();
+            var currentTrip = await modelService.LoadTripAsync(AppSettings.LastTripId);
 
             // unload it
             lock (_sync)
             {
                 if (_loaded)
                 {
-                    var connection = SQLiteService.CreateConnection();
-
-                    foreach (var sight in trip.Sights)
+                    foreach (var sight in extensionsTrip.Sights)
                     {
-                        if (!currentTrip.Sights.Single(s => s.Id == sight.Id).IsMySight)
-                            modelService.DeleteSightAsync(sight);
+                        var importedSight = currentTrip.Sights.Single(s => s.Name == sight.Name);
+                        if (!importedSight.IsMySight)
+                            modelService.DeleteSightAsync(importedSight);
                     }
 
                     // see if package is offline

@@ -10,6 +10,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
         Task<Tuple<bool, string>> AuthenticateAsync();
         Task<List<Trip>> LoadTripsAsync();
         Task<List<Trip>> LoadTripsWithAttractionsAsync();
+        Task InsertSights(IEnumerable<Sight> sights);
         Task InsertTripAsync(Trip trip);
         Task<Trip> LoadTripAsync(Guid tripId);
         Task DeleteTripAsync(Trip trip);

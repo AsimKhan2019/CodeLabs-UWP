@@ -54,7 +54,15 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
             await InitializeAsync();
 
             // Authentication required for the cloud storage
-            return await new AuthenticationService(this.client).AuthenticateAsync();
+            // M3_Exercise_1_Task_2
+            // UNCOMMENT the next line
+            //return await new AuthenticationService(this.client).AuthenticateAsync();
+
+            // This is the async equivalent of an empty method body
+            // M3_Exercise_1_Task_2
+            // REMOVE the next two lines
+            await Task.FromResult(true);
+            return Tuple.Create(true, string.Empty);
         }
 
         public async Task<List<Trip>> LoadTripsAsync()
@@ -131,6 +139,34 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
             }
         }
 
+
+        public async Task InsertSights(IEnumerable<Sight> sights)
+        {
+            try
+            {
+                await InitializeAsync();
+
+                foreach (var sight in sights)
+                {
+                    await sightTable.InsertAsync(sight);
+
+                    foreach (var sightFile in sight.SightFiles)
+                    {
+                        await sightFileTable.InsertAsync(sightFile);
+                    }
+                }
+
+                await SyncAsync(); // offline sync     
+            }
+            catch (Exception ex)
+            {
+                var errorString = "Insert Sights failed: " + ex.Message +
+                                  "\n\nIf you are still in an offline scenario, " +
+                                  "you can try your Pull again when connected with your Mobile Service.";
+                await ShowError(errorString);
+                throw;
+            }
+        }
 
         public async Task<Trip> LoadTripAsync(Guid tripId)
         {
