@@ -53,8 +53,13 @@
                 </VisualState>
 
                 <!-- Tablet State -->
+                <!-- Insert snippet M1_ShellTablet here -->
 
+                
+                
                 <!-- Mobile State -->
+                <!-- Insert snippet M1_ShellMobile here -->
+
 
 
             </VisualStateGroup>

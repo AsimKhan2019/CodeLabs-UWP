@@ -46,7 +46,7 @@
     <PlatformTarget>ARM</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\ARM\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;SQLITE</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>ARM</PlatformTarget>
@@ -123,9 +123,7 @@
       <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Sqlite\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Mobile.Files">
       <HintPath>..\libs\Microsoft.WindowsAzure.Mobile.Files.dll</HintPath>
@@ -140,7 +138,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;EFCORE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;SQLITE</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <NoStdLib>true</NoStdLib>
     <DebugType>full</DebugType>

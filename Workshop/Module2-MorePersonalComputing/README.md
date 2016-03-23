@@ -48,7 +48,7 @@ Estimated time to complete this module:  **40 to 50 minutes**
 ### Exercise 1: Inking ###
 
 We will be implementing the following Inking features:
-- Notes recorded using a simplified OneNote model
+- Notes recorded using inking
 - Inking on photos
 - Ink Toolbar (preview of the RS1 Ink Toolbar for color and pen selection)
 - Optical character recognition
@@ -58,8 +58,14 @@ We will be implementing the following Inking features:
 
 We'll start by adding an InkCanvas that can be used for taking notes.
 
-1. Open the starter project at **&lt;Lab Root&gt;\Module 2\Begin\**.
+1. Open the starter project at **C:\Labs\CodeLabs-UWP\Workshop\Module 2-MorePersonalComputing\Begin\Microsoft.Labs.SightsToSee** and open the solution file.
 
+1.	Once the project has opened, set your Solution Configuration to **Debug** and your Solution Platform to **x86**. Select **Local Machine** from the Debug Target dropdown menu.
+
+	![Configure your app to run on the Local Machine](Images/debug_mode.png?raw=true "Configure your app to run on the Local Machine")
+
+	_Configure your app to run on the Local Machine_
+    
 1. Run the starter project on the **Local Machine** and then exit the application.
 
 	> **Note:** You may notice there is a new prompt for location as well as a BackgroundTasks project in the Solution. We'll be using these features later in the Module.
@@ -72,7 +78,7 @@ We'll start by adding an InkCanvas that can be used for taking notes.
 
 	Let's get started by added a simple InkCanvas to the Notes field.
 
-1. Open **SightsDetailControl.xaml**.
+1. Open **SightDetailPage.xaml** in the __Views__ folder of project __Microsoft.Labs.SightsToSee__.
 
 1. Expand the **M2_EnableInkButton** snippet below the **Notes** title TextBlock. The button will go in the second column of the grid.
 
@@ -88,7 +94,7 @@ We'll start by adding an InkCanvas that can be used for taking notes.
 
 	> **Note:** The visibility of this button is tied to the **NotesAreInking** boolean through a **BooleanToVisibility** converter.
 
-1. Expand the **M2_EnableInk** snippet in the **SightsDetailPageViewModel**. This method will set the **IsNotesInking** bool to true. We're going to use this property to handle visibility for the Ink and Text elements.
+1. Expand the **M2_EnableInk** snippet in the **SightDetailPageViewModel**. This method will set the **IsNotesInking** bool to true. We're going to use this property to handle visibility for the Ink and Text elements.
 
 	(Code Snippet - _M2_EnableInk_)
 	<!--mark:1-3-->
@@ -99,7 +105,7 @@ We'll start by adding an InkCanvas that can be used for taking notes.
 	}
 	````
 
-1. Return to **SightsDetailControl.xaml**. Expand the **M2_NotesInkCanvas** snippet below the Notes TextBox.
+1. Return to **SightDetailPage.xaml**. Expand the **M2_NotesInkCanvas** snippet below the Notes TextBox.
 
 	(Code Snippet - _M2_NotesInkCanvas_)
 	<!--mark:1-8-->
@@ -116,9 +122,8 @@ We'll start by adding an InkCanvas that can be used for taking notes.
 
 	> **Note:** The InkCanvas is contained in a Grid with a white background, because the InkCanvas on its own would display with a transparent background.
 
-1. In the **SightsDetailControl** code-behind, expand the **M2_NotesInputs** snippet after `InitializeComponent()` in the constructor.
+1. In the **SightDetailPage** code-behind, expand the **M2_NotesInputs** snippet after `InitializeComponent()` in the constructor.
 
-1. Build and run your app.
 	(Code Snippet - _M2_NotesInputs_)
 	<!--mark:1-4-->
 	````C#
@@ -127,25 +132,25 @@ We'll start by adding an InkCanvas that can be used for taking notes.
 			CoreInputDeviceTypes.Pen |
 			CoreInputDeviceTypes.Touch;
 	````
+1. Build and run your app.
 
-
-1. Open the **SightDetailControl** for a Sight and use the **EnableInkButton** to change the Notes field to an InkCanvas.
+1. Select a Sight in the app, which navigates to the **SightDetailPage** showing details for a Sight and use the **EnableInkButton** that you added at the top right of the Notes field to change notes input to an InkCanvas.
     
     ![The Simple InkCanvas](Images/notes_inkcanvas.png "The Simple InkCanvas")
     
-    *__Figure__: The simple Notes InkCanvas.*
+    _The simple Notes InkCanvas_
 
 
-	The default pen for the InkCanvas is a simple black line. Right now, we are also not saving the Ink. In the next task, we're going to set up an Ink Toolbar to handle pen color, saving, and clearing the Notes Ink Canvas.
+The default pen for the InkCanvas is a simple black line. Right now, we are also not saving the Ink. In the next task, we're going to set up an Ink Toolbar to handle pen color, saving, and clearing the Notes Ink Canvas.
 
 <a name="Ex1Task2"></a>
 ####  Task 2 – Add the Redstone Ink Toolbar ####
 
 In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any InkCanvas. We're going to use a preview of the toolbar for our Notes InkCanvas. The toolbar is customizable, so we'll also add our custom Save button to it.
 
-1. Notice that the `xmlns:c="using:InkToolbarPreview"` namespace has been added to the top-level **UserControl** in **SightDetailControl.xaml**. We've added an **InkToolbar** example for image annotation, and it is also using this namespace. We've also added the `using InkToolbarPreview` namespace to the **SightsDetailControl** code-behind.
+1. Notice that the `xmlns:c="using:InkToolbarPreview"` namespace has been added to the top-level **&lt;Page&gt;** element at the top of **SightDetailPage.xaml**. We've added an **InkToolbar** example for image annotation, and it is also using this namespace. We've also added the `using InkToolbarPreview` namespace to the **SightDetailPage** code-behind.
 
-1. Expand the **M2_InkToolbar** snippet after the EnableInkButton in **SightDetailControl.xaml**.
+1. Expand the **M2_InkToolbar** snippet after the EnableInkButton in **SightDetailPage.xaml**.
 
 	(Code Snippet - _M2_InkToolbar_)
 	<!--mark:1-21-->
@@ -176,7 +181,7 @@ In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any In
 
     > **Notes:** One of the buttons on the Toolbar is commented out. We'll enable it in the next task. For now, you can ignore it.
 
-1. Open the **SightDetailControl** code-behind.
+1. Open the **SightDetailPage** code-behind.
 
 1. Scroll down to the `#region NotesInkToolbar` and expand the **M2_SaveUndo** snippet in the region.
 
@@ -210,7 +215,7 @@ In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any In
 
     > **Note:** The **EraserClearAll()** method already exists for the image annotation InkToolbar, so we are reusing it for the Notes Ink Toolbar clear method as well.
 
-    > There is also a style already defined for the image annotation InkToolbar, which makes Red, Green, and Blue ink available. The style is defined in **SightDetailControl.xaml**.
+    > There is also a style already defined for the image annotation InkToolbar, which makes Red, Green, and Blue ink available. The style is defined in **SightDetailPage.xaml**.
 
 1. Expand the **M2_SetupNotes** snippet inside the **SetupNotesInkAsync** task in the code-behind. This method restores Ink that has been saved to the Sight.
 
@@ -237,16 +242,16 @@ In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any In
 
     ![The InkToolbar](Images/notes_inktoolbar.png "The InkToolbar")
     
-    *__Figure__: The InkToolbar.*
+    _The InkToolbar_
 
 <a name="Ex1Task3"></a>
 #### Task 3 - Adding OCR Ink to text capability ####
 
 Now that we've added the ability to record notes with Ink, it would be useful to recognize those notes as text. In this task, we're going to add the ability to use Optical Character Recognition to convert Ink notes to text.
 
-1. Uncomment the remaining **InkToolbarCustomToggleButton** on the Notes InkToolbar in **SightDetailControl.xaml**. This button will pop open a dialog where the user can complete the speech recognition process.
+1. Uncomment the remaining **InkToolbarCustomToggleButton** on the Notes InkToolbar in **SightDetailPage.xaml**. This button will pop open a dialog where the user can complete the speech recognition process.
 
-1. Next, let's create the dialog. Expand the **M2_OcrDialog** snippet at the bottom of the main Grid in the **SightsDetailControl** XAML.
+1. Next, let's create the dialog. Expand the **M2_OcrDialog** snippet at the bottom of the main Grid in the **SightDetailPage** XAML.
 
 	(Code Snippet - _M2_OcrDialog_)
 	<!--mark:1-19-->
@@ -276,7 +281,7 @@ Now that we've added the ability to record notes with Ink, it would be useful to
 
     If the result is acceptable, the user can select the primary key on the dialog to finalize the conversion. If not acceptable, the user can cancel and return to the InkCanvas.
 
-1. Open the **SightDetailControl** code-behind and expand the **M2_Recognizers** snippet above the constructor.
+1. Open the **SightDetailPage** code-behind and expand the **M2_Recognizers** snippet above the constructor.
 
     (Code Snippet - _M2_Recognizers_)
     <!--mark:1-2-->
@@ -425,7 +430,7 @@ Now that we've added the ability to record notes with Ink, it would be useful to
     
     ![Recognize handwritten text with OCR](Images/handwriting.png "Recognize handwritten text with OCR")
     
-    *__Figure__: Recognize handwritten text with OCR.*
+    _Recognize handwritten text with OCR_
     
 <a name="Exercise2"></a>
 ### Exercise 2: Cortana Integration and Speech Commands ###
@@ -880,7 +885,7 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
     ![Nearby Sights](Images/nearby_sights.png "Nearby Sights")
     
-    *__Figure__: Nearby Sights display as content tiles in the Cortana pane.*
+    _Nearby Sights display as content tiles in the Cortana pane_
     
 <a name="Exercise3"></a>
 ### Exercise 3: Implementing interactive toast notifications ###
@@ -890,7 +895,7 @@ Voice commands give your users a convenient, hands-free way to interact with you
 
 Toast notifications are a great way to quickly interact with a user outside of an app. In this task, we're going to build and trigger a toast notification for a Sight when it is added to My Sights.
 
-1.	Open **SightDetailControl.xaml** and expand the **M2_DatePicker** snippet after the **Caption** TextBlock. This snippet includes a **CalendarDatePicker** and **TimePicker**.
+1.	Open **SightDetailPage.xaml** and expand the **M2_DatePicker** snippet after the **Caption** TextBlock. This snippet includes a **CalendarDatePicker** and **TimePicker**.
 
     (Code Snippet - _M2_DatePicker_)
     <!--mark:1-4-->
@@ -962,7 +967,7 @@ Toast notifications are a great way to quickly interact with a user outside of a
 
     ![Interactive Toast Notification](Images/toast.png "Interactive Toast Notification")
     
-    *__Figure__: The interactive toast notification.*
+    _The interactive toast notification_
 
 <a name="Summary"></a>
 ## Summary ##
