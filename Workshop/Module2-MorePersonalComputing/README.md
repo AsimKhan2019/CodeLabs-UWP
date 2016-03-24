@@ -24,7 +24,7 @@ In this module, we’re going to get hands-on experience implementing more perso
 
 The following is required to complete this module:
 
-- Microsoft Windows 10 Build 14279 or later
+- Microsoft Windows 10 Version 1511 or later
 - [Microsoft Visual Studio 2015 with Update 2 or later][1]
 
 [1]: https://www.visualstudio.com/products/visual-studio-community-vs
@@ -165,7 +165,7 @@ In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any In
 		<c:InkToolbarEraserButton />
 		<c:InkToolbarBallpointPenButton />
 
-		<!--<c:InkToolbarCustomToggleButton Click="TryOCR">
+		<!--<c:InkToolbarCustomToggleButton Click="TryInkReco">
 			<FontIcon Glyph="&#xE8E9;" FontFamily="Segoe MDL2 Assets" />
 		</c:InkToolbarCustomToggleButton>-->
 
@@ -245,31 +245,25 @@ In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any In
     _The InkToolbar_
 
 <a name="Ex1Task3"></a>
-#### Task 3 - Adding OCR Ink to text capability ####
+#### Task 3 - Adding Ink handwriting recognition ####
 
-Now that we've added the ability to record notes with Ink, it would be useful to recognize those notes as text. In this task, we're going to add the ability to use Optical Character Recognition to convert Ink notes to text.
+Now that we've added the ability to record notes with Ink, it would be useful to recognize those notes as text. In this task, we're going to add the ability to use Handwriting recognition to convert Ink notes to text.
 
-1. Uncomment the remaining **InkToolbarCustomToggleButton** on the Notes InkToolbar in **SightDetailPage.xaml**. This button will pop open a dialog where the user can complete the speech recognition process.
+1. Uncomment the remaining **InkToolbarCustomToggleButton** on the Notes InkToolbar in **SightDetailPage.xaml**. This button will pop open a dialog where the user can complete the handwriting recognition process.
 
-1. Next, let's create the dialog. Expand the **M2_OcrDialog** snippet at the bottom of the main Grid in the **SightDetailPage** XAML.
+1. Next, let's create the dialog. Expand the **M2_InkRecoDialog** snippet at the bottom of the main Grid in the **SightDetailPage** XAML.
 
-	(Code Snippet - _M2_OcrDialog_)
-	<!--mark:1-19-->
+	(Code Snippet - _M2_InkRecoDialog_)
+	<!--mark:1-11-->
 	````C#
-	<ContentDialog x:Name="OCRDialog"
+	<ContentDialog x:Name="InkRecoDialog"
 						PrimaryButtonText="Accept"
 						SecondaryButtonText="Cancel"
 						IsPrimaryButtonEnabled="False"
 						Title="Text Recognition"
-						d:IsHidden="True">
+						d:IsHidden="True"
+						Opened="InkRecoDialog_Opened">
 		 <StackPanel>
-			  <ComboBox x:Name="RecoName"
-							Header="Choose a recognizer:"
-							MaxWidth="500"
-							SelectionChanged="OnRecognizerChanged"
-							Margin="0,4"/>
-			  <Button Click="OnRecognizeAsync"
-						 Margin="0,4">Recognize text</Button>
 			  <TextBox x:Name="Status"
 						  Header="Recognition Output:"
 						  Margin="0,4"/>
@@ -277,53 +271,34 @@ Now that we've added the ability to record notes with Ink, it would be useful to
 	</ContentDialog>
 	````
 
-    This dialog lets the user choose a speech recognizer from those installed on the machine and use it to parse the Ink to text.
+    This dialog lets the user see the results of the handwritng recognition process and then approve or reject it.
 
     If the result is acceptable, the user can select the primary key on the dialog to finalize the conversion. If not acceptable, the user can cancel and return to the InkCanvas.
 
 1. Open the **SightDetailPage** code-behind and expand the **M2_Recognizers** snippet above the constructor.
 
     (Code Snippet - _M2_Recognizers_)
-    <!--mark:1-2-->
+    <!--mark:1-1-->
     ````C#
 	private readonly InkRecognizerContainer _inkRecognizerContainer;
-	private readonly IReadOnlyList<InkRecognizer> _recoView;
     ````
     
-1. In the constructor, find the `#region SetupRecognizers` and expand the **M2_SetupRecognizers** snippet inside of it. This code gets the list of all available recognizers on the device.
+1. In the constructor, find the `#region SetupRecognizers` and expand the **M2_SetupRecognizers** snippet inside of it. This code initializes the InkRecognizerContainer object.
 
     (Code Snippet - _M2_SetupRecognizers_)
-    <!--mark:1-19-->
+    <!--mark:1-1-->
     ````C#
 	_inkRecognizerContainer = new InkRecognizerContainer();
-	_recoView = _inkRecognizerContainer.GetRecognizers();
-	if (_recoView != null)
-	{
-		 if (_recoView.Count > 0)
-		 {
-			  foreach (var recognizer in _recoView)
-			  {
-					RecoName?.Items?.Add(recognizer.Name);
-			  }
-		 }
-		 else
-		 {
-			  RecoName.IsEnabled = false;
-			  RecoName?.Items?.Add("No Recognizer Available");
-		 }
-	}
-
-	RecoName.SelectedIndex = 0;
     ````
     
-1. Scroll down to the `#region OCR`. Expand the **M2_RecognizerMethods** snippet inside the region.
+1. Scroll down to the `#region Ink Recognition`. Expand the **M2_RecognizerMethods** snippet inside the region.
 
     (Code Snippet - _M2_RecognizerMethods_)
-    <!--mark:1-36-->
+    <!--mark:1-15-->
     ````C#
-	private async void TryOCR(object sender, RoutedEventArgs e)
+	private async void TryInkReco(object sender, RoutedEventArgs e)
 	{
-		 var result = await OCRDialog.ShowAsync();
+		 var result = await InkRecoDialog.ShowAsync();
 		 if (result == ContentDialogResult.Primary)
 		 {
 			  ViewModel.IsNotesInking = false;
@@ -336,56 +311,19 @@ Now that we've added the ability to record notes with Ink, it would be useful to
 			  NotesInkCanvas.InkPresenter.StrokeContainer.Clear();
 		 }
 	}
-
-	private bool SetRecognizerByName(string recognizerName)
-	{
-		 var recognizerFound = false;
-
-		 foreach (var reco in _recoView)
-		 {
-			  if (recognizerName == reco.Name)
-			  {
-					_inkRecognizerContainer.SetDefaultRecognizer(reco);
-					recognizerFound = true;
-					break;
-			  }
-
-			  if (!recognizerFound)
-			  {
-					Status.Text = $"Could not find target recognizer: {recognizerName}.";
-			  }
-		 }
-		 return recognizerFound;
-	}
     ````
 
-1. Then expand the **M2_RecognizerChanged** snippet inside the **OnRecognizerChanged** method.
+    - The **TryInkReco** method opens the **InkRecoDialog** when the user selects the button from the Notes InkToolbar. It awaits the result from the dialog: will the user accept the recognized text or cancel?
 
-    (Code Snippet - _M2_RecognizerChanged_)
-    <!--mark:1-3-->
-    ````C#
-	var selectedValue = (string)RecoName.SelectedValue;
-	Status.Text = string.Empty;
-	SetRecognizerByName(selectedValue);
-    ````
-
-    - The **TryOCR** method opens the **OCRDialog** when the user selects the button from the Notes InkToolbar. It awaits the result from the dialog: will the user accept the recognized text or cancel?
-
-    - The **OnRecognizerChanged** method clears the Status TextBlock in the OCRDialog and calls the SetRecognizerByName method.
-
-    - The **SetRecognizerByNameMethod** sets the default recognizer to the user's selection if it exists on the device.
-
-1. Expand the **M2_OnRecognize** snippet inside the **OnRecognizeAsync** method.
+1. Expand the **M2_OnRecognize** snippet inside the **InkRecoDialog_Opened** method.
 
     (Code Snippet - _M2_OnRecognize_)
-    <!--mark:1-32-->
+    <!--mark:1-28-->
     ````C#
 	var currentStrokes =
 		 NotesInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
 	if (currentStrokes.Count > 0)
 	{
-		 RecoName.IsEnabled = false;
-
 		 var recognitionResults = await _inkRecognizerContainer.RecognizeAsync(
 			  NotesInkCanvas.InkPresenter.StrokeContainer,
 			  InkRecognitionTarget.All);
@@ -399,14 +337,12 @@ Now that we've added the ability to record notes with Ink, it would be useful to
 					str += $"{r.GetTextCandidates()[0]} ";
 			  }
 			  Status.Text = str;
-			  OCRDialog.IsPrimaryButtonEnabled = true;
+			  inkRecoDialog.IsPrimaryButtonEnabled = true;
 		 }
 		 else
 		 {
 			  Status.Text = "No text recognized.";
 		 }
-
-		 RecoName.IsEnabled = true;
 	}
 	else
 	{
@@ -414,7 +350,7 @@ Now that we've added the ability to record notes with Ink, it would be useful to
 	}
     ````
 
-    - The **OnRecognizeAsync** method sends the ink strokes (if any) to the ink recognizer container and awaits the results of **RecognizeAsync**.
+    - The **InkRecoDialog_Opened** method sends the ink strokes (if any) to the ink recognizer container and awaits the results of **RecognizeAsync**.
 
     - If results are returned, they are built into a string and displayed in the **Status** TextBlock in the OCR Dialog.
 
@@ -428,9 +364,9 @@ Now that we've added the ability to record notes with Ink, it would be useful to
 
 1. When you receive a result from the recognizer, accept the results to return to a Notes TextBox with the new results appended.
     
-    ![Recognize handwritten text with OCR](Images/handwriting.png "Recognize handwritten text with OCR")
+    ![Recognize handwritten text](Images/handwriting.png "Recognize handwritten text")
     
-    _Recognize handwritten text with OCR_
+    _Recognize handwritten text_
     
 <a name="Exercise2"></a>
 ### Exercise 2: Cortana Integration and Speech Commands ###
