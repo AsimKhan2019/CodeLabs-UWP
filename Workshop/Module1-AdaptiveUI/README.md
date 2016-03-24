@@ -598,7 +598,7 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
 														 Tapped="MapPinTapped">
 	````
 
-1. Open **ViewModels > TripDetailPageViewModel.cs**. Expand the **M1_Close3D** and **M1_Show3D** snippets anywhere within the view model.
+1. Open **ViewModels > TripDetailPageViewModel.cs**. Expand the **M1_Show3D** snippet where indicated by the comment towards the bottom of the view model.
 
 	The **Show3D()** method hides the flyout and sets the Map style to **Aerial3DWithRoads**. It also sets the scene by controlling the pitch, direction, and radius of the 3D view.
 

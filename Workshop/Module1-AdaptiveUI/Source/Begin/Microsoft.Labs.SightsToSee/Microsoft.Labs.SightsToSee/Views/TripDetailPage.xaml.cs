@@ -85,7 +85,14 @@ namespace Microsoft.Labs.SightsToSee.Views
             base.OnNavigatedTo(e);
         }
 
-        // Insert the M1_MapPinTapped snippet here
+
+        private void MapPinTapped(object sender, TappedRoutedEventArgs e)
+        {
+            // Gets the attachedflyout defined in XAML for the sender - the Map, and saves it in the ViewModel
+            ViewModel.Flyout = FlyoutBase.GetAttachedFlyout((FrameworkElement)sender);
+            // Show the attached flyout for the map
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+        }
 
 
         private void SightTemplateRightTapped(object sender, RightTappedRoutedEventArgs e)
