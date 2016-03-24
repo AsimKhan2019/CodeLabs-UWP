@@ -743,10 +743,13 @@ Toast notifications are a great way to quickly interact with a user outside of a
     (Code Snippet - _M2_DatePicker_)
     <!--mark:1-4-->
     ````C#
-	<StackPanel Orientation="Horizontal" Grid.Row="0">
-		 <CalendarDatePicker Date="{x:Bind ViewModel.CurrentSightDate, Mode=TwoWay}" />
-		 <TimePicker Time="{x:Bind ViewModel.CurrentSightTime, Mode=TwoWay}" />
-	</StackPanel>
+	<StackPanel Orientation="Vertical" Grid.Row="0">
+        <TextBlock VerticalAlignment="Center" FontSize="20" Margin="0,0,0,10">When are you going?</TextBlock>
+        <CalendarDatePicker Date="{x:Bind ViewModel.CurrentSightDate, Mode=TwoWay}" HorizontalAlignment="Left" Width="300" Margin="0,0,0,10" Background="White" />
+        <TimePicker Time="{x:Bind ViewModel.CurrentSightTime, Mode=TwoWay}" Margin="0,0,0,10" Background="White" />
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" FontSize="16" Text="30 minute reminder" />
+        <ToggleSwitch Style="{StaticResource SightToggleSwitch}" IsOn="True"  Margin="0,0,0,10"/>
+    </StackPanel>
     ````
   
 

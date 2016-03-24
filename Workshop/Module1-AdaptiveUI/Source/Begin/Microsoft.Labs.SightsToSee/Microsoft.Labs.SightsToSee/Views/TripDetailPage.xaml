@@ -196,6 +196,7 @@
                             </Grid.RowDefinitions>
                             <maps:MapControl x:Name="Map"
                                      Grid.Row="1"
+                                    Margin="0,0,10,0"
                                      MapServiceToken="{x:Bind ViewModel.MapServiceToken}"
                                      ZoomInteractionMode="GestureAndControl"
                                      TiltInteractionMode="GestureAndControl">

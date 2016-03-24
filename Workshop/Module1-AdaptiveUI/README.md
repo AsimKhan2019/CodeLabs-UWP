@@ -156,42 +156,25 @@ This state moves the Map control above the Sights GridViews, and it anchors the 
 
     ````XAML
     <!-- Tablet State -->
-
     <VisualState>
         <VisualState.StateTriggers>
             <AdaptiveTrigger MinWindowWidth="720" />
         </VisualState.StateTriggers>
         <VisualState.Setters>
             <Setter Target="title.Visibility" Value="Visible" />
-
             <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
-
-            <Setter Target="MapGrid.Height" Value="360" />
-            <Setter Target="MapGrid.(RelativePanel.RightOf)" Value="" />
-            <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="" />
-            <Setter Target="MapGrid.(RelativePanel.AlignTopWithPanel)" 
-                Value="True" />
-            <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" 
-                Value="True" />
-            <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" 
-                Value="True" />
-            <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" 
-                Value="False" />
-            <Setter Target="MapGrid.Margin" Value="24,0,24,28" />
-            <Setter Target="MapGrid.Padding" Value="0" />
-
-            <Setter Target="SightsGrid.(RelativePanel.Below)" Value="MapGrid" />
-            <Setter Target="SightsGrid.(RelativePanel.AlignRightWithPanel)" 
-                Value="True" />
-            <Setter Target="SightsGrid.(RelativePanel.AlignLeftWithPanel)" 
-                Value="True" />
-            <Setter Target="SightsGrid.Width" Value="Auto" />
-            <Setter Target="SightsGrid.Margin" Value="24,0,0,0" />
-
-            <Setter Target="LayoutPanel.Padding" Value="0" />
-
+            <Setter Target="baseBranding.Visibility" Value="Visible" />
+            <Setter Target="narrowBranding.Visibility" Value="Collapsed" />
+            <Setter Target="LayoutPanel.Padding" Value="24,0,16,24" />
+            <Setter Target="MapGrid.(RelativePanel.RightOf)" Value="SightsGrid" />
+            <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="SightsGrid" />
+            <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
+            <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" Value="True" />
+            <Setter Target="MapGrid.Padding" Value="0,0,0,0" />
+            <Setter Target="SightsGrid.Width" Value="404" />
+            <Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
         </VisualState.Setters>
-    </VisualState>
+    </VisualState>     
     ````
 	> **Note**:  Visual states sometimes conflict with each other if certain properties aren’t cleared or overridden. With RelativePanels, it is easy to inadvertently set up a circular reference. Explicit layouts and properties directly on controls can also cause conflicts in visual states.
 You can override properties in a visual state by setting them to different values. To clear out a RelativePanel alignment state without setting it to a new value, set it to the empty string.
@@ -239,37 +222,29 @@ You can override properties in a visual state by setting them to different value
 	<!-- Mobile State -->
 
     <VisualState>
-        <VisualState.StateTriggers>
-            <AdaptiveTrigger MinWindowWidth="0" />
-        </VisualState.StateTriggers>
-        <VisualState.Setters>
-            <Setter Target="title.Visibility" Value="Collapsed" />
-
-            <Setter Target="MobileHeader.Visibility" Value="Visible" />
-
-            <Setter Target="MapGrid.Height" Value="300" />
-            <Setter Target="MapGrid.(RelativePanel.RightOf)" Value="" />
-            <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="" />
-            <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" 
-                Value="True" />
-            <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" 
-                Value="True" />
-            <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" 
-                Value="False" />
-            <Setter Target="MapGrid.Margin" Value="0,0,0,12" />
-            <Setter Target="MapGrid.Padding" Value="0" />
-
-            <Setter Target="SightsGrid.(RelativePanel.Below)" Value="MapGrid" />
-            <Setter Target="SightsGrid.(RelativePanel.AlignRightWithPanel)" 
-                Value="True" />
-            <Setter Target="SightsGrid.(RelativePanel.AlignLeftWithPanel)" 
-                Value="True" />
-            <Setter Target="SightsGrid.Width" Value="Auto" />
-            <Setter Target="SightsGrid.Margin" Value="12,0,0,0" />
-
-            <Setter Target="LayoutPanel.Padding" Value="0" />
-        </VisualState.Setters>
-    </VisualState>
+            <VisualState.StateTriggers>
+                <AdaptiveTrigger MinWindowWidth="0" />
+            </VisualState.StateTriggers>
+            <VisualState.Setters>
+                <Setter Target="title.Visibility" Value="Collapsed" />
+                <Setter Target="MobileHeader.Visibility" Value="Visible" />
+                <Setter Target="baseBranding.Visibility" Value="Collapsed" />
+                <Setter Target="narrowBranding.Visibility" Value="Visible" />
+                <Setter Target="MapGrid.Height" Value="240" />
+                <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="" />
+                <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                <Setter Target="MapGrid.Margin" Value="0,0,0,12" />
+                <Setter Target="MapGrid.Padding" Value="0" />
+                <Setter Target="SightsGrid.(RelativePanel.Below)" Value="MapGrid" />
+                <Setter Target="SightsGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                <Setter Target="SightsGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                <Setter Target="SightsGrid.Width" Value="Auto" />
+                <Setter Target="SightsGrid.Margin" Value="12,0,0,0" />
+                <Setter Target="LayoutPanel.Padding" Value="24,0,16,24" />
+                <Setter Target="LayoutPanel.Margin" Value="0" />
+            </VisualState.Setters>
+        </VisualState>
     ````
     
 1. Build and run the app. Resize the window to see the app adapt from Desktop to Tablet to Mobile states.

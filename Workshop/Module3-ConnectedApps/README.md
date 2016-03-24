@@ -574,7 +574,9 @@ The Share contract is an easy way to share data between apps. You can share link
 
 		````C#
 		<AppBarButton Click="{x:Bind ViewModel.ShareSight}"
-						  Label="Share Sight">
+					    Label="Share Sight" 
+                        Foreground="White"
+                        Style="{StaticResource TopCmdBtnStyle}">
 			 <AppBarButton.Icon>
 				  <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
 			 </AppBarButton.Icon>
