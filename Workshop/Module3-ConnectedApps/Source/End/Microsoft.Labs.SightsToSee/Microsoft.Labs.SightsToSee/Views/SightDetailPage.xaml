@@ -92,8 +92,7 @@
                 <VisualState x:Name="Wide">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="1200" />
-                    </VisualState.StateTriggers>
-
+                    </VisualState.StateTriggers>     
                     <VisualState.Setters>
                         <Setter Target="Column0Content.(RelativePanel.RightOf)" Value="Column1Content" />
                         <Setter Target="Column1Content.Padding" Value="0" />
@@ -113,8 +112,7 @@
                 <VisualState x:Name="Medium">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="720" />
-                    </VisualState.StateTriggers>
-
+                    </VisualState.StateTriggers> 
                     <VisualState.Setters>
                         <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Column1Content.Padding" Value="0" />
@@ -185,9 +183,6 @@
                                            BackgroundImageSource="{x:Bind ViewModel.SightImage, Mode=OneWay}" />
 
         <!-- Row 0 -->
-
-        
-
         <Border x:Name="TitleArea" Grid.Row="0" HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
                 Margin="0,0,0,0">
@@ -204,8 +199,6 @@
             <PivotItem Style="{StaticResource SelectedPivotItem}">
                 <PivotItem.Header>
                     <TextBlock Text="Sight"/>
-                    <!--<controls:TabHeader Label="Sight" />-->
-                    <!--  Glyph="&#xE052;" -->
                 </PivotItem.Header>
                 <ScrollViewer x:Name="MyScroller"
                       Grid.Row="1"
@@ -276,12 +269,10 @@
                                 Margin="0,8,0,0">
 
                                     <TextBox  x:Name="Notes"
-                                 
-                                 
-                                 Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                                 AcceptsReturn="True"
-                                 PlaceholderText="Enter your notes here"
-                                 Text="{Binding CurrentSight.Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                         Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                         AcceptsReturn="True"
+                                         PlaceholderText="Enter your notes here"
+                                         Text="{Binding CurrentSight.Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </Border>
                                 <Grid x:Name="InkGrid" 
                               Grid.Row="1" 
@@ -296,8 +287,8 @@
                         </StackPanel>
 
                         <Grid x:Name="Column1Content"
-                      Width="472"
-                      Padding="24,0,0,0">
+                              Width="472"
+                              Padding="24,0,0,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -328,15 +319,15 @@
                             </Border>
 
                             <Grid x:Name="InkingRoot"
-                          Grid.Row="0"
-                          Height="448"
-                          Width="448"
-                          VerticalAlignment="Center"
-                          HorizontalAlignment="Left">
+                                  Grid.Row="0"
+                                  Height="448"
+                                  Width="448"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Left">
 
                                 <Image Source="{x:Bind ViewModel.SightImage, Mode=OneWay}"
-                               Stretch="UniformToFill"
-                               x:Name="SightImage"/>
+                                       Stretch="UniformToFill"
+                                       x:Name="SightImage"/>
 
                                 <InkCanvas x:Name="ImageInkCanvas"/>
 
@@ -369,9 +360,9 @@
                                 <GridView.ItemTemplate>
                                     <DataTemplate x:DataType="models:SightFile">
                                         <Image Width="68"
-                                       Height="68"
-                                       Stretch="UniformToFill"
-                                       Source="{x:Bind ImageUri, Mode=OneWay}" />
+                                               Height="68"
+                                               Stretch="UniformToFill"
+                                               Source="{x:Bind ImageUri, Mode=OneWay}" />
                                     </DataTemplate>
                                 </GridView.ItemTemplate>
                             </GridView>
@@ -433,8 +424,7 @@
                 Grid.Row="0">
 
             <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
-                       Foreground="White"
-                       
+                       Foreground="White"                          
                        VerticalAlignment="Center"
                        Margin="48,0,252,0"
                        TextTrimming="CharacterEllipsis"

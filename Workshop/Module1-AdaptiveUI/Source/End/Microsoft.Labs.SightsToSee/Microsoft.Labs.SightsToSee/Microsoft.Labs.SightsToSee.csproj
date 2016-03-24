@@ -241,7 +241,7 @@
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\SightDetailPageViewModel.cs" />
     <Compile Include="ViewModels\TripDetailPageViewModel.cs" />
-    <Compile Include="Views\EatsControlViewModel.cs" />
+    <Compile Include="ViewModels\EatsControlViewModel.cs" />
     <Compile Include="Views\NewTripPage.xaml.cs">
       <DependentUpon>NewTripPage.xaml</DependentUpon>
     </Compile>

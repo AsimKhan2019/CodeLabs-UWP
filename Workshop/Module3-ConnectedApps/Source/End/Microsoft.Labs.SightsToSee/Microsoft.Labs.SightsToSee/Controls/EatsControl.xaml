@@ -95,17 +95,6 @@
                         <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" Value="True" />
                         <Setter Target="MapGrid.Padding" Value="0,0,0,0" />
                         <Setter Target="EatsGrid.Width" Value="404" />
-                        <!--<Setter Target="MapGrid.Height" Value="360" />
-                        <Setter Target="MapGrid.(RelativePanel.AlignTopWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.Margin" Value="24,0,24,28" />
-                        <Setter Target="MapGrid.Padding" Value="0" />
-                        <Setter Target="EatsGrid.(RelativePanel.Below)" Value="MapGrid" />
-                        <Setter Target="EatsGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="EatsGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="EatsGrid.Width" Value="Auto" />
-                        <Setter Target="EatsGrid.Margin" Value="24,0,0,0" />-->
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState>
@@ -113,7 +102,7 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="MapGrid.Height" Value="360" />
+                        <Setter Target="MapGrid.Height" Value="240" />
                         <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="" />
                         <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />

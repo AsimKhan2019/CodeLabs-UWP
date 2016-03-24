@@ -101,7 +101,6 @@
                     <VisualState.Setters>
                         <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Column1Content.Padding" Value="0" />
-                        <Setter Target="ImageInkToolbar.Margin" Value="0,0" />
                         <Setter Target="GalleryGrid.Padding" Value="0" />
                         <Setter Target="GalleryGrid.Height" Value="82" />
                         <Setter Target="InkingRoot.Width" Value="Auto" />
@@ -195,9 +194,7 @@
                     <RelativePanel x:Name="Content"                           
                            Padding="0,10,0,48">
                         <StackPanel x:Name="Column0Content" 
-                                    Width="472" 
-                                    RelativePanel.Below="Column1Content"
-                                    RelativePanel.AlignLeftWithPanel="True">
+                                    Width="472" >
                             <TextBlock x:Name="Caption"
                                Style="{ThemeResource CaptionTextBlockStyle}"
                                Text="{x:Bind ViewModel.CurrentSight.LongDescription, Mode=OneWay}"
@@ -230,9 +227,7 @@
 
                         <Grid x:Name="Column1Content"
                               Width="472"
-                              Padding="24,0,0,0"
-                              RelativePanel.AlignTopWithPanel="True"
-                              RelativePanel.AlignLeftWithPanel="True">
+                              Padding="24,0,0,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -247,7 +242,7 @@
                                   HorizontalAlignment="Left">
 
                                 <Image Source="{x:Bind ViewModel.SightImage, Mode=OneWay}"
-                                       Stretch="Uniform"
+                                       Stretch="UniformToFill"
                                        x:Name="SightImage" />
 
                             </Grid>
@@ -332,7 +327,8 @@
         <CommandBar x:Name="MobileCommandBar"
                     Grid.Row="0" 
                     HorizontalAlignment="Right"
-                    Foreground="White">
+                    Foreground="White"
+                    Background="{StaticResource NavMenuBackgroundBrush}">
             <AppBarButton x:Name="MobileDeleteFlyout"
                           Label="Delete from Trip"
                           Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
