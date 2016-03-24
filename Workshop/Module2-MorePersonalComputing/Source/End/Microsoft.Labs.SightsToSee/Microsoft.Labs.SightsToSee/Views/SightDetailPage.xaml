@@ -274,7 +274,7 @@
                                         <inkToolbarPreview:InkToolbarEraserButton />
                                         <inkToolbarPreview:InkToolbarBallpointPenButton />
 
-                                        <inkToolbarPreview:InkToolbarCustomToggleButton Click="TryOCR">
+                                        <inkToolbarPreview:InkToolbarCustomToggleButton Click="TryInkReco">
                                             <FontIcon Glyph="&#xE8E9;" FontFamily="Segoe MDL2 Assets" />
                                         </inkToolbarPreview:InkToolbarCustomToggleButton>
 
@@ -429,24 +429,16 @@
 
         <!-- Content Dialogs -->
 
-        <!--Insert the M2_OcrDialog snippet here-->
-        <ContentDialog x:Name="OCRDialog"
+        <!--Insert the M2_InkRecoDialog snippet here-->
+        <ContentDialog x:Name="InkRecoDialog"
                        PrimaryButtonText="Accept"
                        SecondaryButtonText="Cancel"
                        IsPrimaryButtonEnabled="False"
                        Title="Text Recognition"
                        Grid.RowSpan="3"
-                       d:IsHidden="True">
+                       d:IsHidden="True" 
+                       Opened="InkRecoDialog_Opened">
             <StackPanel>
-                <ComboBox x:Name="RecoName"
-                          Header="Choose a recognizer:"
-                          MaxWidth="500"
-                          SelectionChanged="OnRecognizerChanged"
-                          Margin="0,4" />
-                <Button Click="OnRecognizeAsync"
-                        Margin="0,4">
-                    Recognize text
-                </Button>
                 <TextBox x:Name="Status"
                          Header="Recognition Output:"
                          Margin="0,4" />

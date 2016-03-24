@@ -79,7 +79,7 @@ namespace Microsoft.Labs.SightsToSee.Views
 
         }
 
-        #region OCR
+        #region Ink Recognition
 
         // Insert the M2_RecognizerMethods snippet here
 
@@ -87,7 +87,7 @@ namespace Microsoft.Labs.SightsToSee.Views
         #endregion
        
 
-        private async void OnRecognizeAsync(object sender, RoutedEventArgs e)
+        private async void InkRecoDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
             // Insert the M2_OnRecognize snippet here
             
@@ -100,11 +100,6 @@ namespace Microsoft.Labs.SightsToSee.Views
 
 
         #endregion
-
-        private async void OnLaunchForResults(object sender, RoutedEventArgs e)
-        {
-
-        }
 
 
         #region InkToolBarControl

@@ -394,7 +394,7 @@
 
         <!-- Content Dialogs -->
 
-        <!--Insert the M2_OcrDialog snippet here-->
+        <!--Insert the M2_InkRecoDialog snippet here-->
 
     </Grid>
 </Page>

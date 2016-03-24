@@ -255,7 +255,6 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
         }
 
         // Insert the M2_EnableInk snippet here
-
         public void EnableInk()
         {
             IsNotesInking = true;
