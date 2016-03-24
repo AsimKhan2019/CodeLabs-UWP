@@ -281,7 +281,7 @@
                                         <maps:MapItemsControl.ItemTemplate>
                                             <DataTemplate x:DataType="models:Sight">
                                                 <Grid FlyoutBase.AttachedFlyout="{StaticResource SightMapFlyout}"
-                                          Tapped="MapPinTapped">
+                                                    Tapped="MapPinTapped">
                                                     <Ellipse Stroke="{StaticResource NavMenuForegroundPressedBrush}"
                                                          StrokeThickness="2"
                                                          maps:MapControl.Location="{x:Bind Location}"

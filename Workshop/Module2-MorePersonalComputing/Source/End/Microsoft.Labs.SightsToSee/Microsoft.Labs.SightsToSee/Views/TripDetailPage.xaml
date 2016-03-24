@@ -160,47 +160,21 @@
             <VisualStateGroup>
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="800" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="title.Visibility" Value="Visible" />
-                        <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
-
-                        <Setter Target="LayoutPanel.Padding" Value="24,0,16,24" />
-
-                        <Setter Target="MapGrid.(RelativePanel.RightOf)" Value="SightsGrid" />
-                        <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="SightsGrid" />
-                        <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.Padding" Value="0,33,24,0" />
-
-                        <Setter Target="SightsGrid.Width" Value="404" />
-                    </VisualState.Setters>
-
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="title.Visibility" Value="Visible" />
                         <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
-
-                        <Setter Target="MapGrid.Height" Value="360" />
-                        <Setter Target="MapGrid.(RelativePanel.AlignTopWithPanel)" Value="True" />
+                        <Setter Target="baseBranding.Visibility" Value="Visible" />
+                        <Setter Target="narrowBranding.Visibility" Value="Collapsed" />
+                        <Setter Target="LayoutPanel.Padding" Value="24,0,16,24" />
+                        <Setter Target="MapGrid.(RelativePanel.RightOf)" Value="SightsGrid" />
+                        <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="SightsGrid" />
                         <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.Margin" Value="24,0,24,28" />
-                        <Setter Target="MapGrid.Padding" Value="0" />
-
-                        <Setter Target="SightsGrid.(RelativePanel.Below)" Value="MapGrid" />
-                        <Setter Target="SightsGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="SightsGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="SightsGrid.Width" Value="Auto" />
-                        <Setter Target="SightsGrid.Margin" Value="24,0,0,0" />
-
-                        <Setter Target="LayoutPanel.Padding" Value="0" />
-
+                        <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" Value="True" />
+                        <Setter Target="MapGrid.Padding" Value="0,0,0,0" />
+                        <Setter Target="SightsGrid.Width" Value="404" />
+                        <Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState>
@@ -210,21 +184,21 @@
                     <VisualState.Setters>
                         <Setter Target="title.Visibility" Value="Collapsed" />
                         <Setter Target="MobileHeader.Visibility" Value="Visible" />
-                        
-                        <Setter Target="MapGrid.Height" Value="360" />
+                        <Setter Target="baseBranding.Visibility" Value="Collapsed" />
+                        <Setter Target="narrowBranding.Visibility" Value="Visible" />
+                        <Setter Target="MapGrid.Height" Value="240" />
                         <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="" />
                         <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="MapGrid.Margin" Value="0,0,0,12" />
                         <Setter Target="MapGrid.Padding" Value="0" />
-
                         <Setter Target="SightsGrid.(RelativePanel.Below)" Value="MapGrid" />
                         <Setter Target="SightsGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="SightsGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="SightsGrid.Width" Value="Auto" />
                         <Setter Target="SightsGrid.Margin" Value="12,0,0,0" />
-
-                        <Setter Target="LayoutPanel.Padding" Value="0" />
+                        <Setter Target="LayoutPanel.Padding" Value="24,0,16,24" />
+                        <Setter Target="LayoutPanel.Margin" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -237,31 +211,47 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="title"
+        <Border x:Name="title" Grid.Row="0" HorizontalAlignment="Stretch" Background="#FFF2F2F2" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+                <TextBlock 
                    Style="{ThemeResource SubheaderTextBlockStyle}"
-                   Grid.Row="0"
-                   Margin="24,12,0,4"
+                   Margin="24,0,0,28" VerticalAlignment="Top"
                    Text="{x:Bind ViewModel.CurrentTrip.Name, Mode=OneWay}" />
+                <Image Grid.Column="1" Source="ms-appx:///Assets/Sights2SeeLogo.png" Height="60" Margin="0,6,24,6" HorizontalAlignment="Right" VerticalAlignment="Center" />
 
-        <Border Background="{StaticResource NavMenuBackgroundBrush}"
+            </Grid>
+        </Border>
+
+        <Grid Background="{StaticResource NavMenuBackgroundBrush}"
                 x:Name="MobileHeader"
                 Height="48"
                 Visibility="Collapsed"
                 Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
             <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
                        Foreground="White"
                        VerticalAlignment="Center"
                        Margin="48,0,0,0"
                        Text="{x:Bind ViewModel.CurrentTrip.Name, Mode=OneWay}" />
-        </Border>
+            <Image x:Name="baseBranding" Grid.Column="1" Source="ms-appx:///Assets/Sights2SeeLogo.png" Margin="0,6,24,6" HorizontalAlignment="Right"  />
+            <Image x:Name="narrowBranding" Grid.Column="1" Source="ms-appx:///Assets/Tile_Logo.png" Margin="0,6,24,6" HorizontalAlignment="Right" Visibility="Collapsed" />
+        </Grid>
+        
         <Grid Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True">
 
-            <Pivot x:Name="LayoutPanel">
-                <PivotItem Style="{StaticResource SelectedPivotItem}">
+            <Pivot x:Name="LayoutPanel" Margin="0,-40,0,0">
+                <PivotItem Style="{StaticResource SelectedPivotItem}"  >
                     <PivotItem.Header>
-                        <controls:TabHeader Label="Sights" Glyph="&#xE052;" />
+                        <TextBlock Text="Sights"/>
                     </PivotItem.Header>
-                    
+
                     <RelativePanel>
                         <GridView x:Name="SightsGrid"
                           ItemsSource="{x:Bind CvsSights.View, Mode=OneWay}"
@@ -293,36 +283,36 @@
                                         <maps:MapItemsControl.ItemTemplate>
                                             <DataTemplate x:DataType="models:Sight">
                                                 <Grid FlyoutBase.AttachedFlyout="{StaticResource SightMapFlyout}"
-                                          Tapped="MapPinTapped">
+                                                    Tapped="MapPinTapped">
                                                     <Ellipse Stroke="{StaticResource NavMenuForegroundPressedBrush}"
-                                                 StrokeThickness="2"
-                                                 maps:MapControl.Location="{x:Bind Location}"
-                                                 maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
-                                                 Height="36"
-                                                 Width="36"
-                                                 Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                 Fill="{StaticResource SightGridItemHoverBrush}" />
+                                                         StrokeThickness="2"
+                                                         maps:MapControl.Location="{x:Bind Location}"
+                                                         maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
+                                                         Height="36"
+                                                         Width="36"
+                                                         Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                         Fill="{StaticResource SightGridItemHoverBrush}" />
                                                     <Ellipse Stroke="{StaticResource NavMenuForegroundPressedBrush}"
-                                                 StrokeThickness="0"
-                                                 maps:MapControl.Location="{x:Bind Location}"
-                                                 maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
-                                                 Height="18"
-                                                 Width="18"
-                                                 Opacity=".75"
-                                                 Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                                                 Fill="{StaticResource SightGridItemHoverBrush}" />
+                                                         StrokeThickness="0"
+                                                         maps:MapControl.Location="{x:Bind Location}"
+                                                         maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
+                                                         Height="18"
+                                                         Width="18"
+                                                         Opacity=".75"
+                                                         Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                                         Fill="{StaticResource SightGridItemHoverBrush}" />
                                                     <Ellipse maps:MapControl.Location="{x:Bind Location}"
-                                                 maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
-                                                 Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                 Height="8"
-                                                 Width="8"
-                                                 Fill="Black" />
+                                                         maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
+                                                         Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                         Height="8"
+                                                         Width="8"
+                                                         Fill="Black" />
                                                     <Ellipse maps:MapControl.Location="{x:Bind Location}"
-                                                 maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
-                                                 Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                                                 Height="4"
-                                                 Width="4"
-                                                 Fill="Black" />
+                                                         maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
+                                                         Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                                         Height="4"
+                                                         Width="4"
+                                                         Fill="Black" />
                                                 </Grid>
                                             </DataTemplate>
                                         </maps:MapItemsControl.ItemTemplate>
@@ -332,18 +322,18 @@
 
                             <!--Insert M1_Close3DX snippet here-->
                             <Button Style="{StaticResource CircleButtonStyle}"
-                            Grid.Row="1"
-                            Click="{x:Bind ViewModel.Close3DAsync}"
-                            VerticalAlignment="Top"
-                            HorizontalAlignment="Right"
-                            Margin="24"
-                            Visibility="{x:Bind ViewModel.IsDisplay3D, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    Grid.Row="1"
+                                    Click="{x:Bind ViewModel.Close3DAsync}"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Right"
+                                    Margin="24"
+                                    Visibility="{x:Bind ViewModel.IsDisplay3D, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <FontIcon
-                            x:Name="CloseView3D"
-                            VerticalAlignment="Center"
-                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                            FontSize="16"
-                            Glyph="&#xE10A;" />
+                                    x:Name="CloseView3D"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                    FontSize="16"
+                                    Glyph="&#xE10A;" />
                             </Button>
 
 
@@ -352,7 +342,7 @@
                 </PivotItem>
                 <PivotItem Style="{StaticResource SelectedPivotItem}">
                     <PivotItem.Header>
-                        <controls:TabHeader Label="Eats" Glyph="&#xEC06;" />
+                        <TextBlock Text="Eats"/>
                     </PivotItem.Header>
                     <Grid>
                         <controls:EatsControl DataContext="{x:Bind ViewModel.EatsControlViewModel, Mode=OneWay}"/>

@@ -236,7 +236,7 @@
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="0" VerticalAlignment="Center" FontSize="20">Notes</TextBlock>
                                     <Button x:Name="InkButton" Grid.Column="1" Background="Transparent" Click="{x:Bind ViewModel.EnableInk}"
-                                    Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                                        Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
                                         <FontIcon Glyph="&#xEC87;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
                                     </Button>
 
@@ -245,8 +245,6 @@
                                           TargetInkCanvas="{x:Bind NotesInkCanvas}"
                                           Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
                                           EraserClearAllInvoked="EraserClearAll">
-
-
                                         <inkToolbarPreview:InkToolbarEraserButton />
                                         <inkToolbarPreview:InkToolbarBallpointPenButton />
 
@@ -275,10 +273,10 @@
                                          Text="{Binding CurrentSight.Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </Border>
                                 <Grid x:Name="InkGrid" 
-                              Grid.Row="1" 
-                              Background="White" 
-                              Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            Margin="0,8,0,0">
+                                    Grid.Row="1" 
+                                    Background="White" 
+                                    Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    Margin="0,8,0,0">
                                     <InkCanvas x:Name="NotesInkCanvas" 
                                        MinHeight="500" />
                                 </Grid>
@@ -332,8 +330,8 @@
                                 <InkCanvas x:Name="ImageInkCanvas"/>
 
                                 <Image x:Name="InkImage" 
-                               Visibility="Collapsed"
-                               Stretch="UniformToFill">
+                                   Visibility="Collapsed"
+                                   Stretch="UniformToFill">
                                     <Image.Source>
                                         <SoftwareBitmapSource x:Name="InkImageSource" />
                                     </Image.Source>
