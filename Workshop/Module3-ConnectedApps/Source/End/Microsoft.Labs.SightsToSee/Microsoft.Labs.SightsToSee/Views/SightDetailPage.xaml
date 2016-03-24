@@ -265,8 +265,8 @@
 
                                 </Grid>
                                 <Border Grid.Row="1" Background="White"
-                                 Height="96"
-                                Margin="0,8,0,0">
+                                    Height="96"
+                                    Margin="0,8,0,0">
 
                                     <TextBox  x:Name="Notes"
                                          Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"

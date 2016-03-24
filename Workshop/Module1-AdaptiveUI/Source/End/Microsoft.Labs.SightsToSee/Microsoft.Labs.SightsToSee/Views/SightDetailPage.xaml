@@ -80,8 +80,7 @@
                     <VisualState.Setters>
                         <Setter Target="Column0Content.(RelativePanel.RightOf)" Value="Column1Content" />
                         <Setter Target="Column1Content.Padding" Value="0" />
-                        <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        
+                        <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />                            
                         <Setter Target="Column0Content.Margin" Value="20,0,0,0" />
                         <Setter Target="GalleryGrid.Padding" Value="0" />
                         <Setter Target="InkingRoot.Width" Value="Auto" />
@@ -109,7 +108,6 @@
                         <Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Column0Content.Width" Value="Auto" />
                         <Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
-                        <Setter Target="SightImage.Stretch" Value="Uniform" />
                         <Setter Target="TitleCommandBar.Visibility" Value="Visible" />
                         <Setter Target="TitleArea.Visibility" Value="Visible" />
                         <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
