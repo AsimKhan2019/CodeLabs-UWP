@@ -142,6 +142,7 @@
                 </Grid.RowDefinitions>
                 <maps:MapControl x:Name="Map"
                          Grid.Row="1"
+                        Margin="0,0,12,0"
                          MapServiceToken="{x:Bind ViewModel.MapServiceToken}"
                          Center="{x:Bind ViewModel.CenterLocation, Mode=OneWay}"
                          ZoomLevel="13"

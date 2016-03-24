@@ -190,7 +190,7 @@
                         <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="" />
                         <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.Margin" Value="0,0,0,12" />
+                        <Setter Target="MapGrid.Margin" Value="0,0,12,12" />
                         <Setter Target="MapGrid.Padding" Value="0" />
                         <Setter Target="SightsGrid.(RelativePanel.Below)" Value="MapGrid" />
                         <Setter Target="SightsGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
@@ -273,6 +273,7 @@
                             </Grid.RowDefinitions>
                             <maps:MapControl x:Name="Map"
                                      Grid.Row="1"
+                                     Margin="0,0,12,0"
                                      MapServiceToken="{x:Bind ViewModel.MapServiceToken}"
                                      ZoomInteractionMode="GestureAndControl"
                                      TiltInteractionMode="GestureAndControl">

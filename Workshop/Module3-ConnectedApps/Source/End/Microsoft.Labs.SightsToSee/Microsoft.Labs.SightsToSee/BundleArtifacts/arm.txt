@@ -1,6 +1,6 @@
-MainPackage=C:\Users\anwigley\Documents\buildlabs\SourceCode\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\bin\ARM\Debug\Microsoft.Labs.SightsToSee_1.1.0.0_ARM_Debug.appx
-SymbolPackage=C:\Users\anwigley\Documents\buildlabs\SourceCode\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\AppPackages\Microsoft.Labs.SightsToSee_1.1.0.0_Debug_Test\Microsoft.Labs.SightsToSee_1.1.0.0_ARM_Debug.appxsym
-ResourcePack=C:\Users\anwigley\Documents\buildlabs\SourceCode\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\bin\ARM\Debug\Microsoft.Labs.SightsToSee_1.1.0.0_scale-100.appx
-ResourcePack=C:\Users\anwigley\Documents\buildlabs\SourceCode\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\bin\ARM\Debug\Microsoft.Labs.SightsToSee_1.1.0.0_scale-125.appx
-ResourcePack=C:\Users\anwigley\Documents\buildlabs\SourceCode\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\bin\ARM\Debug\Microsoft.Labs.SightsToSee_1.1.0.0_scale-150.appx
-ResourcePack=C:\Users\anwigley\Documents\buildlabs\SourceCode\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\bin\ARM\Debug\Microsoft.Labs.SightsToSee_1.1.0.0_scale-400.appx
+MainPackage=C:\Projects\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\End\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\bin\ARM\Debug\Microsoft.Labs.SightsToSee_1.1.1.0_ARM_Debug.appx
+SymbolPackage=C:\Projects\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\End\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\AppPackages\Microsoft.Labs.SightsToSee_1.1.1.0_Debug_Test\Microsoft.Labs.SightsToSee_1.1.1.0_ARM_Debug.appxsym
+ResourcePack=C:\Projects\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\End\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\bin\ARM\Debug\Microsoft.Labs.SightsToSee_1.1.1.0_scale-100.appx
+ResourcePack=C:\Projects\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\End\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\bin\ARM\Debug\Microsoft.Labs.SightsToSee_1.1.1.0_scale-125.appx
+ResourcePack=C:\Projects\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\End\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\bin\ARM\Debug\Microsoft.Labs.SightsToSee_1.1.1.0_scale-150.appx
+ResourcePack=C:\Projects\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\End\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\bin\ARM\Debug\Microsoft.Labs.SightsToSee_1.1.1.0_scale-400.appx

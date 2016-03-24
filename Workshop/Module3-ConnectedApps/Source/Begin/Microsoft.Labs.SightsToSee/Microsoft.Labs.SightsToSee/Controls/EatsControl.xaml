@@ -36,17 +36,6 @@
                            Height="40"
                            TextTrimming="CharacterEllipsis"
                            Grid.Row="1"/>
-                <!--<Rectangle Fill="Transparent"
-                           IsRightTapEnabled="True"
-                           RightTapped="SightTemplateRightTapped"
-                           Grid.Row="0"
-                           Grid.RowSpan="2">
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout>
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
-
-                </Rectangle>-->
             </Grid>
         </DataTemplate>
 
@@ -106,7 +95,7 @@
                         <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="" />
                         <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.Margin" Value="0,0,0,12" />
+                        <Setter Target="MapGrid.Margin" Value="0,0,12,12" />
                         <Setter Target="MapGrid.Padding" Value="0" />
                         <Setter Target="EatsGrid.(RelativePanel.Below)" Value="MapGrid" />
                         <Setter Target="EatsGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
@@ -144,6 +133,7 @@
                          Grid.Row="1"
                          MapServiceToken="{x:Bind ViewModel.MapServiceToken}"
                          Center="{x:Bind ViewModel.CenterLocation, Mode=OneWay}"
+                         Margin="0,0,12,12"
                          ZoomLevel="13"
                          ZoomInteractionMode="GestureAndControl"
                          TiltInteractionMode="GestureAndControl">
