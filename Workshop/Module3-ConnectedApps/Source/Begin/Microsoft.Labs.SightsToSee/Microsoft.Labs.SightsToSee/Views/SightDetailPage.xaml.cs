@@ -41,7 +41,6 @@ namespace Microsoft.Labs.SightsToSee.Views
         #endregion
 
         private readonly InkRecognizerContainer _inkRecognizerContainer;
-        private readonly IReadOnlyList<InkRecognizer> _recoView;
 
         public SightDetailPage()
         {
@@ -51,23 +50,6 @@ namespace Microsoft.Labs.SightsToSee.Views
                                                            CoreInputDeviceTypes.Pen |
                                                            CoreInputDeviceTypes.Touch;
             _inkRecognizerContainer = new InkRecognizerContainer();
-            _recoView = _inkRecognizerContainer.GetRecognizers();
-            if (_recoView != null)
-            {
-                if (_recoView.Count > 0)
-                {
-                    foreach (var recognizer in _recoView)
-                    {
-                        RecoName?.Items?.Add(recognizer.Name);
-                    }
-                }
-                else
-                {
-                    RecoName.IsEnabled = false;
-                    RecoName?.Items?.Add("No Recognizer Available");
-                }
-            }
-            RecoName.SelectedIndex = 0;
 
             #region InkToolbarControl
 
@@ -107,9 +89,9 @@ namespace Microsoft.Labs.SightsToSee.Views
             }
         }
 
-        private async void TryOCR(object sender, RoutedEventArgs e)
+        private async void TryInkReco(object sender, RoutedEventArgs e)
         {
-            var result = await OCRDialog.ShowAsync();
+            var result = await InkRecoDialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
                 ViewModel.IsNotesInking = false;
@@ -122,42 +104,12 @@ namespace Microsoft.Labs.SightsToSee.Views
             }
         }
 
-        private void OnRecognizerChanged(object sender, RoutedEventArgs e)
-        {
-            var selectedValue = (string)RecoName.SelectedValue;
-            Status.Text = string.Empty;
-            SetRecognizerByName(selectedValue);
-        }
-
-        private bool SetRecognizerByName(string recognizerName)
-        {
-            var recognizerFound = false;
-
-            foreach (var reco in _recoView)
-            {
-                if (recognizerName == reco.Name)
-                {
-                    _inkRecognizerContainer.SetDefaultRecognizer(reco);
-                    recognizerFound = true;
-                    break;
-                }
-
-                if (!recognizerFound)
-                {
-                    Status.Text = $"Could not find target recognizer: {recognizerName}.";
-                }
-            }
-            return recognizerFound;
-        }
-
-        private async void OnRecognizeAsync(object sender, RoutedEventArgs e)
+        private async void InkRecoDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
             var currentStrokes =
                 NotesInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
             if (currentStrokes.Count > 0)
             {
-                RecoName.IsEnabled = false;
-
                 var recognitionResults = await _inkRecognizerContainer.RecognizeAsync(
                     NotesInkCanvas.InkPresenter.StrokeContainer,
                     InkRecognitionTarget.All);
@@ -171,14 +123,12 @@ namespace Microsoft.Labs.SightsToSee.Views
                         str += $"{r.GetTextCandidates()[0]} ";
                     }
                     Status.Text = str;
-                    OCRDialog.IsPrimaryButtonEnabled = true;
+                    InkRecoDialog.IsPrimaryButtonEnabled = true;
                 }
                 else
                 {
                     Status.Text = "No text recognized.";
                 }
-
-                RecoName.IsEnabled = true;
             }
             else
             {
