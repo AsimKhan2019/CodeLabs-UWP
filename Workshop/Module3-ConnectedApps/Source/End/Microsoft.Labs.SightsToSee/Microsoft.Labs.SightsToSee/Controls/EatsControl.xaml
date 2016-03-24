@@ -183,48 +183,7 @@
                 </maps:MapControl>
             </Grid>
 
-        </RelativePanel>
-        <!-- Row 0: Header -->
-        
-        <!--<TextBlock Text="{x:Bind ViewModel.Title, Mode=OneWay}"
-                   Style="{StaticResource TitleTextBlockStyle}"/>-->
-
-        <!-- Row 1: Map -->
-
-        <!-- Row 2: Restaurant Grid -->
-
-        <!--<GridView Grid.Row="2"
-                  ItemsSource="{x:Bind ViewModel.Eats, Mode=OneWay}">
-            <GridView.ItemTemplate>
-                <DataTemplate x:DataType="models:Restaurant">
-                    <Grid Width="400">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="143"/>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        
-                        <Image Grid.Row="0"
-                               Grid.Column="0"
-                               Source="{x:Bind ImagePath}"
-                               Height="135"
-                               Width="135"
-                               Margin="4"/>
-                        --><!-- Column 1 --><!--
-                        
-                        <StackPanel Grid.Column="1"
-                                    Margin="4">
-                            <TextBlock Text="{x:Bind Name}"
-                                       Style="{StaticResource TitleTextBlockStyle}"/>
-                            <TextBlock Text="{x:Bind CulinaryStyle}"
-                                       Style="{StaticResource SubtitleTextBlockStyle}"/>
-                            <TextBlock Text="{x:Bind Description}"
-                                       Style="{StaticResource BodyTextBlockStyle}"
-                                       TextWrapping="WrapWholeWords"/>
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>-->
+        </RelativePanel>           
         
         <!-- Busy Indicator -->
 

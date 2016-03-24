@@ -10,88 +10,181 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+    <UserControl.Resources>
+
+        <CollectionViewSource x:Name="CvsEats"
+                              Source="{x:Bind ViewModel.EatGroups, Mode=OneWay}"
+                              IsSourceGrouped="True"
+                              ItemsPath="ListOfEats" />
+
+        <DataTemplate x:Key="EatsTemplate" x:DataType="models:Restaurant">
+            <!-- x:DataType="models:Sight" -->
+            <Grid Width="124">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Image Height="124"
+                       Width="124"
+                       Source="{x:Bind ImagePath, Mode=OneWay}"
+                       Stretch="UniformToFill"
+                       Margin="0,0,0,4" />
+
+                <TextBlock Text="{x:Bind Name}"
+                           Style="{StaticResource CaptionTextBlockStyle}"
+                           Height="40"
+                           TextTrimming="CharacterEllipsis"
+                           Grid.Row="1"/>
+                <!--<Rectangle Fill="Transparent"
+                           IsRightTapEnabled="True"
+                           RightTapped="SightTemplateRightTapped"
+                           Grid.Row="0"
+                           Grid.RowSpan="2">
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout>
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+
+                </Rectangle>-->
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="EatGroupHeaderTemplate"
+                      x:DataType="models:EatsGroup">
+            <TextBlock Text="{x:Bind GroupName, Mode=OneWay}" />
+        </DataTemplate>
+
+        <Style TargetType="GridViewHeaderItem" x:Key="EatsGridViewHeaderItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontSize" Value="{ThemeResource GridViewHeaderItemThemeFontSize}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Margin" Value="0,0,0,8" />
+            <Setter Property="Padding" Value="0,0,0,4" />
+            <Setter Property="MinHeight" Value="10" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Top" />
+            <Setter Property="UseSystemFocusVisuals" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewHeaderItem">
+                        <ContentPresenter x:Name="ContentPresenter"
+                                          Margin="0"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          ContentTransitions="{TemplateBinding ContentTransitions}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
 
     <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MapGrid.(RelativePanel.RightOf)" Value="EatsGrid" />
+                        <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="EatsGrid" />
+                        <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" Value="True" />
+                        <Setter Target="MapGrid.Padding" Value="0,0,0,0" />
+                        <Setter Target="EatsGrid.Width" Value="404" />
+                        <!--<Setter Target="MapGrid.Height" Value="360" />
+                        <Setter Target="MapGrid.(RelativePanel.AlignTopWithPanel)" Value="True" />
+                        <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="MapGrid.Margin" Value="24,0,24,28" />
+                        <Setter Target="MapGrid.Padding" Value="0" />
+                        <Setter Target="EatsGrid.(RelativePanel.Below)" Value="MapGrid" />
+                        <Setter Target="EatsGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="EatsGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="EatsGrid.Width" Value="Auto" />
+                        <Setter Target="EatsGrid.Margin" Value="24,0,0,0" />-->
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MapGrid.Height" Value="360" />
+                        <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="" />
+                        <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="MapGrid.Margin" Value="0,0,0,12" />
+                        <Setter Target="MapGrid.Padding" Value="0" />
+                        <Setter Target="EatsGrid.(RelativePanel.Below)" Value="MapGrid" />
+                        <Setter Target="EatsGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="EatsGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="EatsGrid.Width" Value="Auto" />
+                        <Setter Target="EatsGrid.Margin" Value="12,0,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition />
-            <RowDefinition />
         </Grid.RowDefinitions>
-        
-        <!-- Row 0: Header -->
-        
-        <TextBlock Text="{x:Bind ViewModel.Title, Mode=OneWay}"
-                   Style="{StaticResource TitleTextBlockStyle}"/>
-
-        <!-- Row 1: Map -->
-
-        <maps:MapControl x:Name="Map"
+        <RelativePanel Grid.Row="1">
+            <GridView x:Name="EatsGrid"
+                          ItemsSource="{x:Bind CvsEats.View, Mode=OneWay}"
+                          ScrollViewer.IsVerticalScrollChainingEnabled="False"
+                          MinHeight="124"
+                          ItemContainerStyle="{StaticResource SightGridViewItemExpanded}"
+                          ItemTemplate="{StaticResource EatsTemplate}"
+                          SelectionMode="None">
+                <GridView.GroupStyle>
+                    <GroupStyle HeaderTemplate="{StaticResource EatGroupHeaderTemplate}"
+                                    HeaderContainerStyle="{StaticResource EatsGridViewHeaderItem}" />
+                </GridView.GroupStyle>
+            </GridView>
+            <Grid x:Name="MapGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <maps:MapControl x:Name="Map"
                          Grid.Row="1"
                          MapServiceToken="{x:Bind ViewModel.MapServiceToken}"
                          Center="{x:Bind ViewModel.CenterLocation, Mode=OneWay}"
                          ZoomLevel="13"
                          ZoomInteractionMode="GestureAndControl"
                          TiltInteractionMode="GestureAndControl">
-            <maps:MapControl.Children>
-                <maps:MapItemsControl ItemsSource="{x:Bind ViewModel.Eats, Mode=OneWay}">
-                    <maps:MapItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="models:Restaurant">
-                            <Grid>
-                                <Ellipse Stroke="{StaticResource NavMenuForegroundPressedBrush}"
+                    <maps:MapControl.Children>
+                        <maps:MapItemsControl ItemsSource="{x:Bind ViewModel.Eats, Mode=OneWay}">
+                            <maps:MapItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="models:Restaurant">
+                                    <Grid>
+                                        <Ellipse Stroke="{StaticResource NavMenuForegroundPressedBrush}"
                                          StrokeThickness="2"
                                          maps:MapControl.Location="{x:Bind Location}"
                                          maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
                                          Height="36"
                                          Width="36"
                                          Fill="{StaticResource SightGridItemHoverBrush}" />
-                                <Ellipse maps:MapControl.Location="{x:Bind Location}"
+                                        <Ellipse maps:MapControl.Location="{x:Bind Location}"
                                          maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
                                          Height="8"
                                          Width="8"
                                          Fill="Black" />
-                            </Grid>
-                        </DataTemplate>
-                    </maps:MapItemsControl.ItemTemplate>
-                </maps:MapItemsControl>
-            </maps:MapControl.Children>
-        </maps:MapControl>
+                                    </Grid>
+                                </DataTemplate>
+                            </maps:MapItemsControl.ItemTemplate>
+                        </maps:MapItemsControl>
+                    </maps:MapControl.Children>
+                </maps:MapControl>
+            </Grid>
 
+        </RelativePanel>
 
-        <!-- Row 2: Restaurant Grid -->
-
-        <GridView Grid.Row="2"
-                  ItemsSource="{x:Bind ViewModel.Eats, Mode=OneWay}">
-            <GridView.ItemTemplate>
-                <DataTemplate x:DataType="models:Restaurant">
-                    <Grid Width="400">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="143"/>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        
-                        <Image Grid.Row="0"
-                               Grid.Column="0"
-                               Source="{x:Bind ImagePath}"
-                               Height="135"
-                               Width="135"
-                               Margin="4"/>
-                        <!-- Column 1 -->
-                        
-                        <StackPanel Grid.Column="1"
-                                    Margin="4">
-                            <TextBlock Text="{x:Bind Name}"
-                                       Style="{StaticResource TitleTextBlockStyle}"/>
-                            <TextBlock Text="{x:Bind CulinaryStyle}"
-                                       Style="{StaticResource SubtitleTextBlockStyle}"/>
-                            <TextBlock Text="{x:Bind Description}"
-                                       Style="{StaticResource BodyTextBlockStyle}"
-                                       TextWrapping="WrapWholeWords"/>
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>
-        
         <!-- Busy Indicator -->
 
         <Grid x:Name="BusyGrid"

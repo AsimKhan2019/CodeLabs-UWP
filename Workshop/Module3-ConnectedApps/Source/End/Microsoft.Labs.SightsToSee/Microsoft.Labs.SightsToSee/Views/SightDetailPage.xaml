@@ -91,11 +91,10 @@
             <VisualStateGroup>
                 <VisualState x:Name="Wide">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1360" />
+                        <AdaptiveTrigger MinWindowWidth="1200" />
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <!--<Setter Target="HeaderSpacer.Height" Value="56" />-->
                         <Setter Target="Column0Content.(RelativePanel.RightOf)" Value="Column1Content" />
                         <Setter Target="Column1Content.Padding" Value="0" />
                         <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
@@ -104,8 +103,6 @@
                         <Setter Target="InkingRoot.Width" Value="Auto" />
                         <Setter Target="GalleryGrid.ItemsPanel" Value="{StaticResource ItemsPanelTemplate}" />
                         <Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
-                        <!--<Setter Target="MobileCommandBar.Visibility" Value="Collapsed" />-->
-
                         <Setter Target="TitleCommandBar.Visibility" Value="Visible" />
                         <Setter Target="TitleArea.Visibility" Value="Visible" />
                         <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
@@ -119,7 +116,6 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <!--<Setter Target="HeaderSpacer.Height" Value="56" />-->
                         <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Column1Content.Padding" Value="0" />
                         <Setter Target="ImageInkToolbar.Margin" Value="0,0" />
@@ -142,7 +138,6 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--<Setter Target="HeaderSpacer.Height" Value="48" />-->
                         <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Column1Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="Column1Content.Padding" Value="0" />
@@ -164,7 +159,7 @@
                         <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="LayoutRoot.Margin" Value="0" />
                         <Setter Target="LayoutRoot.VerticalAlignment" Value="Stretch" />
-                        <Setter Target="Content.Padding" Value="15,10,15,72" />
+                        <Setter Target="Content.Padding" Value="0,10,15,72" />
                         <Setter Target="LayoutPanel.Margin" Value="0" />
                         <Setter Target="TitleCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="TitleArea.Visibility" Value="Collapsed" />
@@ -388,8 +383,6 @@
             <PivotItem Style="{StaticResource SelectedPivotItem}">
                 <PivotItem.Header>
                     <TextBlock Text="Eats"/>
-                    <!--<controls:TabHeader Label="Eats" />-->
-                    <!-- Glyph="&#xEC06;" -->
                 </PivotItem.Header>
                 <Grid>
                     <controls:EatsControl DataContext="{x:Bind ViewModel.EatsControlViewModel, Mode=OneWay}"
