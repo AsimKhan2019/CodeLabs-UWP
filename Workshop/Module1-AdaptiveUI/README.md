@@ -428,7 +428,7 @@ The structure of the XML we’re going to generate with code will reflect the st
 
 1. Now that the tile helper is part of the project, we can call it from our code. Open **ViewModels > TripDetailPageViewModel.cs**.
 
-1. Create a new line after line **113** and expand the **M1_CreateTiles** snippet.
+1. Find the comment telling you where to insert the **M1_CreateTiles** snippet and expand the **M1_CreateTiles** snippet there.
 
 	(Code Snippet - _M1_CreateTiles_)
 
