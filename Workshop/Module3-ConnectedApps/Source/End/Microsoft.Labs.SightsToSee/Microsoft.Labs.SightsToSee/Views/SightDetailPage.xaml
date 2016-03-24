@@ -264,8 +264,7 @@
                                 </Grid>
                                 <Border Grid.Row="1" Background="White"
                                     Height="96"
-                                    Margin="0,8,0,0">
-
+                                    Margin="0,8,0,0">        
                                     <TextBox  x:Name="Notes"
                                          Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
                                          AcceptsReturn="True"
@@ -339,16 +338,16 @@
                             </Grid>
 
                             <GridView x:Name="GalleryGrid"
-                              Grid.Row="2"
-                              AllowDrop="True"
-                              Drop="{x:Bind ViewModel.SightFile_DropAsync}"
-                              DragOver="{x:Bind ViewModel.SightFile_DragOver}"
-                              ItemsSource="{Binding CurrentSightFiles, Mode=TwoWay}"
-                              ItemContainerStyle="{StaticResource GalleryGridViewItemExpanded}"
-                              SelectedItem="{Binding SelectedSightFile, Mode=TwoWay}"
-                              SelectionMode="Single"
-                              Margin="0,8,-8,0"
-                              SelectionChanged="{x:Bind ViewModel.GalleryItemClicked}">
+                                  Grid.Row="2"
+                                  AllowDrop="True"
+                                  Drop="{x:Bind ViewModel.SightFile_DropAsync}"
+                                  DragOver="{x:Bind ViewModel.SightFile_DragOver}"
+                                  ItemsSource="{Binding CurrentSightFiles, Mode=TwoWay}"
+                                  ItemContainerStyle="{StaticResource GalleryGridViewItemExpanded}"
+                                  SelectedItem="{Binding SelectedSightFile, Mode=TwoWay}"
+                                  SelectionMode="Single"
+                                  Margin="0,8,-8,0"
+                                  SelectionChanged="{x:Bind ViewModel.GalleryItemClicked}">
                                 <GridView.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <ItemsWrapGrid Orientation="Vertical"

@@ -221,6 +221,8 @@ namespace Microsoft.Labs.SightsToSee
             titleBar.ButtonHoverForegroundColor = titleBarButtonHoverForeground.Color;
             titleBar.ButtonPressedBackgroundColor = titleBarButtonPressedBackground.Color;
             titleBar.ButtonPressedForegroundColor = titleBarButtonPressedForeground.Color;
+            titleBar.InactiveBackgroundColor = titleBarInactiveBackground.Color;
+            titleBar.InactiveForegroundColor = titleBarInactiveForeground.Color;
 
             titleBar.ButtonInactiveBackgroundColor = titleBarButtonInactiveBackground.Color;
             titleBar.ButtonInactiveForegroundColor = titleBarButtonInactiveForeground.Color;
