@@ -56,13 +56,13 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
             // Authentication required for the cloud storage
             // M3_Exercise_1_Task_2
             // UNCOMMENT the next line
-            //return await new AuthenticationService(this.client).AuthenticateAsync();
+            return await new AuthenticationService(this.client).AuthenticateAsync();
 
             // This is the async equivalent of an empty method body
             // M3_Exercise_1_Task_2
             // REMOVE the next two lines
-            await Task.FromResult(true);
-            return Tuple.Create(true, string.Empty);
+            //await Task.FromResult(true);
+            //return Tuple.Create(true, string.Empty);
         }
 
         public async Task<List<Trip>> LoadTripsAsync()

@@ -256,8 +256,7 @@ namespace Microsoft.Labs.SightsToSee.Facts
         private AppExtension _extension;
         private IPropertySet _valueset;
         private string _version;
-        private bool _enabled;
-        private bool _loaded;
+        //private bool _enabled;
         private bool _supported;
         private bool _offline;
         private string _uniqueId;
@@ -268,8 +267,6 @@ namespace Microsoft.Labs.SightsToSee.Facts
         {
             _extension = ext;
             _valueset = properties;
-            _enabled = false;
-            _loaded = false;
             _offline = false;
             _supported = false;
             _logo = logo;
@@ -306,18 +303,6 @@ namespace Microsoft.Labs.SightsToSee.Facts
             get { return _uniqueId; }
         }
 
-        public bool Enabled
-        {
-            get { return _enabled; }
-            set
-            {
-                if (value)
-                    Enable();
-                else
-                    Disable();
-            }
-        }
-
         public string Version
         {
             get { return _version; }
@@ -331,6 +316,44 @@ namespace Microsoft.Labs.SightsToSee.Facts
         public AppExtension AppExtension
         {
             get { return _extension; }
+        }
+
+        public bool Enabled
+        {
+            get
+            {
+                return AppSettings.AppExtensionEnabled;
+            }
+
+            set
+            {
+                if (value != AppSettings.AppExtensionEnabled)
+                {
+                    if (value)
+                    {
+                        AppSettings.AppExtensionEnabled = true;
+                        Enable();
+                    }
+                    else
+                    {
+                        AppSettings.AppExtensionEnabled = false;
+                        Disable();
+                    }
+                }
+            }
+        }
+
+        public bool Loaded
+        {
+            get
+            {
+                return AppSettings.AppExtensionLoaded;
+            }
+
+            set
+            {
+                AppSettings.AppExtensionLoaded = value;
+            }
         }
 
         public async Task Update(AppExtension ext)
@@ -373,7 +396,7 @@ namespace Microsoft.Labs.SightsToSee.Facts
         public async Task Load()
         {
             // if it's not enabled or already loaded, don't load it
-            if (!_enabled || _loaded)
+            if (!Enabled || Loaded)
             {
                 return;
             }
@@ -402,7 +425,7 @@ namespace Microsoft.Labs.SightsToSee.Facts
 
                 await dataModelService.InsertSights(extensionsTrip.Sights);
             }
-            _loaded = true;
+            Loaded = true;
             _offline = false;
 
         }
@@ -411,7 +434,7 @@ namespace Microsoft.Labs.SightsToSee.Facts
         public async Task Enable()
         {
             // indicate desired state is enabled
-            _enabled = true;
+            Enabled = true;
 
             // load the extension
             await Load();
@@ -437,7 +460,7 @@ namespace Microsoft.Labs.SightsToSee.Facts
             // unload it
             lock (_sync)
             {
-                if (_loaded)
+                if (Loaded)
                 {
                     foreach (var sight in extensionsTrip.Sights)
                     {
@@ -452,7 +475,7 @@ namespace Microsoft.Labs.SightsToSee.Facts
                         _offline = true;
                     }
 
-                    _loaded = false;
+                    Loaded = false;
                 }
             }
         }
@@ -461,10 +484,10 @@ namespace Microsoft.Labs.SightsToSee.Facts
         public void Disable()
         {
             // only disable if it is enabled
-            if (_enabled)
+            if (Enabled)
             {
                 // set desired state to disabled
-                _enabled = false;
+                Enabled = false;
                 // unload the app
                 Unload();
             }

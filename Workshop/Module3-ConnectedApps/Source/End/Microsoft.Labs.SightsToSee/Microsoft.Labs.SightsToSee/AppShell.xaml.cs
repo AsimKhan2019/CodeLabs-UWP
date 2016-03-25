@@ -95,6 +95,12 @@ namespace Microsoft.Labs.SightsToSee
                     {
                         AddTrip(trip.Name, trip.Id);
                     }
+
+                    if (AppSettings.LastTripId == Guid.Empty)
+                    {
+                        AppSettings.LastTripId = trips.First().Id;
+                    }
+
                     var parameter = new TripNavigationParameter {TripId = trips.First().Id}.GetJson();
                     NavigateToPage(typeof (TripDetailPage), parameter);
                     LandingPage.Visibility = Visibility.Collapsed;

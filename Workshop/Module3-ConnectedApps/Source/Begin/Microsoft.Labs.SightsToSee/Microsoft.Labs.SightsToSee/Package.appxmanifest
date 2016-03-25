@@ -5,7 +5,7 @@
   <Properties>
     <DisplayName>Build2016UWPCodeLab</DisplayName>
     <PublisherDisplayName>Applicious</PublisherDisplayName>
-    <Logo>Assets\Images\NewStoreLogo.png</Logo>
+    <Logo>C:\GitHub\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\Begin\Microsoft.Labs.SightsToSee\AdditionalSights\Assets\NewStoreLogo.png</Logo>
   </Properties>
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="12.0.0.0" />
@@ -15,9 +15,8 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Microsoft.Labs.SightsToSee.App">
-      <uap:VisualElements DisplayName="Sights2See" Square150x150Logo="Assets\Images\Square150x150Logo.png" Square44x44Logo="Assets\Images\Square44x44Logo.png" Description="Microsoft.Labs.SightsToSee" BackgroundColor="#2dA092">
-        <uap:DefaultTile Wide310x150Logo="Assets\Images\Wide310x150Logo.png" Square310x310Logo="Assets\Images\Square310x310Logo.png" Square71x71Logo="Assets\Images\Square71x71Logo.png">
-        </uap:DefaultTile>
+      <uap:VisualElements DisplayName="Sights2See" Square150x150Logo="C:\GitHub\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\Begin\Microsoft.Labs.SightsToSee\AdditionalSights\Assets\Square150x150Logo.png" Square44x44Logo="C:\GitHub\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\Begin\Microsoft.Labs.SightsToSee\AdditionalSights\Assets\Square44x44Logo.png" Description="Microsoft.Labs.SightsToSee" BackgroundColor="#2dA092">
+        <uap:DefaultTile Wide310x150Logo="C:\GitHub\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\Begin\Microsoft.Labs.SightsToSee\AdditionalSights\Assets\Wide310x150Logo.png" Square310x310Logo="C:\GitHub\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\Begin\Microsoft.Labs.SightsToSee\AdditionalSights\Assets\Square310x310Logo.png" Square71x71Logo="C:\GitHub\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\Begin\Microsoft.Labs.SightsToSee\AdditionalSights\Assets\Square71x71Logo.png"></uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#2da092" />
       </uap:VisualElements>
       <Extensions>
@@ -26,8 +25,6 @@
         </uap:Extension>
         <uap:Extension Category="windows.personalAssistantLaunch" />
         <!--Insert the M3_ExtensionHost snippet here-->
-        
-    
       </Extensions>
     </Application>
   </Applications>

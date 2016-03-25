@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Windows.Storage;
 
 namespace Microsoft.Labs.SightsToSee.Models
@@ -21,6 +22,18 @@ namespace Microsoft.Labs.SightsToSee.Models
         {
             get { return GetTyped<Guid>(nameof(LastTripId)); }
             set { LocalSettings.Values[nameof(LastTripId)] = value; }
+        }
+
+        public static bool AppExtensionEnabled
+        {
+            get { return GetTyped<bool>(nameof(AppExtensionEnabled)); }
+            set { LocalSettings.Values[nameof(AppExtensionEnabled)] = value; }
+        }
+
+        public static bool AppExtensionLoaded
+        {
+            get { return GetTyped<bool>(nameof(AppExtensionLoaded)); }
+            set { LocalSettings.Values[nameof(AppExtensionLoaded)] = value; }
         }
 
         private static T GetTyped<T>(string key)
