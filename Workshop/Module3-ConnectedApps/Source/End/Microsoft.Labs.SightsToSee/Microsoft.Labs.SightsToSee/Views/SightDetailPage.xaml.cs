@@ -208,7 +208,6 @@ namespace Microsoft.Labs.SightsToSee.Views
                         string alteredFileToken = response.Result["Token"].ToString();
                         var alteredFile = await SharedStorageAccessManager.RedeemTokenForFileAsync(alteredFileToken);
 
-                        //var copiedFile = await alteredFile.CopyAsync(ApplicationData.Current.LocalFolder, alteredFile.Name, NameCollisionOption.ReplaceExisting);
                         // get the destination where this file needs to go
                         var sightFile = await ViewModel.CreateSightFileAndAssociatedStorageFileAsync();
 
