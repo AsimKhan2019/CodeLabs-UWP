@@ -170,18 +170,10 @@ namespace Microsoft.Labs.SightsToSee.Views
 
         private async void OnLaunchForResults(object sender, RoutedEventArgs e)
         {
-            // Insert the M3_OpenPicker snippet here
-
-            FileOpenPicker openPicker = new FileOpenPicker();
-            openPicker.ViewMode = PickerViewMode.Thumbnail;
-            openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-            openPicker.FileTypeFilter.Add(".jpg");
-            openPicker.FileTypeFilter.Add(".jpeg");
-            openPicker.FileTypeFilter.Add(".png");
-
-            StorageFile file = await openPicker.PickSingleFileAsync();
-
             // Insert the M3_LaunchForResults snippet here
+            StorageFile imagefile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(ViewModel.SelectedSightFile.Uri));
+            // Copy to temp local storage - SharedStorageAccessmanager cannot get tokens for files that are in the app package folder
+            StorageFile file = await imagefile.CopyAsync(ApplicationData.Current.TemporaryFolder, imagefile.Name, NameCollisionOption.GenerateUniqueName);
 
             if (file != null)
             {

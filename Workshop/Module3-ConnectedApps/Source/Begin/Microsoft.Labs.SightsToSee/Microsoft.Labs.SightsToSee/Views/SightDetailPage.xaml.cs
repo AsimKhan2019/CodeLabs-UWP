@@ -170,9 +170,6 @@ namespace Microsoft.Labs.SightsToSee.Views
 
         private async void OnLaunchForResults(object sender, RoutedEventArgs e)
         {
-            // Insert the M3_OpenPicker snippet here
-
-
             // Insert the M3_LaunchForResults snippet here
 
 

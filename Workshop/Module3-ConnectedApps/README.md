@@ -424,36 +424,15 @@ Beyond launching a target app and passing it data, we can launch an app and rece
 
 1. Open the **SightDetailPage** code-behind. Find the **OnLaunchForResults** event handler.
 
-1. Expand the **M3_OpenPicker** snippet inside the event handler.
-
-	(Code Snippet - _M3_OpenPicker_)
-
-	````C#
-	FileOpenPicker openPicker = new FileOpenPicker();
-	openPicker.ViewMode = PickerViewMode.Thumbnail;
-	openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-	openPicker.FileTypeFilter.Add(".jpg");
-	openPicker.FileTypeFilter.Add(".jpeg");
-	openPicker.FileTypeFilter.Add(".png");
-
-	StorageFile file = await openPicker.PickSingleFileAsync();
-	````
-
-    What it does:
-
-    - Creates a new **FileOpenPicker** in thumbnail mode
-
-    - Sets the suggested start location to the user's **Picture Library**
-
-    - Looks for files of type **jpg**, **jpeg**, and **png**
-
-    - Creates a storage file to save the user's image selection locally
-
-1. Now that we have an image, we can send it to our photoprocessing app. Expand the **M3_LaunchForResults** snippet below the previous snippet in the **OnLaunchForResults** event handler.
+1. Now we can send the current image file to our photoprocessing app. Expand the **M3_LaunchForResults** snippet inside the **OnLaunchForResults** event handler.
 
 	(Code Snippet - _M3_LaunchForResults_)
 
 	````C#
+    StorageFile imagefile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(ViewModel.SelectedSightFile.Uri));
+    // Copy to temp local storage - SharedStorageAccessmanager cannot get tokens for files that are in the app package folder
+    StorageFile file = await imagefile.CopyAsync(ApplicationData.Current.TemporaryFolder, imagefile.Name, NameCollisionOption.GenerateUniqueName);
+    
     if (file != null)
     {
 		//Send data to the service 
@@ -497,7 +476,9 @@ Beyond launching a target app and passing it data, we can launch an app and rece
 
     What it does:
 
-    - If the user has chosen a valid file, it is added as a token to a ValueSet
+    - Gets the StorageFile object for the current image and copies it to the Temporary folder.
+    
+    - Calls the SharedStorageAccessManager to get a token for the file, which is added into a ValueSet
 
     - The target app Uri is specified
 
@@ -507,15 +488,15 @@ Beyond launching a target app and passing it data, we can launch an app and rece
 
     - If the response status is Success, we copy the new image file to the local folder and add it to the Sight record.
 
-1. Build and run your app. Open a Sight detail page and use the **LaunchForResults** button on the ImageInkToolbar to launch the file picker.
+1. Build and run your app. Open a Sight detail page and use the **LaunchForResults** button on the ImageInkToolbar to launch the QuickStart app and send it a token for the current Sight image.
 
     ![The LaunchForResults Button](Images/launchforresults_button.png "The LaunchForResults Button")
 
     _The LaunchForResults Button_
 
-1. Select an image from the filesystem. When the QuickStart app opens, set a brightness level for the modified image.
+1. When the QuickStart app opens, set a brightness level for the modified image.
 
-1. Use the **Save the image** button to save and return the image to the SightsToSee app. You will see the modified image appear in the Sight gallery.
+1. Use the **Save the image** button to save and return the image to the SightsToSee app. You will see the modified image appear in the Sight gallery. For the purposes of this demo, we add it as an additional image, although you could easily modify the app to replace the original image with the modified one.
 
 
 <a name="Exercise4"></a>

@@ -111,6 +111,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.AzureService
 
         public Task<string> GetAuthTokenAsync()
         {
+            // When using 
             var tcs = new TaskCompletionSource<string>();
             EventHandler<AuthenticatedEventArgs> subscription = null;
             subscription = (_, e) =>
@@ -125,7 +126,8 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.AzureService
         }
 
         // Get an access token for the given context and resourceId. An attempt is first made to 
-        // acquire the token silently. If that fails, then we try to acquire the token by prompting the user.
+        // acquire the token silently. If that fails, then we start the flow of interacting with the user
+        // through.
         private async Task BeginGetAuthTokenAsync()
         {
             string token = null;
@@ -196,6 +198,9 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.AzureService
                     // The AccountCommandsRequested event triggers before the Accounts settings pane is displayed 
                     AccountsSettingsPane.GetForCurrentView().AccountCommandsRequested += OnAccountCommandsRequested;
                     AccountsSettingsPane.Show();
+
+                    // Quit at this point - the user interacts with the AccountSettingsPane to enter MSA credentials, so
+                    // The OnAuthenticated event gets fired later on to complete this operation
                     return;
                 }
             }
