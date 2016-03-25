@@ -451,6 +451,50 @@ Beyond launching a target app and passing it data, we can launch an app and rece
 
 1. Now that we have an image, we can send it to our photoprocessing app. Expand the **M3_LaunchForResults** snippet below the previous snippet in the **OnLaunchForResults** event handler.
 
+	(Code Snippet - _M3_LaunchForResults_)
+
+	````C#
+    if (file != null)
+    {
+		//Send data to the service 
+		var token = SharedStorageAccessManager.AddFile(file);
+
+		var message = new ValueSet();
+
+		//For QuickStart
+		message.Add("Token", token);
+
+		var targetAppUri = new Uri("lumiaphotoeditingquick:");
+
+		// We want a specific app to perform our photo editing operation, not just any that implements the protocol we're using for launch
+		var options = new LauncherOptions();
+		options.TargetApplicationPackageFamilyName = "3ac26f24-3747-47ef-bfc5-b877b482f0f3_gd40dm16kn5w8";
+
+		var response = await Launcher.LaunchUriForResultsAsync(targetAppUri, options, message);
+
+		if (response.Status == LaunchUriStatus.Success)
+		{
+		    if (response.Result != null)
+		    {
+		        string alteredFileToken = response.Result["Token"].ToString();
+		        var alteredFile = await SharedStorageAccessManager.RedeemTokenForFileAsync(alteredFileToken);
+
+		        // get the destination where this file needs to go
+		        var sightFile = await ViewModel.CreateSightFileAndAssociatedStorageFileAsync();
+
+		        // Get the destination StorageFile
+		        var destFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(sightFile.Uri));
+
+		        // save the edited image file at the required destination
+		        await alteredFile.CopyAndReplaceAsync(destFile);
+		        sightFile.FileType = SightFileType.ImageGallery;
+
+		        await ViewModel.SaveSightFileAsync(sightFile);
+		    }
+		}
+    }
+	````
+
     What it does:
 
     - If the user has chosen a valid file, it is added as a token to a ValueSet

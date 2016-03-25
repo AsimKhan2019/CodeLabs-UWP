@@ -194,10 +194,6 @@ namespace Microsoft.Labs.SightsToSee.Views
                 //For QuickStart
                 message.Add("Token", token);
 
-                //For EditShowcase
-                //message.Add("DestinationToken", token);
-                //message.Add("Photo", "Photo");
-
                 var targetAppUri = new Uri("lumiaphotoeditingquick:");
 
                 // We want a specific app to perform our photo editing operation, not just any that implements the protocol we're using for launch
@@ -213,24 +209,36 @@ namespace Microsoft.Labs.SightsToSee.Views
                         string alteredFileToken = response.Result["Token"].ToString();
                         var alteredFile = await SharedStorageAccessManager.RedeemTokenForFileAsync(alteredFileToken);
 
-                        var copiedFile = await alteredFile.CopyAsync(ApplicationData.Current.LocalFolder, alteredFile.Name, NameCollisionOption.ReplaceExisting);
+                        //var copiedFile = await alteredFile.CopyAsync(ApplicationData.Current.LocalFolder, alteredFile.Name, NameCollisionOption.ReplaceExisting);
 
-                        // add to record
-                        var sightFile = new SightFile
-                        {
-                            Id = Guid.NewGuid(),
-                            FileType = 0,
-                            FileName = copiedFile.Name,
-                            Sight = ViewModel.CurrentSight,
-                            SightId = ViewModel.CurrentSight.Id,
-                            Uri = copiedFile.GetUri().ToString()
-                        };
+                        //// add to record
+                        //var sightFile = new SightFile
+                        //{
+                        //    Id = Guid.NewGuid(),
+                        //    FileType = 0,
+                        //    FileName = copiedFile.Name,
+                        //    Sight = ViewModel.CurrentSight,
+                        //    SightId = ViewModel.CurrentSight.Id,
+                        //    Uri = copiedFile.GetUri().ToString()
+                        //};
 
-                        ViewModel.CurrentSight.SightFiles.Add(sightFile);
-                        ViewModel.CurrentSightFiles.Add(sightFile);
+                        //ViewModel.CurrentSight.SightFiles.Add(sightFile);
+                        //ViewModel.CurrentSightFiles.Add(sightFile);
 
-                        var _dataModelService = DataModelServiceFactory.CurrentDataModelService();
-                        await _dataModelService.SaveSightFileAsync(sightFile);
+                        //var _dataModelService = DataModelServiceFactory.CurrentDataModelService();
+                        //await _dataModelService.SaveSightFileAsync(sightFile);
+
+                        // get the destination where this file needs to go
+                        var sightFile = await ViewModel.CreateSightFileAndAssociatedStorageFileAsync();
+
+                        // Get the destination StorageFile
+                        var destFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri(sightFile.Uri));
+
+                        // save the edited image file at the required destination
+                        await alteredFile.CopyAndReplaceAsync(destFile);
+                        sightFile.FileType = SightFileType.ImageGallery;
+
+                        await ViewModel.SaveSightFileAsync(sightFile);
                     }
                 }
             }
