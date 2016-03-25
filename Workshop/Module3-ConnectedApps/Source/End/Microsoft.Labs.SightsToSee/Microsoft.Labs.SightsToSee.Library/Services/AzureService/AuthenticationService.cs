@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Windows.Security.Authentication.Web.Core;
 using Windows.Security.Credentials;
 using Windows.Storage;
+using Windows.UI.ApplicationSettings;
+using Windows.UI.Popups;
 
 namespace Microsoft.Labs.SightsToSee.Library.Services.AzureService
 {
@@ -53,7 +55,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.AzureService
             try
             {
                 // Sign-in 
-                string token = await MSAAuthenticationHelper.GetTokenHelperAsync();
+                string token = await new MSAAuthenticationHelper().GetAuthTokenAsync();
 
                 if (token != null)
                 {
@@ -84,35 +86,48 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.AzureService
     }
 
 
-    internal static class MSAAuthenticationHelper
+    internal class MSAAuthenticationHelper
     {
         // To obtain Microsoft account tokens, you must register your application online 
         // Then, you must associate the app with the store. 
         private const string MicrosoftAccountProviderId = "https://login.microsoft.com";
 
-        private static WebAccountProvider accountProvider = null;
-        private static WebAccount userAccount = null;
+        private WebAccountProvider accountProvider = null;
+        private WebAccount userAccount = null;
 
         //Use "consumers" as your authority when you want to get an MSA token.
-        const string authority = "consumers";
-
-        //Use "organizations" as your authority when you want the app to work on any Azure Tenant.
-        //static string authority = "organizations";
+        const string consumerAuthority = "consumers";
 
         // Store account-specific settings so that the app can remember that a user has already signed in.
-        public static ApplicationDataContainer _settings = ApplicationData.Current.RoamingSettings;
+        public ApplicationDataContainer _settings = ApplicationData.Current.RoamingSettings;
 
         const string AccountScopeRequested = "wl.basic";
 
         // Client ID is ignored for WAM requests for MSA
         const string AccountClientId = "none";
 
+        // Event to return the token
+        public event EventHandler<AuthenticatedEventArgs> OnAuthenticated;
+
+        public Task<string> GetAuthTokenAsync()
+        {
+            var tcs = new TaskCompletionSource<string>();
+            EventHandler<AuthenticatedEventArgs> subscription = null;
+            subscription = (_, e) =>
+            {
+                this.OnAuthenticated -= subscription;
+                tcs.TrySetResult(e.Token);
+            };
+            this.OnAuthenticated += subscription;
+            this.BeginGetAuthTokenAsync();
+            return tcs.Task;
+
+        }
 
         // Get an access token for the given context and resourceId. An attempt is first made to 
         // acquire the token silently. If that fails, then we try to acquire the token by prompting the user.
-        public static async Task<string> GetTokenHelperAsync()
+        private async Task BeginGetAuthTokenAsync()
         {
-
             string token = null;
 
             // FindAccountProviderAsync returns the WebAccountProvider of an installed plugin
@@ -121,7 +136,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.AzureService
 
             // The Microsoft account provider is always present in Windows 10 devices, as is the Azure AD plugin.
             // If a non-installed plugin or incorect identity is specified, FindAccountProviderAsync will return null 
-            accountProvider = await WebAuthenticationCoreManager.FindAccountProviderAsync(MicrosoftAccountProviderId, authority);
+            accountProvider = await WebAuthenticationCoreManager.FindAccountProviderAsync(MicrosoftAccountProviderId, consumerAuthority);
 
             // Check if there's a record of the last account used with the app
             var userID = _settings.Values["userID"];
@@ -136,7 +151,8 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.AzureService
 
 
                 // Ensure that the saved account works for getting the token we need
-                WebTokenRequestResult webTokenRequestResult = await WebAuthenticationCoreManager.RequestTokenAsync(webTokenRequest, userAccount);
+                //WebTokenRequestResult webTokenRequestResult = await WebAuthenticationCoreManager.RequestTokenAsync(webTokenRequest, userAccount);
+                WebTokenRequestResult webTokenRequestResult = await WebAuthenticationCoreManager.GetTokenSilentlyAsync(webTokenRequest, userAccount);
                 if (webTokenRequestResult.ResponseStatus == WebTokenRequestStatus.Success || webTokenRequestResult.ResponseStatus == WebTokenRequestStatus.AccountSwitch)
                 {
                     WebTokenResponse webTokenResponse = webTokenRequestResult.ResponseData[0];
@@ -152,23 +168,35 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.AzureService
             }
             else
             {
-                // There is no recorded user. Start a sign in flow without imposing a specific account.
-                WebTokenRequest webTokenRequest = new WebTokenRequest(accountProvider, AccountScopeRequested, AccountClientId);
+                // There is no recorded user. 
+                // Check if a default MSA account has been set already.
+                accountProvider = await WebAuthenticationCoreManager.FindAccountProviderAsync(MicrosoftAccountProviderId);
 
-                // This is where most of the magic happens.The provider you specified takes over, trying to use the currently 
-                // signed in user(or any account saved on the system) to obtain the token you requested without prompting the user. 
-                // If the token can be obtained without interaction, as it will often be the case on cloud domain joined or 
-                // classic domain joined machines, the call to RequestTokenAsync will return right away.
-                // In case interaction is required, either for showing consent or for gathering authentication factors, 
-                // the API will take care to automatically prompt the user with the correct experience.
-                WebTokenRequestResult webTokenRequestResult = await WebAuthenticationCoreManager.RequestTokenAsync(webTokenRequest);
-                //WebTokenRequestResult webTokenRequestResult = await WebAuthenticationCoreManager.GetTokenSilentlyAsync(webTokenRequest);
-
-                if (webTokenRequestResult.ResponseStatus == WebTokenRequestStatus.Success)
+                // Check if the returned authority is "consumers" 
+                if (accountProvider?.Authority == consumerAuthority)
                 {
-                    WebTokenResponse webTokenResponse = webTokenRequestResult.ResponseData[0];
-                    userAccount = webTokenResponse.WebAccount;
-                    token = webTokenResponse.Token;
+                    // If it is, then there’s a default MSA account present and there’s no need to show account control
+                    WebTokenRequest webTokenRequest = new WebTokenRequest(accountProvider, AccountScopeRequested, AccountClientId);
+
+                    // This is where most of the magic happens.The provider you specified takes over, trying to use the currently 
+                    // signed in user(or any account saved on the system) to obtain the token you requested without prompting the user. 
+                    //WebTokenRequestResult webTokenRequestResult = await WebAuthenticationCoreManager.RequestTokenAsync(webTokenRequest);
+                    WebTokenRequestResult webTokenRequestResult = await WebAuthenticationCoreManager.GetTokenSilentlyAsync(webTokenRequest);
+
+                    if (webTokenRequestResult.ResponseStatus == WebTokenRequestStatus.Success)
+                    {
+                        WebTokenResponse webTokenResponse = webTokenRequestResult.ResponseData[0];
+                        userAccount = webTokenResponse.WebAccount;
+                        token = webTokenResponse.Token;
+                    }
+                }
+                else
+                {
+                    // There is no default account or the returned authority is not "consumer", so we must show account control
+                    // The AccountCommandsRequested event triggers before the Accounts settings pane is displayed 
+                    AccountsSettingsPane.GetForCurrentView().AccountCommandsRequested += OnAccountCommandsRequested;
+                    AccountsSettingsPane.Show();
+                    return;
                 }
             }
 
@@ -179,7 +207,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.AzureService
                 _settings.Values["userID"] = userAccount.Id;
                 _settings.Values["userEmail"] = userAccount.UserName;
 
-                return token;
+                OnAuthenticated?.Invoke(this, new AuthenticatedEventArgs(token));
             }
 
             // We didn't succeed in getting a valid user. Clear the app settings so that another user can sign in.
@@ -187,18 +215,96 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.AzureService
             {
 
                 SignOut();
-                return null;
+                OnAuthenticated?.Invoke(this, new AuthenticatedEventArgs(string.Empty));
             }
+        }
+
+        // This event handler is called when the Account settings pane is to be launched.
+        private async void OnAccountCommandsRequested(
+            AccountsSettingsPane sender,
+            AccountsSettingsPaneCommandsRequestedEventArgs e)
+        {
+            // In order to make async calls within this callback, the deferral object is needed
+            AccountsSettingsPaneEventDeferral deferral = e.GetDeferral();
+
+            // The Microsoft account provider is always present in Windows 10 devices, as is the Azure AD plugin.
+            // If a non-installed plugin or incorect identity is specified, FindAccountProviderAsync will return null   
+            WebAccountProvider provider = await WebAuthenticationCoreManager.FindAccountProviderAsync(MicrosoftAccountProviderId, consumerAuthority);
+
+            WebAccountProviderCommand providerCommand = new WebAccountProviderCommand(provider, WebAccountProviderCommandInvoked);
+            e.WebAccountProviderCommands.Add(providerCommand);
+
+            e.HeaderText = "Signing in with your Microsoft account allows syncing of your Sights2See data across all your devices";
+
+            // You can add links such as privacy policy, help, general account settings
+            e.Commands.Add(new SettingsCommand("privacypolicy", "Privacy policy", PrivacyPolicyInvoked));
+            e.Commands.Add(new SettingsCommand("otherlink", "Other link", OtherLinkInvoked));
+            deferral.Complete();
+        }
+
+        private async void WebAccountProviderCommandInvoked(WebAccountProviderCommand command)
+        {
+            string token = string.Empty;
+
+            // AccountClientID is ignored by MSA
+            WebTokenRequest webTokenRequest = new WebTokenRequest(command.WebAccountProvider, AccountScopeRequested, AccountClientId);
+
+            // If the user selected a specific account, RequestTokenAsync will return a token for that account.
+            // The user may be prompted for credentials or to authorize using that account with your app
+            // If the user selected a provider, the user will be prompted for credentials to login to a new account
+            WebTokenRequestResult webTokenRequestResult = await WebAuthenticationCoreManager.RequestTokenAsync(webTokenRequest);
+
+            // If a token was successfully returned, then store the WebAccount Id into local app data
+            // This Id can be used to retrieve the account whenever needed. To later get a token with that account
+            // First retrieve the account with FindAccountAsync, and include that webaccount 
+            // as a parameter to RequestTokenAsync or RequestTokenSilentlyAsync
+            if (webTokenRequestResult.ResponseStatus == WebTokenRequestStatus.Success)
+            {
+                WebTokenResponse webTokenResponse = webTokenRequestResult.ResponseData[0];
+                userAccount = webTokenResponse.WebAccount;
+                token = webTokenResponse.Token;
+            }
+
+            // We succeeded in getting a valid user.
+            if (userAccount != null)
+            {
+                // save user ID in local storage
+                _settings.Values["userID"] = userAccount.Id;
+                _settings.Values["userEmail"] = userAccount.UserName;
+            }
+
+            AccountsSettingsPane.GetForCurrentView().AccountCommandsRequested -= OnAccountCommandsRequested;
+
+            OnAuthenticated?.Invoke(this, new AuthenticatedEventArgs(token));
+        }
+
+        private async void PrivacyPolicyInvoked(IUICommand command)
+        {
+            await (new MessageDialog("Privacy policy clicked by user")).ShowAsync();
+        }
+
+        private async void OtherLinkInvoked(IUICommand command)
+        {
+            await(new MessageDialog("Other link pressed by user")).ShowAsync();
         }
 
         /// <summary>
         /// Signs the user out of the service.
         /// </summary>
-        public static void SignOut()
+        public void SignOut()
         {
             //Clear stored values from last authentication.
             _settings.Values["userID"] = null;
             _settings.Values["userEmail"] = null;
+        }
+    }
+
+    public class AuthenticatedEventArgs : EventArgs
+    {
+        public string Token { get; internal set; }
+        public AuthenticatedEventArgs(string token)
+        {
+            Token = token;
         }
     }
 }

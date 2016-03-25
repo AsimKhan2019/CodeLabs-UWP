@@ -183,7 +183,6 @@ namespace Microsoft.Labs.SightsToSee.Views
 
             // Insert the M3_LaunchForResults snippet here
 
-
             if (file != null)
             {
                 //Send data to the service 
@@ -210,24 +209,6 @@ namespace Microsoft.Labs.SightsToSee.Views
                         var alteredFile = await SharedStorageAccessManager.RedeemTokenForFileAsync(alteredFileToken);
 
                         //var copiedFile = await alteredFile.CopyAsync(ApplicationData.Current.LocalFolder, alteredFile.Name, NameCollisionOption.ReplaceExisting);
-
-                        //// add to record
-                        //var sightFile = new SightFile
-                        //{
-                        //    Id = Guid.NewGuid(),
-                        //    FileType = 0,
-                        //    FileName = copiedFile.Name,
-                        //    Sight = ViewModel.CurrentSight,
-                        //    SightId = ViewModel.CurrentSight.Id,
-                        //    Uri = copiedFile.GetUri().ToString()
-                        //};
-
-                        //ViewModel.CurrentSight.SightFiles.Add(sightFile);
-                        //ViewModel.CurrentSightFiles.Add(sightFile);
-
-                        //var _dataModelService = DataModelServiceFactory.CurrentDataModelService();
-                        //await _dataModelService.SaveSightFileAsync(sightFile);
-
                         // get the destination where this file needs to go
                         var sightFile = await ViewModel.CreateSightFileAndAssociatedStorageFileAsync();
 

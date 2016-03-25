@@ -71,6 +71,8 @@ namespace Microsoft.Labs.SightsToSee
                 bool isAuthenticated = false;
                 while (!isAuthenticated)
                 {
+                    await SetBusyAsync("Logging you in...");
+
                     var authResponse = await dm.AuthenticateAsync();
 
                     isAuthenticated = authResponse.Item1;
