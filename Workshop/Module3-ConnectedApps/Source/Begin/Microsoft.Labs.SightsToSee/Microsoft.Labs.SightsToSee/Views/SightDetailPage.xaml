@@ -1,502 +1,509 @@
 ﻿<Page
-    x:Class="Microsoft.Labs.SightsToSee.Views.SightDetailPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Microsoft.Labs.SightsToSee.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.Labs.SightsToSee.Controls"
-    xmlns:viewModels="using:Microsoft.Labs.SightsToSee.ViewModels"
-    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
-    xmlns:models="using:Microsoft.Labs.SightsToSee.Library.Models"
-    xmlns:inkToolbarPreview="using:InkToolbarPreview"
-    x:Name="SightPage"
-    mc:Ignorable="d">
+	x:Class="Microsoft.Labs.SightsToSee.Views.SightDetailPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="using:Microsoft.Labs.SightsToSee.Views"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:controls="using:Microsoft.Labs.SightsToSee.Controls"
+	xmlns:viewModels="using:Microsoft.Labs.SightsToSee.ViewModels"
+	xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
+	xmlns:models="using:Microsoft.Labs.SightsToSee.Library.Models"
+	xmlns:inkToolbarPreview="using:InkToolbarPreview"
+	x:Name="SightPage"
+	mc:Ignorable="d">
 
-    <Page.DataContext>
-        <viewModels:SightDetailPageViewModel />
-    </Page.DataContext>
+	<Page.DataContext>
+		<viewModels:SightDetailPageViewModel />
+	</Page.DataContext>
 
-    <Page.Resources>
-        <Flyout x:Key="DeleteFlyout"
-                Placement="Top">
-            <Grid DataContext="{Binding}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+	<Page.Resources>
+		<Flyout x:Key="DeleteFlyout"
+				Placement="Top">
+			<Grid DataContext="{Binding}">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
 
-                <TextBlock Style="{StaticResource CaptionTextBlockStyle}"
-                           Margin="0,0,0,12">
-                    Are you sure you want to remove this sight from your trip?
-                </TextBlock>
+				<TextBlock Style="{StaticResource CaptionTextBlockStyle}"
+						   Margin="0,0,0,12">
+					Are you sure you want to remove this sight from your trip?
+				</TextBlock>
 
-                <!-- Buttons -->
-                <StackPanel Orientation="Horizontal"
-                            Grid.Row="1"
-                            HorizontalAlignment="Right">
-                    <Button x:Name="DeleteSightButton"
-                            Tapped="DeleteSightButton_OnTapped"
-                            Click="{x:Bind ViewModel.DeleteSightAsync}">
-                        Remove
-                    </Button>
-                </StackPanel>
-            </Grid>
-            <Flyout.FlyoutPresenterStyle>
-                <Style TargetType="FlyoutPresenter">
-                    <Setter Property="ScrollViewer.ZoomMode" Value="Enabled" />
-                    <Setter Property="Background" Value="White" />
-                    <Setter Property="BorderBrush" Value="Gray" />
-                    <Setter Property="BorderThickness" Value="1" />
-                    <Setter Property="MinHeight" Value="80" />
-                    <Setter Property="MinWidth" Value="80" />
-                    <Setter Property="Padding" Value="12" />
-                </Style>
-            </Flyout.FlyoutPresenterStyle>
-        </Flyout>
+				<!-- Buttons -->
+				<StackPanel Orientation="Horizontal"
+							Grid.Row="1"
+							HorizontalAlignment="Right">
+					<Button x:Name="DeleteSightButton"
+							Tapped="DeleteSightButton_OnTapped"
+							Click="{x:Bind ViewModel.DeleteSightAsync}">
+						Remove
+					</Button>
+				</StackPanel>
+			</Grid>
+			<Flyout.FlyoutPresenterStyle>
+				<Style TargetType="FlyoutPresenter">
+					<Setter Property="ScrollViewer.ZoomMode" Value="Enabled" />
+					<Setter Property="Background" Value="White" />
+					<Setter Property="BorderBrush" Value="Gray" />
+					<Setter Property="BorderThickness" Value="1" />
+					<Setter Property="MinHeight" Value="80" />
+					<Setter Property="MinWidth" Value="80" />
+					<Setter Property="Padding" Value="12" />
+				</Style>
+			</Flyout.FlyoutPresenterStyle>
+		</Flyout>
 
-        <ItemsPanelTemplate x:Key="ItemsPanelTemplate">
-            <ItemsWrapGrid Orientation="Horizontal" />
-        </ItemsPanelTemplate>
+		<ItemsPanelTemplate x:Key="ItemsPanelTemplate">
+			<ItemsWrapGrid Orientation="Horizontal" />
+		</ItemsPanelTemplate>
 
-        <Style x:Key="HorizontalGridView" TargetType="GridView">
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
-            <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Enabled" />
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
-            <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
-        </Style>
+		<Style x:Key="HorizontalGridView" TargetType="GridView">
+			<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+			<Setter Property="ScrollViewer.HorizontalScrollMode" Value="Enabled" />
+			<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+			<Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
+		</Style>
 
-        <Style TargetType="inkToolbarPreview:InkToolbarBallpointPenButton">
-            <Setter Property="MinStrokeWidth" Value="3" />
-            <Setter Property="SelectedStrokeWidth" Value="5" />
-            <Setter Property="ColorPalette">
-                <Setter.Value>
-                    <inkToolbarPreview:ColorCollection>
-                        <Color>Red</Color>
-                        <Color>Green</Color>
-                        <Color>Blue</Color>
-                    </inkToolbarPreview:ColorCollection>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="SelectedColor" Value="Blue" />
-        </Style>
+		<Style TargetType="inkToolbarPreview:InkToolbarBallpointPenButton">
+			<Setter Property="MinStrokeWidth" Value="3" />
+			<Setter Property="SelectedStrokeWidth" Value="5" />
+			<Setter Property="ColorPalette">
+				<Setter.Value>
+					<inkToolbarPreview:ColorCollection>
+						<Color>Red</Color>
+						<Color>Green</Color>
+						<Color>Blue</Color>
+					</inkToolbarPreview:ColorCollection>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="SelectedColor" Value="Blue" />
+		</Style>
+
+	</Page.Resources>
 
 
-    </Page.Resources>
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+		  x:Name="LayoutRoot">
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState x:Name="Wide">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="1200" />
+					</VisualState.StateTriggers>     
+					<VisualState.Setters>
+						<Setter Target="Column0Content.(RelativePanel.RightOf)" Value="Column1Content" />
+						<Setter Target="Column1Content.Padding" Value="0" />
+						<Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+						<Setter Target="Column0Content.Margin" Value="20,0,0,0" />
+						<Setter Target="GalleryGrid.Padding" Value="0" />    
+						<Setter Target="InkingRoot.Width" Value="Auto" />
+						<Setter Target="GalleryGrid.ItemsPanel" Value="{StaticResource ItemsPanelTemplate}" />
+						<Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
+						<Setter Target="TitleCommandBar.Visibility" Value="Visible" />
+						<Setter Target="TitleArea.Visibility" Value="Visible" />
+						<Setter Target="MobileHeader.Visibility" Value="Collapsed" />
+						<Setter Target="MobileCommandBar.Visibility" Value="Collapsed" />
+					</VisualState.Setters>
+				</VisualState>
 
+				<VisualState x:Name="Medium">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="720" />
+					</VisualState.StateTriggers> 
+					<VisualState.Setters>
+						<Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+						<Setter Target="Column1Content.Padding" Value="0" />
+						<Setter Target="ImageInkToolbar.Margin" Value="0,0" />
+						<Setter Target="GalleryGrid.Padding" Value="0" />
+						<Setter Target="GalleryGrid.Height" Value="82" />
+						<Setter Target="InkingRoot.Width" Value="Auto" />
+						<Setter Target="GalleryGrid.Style" Value="{StaticResource HorizontalGridView}" />
+						<Setter Target="Column0Content.(RelativePanel.Below)" Value="Column1Content" />
+						<Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+						<Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
+						<Setter Target="TitleCommandBar.Visibility" Value="Visible" />
+						<Setter Target="TitleArea.Visibility" Value="Visible" />
+						<Setter Target="MobileHeader.Visibility" Value="Collapsed" />
+						<Setter Target="MobileCommandBar.Visibility" Value="Collapsed" />
+					</VisualState.Setters>
+				</VisualState>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-          x:Name="LayoutRoot">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState x:Name="Wide">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1200" />
-                    </VisualState.StateTriggers>     
-                    <VisualState.Setters>
-                        <Setter Target="Column0Content.(RelativePanel.RightOf)" Value="Column1Content" />
-                        <Setter Target="Column1Content.Padding" Value="0" />
-                        <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="Column0Content.Margin" Value="20,0,0,0" />
-                        <Setter Target="GalleryGrid.Padding" Value="0" />    
-                        <Setter Target="InkingRoot.Width" Value="Auto" />
-                        <Setter Target="GalleryGrid.ItemsPanel" Value="{StaticResource ItemsPanelTemplate}" />
-                        <Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
-                        <Setter Target="TitleCommandBar.Visibility" Value="Visible" />
-                        <Setter Target="TitleArea.Visibility" Value="Visible" />
-                        <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
-                        <Setter Target="MobileCommandBar.Visibility" Value="Collapsed" />
-                    </VisualState.Setters>
-                </VisualState>
+				<VisualState x:Name="Narrow">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="0" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+						<Setter Target="Column1Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
+						<Setter Target="Column1Content.Padding" Value="0" />
+						<Setter Target="Column1Content.Width" Value="Auto" />
+						<Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+						<Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
+						<Setter Target="Column0Content.Padding" Value="0" />
+						<Setter Target="Column0Content.Width" Value="Auto" />
+						<Setter Target="GalleryGrid.Padding" Value="0" />
+						<Setter Target="GalleryGrid.Height" Value="82" />
+						<Setter Target="GalleryGrid.Style" Value="{StaticResource HorizontalGridView}" />
+						<Setter Target="GalleryGrid.Margin" Value="0,12,0,12" />
+						<Setter Target="InkingRoot.Width" Value="Auto" />
+						<Setter Target="InkingRoot.Height" Value="Auto" />
+						<Setter Target="InkingRoot.MaxHeight" Value="360" />
+						<Setter Target="SightImage.Stretch" Value="UniformToFill" />
+						<Setter Target="Column0Content.(RelativePanel.Below)" Value="Column1Content" />
+						<Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+						<Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
+						<Setter Target="LayoutRoot.Margin" Value="0" />
+						<Setter Target="LayoutRoot.VerticalAlignment" Value="Stretch" />
+						<Setter Target="Content.Padding" Value="0,10,15,72" />
+						<Setter Target="LayoutPanel.Margin" Value="0" />
+						<Setter Target="TitleCommandBar.Visibility" Value="Collapsed" />
+						<Setter Target="TitleArea.Visibility" Value="Collapsed" />
+						<Setter Target="MobileHeader.Visibility" Value="Visible" />
+						<Setter Target="MobileCommandBar.Visibility" Value="Visible" />
+					</VisualState.Setters>
+				</VisualState>
 
-                <VisualState x:Name="Medium">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="720" />
-                    </VisualState.StateTriggers> 
-                    <VisualState.Setters>
-                        <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="Column1Content.Padding" Value="0" />
-                        <Setter Target="ImageInkToolbar.Margin" Value="0,0" />
-                        <Setter Target="GalleryGrid.Padding" Value="0" />
-                        <Setter Target="GalleryGrid.Height" Value="82" />
-                        <Setter Target="InkingRoot.Width" Value="Auto" />
-                        <Setter Target="GalleryGrid.Style" Value="{StaticResource HorizontalGridView}" />
-                        <Setter Target="Column0Content.(RelativePanel.Below)" Value="Column1Content" />
-                        <Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
-                        <Setter Target="TitleCommandBar.Visibility" Value="Visible" />
-                        <Setter Target="TitleArea.Visibility" Value="Visible" />
-                        <Setter Target="MobileHeader.Visibility" Value="Collapsed" />
-                        <Setter Target="MobileCommandBar.Visibility" Value="Collapsed" />
-                    </VisualState.Setters>
-                </VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
 
-                <VisualState x:Name="Narrow">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="Column1Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="Column1Content.Padding" Value="0" />
-                        <Setter Target="Column1Content.Width" Value="Auto" />
-                        <Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="Column0Content.Padding" Value="0" />
-                        <Setter Target="Column0Content.Width" Value="Auto" />
-                        <Setter Target="GalleryGrid.Padding" Value="0" />
-                        <Setter Target="GalleryGrid.Height" Value="82" />
-                        <Setter Target="GalleryGrid.Style" Value="{StaticResource HorizontalGridView}" />
-                        <Setter Target="GalleryGrid.Margin" Value="0,12,0,12" />
-                        <Setter Target="InkingRoot.Width" Value="Auto" />
-                        <Setter Target="InkingRoot.Height" Value="Auto" />
-                        <Setter Target="InkingRoot.MaxHeight" Value="360" />
-                        <Setter Target="SightImage.Stretch" Value="UniformToFill" />
-                        <Setter Target="Column0Content.(RelativePanel.Below)" Value="Column1Content" />
-                        <Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="LayoutRoot.Margin" Value="0" />
-                        <Setter Target="LayoutRoot.VerticalAlignment" Value="Stretch" />
-                        <Setter Target="Content.Padding" Value="0,10,15,72" />
-                        <Setter Target="LayoutPanel.Margin" Value="0" />
-                        <Setter Target="TitleCommandBar.Visibility" Value="Collapsed" />
-                        <Setter Target="TitleArea.Visibility" Value="Collapsed" />
-                        <Setter Target="MobileHeader.Visibility" Value="Visible" />
-                        <Setter Target="MobileCommandBar.Visibility" Value="Visible" />
-                    </VisualState.Setters>
-                </VisualState>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
 
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+		</Grid.RowDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+		<!-- Background -->
 
-        </Grid.RowDefinitions>
+		<controls:BlurredBackgroundControl x:Name="BackgroundControl"
+										   Grid.Row="0"
+										   Grid.RowSpan="3"
+										   BackgroundImageSource="{x:Bind ViewModel.SightImage, Mode=OneWay}" />
 
-        <!-- Background -->
-
-        <controls:BlurredBackgroundControl x:Name="BackgroundControl"
-                                           Grid.Row="0"
-                                           Grid.RowSpan="3"
-                                           BackgroundImageSource="{x:Bind ViewModel.SightImage, Mode=OneWay}" />
-
-        <!-- Row 0 -->
+		<!-- Row 0 -->
 	<Border x:Name="TitleArea" Grid.Row="0" HorizontalAlignment="Stretch"
-                VerticalAlignment="Top"
-                Margin="0,0,0,0">
-            <TextBlock
-                   Style="{ThemeResource SubheaderTextBlockStyle}"
-                   Margin="24,0,12,28"
-                   Text="{x:Bind ViewModel.CurrentSight.Name, Mode=OneWay}" />
-        </Border>
+				VerticalAlignment="Top"
+				Margin="0,0,0,0">
+			<TextBlock
+				   Style="{ThemeResource SubheaderTextBlockStyle}"
+				   Margin="24,0,12,28"
+				   Text="{x:Bind ViewModel.CurrentSight.Name, Mode=OneWay}" />
+		</Border>
 
 	<Pivot x:Name="LayoutPanel"
-               Padding="24,0,24,0"
-               Margin="0,-40,0,0"
-               Grid.Row="1">
-            <PivotItem Style="{StaticResource SelectedPivotItem}">
-                <PivotItem.Header>
-                    <TextBlock Text="Sight"/>
-                </PivotItem.Header>
-                <ScrollViewer x:Name="MyScroller"
-                      Grid.Row="1"
-                      Margin="0,12,0,0">
+			   Padding="24,0,24,0"
+			   Margin="0,-40,0,0"
+			   Grid.Row="1">
+			<PivotItem Style="{StaticResource SelectedPivotItem}">
+				<PivotItem.Header>
+					<TextBlock Text="Sight"/>
+				</PivotItem.Header>
+				<ScrollViewer x:Name="MyScroller"
+					  Grid.Row="1"
+					  Margin="0,12,0,0">
 
-                    <RelativePanel x:Name="Content"                           
-                           Padding="0,10,0,48">
-                        <StackPanel Width="472"
-                            x:Name="Column0Content">
-                            <TextBlock x:Name="Caption"
-                               Style="{ThemeResource CaptionTextBlockStyle}"
-                               Text="{x:Bind ViewModel.CurrentSight.LongDescription, Mode=OneWay}"
-                               Margin="0,0,0,36" />
-                            <StackPanel Orientation="Vertical" Grid.Row="0">
-                                <TextBlock VerticalAlignment="Center" FontSize="20" Margin="0,0,0,10">When are you going?</TextBlock>
-                                <CalendarDatePicker Date="{x:Bind ViewModel.CurrentSightDate, Mode=TwoWay}" HorizontalAlignment="Left" Width="300" Margin="0,0,0,10" Background="White" />
-                                <TimePicker Time="{x:Bind ViewModel.CurrentSightTime, Mode=TwoWay}" Margin="0,0,0,10" Background="White" />
-                                <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" FontSize="16" Text="30 minute reminder" />
-                                <ToggleSwitch Style="{StaticResource SightToggleSwitch}" IsOn="True"  Margin="0,0,0,10"/>
-                            </StackPanel>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" VerticalAlignment="Center" FontSize="20">Notes</TextBlock>
-                                    <Button x:Name="InkButton" Grid.Column="1" Background="Transparent"
-                                            Click="{x:Bind ViewModel.EnableInk}"
-                                            Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
-                                        <FontIcon Glyph="&#xEC87;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
-                                    </Button>
+					<RelativePanel x:Name="Content"                           
+						   Padding="0,10,0,48">
+						<StackPanel Width="472"
+							x:Name="Column0Content">
+							<TextBlock x:Name="Caption"
+							   Style="{ThemeResource CaptionTextBlockStyle}"
+							   Text="{x:Bind ViewModel.CurrentSight.LongDescription, Mode=OneWay}"
+							   Margin="0,0,0,36" />
+							<StackPanel Orientation="Vertical" Grid.Row="0">
+								<TextBlock VerticalAlignment="Center" FontSize="20" Margin="0,0,0,10">When are you going?</TextBlock>
+								<CalendarDatePicker Date="{x:Bind ViewModel.CurrentSightDate, Mode=TwoWay}" HorizontalAlignment="Left" Width="300" Margin="0,0,0,10" Background="White" />
+								<TimePicker Time="{x:Bind ViewModel.CurrentSightTime, Mode=TwoWay}" Margin="0,0,0,10" Background="White" />
+								<TextBlock Style="{StaticResource SubtitleTextBlockStyle}" FontSize="16" Text="30 minute reminder" />
+								<ToggleSwitch Style="{StaticResource SightToggleSwitch}" IsOn="True"  Margin="0,0,0,10"/>
+							</StackPanel>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="Auto" />
+									</Grid.ColumnDefinitions>
+									<TextBlock Grid.Column="0" VerticalAlignment="Center" FontSize="20">Notes</TextBlock>
+									<Button x:Name="InkButton" Grid.Column="1" Background="Transparent"
+											Click="{x:Bind ViewModel.EnableInk}"
+											Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+										<FontIcon Glyph="&#xEC87;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+									</Button>
 
-                                    <inkToolbarPreview:InkToolbar x:Name="NoteInkToolbar" Grid.Column="1"
-                                                                  AutoPopulate="None"
-                                                                  TargetInkCanvas="{x:Bind NotesInkCanvas}"
-                                                                  Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                                  EraserClearAllInvoked="EraserClearAll">
-
-
-                                        <inkToolbarPreview:InkToolbarEraserButton />
-                                        <inkToolbarPreview:InkToolbarBallpointPenButton />
-
-                                        <inkToolbarPreview:InkToolbarCustomToggleButton Click="TryInkReco">
-                                            <FontIcon Glyph="&#xE8E9;" FontFamily="Segoe MDL2 Assets" />
-                                        </inkToolbarPreview:InkToolbarCustomToggleButton>
-
-                                        <inkToolbarPreview:InkToolbarCustomToggleButton Click="NotesSaveButton_Click">
-                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE001;" />
-                                        </inkToolbarPreview:InkToolbarCustomToggleButton>
-                                        <inkToolbarPreview:InkToolbarCustomToggleButton Click="NotesUndoButton_Click">
-                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
-                                        </inkToolbarPreview:InkToolbarCustomToggleButton>
+									<inkToolbarPreview:InkToolbar x:Name="NoteInkToolbar" Grid.Column="1"
+																  AutoPopulate="None"
+																  TargetInkCanvas="{x:Bind NotesInkCanvas}"
+																  Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+																  EraserClearAllInvoked="EraserClearAll">
 
 
-                                    </inkToolbarPreview:InkToolbar>
+										<inkToolbarPreview:InkToolbarEraserButton />
+										<inkToolbarPreview:InkToolbarBallpointPenButton />
 
-                                </Grid>
-                                <Border Grid.Row="1" Background="White"
-                                    Height="96"
-                                    Margin="0,8,0,0">        
-                                    <TextBox  x:Name="Notes"
-                                         Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                                         AcceptsReturn="True"
-                                         PlaceholderText="Enter your notes here"
-                                         Text="{Binding CurrentSight.Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                </Border>
-                                <Grid x:Name="InkGrid"
-                                      Grid.Row="1"
-                                      Background="White"
-                                      Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                      Margin="0,8,0,0">
-                                    <InkCanvas x:Name="NotesInkCanvas"
-                                               MinHeight="500" />
-                                </Grid>
-                            </Grid>
+										<inkToolbarPreview:InkToolbarCustomToggleButton Click="TryInkReco">
+											<FontIcon Glyph="&#xE8E9;" FontFamily="Segoe MDL2 Assets" />
+										</inkToolbarPreview:InkToolbarCustomToggleButton>
 
-                        </StackPanel>
-
-                        <Grid x:Name="Column1Content"
-                              Width="472"
-                              Padding="24,0,0,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-			<Border Grid.Row="1" Background="#FFE6E6E6">
-                            <inkToolbarPreview:InkToolbar x:Name="ImageInkToolbar"
-                                                          AutoPopulate="None"
-                                                          TargetInkCanvas="{x:Bind ImageInkCanvas}"
-                                                          EraserClearAllInvoked="EraserClearAll">
-
-                                <inkToolbarPreview:InkToolbarEraserButton />
-                                <inkToolbarPreview:InkToolbarBallpointPenButton />
-                                <inkToolbarPreview:InkToolbarHighlighterButton />
-                                <inkToolbarPreview:InkToolbarPencilButton />
+										<inkToolbarPreview:InkToolbarCustomToggleButton Click="NotesSaveButton_Click">
+											<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE001;" />
+										</inkToolbarPreview:InkToolbarCustomToggleButton>
+										<inkToolbarPreview:InkToolbarCustomToggleButton Click="NotesUndoButton_Click">
+											<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
+										</inkToolbarPreview:InkToolbarCustomToggleButton>
 
 
-                                <inkToolbarPreview:InkToolbarCustomToggleButton Click="ImageSaveButton_Click">
-                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE001;" />
-                                </inkToolbarPreview:InkToolbarCustomToggleButton>
-                                <inkToolbarPreview:InkToolbarCustomToggleButton Click="ImageUndoButton_Click">
-                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
-                                </inkToolbarPreview:InkToolbarCustomToggleButton>
-                                <!--Insert the M3_LaunchButton snippet here-->
+									</inkToolbarPreview:InkToolbar>
 
-                            </inkToolbarPreview:InkToolbar>
-			</Border>
+								</Grid>
+								<Border Grid.Row="1" Background="White"
+									Height="96"
+									Margin="0,8,0,0">        
+									<TextBox  x:Name="Notes"
+										 Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+										 AcceptsReturn="True"
+										 PlaceholderText="Enter your notes here"
+										 Text="{Binding CurrentSight.Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+								</Border>
+								<Grid x:Name="InkGrid"
+									  Grid.Row="1"
+									  Background="White"
+									  Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+									  Margin="0,8,0,0">
+									<InkCanvas x:Name="NotesInkCanvas"
+											   MinHeight="500" />
+								</Grid>
+							</Grid>
 
+						</StackPanel>
 
-                            <Grid x:Name="InkingRoot"
-                                  Grid.Row="0"
-                                  Height="448"
-                                  Width="448"
-                                  VerticalAlignment="Center"
-                                  HorizontalAlignment="Left">
+						<Grid x:Name="Column1Content"
+							  Width="472"
+							  Padding="24,0,0,0">
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
+								<Border Grid.Row="1" Background="#FFE6E6E6" Height="50">
+									<ToggleButton x:Name="ImageInkButton" Grid.Column="1" Background="Transparent" 
+											      Checked="{x:Bind ViewModel.EnableImageInk}" Unchecked="{x:Bind ViewModel.DisableImageInk}"
+										          IsChecked="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToNullableBooleanConverter}}"
+										          HorizontalAlignment="Right">
+										<FontIcon Glyph="&#xEC87;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+									</ToggleButton>
+								</Border>
+								<inkToolbarPreview:InkToolbar x:Name="ImageInkToolbar" 
+								  Grid.Row="1"                             
+								  AutoPopulate="None"
+								  Visibility="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+								  TargetInkCanvas="{x:Bind ImageInkCanvas}"
+								  EraserClearAllInvoked="EraserClearAll">
 
-                                <Image Source="{x:Bind ViewModel.SightImage, Mode=OneWay}"
-                                       Stretch="UniformToFill"
-                                       x:Name="SightImage" />
-
-                                <InkCanvas x:Name="ImageInkCanvas" />
-
-                                <Image x:Name="InkImage"
-                                       Visibility="Collapsed"
-                                       Stretch="UniformToFill">
-                                    <Image.Source>
-                                        <SoftwareBitmapSource x:Name="InkImageSource" />
-                                    </Image.Source>
-                                </Image>
-                            </Grid>
-
-                            <!--M3: Add the AllowDrop, Drop, and DragOver attributes-->
-                            <GridView x:Name="GalleryGrid"
-                                      Grid.Row="2"
-                                      ItemsSource="{Binding CurrentSightFiles, Mode=TwoWay}"
-                                      ItemContainerStyle="{StaticResource GalleryGridViewItemExpanded}"
-                                      SelectedItem="{Binding SelectedSightFile, Mode=TwoWay}"
-                                      SelectionMode="Single"
-                                      Margin="0,8,-8,0"
-                                      SelectionChanged="{x:Bind ViewModel.GalleryItemClicked}">
-                                <GridView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <ItemsWrapGrid Orientation="Vertical"
-                                                       MaximumRowsOrColumns="1" />
-                                    </ItemsPanelTemplate>
-                                </GridView.ItemsPanel>
-                                <GridView.ItemTemplate>
-                                    <DataTemplate x:DataType="models:SightFile">
-                                        <Image Width="68"
-                                               Height="68"
-                                               Stretch="UniformToFill"
-                                               Source="{x:Bind ImageUri, Mode=OneWay}" />
-                                    </DataTemplate>
-                                </GridView.ItemTemplate>
-                            </GridView>
-                        </Grid>
-
-                    </RelativePanel>
-                </ScrollViewer>
+									<inkToolbarPreview:InkToolbarEraserButton />
+									<inkToolbarPreview:InkToolbarBallpointPenButton />
+									<inkToolbarPreview:InkToolbarHighlighterButton />
+									<inkToolbarPreview:InkToolbarPencilButton />
+									<inkToolbarPreview:InkToolbarCustomToggleButton Click="ImageSaveButton_Click">
+										<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE001;" />
+									</inkToolbarPreview:InkToolbarCustomToggleButton>
+									<inkToolbarPreview:InkToolbarCustomToggleButton Click="ImageUndoButton_Click">
+										<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
+									</inkToolbarPreview:InkToolbarCustomToggleButton>
+									
+									<!--Insert the M3_LaunchButton snippet here-->
 
 
-            </PivotItem>
-            <PivotItem Style="{StaticResource SelectedPivotItem}">
-                <PivotItem.Header>
-                    <TextBlock Text="Eats"/>
-                </PivotItem.Header>
-                <Grid>
-                    <controls:EatsControl DataContext="{x:Bind ViewModel.EatsControlViewModel, Mode=OneWay}"
-                                          Margin="0,28,0,0" />
-                </Grid>
-            </PivotItem>
-        </Pivot>
+								</inkToolbarPreview:InkToolbar>
+
+								<Grid x:Name="InkingRoot"
+								  Grid.Row="0"
+								  Height="448"
+								  Width="448"
+								  VerticalAlignment="Center"
+								  HorizontalAlignment="Left">
+
+								<Image Source="{x:Bind ViewModel.SightImage, Mode=OneWay}"
+									   Stretch="UniformToFill"
+									   x:Name="SightImage" />
+
+								<InkCanvas x:Name="ImageInkCanvas"
+										   Visibility="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+								
+								<Image x:Name="InkImage"
+									   Visibility="Collapsed"
+									   Stretch="UniformToFill">
+									<Image.Source>
+										<SoftwareBitmapSource x:Name="InkImageSource" />
+									</Image.Source>
+								</Image>
+							</Grid>
+
+							<!--M3: Add the AllowDrop, Drop, and DragOver attributes-->
+							<GridView x:Name="GalleryGrid"
+									  Grid.Row="2"
+									  ItemsSource="{Binding CurrentSightFiles, Mode=TwoWay}"
+									  ItemContainerStyle="{StaticResource GalleryGridViewItemExpanded}"
+									  SelectedItem="{Binding SelectedSightFile, Mode=TwoWay}"
+									  SelectionMode="Single"
+									  Margin="0,8,-8,0"
+									  SelectionChanged="{x:Bind ViewModel.GalleryItemClicked}">
+								<GridView.ItemsPanel>
+									<ItemsPanelTemplate>
+										<ItemsWrapGrid Orientation="Vertical"
+													   MaximumRowsOrColumns="1" />
+									</ItemsPanelTemplate>
+								</GridView.ItemsPanel>
+								<GridView.ItemTemplate>
+									<DataTemplate x:DataType="models:SightFile">
+										<Image Width="68"
+											   Height="68"
+											   Stretch="UniformToFill"
+											   Source="{x:Bind ImageUri, Mode=OneWay}" />
+									</DataTemplate>
+								</GridView.ItemTemplate>
+							</GridView>
+						</Grid>
+
+					</RelativePanel>
+				</ScrollViewer>
 
 
-        <CommandBar x:Name="TitleCommandBar"
-                    Grid.Row="0"
-                    Background="Transparent"
-                    Margin="0,0,0,0" Height="60">
-            <!--Insert the M3_ShareButton snippet here-->
+			</PivotItem>
+			<PivotItem Style="{StaticResource SelectedPivotItem}">
+				<PivotItem.Header>
+					<TextBlock Text="Eats"/>
+				</PivotItem.Header>
+				<Grid>
+					<controls:EatsControl DataContext="{x:Bind ViewModel.EatsControlViewModel, Mode=OneWay}"
+										  Margin="0,28,0,0" />
+				</Grid>
+			</PivotItem>
+		</Pivot>
 
 
-            <!--Insert the M3_DirectionsButton snippet here-->
-            
-            
-            <AppBarButton x:Name="DesktopDeleteFlyout"
-                          Label="Delete from Trip"
-                          Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                          Flyout="{StaticResource DeleteFlyout}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton
-                Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                Label="Add to Trip"
-                Click="{x:Bind ViewModel.AddSightAsync}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+		<CommandBar x:Name="TitleCommandBar"
+					Grid.Row="0"
+					Background="Transparent"
+					Margin="0,0,0,0" Height="60">
+			<!--Insert the M3_ShareButton snippet here-->
 
-        </CommandBar>
 
-        <Border Background="{StaticResource NavMenuBackgroundBrush}"
-                x:Name="MobileHeader"
-                Height="48"
-                Visibility="Collapsed"
-                Grid.Row="0">
-            <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
-                       Foreground="White"
-                       VerticalAlignment="Center"
-                       Margin="48,0,0,0"
-                       Text="{x:Bind ViewModel.CurrentSight.Name, Mode=OneWay}" />
-        </Border>
+			<!--Insert the M3_DirectionsButton snippet here-->
+			
+			
+			<AppBarButton x:Name="DesktopDeleteFlyout"
+						  Label="Delete from Trip"
+						  Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+						  Flyout="{StaticResource DeleteFlyout}">
+				<AppBarButton.Icon>
+					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
+				</AppBarButton.Icon>
+			</AppBarButton>
+			<AppBarButton
+				Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+				Label="Add to Trip"
+				Click="{x:Bind ViewModel.AddSightAsync}">
+				<AppBarButton.Icon>
+					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
+				</AppBarButton.Icon>
+			</AppBarButton>
 
-        <CommandBar x:Name="MobileCommandBar" 
-                    Grid.Row="0" 
-                    HorizontalAlignment="Right"
-                    Foreground="White"
-                    Background="{StaticResource NavMenuBackgroundBrush}">
-            <!--Insert the M3_MobileShareButton snippet here-->
-            
-            
-            <!--Insert the M3_MobileDirectionsButton snippet here-->
-            
-            
-            <AppBarButton x:Name="MobileDeleteFlyout"
-                          Label="Delete from Trip"
-                          Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                          Flyout="{StaticResource DeleteFlyout}" Foreground="White"
-                          Style="{StaticResource TopCmdBtnStyle}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton
-                Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                Label="Add to Trip"
-                Click="{x:Bind ViewModel.AddSightAsync}" Foreground="White"
-                          Style="{StaticResource TopCmdBtnStyle}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-        </CommandBar>
+		</CommandBar>
+
+		<Border Background="{StaticResource NavMenuBackgroundBrush}"
+				x:Name="MobileHeader"
+				Height="48"
+				Visibility="Collapsed"
+				Grid.Row="0">
+			<TextBlock Style="{ThemeResource TitleTextBlockStyle}"
+					   Foreground="White"
+					   VerticalAlignment="Center"
+					   Margin="48,0,0,0"
+					   Text="{x:Bind ViewModel.CurrentSight.Name, Mode=OneWay}" />
+		</Border>
+
+		<CommandBar x:Name="MobileCommandBar" 
+					Grid.Row="0" 
+					HorizontalAlignment="Right"
+					Foreground="White"
+					Background="{StaticResource NavMenuBackgroundBrush}">
+			<!--Insert the M3_MobileShareButton snippet here-->
+			
+			
+			<!--Insert the M3_MobileDirectionsButton snippet here-->
+			
+			
+			<AppBarButton x:Name="MobileDeleteFlyout"
+						  Label="Delete from Trip"
+						  Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+						  Flyout="{StaticResource DeleteFlyout}" Foreground="White"
+						  Style="{StaticResource TopCmdBtnStyle}">
+				<AppBarButton.Icon>
+					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
+				</AppBarButton.Icon>
+			</AppBarButton>
+			<AppBarButton
+				Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+				Label="Add to Trip"
+				Click="{x:Bind ViewModel.AddSightAsync}" Foreground="White"
+						  Style="{StaticResource TopCmdBtnStyle}">
+				<AppBarButton.Icon>
+					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
+				</AppBarButton.Icon>
+			</AppBarButton>
+		</CommandBar>
 
 <!-- This CommandBar is ideal for mobile devices (phones) --> 
 <!-- <CommandBar x:Name="MobileCommandBar" 
-                    Grid.Row="0" 
-                    HorizontalAlignment="Right"
-                    Foreground="White"
-                    Background="{StaticResource NavMenuBackgroundBrush}">
-            
-            
-            <AppBarButton x:Name="MobileDeleteFlyout"
-                          Label="Delete from Trip"
-                          Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                          Flyout="{StaticResource DeleteFlyout}" Foreground="White"
-                          Style="{StaticResource TopCmdBtnStyle}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton
-                Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                Label="Add to Trip"
-                Click="{x:Bind ViewModel.AddSightAsync}" Foreground="White"
-                          Style="{StaticResource TopCmdBtnStyle}">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-        </CommandBar>
+					Grid.Row="0" 
+					HorizontalAlignment="Right"
+					Foreground="White"
+					Background="{StaticResource NavMenuBackgroundBrush}">
+			
+			
+			<AppBarButton x:Name="MobileDeleteFlyout"
+						  Label="Delete from Trip"
+						  Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+						  Flyout="{StaticResource DeleteFlyout}" Foreground="White"
+						  Style="{StaticResource TopCmdBtnStyle}">
+				<AppBarButton.Icon>
+					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
+				</AppBarButton.Icon>
+			</AppBarButton>
+			<AppBarButton
+				Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+				Label="Add to Trip"
+				Click="{x:Bind ViewModel.AddSightAsync}" Foreground="White"
+						  Style="{StaticResource TopCmdBtnStyle}">
+				<AppBarButton.Icon>
+					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
+				</AppBarButton.Icon>
+			</AppBarButton>
+		</CommandBar>
 -->
 
-        <!-- Content Dialogs -->
+		<!-- Content Dialogs -->
 
-        <ContentDialog x:Name="InkRecoDialog"
-                       PrimaryButtonText="Accept"
-                       SecondaryButtonText="Cancel"
-                       IsPrimaryButtonEnabled="False"
-                       Title="Text Recognition"
-                       Grid.RowSpan="3"
-                       d:IsHidden="True"
-                       Opened="InkRecoDialog_Opened">
-            <StackPanel>
-                <TextBox x:Name="Status"
-                         Header="Recognition Output:"
-                         Margin="0,4" />
-            </StackPanel>
-        </ContentDialog>
+		<ContentDialog x:Name="InkRecoDialog"
+					   PrimaryButtonText="Accept"
+					   SecondaryButtonText="Cancel"
+					   IsPrimaryButtonEnabled="False"
+					   Title="Text Recognition"
+					   Grid.RowSpan="3"
+					   d:IsHidden="True"
+					   Opened="InkRecoDialog_Opened">
+			<StackPanel>
+				<TextBox x:Name="Status"
+						 Header="Recognition Output:"
+						 Margin="0,4" />
+			</StackPanel>
+		</ContentDialog>
 
-    </Grid>
+	</Grid>
 </Page>

@@ -68,6 +68,7 @@
 
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+            <converters:BooleanToNullableBooleanConverter x:Key="BooleanToNullableBooleanConverter" />
 
         </ResourceDictionary>
 

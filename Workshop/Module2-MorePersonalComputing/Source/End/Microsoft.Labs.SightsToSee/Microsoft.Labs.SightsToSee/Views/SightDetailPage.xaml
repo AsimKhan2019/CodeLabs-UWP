@@ -301,18 +301,25 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-
-                            <inkToolbarPreview:InkToolbar x:Name="ImageInkToolbar" Grid.Row="0"
-                                                          AutoPopulate="None"
-                                                          TargetInkCanvas="{x:Bind ImageInkCanvas}"
-                                                          EraserClearAllInvoked="EraserClearAll">
+                            <Border Grid.Row="1" Background="#FFE6E6E6" Height="50">
+                                <ToggleButton x:Name="ImageInkButton" Grid.Column="1" Background="Transparent" 
+                                              Checked="{x:Bind ViewModel.EnableImageInk}" Unchecked="{x:Bind ViewModel.DisableImageInk}"
+                                        IsChecked="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToNullableBooleanConverter}}"
+                                        HorizontalAlignment="Right">
+                                    <FontIcon Glyph="&#xEC87;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+                                </ToggleButton>
+                            </Border>
+                            <inkToolbarPreview:InkToolbar x:Name="ImageInkToolbar" 
+                                  Grid.Row="1"                             
+                                  AutoPopulate="None"
+                                  Visibility="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                  TargetInkCanvas="{x:Bind ImageInkCanvas}"
+                                  EraserClearAllInvoked="EraserClearAll">
 
                                 <inkToolbarPreview:InkToolbarEraserButton />
                                 <inkToolbarPreview:InkToolbarBallpointPenButton />
                                 <inkToolbarPreview:InkToolbarHighlighterButton />
                                 <inkToolbarPreview:InkToolbarPencilButton />
-
-
                                 <inkToolbarPreview:InkToolbarCustomToggleButton Click="ImageSaveButton_Click">
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE001;" />
                                 </inkToolbarPreview:InkToolbarCustomToggleButton>
@@ -320,7 +327,6 @@
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
                                 </inkToolbarPreview:InkToolbarCustomToggleButton>
                             </inkToolbarPreview:InkToolbar>
-
 
                             <Grid x:Name="InkingRoot"
                                   Grid.Row="0"
@@ -333,8 +339,9 @@
                                        Stretch="UniformToFill"
                                        x:Name="SightImage" />
 
-                                <InkCanvas x:Name="ImageInkCanvas" />
-
+                                <InkCanvas x:Name="ImageInkCanvas"
+                                           Visibility="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                
                                 <Image x:Name="InkImage"
                                        Visibility="Collapsed"
                                        Stretch="UniformToFill">

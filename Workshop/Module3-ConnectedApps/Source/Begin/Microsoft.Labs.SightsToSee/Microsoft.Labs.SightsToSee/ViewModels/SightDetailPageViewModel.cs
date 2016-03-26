@@ -28,6 +28,7 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
         private ObservableCollection<SightFile> _currentSightFiles;
         private TimeSpan _currentSightTime;
         private bool _isNotesInking;
+        private bool _isImageInking;
         private SightFile _selectedSightFile;
         private BitmapImage _sightImage;
         private EatsControlViewModel _eatsControlViewModel;
@@ -39,6 +40,16 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             {
                 if (_isNotesInking == value) return;
                 Set(ref _isNotesInking, value);
+            }
+        }
+
+        public bool IsImageInking
+        {
+            get { return _isImageInking; }
+            set
+            {
+                if (_isImageInking == value) return;
+                Set(ref _isImageInking, value);
             }
         }
 
@@ -266,6 +277,16 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             CurrentSightFiles.Insert(position, replacement);
             CurrentSightFiles.RemoveAt(position + 1);
             SightImage = replacement.ImageUri;
+        }
+
+        public void EnableImageInk()
+        {
+            IsImageInking = true;
+        }
+
+        public void DisableImageInk()
+        {
+            IsImageInking = false;
         }
 
         public void EnableInk()
