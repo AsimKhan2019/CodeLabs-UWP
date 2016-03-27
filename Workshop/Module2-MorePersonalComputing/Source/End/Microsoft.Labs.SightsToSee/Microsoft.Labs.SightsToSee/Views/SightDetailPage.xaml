@@ -66,22 +66,6 @@
             <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
         </Style>
 
-        <Style TargetType="inkToolbarPreview:InkToolbarBallpointPenButton">
-            <Setter Property="MinStrokeWidth" Value="3" />
-            <Setter Property="SelectedStrokeWidth" Value="5" />
-            <Setter Property="ColorPalette">
-                <Setter.Value>
-                    <inkToolbarPreview:ColorCollection>
-                        <Color>Red</Color>
-                        <Color>Green</Color>
-                        <Color>Blue</Color>
-                    </inkToolbarPreview:ColorCollection>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="SelectedColor" Value="Blue" />
-        </Style>
-
-
     </Page.Resources>
 
 
@@ -244,14 +228,13 @@
 
                                     <!--Insert the M2_InkToolbar snippet here-->
                                     <inkToolbarPreview:InkToolbar x:Name="NoteInkToolbar" Grid.Column="1"
-                                                                  AutoPopulate="None"
                                                                   TargetInkCanvas="{x:Bind NotesInkCanvas}"
                                                                   Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                                  EraserClearAllInvoked="EraserClearAll">
+                                                                  EraseAllClick="EraserClearAll">
 
 
                                         <inkToolbarPreview:InkToolbarEraserButton />
-                                        <inkToolbarPreview:InkToolbarBallpointPenButton />
+                                        <inkToolbarPreview:InkToolbarBallpointPenButton SelectedStrokeWidth="5"/>
 
                                         <inkToolbarPreview:InkToolbarCustomToggleButton Click="TryInkReco">
                                             <FontIcon Glyph="&#xE8E9;" FontFamily="Segoe MDL2 Assets" />
@@ -310,14 +293,13 @@
                                 </ToggleButton>
                             </Border>
                             <inkToolbarPreview:InkToolbar x:Name="ImageInkToolbar" 
-                                  Grid.Row="1"                             
-                                  AutoPopulate="None"
+                                  Grid.Row="1" 
                                   Visibility="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
                                   TargetInkCanvas="{x:Bind ImageInkCanvas}"
-                                  EraserClearAllInvoked="EraserClearAll">
+                                  EraseAllClick="EraserClearAll">
 
                                 <inkToolbarPreview:InkToolbarEraserButton />
-                                <inkToolbarPreview:InkToolbarBallpointPenButton />
+                                <inkToolbarPreview:InkToolbarBallpointPenButton SelectedStrokeWidth="5" />
                                 <inkToolbarPreview:InkToolbarHighlighterButton />
                                 <inkToolbarPreview:InkToolbarPencilButton />
                                 <inkToolbarPreview:InkToolbarCustomToggleButton Click="ImageSaveButton_Click">

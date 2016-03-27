@@ -292,7 +292,10 @@
 										<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
 									</inkToolbarPreview:InkToolbarCustomToggleButton>
 									<!--Insert the M3_LaunchButton snippet here-->
-
+									<inkToolbarPreview:InkToolbarCustomToggleButton Click="OnLaunchForResults">
+										<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE2AC;" />
+									</inkToolbarPreview:InkToolbarCustomToggleButton>
+									
 								</inkToolbarPreview:InkToolbar>
 							</Border>
 
@@ -322,6 +325,9 @@
 							<!--M3: Add the AllowDrop, Drop, and DragOver attributes-->
 							<GridView x:Name="GalleryGrid"
 									  Grid.Row="2"
+									  AllowDrop="True"
+									  Drop="{x:Bind ViewModel.SightFile_DropAsync}"
+									  DragOver="{x:Bind ViewModel.SightFile_DragOver}"
 									  ItemsSource="{Binding CurrentSightFiles, Mode=TwoWay}"
 									  ItemContainerStyle="{StaticResource GalleryGridViewItemExpanded}"
 									  SelectedItem="{Binding SelectedSightFile, Mode=TwoWay}"
@@ -367,11 +373,23 @@
 					Background="Transparent"
 					Margin="0,0,0,0" Height="60">
 			<!--Insert the M3_ShareButton snippet here-->
-
+			<AppBarButton x:Name="Share"
+						  Label="Share Sight"
+						  Click="{x:Bind ViewModel.ShareSight}">
+				<AppBarButton.Icon>
+					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
+				</AppBarButton.Icon>
+			</AppBarButton>
 
 			<!--Insert the M3_DirectionsButton snippet here-->
-			
-			
+			<AppBarButton x:Name="Directions"
+						  Label="Directions to Sight"
+						  Click="{x:Bind ViewModel.GetDirectionsAsync}">
+				<AppBarButton.Icon>
+					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE707;" />
+				</AppBarButton.Icon>
+			</AppBarButton>
+
 			<AppBarButton x:Name="DesktopDeleteFlyout"
 						  Label="Delete from Trip"
 						  Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -409,9 +427,20 @@
 					Background="{StaticResource NavMenuBackgroundBrush}">
 			
 			<!--Insert the M3_MobileShareButton snippet here-->
-
+			<AppBarButton Click="{x:Bind ViewModel.ShareSight}"
+						  Label="Share Sight" Foreground="White" Style="{StaticResource TopCmdBtnStyle}">
+				<AppBarButton.Icon>
+					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72D;" />
+				</AppBarButton.Icon>
+			</AppBarButton>
 
 			<!--Insert the M3_MobileDirectionsButton snippet here-->
+			<AppBarButton Click="{x:Bind ViewModel.GetDirectionsAsync}"
+						  Label="Directions to Sight" Foreground="White" Style="{StaticResource TopCmdBtnStyle}">
+				<AppBarButton.Icon>
+					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE707;" />
+				</AppBarButton.Icon>
+			</AppBarButton>
 
 			<AppBarButton x:Name="MobileDeleteFlyout"
 						  Label="Delete from Trip"

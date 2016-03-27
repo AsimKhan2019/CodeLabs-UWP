@@ -153,17 +153,16 @@ In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any In
 1. Expand the **M2_InkToolbar** snippet after the EnableInkButton in **SightDetailPage.xaml**.
 
 	(Code Snippet - _M2_InkToolbar_)
-	<!--mark:1-21-->
+	<!--mark:1-20-->
 	````C#
 	<c:InkToolbar x:Name="NoteInkToolbar" Grid.Column="1"
-					AutoPopulate="None"
 					TargetInkCanvas="{x:Bind NotesInkCanvas}"
 					Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-					EraserClearAllInvoked="EraserClearAll">
+					EraseAllClick="EraserClearAll">
 
 
 		<c:InkToolbarEraserButton />
-		<c:InkToolbarBallpointPenButton />
+		<c:InkToolbarBallpointPenButton SelectedStrokeWidth="5"/>
 
 		<!--<c:InkToolbarCustomToggleButton Click="TryInkReco">
 			<FontIcon Glyph="&#xE8E9;" FontFamily="Segoe MDL2 Assets" />
