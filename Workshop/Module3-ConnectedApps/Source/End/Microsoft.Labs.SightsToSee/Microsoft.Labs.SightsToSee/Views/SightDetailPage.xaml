@@ -124,6 +124,7 @@
                         <Setter Target="Column1Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="Column1Content.Padding" Value="0" />
                         <Setter Target="Column1Content.Width" Value="Auto" />
+                        <Setter Target="Column0Content.(RelativePanel.Below)" Value="Column1Content" />
                         <Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="Column0Content.Padding" Value="0" />
@@ -136,13 +137,11 @@
                         <Setter Target="InkingRoot.Height" Value="Auto" />
                         <Setter Target="InkingRoot.MaxHeight" Value="360" />
                         <Setter Target="SightImage.Stretch" Value="UniformToFill" />
-                        <Setter Target="Column0Content.(RelativePanel.Below)" Value="Column1Content" />
-                        <Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="LayoutRoot.Margin" Value="0" />
                         <Setter Target="LayoutRoot.VerticalAlignment" Value="Stretch" />
                         <Setter Target="Content.Padding" Value="0,10,15,72" />
                         <Setter Target="LayoutPanel.Margin" Value="0" />
+                        <Setter Target="LayoutPanel.Padding" Value="12,0" />
                         <Setter Target="TitleCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="TitleArea.Visibility" Value="Collapsed" />
                         <Setter Target="MobileHeader.Visibility" Value="Visible" />
