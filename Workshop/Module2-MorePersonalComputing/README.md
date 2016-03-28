@@ -663,7 +663,7 @@ Voice commands give your users a convenient, hands-free way to interact with you
     Expand the **M2_HandleNearbySights** snippet inside the **Try** block in the **Run()** method.
 
     (Code Snippet - _M2_HandleNearbySights_)
-    <!--mark:1-46-->
+    <!--mark:1-54-->
     ````C#
 	VoiceCommand voiceCommand = await _voiceServiceConnection.GetVoiceCommandAsync();
 
@@ -684,11 +684,19 @@ Voice commands give your users a convenient, hands-free way to interact with you
 			  if (accessStatus == GeolocationAccessStatus.Allowed)
 			  {
 
-					var geolocator = new Geolocator();
-					var pos = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(5));
-					if (pos != null)
-					{
-						 var nearest = await GetNearestSights(pos);
+			      var geolocator = new Geolocator();
+    #if DEBUG
+			      // For testing, fake a location in San Francisco
+			      Geopoint point = new Geopoint(new BasicGeoposition { Latitude = 37.774930, Longitude = -122.419416 });
+			      if (true) { 
+    #else
+			         var pos = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(5));
+			         if (pos != null)
+			         {
+			             Geocoordinate coordinate = pos.Coordinate; 
+    #endif
+
+			             var nearest = await GetNearestSights(point);
 						 if (nearest != null && nearest.Any())
 						 {
 							  await ShowNearestResults(nearest);
