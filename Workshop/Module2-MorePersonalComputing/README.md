@@ -155,27 +155,27 @@ In the next version of the Windows SDK, you'll have the option of adding an Ink 
 	(Code Snippet - _M2_InkToolbar_)
 	<!--mark:1-20-->
 	````C#
-	<c:InkToolbar x:Name="NoteInkToolbar" Grid.Column="1"
+	<inkToolbarPreview:InkToolbar x:Name="NoteInkToolbar" Grid.Column="1"
 					TargetInkCanvas="{x:Bind NotesInkCanvas}"
 					Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
 					EraseAllClick="EraserClearAll">
 
 
-		<c:InkToolbarEraserButton />
-		<c:InkToolbarBallpointPenButton SelectedStrokeWidth="5"/>
+		<inkToolbarPreview:InkToolbarEraserButton />
+		<inkToolbarPreview:InkToolbarBallpointPenButton SelectedStrokeWidth="5"/>
 
-		<!--<c:InkToolbarCustomToggleButton Click="TryInkReco">
+		<!--<inkToolbarPreview:InkToolbarCustomToggleButton Click="TryInkReco">
 			<FontIcon Glyph="&#xE8E9;" FontFamily="Segoe MDL2 Assets" />
-		</c:InkToolbarCustomToggleButton>-->
+		</inkToolbarPreview:InkToolbarCustomToggleButton>-->
 
-		<c:InkToolbarCustomToggleButton Click="NotesSaveButton_Click">
+		<inkToolbarPreview:InkToolbarCustomToggleButton Click="NotesSaveButton_Click">
 			<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE001;" />
-		</c:InkToolbarCustomToggleButton>
-		<c:InkToolbarCustomToggleButton Click="NotesUndoButton_Click">
+		</inkToolbarPreview:InkToolbarCustomToggleButton>
+		<inkToolbarPreview:InkToolbarCustomToggleButton Click="NotesUndoButton_Click">
 			<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
-		</c:InkToolbarCustomToggleButton>
+		</inkToolbarPreview:InkToolbarCustomToggleButton>
 
-	</c:InkToolbar>
+	</inkToolbarPreview:InkToolbar>
 	````
 
     > **Notes:** One of the buttons on the Toolbar is commented out. We'll enable it in the next task. For now, you can ignore it.
