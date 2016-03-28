@@ -144,9 +144,9 @@ We'll start by adding an InkCanvas that can be used for taking notes.
 The default pen for the InkCanvas is a simple black line. Right now, we are also not saving the Ink. In the next task, we're going to set up an Ink Toolbar to handle pen color, saving, and clearing the Notes Ink Canvas.
 
 <a name="Ex1Task2"></a>
-####  Task 2 – Add the Redstone Ink Toolbar ####
+####  Task 2 – Add the Ink Toolbar Preview ####
 
-In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any InkCanvas. We're going to use a preview of the toolbar for our Notes InkCanvas. The toolbar is customizable, so we'll also add our custom Save button to it.
+In the next version of the Windows SDK, you'll have the option of adding an Ink Toolbar to any InkCanvas. We're going to use a preview of the toolbar for our Notes InkCanvas. The toolbar is customizable, so we'll also add our custom Save button to it.
 
 1. Notice that the `xmlns:c="using:InkToolbarPreview"` namespace has been added to the top-level **&lt;Page&gt;** element at the top of **SightDetailPage.xaml**. We've added an **InkToolbar** example for image annotation, and it is also using this namespace. We've also added the `using InkToolbarPreview` namespace to the **SightDetailPage** code-behind.
 
@@ -213,8 +213,6 @@ In Redstone, you'll have the option of adding the Redstone Ink Toolbar to any In
 1. Locate and review the **NotesUndoButton_Click** method  which clears all strokes, sets **NotesAreInk** and **IsNotesInking** to false, and returns to the text input method for Notes.
 
     > **Note:** The **EraserClearAll()** method already exists for the image annotation InkToolbar, so we are reusing it for the Notes Ink Toolbar clear method as well.
-
-    > There is also a style already defined for the image annotation InkToolbar, which makes Red, Green, and Blue ink available. The style is defined in **SightDetailPage.xaml**.
 
 1. Expand the **M2_SetupNotes** snippet inside the **SetupNotesInkAsync** task in the code-behind. This method restores Ink that has been saved to the Sight.
 
