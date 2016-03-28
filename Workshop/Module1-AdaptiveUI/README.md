@@ -432,7 +432,7 @@ Maps provide a great way to add visual interaction with the Sights in the app. W
 
 In this task, we will display the Sights as PushPins on the map, enable Aerial3D Map View, and enable ShowStreet mode.
 
-1. Open TripDetailPage.xaml. Expand the **M1_MapItems** snippet inside the MapControl. The Map items in the MapItemsControl are bound to the list of Sights. Sights added to **My Sights** will display as larger PushPins with borders. **Suggested Sights** will display as smaller PushPins without borders.
+1. Open **TripDetailPage.xaml**. Expand the **M1_MapItems** snippet inside the MapControl. The Map items in the MapItemsControl are bound to the list of Sights. Sights added to **My Sights** will display as larger PushPins with borders. **Suggested Sights** will display as smaller PushPins without borders.
 
 	(Code Snippet - _M1_MapItems_)
 
@@ -494,7 +494,7 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
 	</maps:MapControl>
 	````
 
-1. Open **TripDetailPage.xaml**. Expand the **M1_Flyout** snippet immediately after the GridViewHeaderItem style. This Flyout will pop up when a map PushPin is selected and show icons to enable Aerial3D and ShowStreet modes.
+1. Still in **TripDetailPage.xaml**, expand the **M1_Flyout** snippet immediately after the GridViewHeaderItem style. This Flyout will pop up when a map PushPin is selected and show icons to enable Aerial3D and ShowStreet modes.
 
 	(Code Snippet - _M1_Flyout_)
 
