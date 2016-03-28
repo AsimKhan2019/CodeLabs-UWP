@@ -6,7 +6,7 @@
 <a name="Overview"></a>
 ## Overview ##
 
-Windows 10 Redstone comes with more ways than ever before to create great user experiences across devices and across apps.
+The Universal Windows Platform comes with many ways to create great user experiences across devices and across apps.
 In this module, you will learn how to connect your app to the cloud so users can get their data on whichever device they pick up. 
 You will enhance the app to load additional app data through an App Extension, and you will use the LaunchUri and LaunchForResults APIs to get directions from BingMaps and to connect to a photo processing apps to add effects to pictures.
 
@@ -29,9 +29,9 @@ In this module, you will see how to:
 
 The following is required to complete this module:
 
-- Microsoft Windows 10 Build 14279 or later
+- Microsoft Windows 10 Build 14291 or later
 - Microsoft Visual Studio 2015 Update 2 or later
-- Windows SDK Build 14279 or later
+- Windows SDK Build 14291 or later
 
 ---
 
@@ -151,7 +151,7 @@ In this application, you will enable client-directed authentication, where the c
 
     However, in this workshop, we are using the client-directed authentication stream which is further down in the class. The **MSAAuthenticationHelper** class at the bottom of this code file shows how to use the UWP **WebAuthenticationCoreManager** API to get an authorization token for a Microsoft Account, which it will be able to do silently if the user has already signed onto their Windows 10 device using MSA credentials.
    
-1. Before you run the app again, as a precaution UNINSTALL the app from your system. This will ensure that the WebAuthenticationCoreManager identoty provider sees your app as a new one and initializes correctly. Click the Windows button bottom left, click **All Apps** and navigate to the Sights2See app in the apps list. Right-click the Sights2See app and then click **Uninstall**.
+1. Before you run the app again, as a precaution UNINSTALL the app from your system. This will ensure that the WebAuthenticationCoreManager identity provider sees your app as a new one and initializes correctly. Click the Windows button bottom left, click **All Apps** and navigate to the Sights2See app in the apps list. Right-click the Sights2See app and then click **Uninstall**.
      
     ![Uninstall the Sights2See app](Images/Uninstall.png "Uninstall the Sights2See app")
     
@@ -159,6 +159,14 @@ In this application, you will enable client-directed authentication, where the c
     
 1. Run the app again. This time you will be prompted for credentials if you are logged onto a Windows 10 device and you haven't used Microsoft Account credentials to do so, or if your machine account has already authenticated using MSA credentials, you will connect to the cloud service silently.
       
+    ![Selecting the Microsoft Account for authentication](Images/MSAaccountselection.png "Selecting the Microsoft Account for authentication")
+
+    _Selecting the Microsoft Account for authentication_
+    
+    If you are doing this lab at BUILD, select the __Build2016Labsxx@outlook.com__ identity, as this is the same one that the phone device you have is associated with. Otherwise, you may enter the username and password of any Microsoft Account.
+
+1. After successful authentication, the code passes the token to the proxy object for the Azure App Service Mobile Apps service, and connects to the cloud to synchronize data with the cloud service. All data stored and retrieved from the backend service is associated with the User Id of the authenticated user.
+         
     ![Synchronizing data with the cloud service](Images/synchronising.png "Synchronizing data with the cloud service")
 
     _Synchronizing data with the cloud service_
@@ -174,7 +182,23 @@ With your data stored in the cloud, now the user can enjoy your app whichever of
 
 1. Now either select the **Mobile Emulator Preview 10.0.14291.0 WVGA 4inch 512MB** device in the target dropdown, or if you want to use a real phone, connect the phone to your PC using a USB cable and then change the Solution Platform to **ARM** and select **Device** as the output device.
 
-1. Run the app from Visual Studio and it will launch on your mobile emulator or real Windows 10 mobile device. You will have to log in with MSA credentials and then the app will synchronize with the cloud. You will see the same selection of Sights and the same inking annotations you created previously on the PC.
+1. Run the app from Visual Studio and it will launch on your mobile emulator or real Windows 10 mobile device.
+
+    If you are doing this code lab at BUILD using the phone device provided, this phone has already been setup to be associated with the same __Build2016Labsxx@outlook.com__ identity you used earlier when signing into the desktop app. Choose that identity when prompted: 
+      
+    ![Selecting the Microsoft Account for authentication on Mobile](Images/phoneaccountselection.png "Selecting the Microsoft Account for authentication on Mobile")
+
+    _Selecting the Microsoft Account for authentication on Mobile_
+    
+    Notice that if you choose the __Build2016Labsxx@outlook.com__ identity on the phone, it will not prompt you for the password, showing the convenince using the WebAuthenticationCoreManager brings with its close itegration with Windows 10.
+    
+1. After you have successfully authenticated the app will synchronize with the cloud. 
+         
+    ![Synchronizing data with the cloud service on Mobile](Images/phoneSynchronizing.png "Synchronizing data with the cloud service on Mobile")
+
+    _Synchronizing data with the cloud service on Mobile_
+
+    You will see the same selection of Sights and the same inking annotations you created previously on the PC.
 
 <a name="Exercise2"></a>
 ### Exercise 2: Loading resources from App Extensions ###
