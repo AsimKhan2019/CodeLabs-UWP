@@ -186,7 +186,7 @@ With your data stored in the cloud, now the user can enjoy your app whichever of
 
     If you are doing this code lab at BUILD using the phone device provided, this phone has already been setup to be associated with the same __Build2016Labsxx@outlook.com__ identity you used earlier when signing into the desktop app. Choose that identity when prompted: 
       
-    ![Selecting the Microsoft Account for authentication on Mobile](Images/phoneaccountselection.png "Selecting the Microsoft Account for authentication on Mobile")
+    ![Selecting the Microsoft Account for authentication on Mobile](Images/phoneAccountSelection.png "Selecting the Microsoft Account for authentication on Mobile")
 
     _Selecting the Microsoft Account for authentication on Mobile_
     
