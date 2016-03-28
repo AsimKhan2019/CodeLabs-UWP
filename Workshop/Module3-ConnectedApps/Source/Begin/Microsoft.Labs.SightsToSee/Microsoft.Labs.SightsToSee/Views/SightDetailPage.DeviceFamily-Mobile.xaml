@@ -124,10 +124,10 @@
 						<Setter Target="Column1Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
 						<Setter Target="Column1Content.Padding" Value="0" />
 						<Setter Target="Column1Content.Width" Value="Auto" />
-                        <Setter Target="Column0Content.(RelativePanel.Below)" Value="Column1Content" />
-                        <Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="Column0Content.Padding" Value="0" />
+						<Setter Target="Column0Content.(RelativePanel.Below)" Value="Column1Content" />
+						<Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+						<Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
+						<Setter Target="Column0Content.Padding" Value="0" />
 						<Setter Target="Column0Content.Width" Value="Auto" />
 						<Setter Target="GalleryGrid.Padding" Value="0" />
 						<Setter Target="GalleryGrid.Height" Value="82" />
@@ -140,9 +140,9 @@
 						<Setter Target="LayoutRoot.Margin" Value="0" />
 						<Setter Target="LayoutRoot.VerticalAlignment" Value="Stretch" />
 						<Setter Target="Content.Padding" Value="0,10,15,72" />
-                        <Setter Target="LayoutPanel.Margin" Value="0" />
-                        <Setter Target="LayoutPanel.Padding" Value="12,0" />
-                        <Setter Target="TitleCommandBar.Visibility" Value="Collapsed" />
+						<Setter Target="LayoutPanel.Margin" Value="0" />
+						<Setter Target="LayoutPanel.Padding" Value="12,0" />
+						<Setter Target="TitleCommandBar.Visibility" Value="Collapsed" />
 						<Setter Target="TitleArea.Visibility" Value="Collapsed" />
 						<Setter Target="MobileHeader.Visibility" Value="Visible" />
 						<Setter Target="MobileCommandBar.Visibility" Value="Visible" />
@@ -273,10 +273,18 @@
 								<RowDefinition Height="Auto" />
 								<RowDefinition Height="Auto" />
 							</Grid.RowDefinitions>
-							<Border Grid.Row="1" Background="#FFE6E6E6">
-								<inkToolbarPreview:InkToolbar x:Name="ImageInkToolbar"
-														  TargetInkCanvas="{x:Bind ImageInkCanvas}"
-														  EraseAllClick="EraserClearAll">
+							<Border Grid.Row="1" Background="#FFE6E6E6" Height="50">
+								<ToggleButton x:Name="ImageInkButton" Grid.Column="1" Background="Transparent" 
+												  Checked="{x:Bind ViewModel.EnableImageInk}" Unchecked="{x:Bind ViewModel.DisableImageInk}"
+												  IsChecked="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToNullableBooleanConverter}}"
+												  HorizontalAlignment="Right">
+									<FontIcon Glyph="&#xEC87;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+								</ToggleButton>
+							</Border>
+							<inkToolbarPreview:InkToolbar x:Name="ImageInkToolbar"
+										Visibility="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+										TargetInkCanvas="{x:Bind ImageInkCanvas}"
+										EraseAllClick="EraserClearAll">
 
 									<inkToolbarPreview:InkToolbarEraserButton />
 									<inkToolbarPreview:InkToolbarBallpointPenButton />
@@ -293,7 +301,6 @@
 									<!--Insert the M3_LaunchButton snippet here-->
 
 								</inkToolbarPreview:InkToolbar>
-							</Border>
 
 
 							<Grid x:Name="InkingRoot"
@@ -307,7 +314,8 @@
 									   Stretch="UniformToFill"
 									   x:Name="SightImage" />
 
-								<InkCanvas x:Name="ImageInkCanvas" />
+								<InkCanvas x:Name="ImageInkCanvas"
+										   Visibility="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
 								<Image x:Name="InkImage"
 									   Visibility="Collapsed"
