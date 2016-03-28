@@ -514,8 +514,12 @@ Voice commands give your users a convenient, hands-free way to interact with you
     Open **VoiceCommands.xml**. Expand the **M2_NearbyCommand** snippet immediately below the closing tag of the  **LaunchApp** command.
 
     (Code Snippet - _M2_NearbyCommand_)
-    <!--mark:1-22-->
+    <!--mark:1-26-->
     ````C#
+    <Command Name="LaunchApp">
+    ...
+    </Command>
+    
 	<Command Name="NearbySights">
 	  <Example>Show me the closest sightseeing attractions</Example>
 	  <ListenFor>Show me nearby sights</ListenFor>
