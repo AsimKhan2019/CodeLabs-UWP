@@ -171,6 +171,9 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
                 var boundingBox = GeoboundingBox.TryCompute(GetSightsPositions());
                 if (animateMap)
                 {
+                    // Delay to allow the Map to finish loading - on faster machines, animation fails
+                    await Task.Delay(500);
+
                     // We actually don't want to wait for the map to stop animating
                     // so we assign the task to a variable to remove the warning about await
                     var task = Map.TrySetViewBoundsAsync(boundingBox,
