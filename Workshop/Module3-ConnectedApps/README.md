@@ -276,9 +276,9 @@ Let's take a look at how the extension app is set up.
 
 	- It then checks the Sights in the extension file against the existing Sights in the app. If they are not in **My Sights**, the extension Sights will be removed.
 
-1. Now that we've seen how extensions work and that we have the helper to support loading and unloading, we can set up the app to do the work. Open **App.xaml.cs**
+1. Now that we've seen how extensions work and that we have the helper to support loading and unloading, we can set up the app to do the work. 
 
-1. Expand the **M3_ExtensionManager** snippet anywhere in the **App** class. This code creates a new ExtensionManager to handle extensions with the name **SanFranPack.1.0** and sets up an ExtensionManager property that we can access.
+    Open **App.xaml.cs**. Expand the **M3_ExtensionManager** snippet where indicated before the __OnActivated__ method. This code creates a new ExtensionManager to handle extensions with the name **SanFranPack.1.0** and sets up an ExtensionManager property that we can access.
 
 	(Code Snippet - _M3_ExtensionManager_)
 
@@ -303,17 +303,17 @@ Let's take a look at how the extension app is set up.
 
 1. Open **ViewModels > SettingsPageViewModel.cs**. Uncomment the **Extensions ObservableCollection**.
 
-1. Deploy the **SightsToSee** app and run it from the Start Menu. Navigate to the **Settings** page. You can see that the Extensions list is empty. Before we can load the extension, it first needs to be installed on the machine. You can install an extension app directly from the Windows Store, sideload it, or deploy it if you have the source code.
+1. On the Visual Studio __Build__ menu, click __Deploy Solution__ to deploy the **SightsToSee** app to your computer. Start the app from the Start Menu. 
+
+    Navigate to the **Settings** page. You can see that the Extensions list is empty. Before we can load the extension, it first needs to be installed on the machine. You can install an extension app directly from the Windows Store, sideload it, or deploy it if you have the source code.
 
     ![The Empty Extensions List](Images/empty_extensions_list.png "The Empty Extensions List")
 
     _The extensions list is empty until an extension app is installed_
 
-1. Since we have the source code, Deploy the **AdditionalSights** project to install it. Keep the **Settings** page open as it deploys.
+1. The source code for the **AdditionalSights** project is in the same solution. In Solution Explorer, right-click on the **AdditionalSights** project and click __Deploy__ to install it. Keep the **Settings** page of __Sights2See__ open as it deploys.
 
-    > **Note:** You can sideload an appx bundle with PowerShell commands.
-
-    - As soon as the **AddtionalSights** app is installed, it appears in the **Extensions** list. Use the toggle to enable it.
+    - As soon as the **AddtionalSights** app is installed, it is detected by the ExtensionManager code and appears in the **Extensions** list on the settings page. Use the toggle to enable it.
 
     ![Enable the extension app](Images/enable_extension.png "Enable the extension app")
 
@@ -382,7 +382,7 @@ Let's start with a simple LaunchUri scenario.
 
 1. The app bar buttons you just added are hooked up to a **GetDirectionsAsync** method in the view model. In the next step, we'll create that method.
 
-1. Open the **SightDetailPageViewModel**. Expand the **M3_GetDirections** snippet anywhere in the view model.
+1. Open the **SightDetailPageViewModel**. Expand the **M3_GetDirections** snippet where indicated by the comment in the view model.
 
 	(Code Snippet - _M3_GetDirections_)
 
@@ -422,11 +422,11 @@ Let's start with a simple LaunchUri scenario.
 <a name="Ex3Task2"></a>
 #### Task 2 - Connect to another app using LaunchUriForResults ####
 
-Beyond launching a target app and passing it data, we can launch an app and receive results back. We're going to add a button to the InkToolbar we're using for image annotation and use it to launch a photoprocessing app. The photoprocessing app will apply a Lumia filter to the image and return the altered version to our SightsToSee app.
+Beyond launching a target app and passing it data, we can launch an app and receive results back. We're going to add a button to the InkToolbar we're using for image annotation and use it to launch a photoprocessing app. The photoprocessing app will apply a Lumia Imaging SDK filter to the image and return the altered version to our SightsToSee app.
 
 1. Before we can launch the photoprocessing app, we need to install it on the system. Open the **&lt;LabRoot&gt;\Module3\Begin\ImageProcessingApp\PhotoEditingLaunchForResults.sln** solution.
 
-1. Set the **QuickStart** project as the **StartUp Project** if it isn't already. The QuickStart app applies a black and white Lumia filter to a photograph and allows the user to adjust brightness.
+1. Once the project has opened, set your Solution Configuration to **Debug** and your Solution Platform to **x86**. Select **Local Machine** from the Debug Target dropdown menu. 
 
 1. Build and deploy the **QuickStart** app.
 
@@ -512,16 +512,15 @@ Beyond launching a target app and passing it data, we can launch an app and rece
 
     - If the response status is Success, we copy the new image file to the local folder and add it to the Sight record.
 
-1. Build and run your app. Open a Sight detail page and use the **LaunchForResults** button on the ImageInkToolbar to launch the QuickStart app and send it a token for the current Sight image.
-
-    ![The LaunchForResults Button](Images/launchforresults_button.png "The LaunchForResults Button")
-
-    _The LaunchForResults Button_
+1. Build and run your app. Open a Sight detail page and click the button on the toolbar underneath the image to show the Inking Toolbar with our new button added to it. Click the **LaunchForResults** button on the ImageInkToolbar to launch the QuickStart app and send it a token for the current Sight image.
 
 1. When the QuickStart app opens, set a brightness level for the modified image.
 
 1. Use the **Save the image** button to save and return the image to the SightsToSee app. You will see the modified image appear in the Sight gallery. For the purposes of this demo, we add it as an additional image, although you could easily modify the app to replace the original image with the modified one.
 
+    ![The Image editing functionality](Images/LaunchForResultsOutput.png "The LaunchForResults Button")
+
+    _Result of the LaunchForResults operation_
 
 <a name="Exercise4"></a>
 ### Exercise 4: Sharing files and content with other apps ###
@@ -547,7 +546,7 @@ Adding drag and drop is a quick way to make your app more user-friendly. We're g
 
 	- We are wiring up the Drop and DragOver events to methods in the view model. We'll add those methods in the following steps.
 
-1. Open the **SightDetailPageViewModel**. Expand the **M3_DragOver** snippet anywhere in the view model.
+1. Open the **SightDetailPageViewModel**. Expand the **M3_DragOver** snippet where indicated by the comment in the view model.
 
 	(Code Snippet - _M3_DragOver_)
 
@@ -587,7 +586,7 @@ Adding drag and drop is a quick way to make your app more user-friendly. We're g
 
     > **Note:** You can drag and drop multiple images at once.
 
-1. Build and run the app. Drag and drop an image or multiple images onto the gallery grid in a Sight detail view.
+1. Build and run the app. Open __Windows Explorer__ and navigate to a folder where you have some images (You can navigate to the images provided for this app by going to _C:\Labs\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\Begin\Microsoft.Labs.SightsToSee\Microsoft.Labs.SightsToSee\Assets\DemoImages_).  Drag and drop an image or multiple images onto the gallery grid in a Sight detail view.
 
     ![Drag and Drop](Images/drag_and_drop.png "Drag and Drop")
 
@@ -632,7 +631,7 @@ The Share contract is an easy way to share data between apps. You can share link
 		</AppBarButton>
 		````
 
-1. Now let's add the code to support the share button. Open the **SightDetailPageViewModel** and expand the **M3_ShareSight** snippet anywhere in the ViewModel.
+1. Now let's add the code to support the share button. Open the **SightDetailPageViewModel** and expand the **M3_ShareSight** snippet where indicated by the comment in the ViewModel.
 
 	(Code Snippet - _M3_ShareSight_)
 
