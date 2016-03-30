@@ -21,10 +21,13 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#2da092" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.personalAssistantLaunch" />
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="sights2see" />
+        </uap:Extension>
         <uap:Extension Category="windows.appService" EntryPoint="BackgroundTasks.VoiceCommandService">
           <uap:AppService Name="VoiceCommandService" />
         </uap:Extension>
+        <uap:Extension Category="windows.personalAssistantLaunch" />
         <!--Insert the M3_ExtensionHost snippet here-->
         <uap3:Extension Category="windows.appExtensionHost">
           <uap3:AppExtensionHost>

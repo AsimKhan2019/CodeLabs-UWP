@@ -210,6 +210,104 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
                 TileHelper.SetInteractiveTilesForTrip(CurrentTrip);
         }
 
+        public async void SetEatsByCuisine(string cuisinePreferences)
+        {
+            // Cuisine preferences come in from the Cortana pane as a comma separated list of styles
+            var cuisines = cuisinePreferences.Split(new char[] { ',' });
+
+            try
+            {
+                EatsControlViewModel.IsLoadingEats = true;
+                var allEats = await RestaurantDataService.Current.GetRestaurantsForTripAsync(CurrentTrip);
+                var selectedEats =
+                    new ObservableCollection<Restaurant>();
+
+                foreach (var cuisine in cuisines)
+                {
+                    if (cuisine != string.Empty)
+                    {
+                        switch (cuisine)
+                        {
+                            case "Indian":
+                                var matched = allEats.Where(r => r.CulinaryStyle == "Indian");
+                                foreach (var item in matched)
+                                {
+                                    selectedEats.Add(item);
+                                }
+                                break;
+                            case "French":
+                                matched = allEats.Where(r => r.CulinaryStyle == "French");
+                                foreach (var item in matched)
+                                {
+                                    selectedEats.Add(item);
+                                }
+                                break;
+                            case "Barbecue":
+                                matched = allEats.Where(r => r.CulinaryStyle == "Steakhouse");
+                                foreach (var item in matched)
+                                {
+                                    selectedEats.Add(item);
+                                }
+                                break;
+                            case "Chinese":
+                                matched = allEats.Where(r => r.CulinaryStyle == "Chinese");
+                                foreach (var item in matched)
+                                {
+                                    selectedEats.Add(item);
+                                }
+                                break;
+                            case "Diner":
+                                matched = allEats.Where(r => r.CulinaryStyle == "American");
+                                foreach (var item in matched)
+                                {
+                                    selectedEats.Add(item);
+                                }
+                                break;
+                            case "Greek":
+                                matched = allEats.Where(r => r.CulinaryStyle == "Greek");
+                                foreach (var item in matched)
+                                {
+                                    selectedEats.Add(item);
+                                }
+                                break;
+                            case "Italian":
+                                matched = allEats.Where(r => r.CulinaryStyle == "Italian");
+                                foreach (var item in matched)
+                                {
+                                    selectedEats.Add(item);
+                                }
+                                matched = allEats.Where(r => r.CulinaryStyle == "Pizza");
+                                foreach (var item in matched)
+                                {
+                                    selectedEats.Add(item);
+                                }
+                                break;
+                            case "Sushi":
+                                matched = allEats.Where(r => r.CulinaryStyle == "Seafood");
+                                foreach (var item in matched)
+                                {
+                                    selectedEats.Add(item);
+                                }
+                                matched = allEats.Where(r => r.CulinaryStyle == "Japanese");
+                                foreach (var item in matched)
+                                {
+                                    selectedEats.Add(item);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                EatsControlViewModel.Eats = selectedEats;
+            }
+            finally
+            {
+                EatsControlViewModel.IsLoadingEats = false;
+            }
+        }
+
+
         private void BuildSightGroups()
         {
             var grouped = from sight in Sights

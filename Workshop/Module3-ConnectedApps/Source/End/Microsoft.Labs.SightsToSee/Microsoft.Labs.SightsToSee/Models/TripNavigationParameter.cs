@@ -14,6 +14,7 @@ namespace Microsoft.Labs.SightsToSee.Models
         public Guid SightId { get; set; }
         public bool DisplayClosestSight { get; set; }
         public bool DeleteSight { get; set; }
+        public string CuisinePreferences { get; set; }
 
         // Setting the default to Sights
         public TripPivots ShowPivotName { get; set; } = TripPivots.Sights;

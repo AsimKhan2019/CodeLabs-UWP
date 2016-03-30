@@ -697,3 +697,12 @@ In this task, we will display the Sights as PushPins on the map, enable Aerial3D
 ## Summary ##
 
 In this module, you learned techniques to design and build an adaptive UI for multiple Windows devices. You used tools to generate and build default and adaptive tiles that enhance the user experience and extend interactions with the app onto the start menu.
+
+## Evaluations ##
+
+Please evaluate this lab. Your feedback is important to us!
+Scan the QR code to access the evaluation form for this lab.
+
+![Evaluation code](Images/L724-R1.png "Evaluation code")
+
+_Evaluation QR code_

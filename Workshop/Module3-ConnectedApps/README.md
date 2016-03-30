@@ -704,3 +704,12 @@ The Share contract is an easy way to share data between apps. You can share link
 In this module, we connected the app to the cloud and loaded additional app data through an App Extension. We also added LaunchUri and LaunchForResults scenarios to get directions from BingMaps and process photos that we added to the Sights.
 
 Finally, we enhanced the user experience by adding Drag and Drop and the Share contract.
+
+## Evaluations ##
+
+Please evaluate this lab. Your feedback is important to us!
+Scan the QR code to access the evaluation form for this lab.
+
+![Evaluation code](Images/L726-R1.png "Evaluation code")
+
+_Evaluation QR code_

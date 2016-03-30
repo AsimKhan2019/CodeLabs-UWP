@@ -117,10 +117,22 @@ namespace Microsoft.Labs.SightsToSee
             {
                 case ActivationKind.Protocol:
                     ProtocolActivatedEventArgs protocolArgs = args as ProtocolActivatedEventArgs;
-                    Windows.Foundation.WwwFormUrlDecoder decoder = new Windows.Foundation.WwwFormUrlDecoder(protocolArgs.Uri.Query);
-                    var siteId = decoder.GetFirstValueByName("LaunchContext");
-                    var parameter = new TripNavigationParameter { TripId = AppSettings.LastTripId, SightId = Guid.ParseExact(siteId, "D")}.GetJson();
-                    AppShell.Current.NavigateToPage(typeof(TripDetailPage), parameter);
+
+                    // Is this a protocol launch from Cortana actions, or from voice command?
+                    if (protocolArgs.Uri.Scheme == "sights2see")
+                    {
+                        Windows.Foundation.WwwFormUrlDecoder decoder = new Windows.Foundation.WwwFormUrlDecoder(protocolArgs.Uri.Query);
+                        var foodpref = decoder.GetFirstValueByName("foodpref");
+                        var parameter = new TripNavigationParameter { TripId = AppSettings.LastTripId, ShowPivotName= TripPivots.Eats, CuisinePreferences = foodpref }.GetJson();
+                        AppShell.Current.NavigateToPage(typeof(TripDetailPage), parameter);
+                    }
+                    else
+                    {
+                        Windows.Foundation.WwwFormUrlDecoder decoder = new Windows.Foundation.WwwFormUrlDecoder(protocolArgs.Uri.Query);
+                        var siteId = decoder.GetFirstValueByName("LaunchContext");
+                        var parameter = new TripNavigationParameter { TripId = AppSettings.LastTripId, SightId = Guid.ParseExact(siteId, "D") }.GetJson();
+                        AppShell.Current.NavigateToPage(typeof(TripDetailPage), parameter);
+                    }
                     break;
 
                 // Voice activation behavior

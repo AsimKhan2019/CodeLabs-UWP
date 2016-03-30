@@ -832,3 +832,12 @@ By completing this module, you should have:
 - Added inking support
 - Provided speech integration through Cortana
 - Built an interactive notification that enables direct user actions
+
+## Evaluations ##
+
+Please evaluate this lab. Your feedback is important to us!
+Scan the QR code to access the evaluation form for this lab.
+
+![Evaluation code](Images/L725-R1.png "Evaluation code")
+
+_Evaluation QR code_

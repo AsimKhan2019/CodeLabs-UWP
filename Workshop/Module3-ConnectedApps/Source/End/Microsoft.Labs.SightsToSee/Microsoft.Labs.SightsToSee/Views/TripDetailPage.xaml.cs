@@ -67,6 +67,11 @@ namespace Microsoft.Labs.SightsToSee.Views
                     }
                 }
 
+                if (! string.IsNullOrEmpty(parameter.CuisinePreferences))
+                {
+                    ViewModel.SetEatsByCuisine(parameter.CuisinePreferences);
+                }
+
                 // Set the current Pivot
                 switch (parameter.ShowPivotName)
                 {
