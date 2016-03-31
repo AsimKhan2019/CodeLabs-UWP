@@ -89,11 +89,10 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
             {
                 await InitializeAsync();
                 var trips = await tripTable.ToListAsync();
-                var sights = await sightTable.ToListAsync();
 
                 foreach (var trip in trips)
                 {
-                    trip.Sights = new List<Sight>(sights.Where(a => a.TripId == trip.Id));
+                    trip.Sights = new List<Sight>(await sightTable.Where(a => a.TripId == trip.Id).ToCollectionAsync());
                 }
 
                 return trips;
@@ -344,9 +343,14 @@ namespace Microsoft.Labs.SightsToSee.Library.Services.DataModelService
                 await sightTable.PushFileChangesAsync();
                 await sightFileTable.PushFileChangesAsync();
                 await tripTable.PullAsync("tripItems", tripTable.CreateQuery());
-                await sightTable.PullAsync("attractionItems", sightTable.CreateQuery());
-                await sightFileTable.PullAsync("attractionFileItems", sightFileTable.CreateQuery());
-                //await sightTable.GetFilesAsync();
+                foreach (var trip in await tripTable.ToCollectionAsync())
+                {
+                    await sightTable.PullAsync("attractionItems", sightTable.CreateQuery().Where(s => s.TripId == trip.Id));
+                }
+                foreach (var sight in await sightTable.ToCollectionAsync())
+                {
+                    await sightFileTable.PullAsync("attractionFileItems", sightFileTable.CreateQuery().Where(sf => sf.SightId == sight.Id));
+                }
             }
 
             catch (MobileServicePushFailedException ex)
