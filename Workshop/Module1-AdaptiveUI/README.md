@@ -147,9 +147,9 @@ Now that we’ve explored the fixed UI in the SightsToSee starter app, we can ad
     </VisualState>
     ````
 
-1. The snippet we just added will control the Tablet state for the navigation pane, but we also need to add a tablet state for the content. but we also need to add a tablet state for the content. Open **Views > TripDetailPage.xaml**.
+1. The snippet we just added will control the Tablet state for the navigation pane, but we also need to add a tablet state for the content. but we also need to add a tablet state for the content. 
 
-1.	Look for the `<!--Tablet State -->` section in the VisualStateGroup. Type **M1_TripTablet** below the comment and hit the Tab key to expand the snippet.
+1. Open **Views > TripDetailPage.xaml**. Look for the `<!--Tablet State -->` section in the VisualStateGroup. Type **M1_TripTablet** below the comment and hit the Tab key to expand the snippet.
 This state moves the Map control above the Sights GridViews, and it anchors the top, left, and right sides of the Map to the panel.
 
 	(Code Snippet - _M1_TripTablet_)

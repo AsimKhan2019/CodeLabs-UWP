@@ -148,7 +148,7 @@ The default pen for the InkCanvas is a simple black line. Right now, we are also
 
 In the next version of the Windows SDK, you'll have the option of adding an Ink Toolbar to any InkCanvas. We're going to use a preview of the toolbar for our Notes InkCanvas. The toolbar is customizable, so we'll also add our custom Save button to it.
 
-1. Notice that the `xmlns:c="using:InkToolbarPreview"` namespace has been added to the top-level **&lt;Page&gt;** element at the top of **SightDetailPage.xaml**. We've added an **InkToolbar** example for image annotation, and it is also using this namespace. We've also added the `using InkToolbarPreview` namespace to the **SightDetailPage** code-behind.
+1. Notice that the `xmlns:inkToolbarPreview="using:InkToolbarPreview"` namespace has been added to the top-level **&lt;Page&gt;** element at the top of **SightDetailPage.xaml**. We've added an **InkToolbar** example for image annotation, and it is also using this namespace. We've also added the `using InkToolbarPreview` namespace to the **SightDetailPage** code-behind.
 
 1. Expand the **M2_InkToolbar** snippet after the EnableInkButton in **SightDetailPage.xaml**.
 
@@ -185,27 +185,38 @@ In the next version of the Windows SDK, you'll have the option of adding an Ink 
 1. Scroll down to the `#region NotesInkToolbar` and expand the **M2_SaveUndo** snippet in the region.
 
 	(Code Snippet - _M2_SaveUndo_)
-	<!--mark:1-19-->
+	<!--mark:1-29-->
 	````C#
 	private async void NotesSaveButton_Click(object sender, RoutedEventArgs e)
-	{
-		 ViewModel.CurrentSight.NotesAreInk = true;
-		 var file = await ViewModel.GenerateStorageFileForInk();
-		 ViewModel.CurrentSight.InkFilePath = file.Path;
-		 using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
-		 {
-			  await NotesInkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
-		 }
-		 await ViewModel.UpdateSightAsync(ViewModel.CurrentSight);
-	}
+    {
+		ViewModel.CurrentSight.NotesAreInk = true;
 
-	private async void NotesUndoButton_Click(object sender, RoutedEventArgs e)
-	{
-		 NotesInkCanvas.InkPresenter.StrokeContainer.Clear();
-		 ViewModel.CurrentSight.NotesAreInk = false;
-		 ViewModel.IsNotesInking = false;
-		 await ViewModel.UpdateSightAsync(ViewModel.CurrentSight);
-	}
+		var sightFile = await ViewModel.CreateSightFileAndAssociatedStorageFileAsync();
+
+		// In the Sight, record where the ink strokes file can be found
+		ViewModel.CurrentSight.InkFileUri = sightFile.Uri;
+
+		// Get the destination StorageFile
+		var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(sightFile.Uri));
+
+		using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+		{
+		    await NotesInkCanvas.InkPresenter.StrokeContainer.SaveAsync(stream);
+		}
+
+		// save the file with the ink strokes
+		await ViewModel.SaveSightFileAsync(sightFile);
+		// and update the associated record
+		await ViewModel.UpdateSightAsync(ViewModel.CurrentSight);
+    }
+
+    private async void NotesUndoButton_Click(object sender, RoutedEventArgs e)
+    {
+		NotesInkCanvas.InkPresenter.StrokeContainer.Clear();
+		ViewModel.CurrentSight.NotesAreInk = false;
+		ViewModel.IsNotesInking = false;
+		await ViewModel.UpdateSightAsync(ViewModel.CurrentSight);
+    }
 	````
 
 1. Locate and review the **NotesSaveButton_Click** method which sets the **NotesAreInk** property on the Sight to true and saves the ink strokes in a storage file.
@@ -489,6 +500,8 @@ Voice commands give your users a convenient, hands-free way to interact with you
 1. Build and run the app to register the VCD. Close the app.
 
 1. Tap the microphone icon to the right of the Cortana pane and speak one of the variations of the launch command, for example say: "Sights to See, Show me my sights". The app should launch and navigate to the main page.
+
+    > **Note:** If you are working in a noisy place, you can type the command into the Cortana query box. Alternatively, you may find using a headset useful! 
 
 <a name="Ex2Task2"></a>
 #### Task 2 -  Voice Commands to interact with your App in the background ####
