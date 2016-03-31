@@ -58,7 +58,7 @@ We will be implementing the following Inking features:
 
 We'll start by adding an InkCanvas that can be used for taking notes.
 
-1. Open the starter project at **C:\Labs\CodeLabs-UWP\Workshop\Module 2-MorePersonalComputing\Begin\Microsoft.Labs.SightsToSee** and open the solution file.
+1. Open the starter project at **C:\Labs\CodeLabs-UWP\Workshop\Module 2-MorePersonalComputing\Source\Begin\Microsoft.Labs.SightsToSee** and open the solution file.
 
 1.	Once the project has opened, set your Solution Configuration to **Debug** and your Solution Platform to **x86**. Select **Local Machine** from the Debug Target dropdown menu.
 

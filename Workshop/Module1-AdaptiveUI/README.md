@@ -64,7 +64,7 @@ We’re going to begin with a version of the SightsToSee app that has a fixed la
 
 Let’s take a look at how the app is set up and plan an adaptive layout. We’ll begin by walking through the starter project.
 
-1.	In a new instance of Visual Studio 2015, choose **File > Open> Project/Solution**. Browse to **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Begin\Microsoft.Labs.SightsToSee** and open the solution file.
+1.	In a new instance of Visual Studio 2015, choose **File > Open> Project/Solution**. Browse to **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Source\Begin\Microsoft.Labs.SightsToSee** and open the solution file.
 
 1.	Once the project has opened, set your Solution Configuration to **Debug** and your Solution Platform to **x86**. Select **Local Machine** from the Debug Target dropdown menu.
 
@@ -326,7 +326,7 @@ In this task, we will add a logo asset to the project, and use the UWP Tile Gene
 
 	First, open the **Package.appxmanifest** and browse to the **Visual Assets** tab. Select **All Image Assets** to view the current tiles and splash assets. You’ll see that the placeholder UWP app tile appears for the recommended tile sizes.
 
-1. Right-click the **Assets** directory in the Solution Explorer and choose **Add > Existing Item**. Add the logo asset from **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Begin\Assets\Tile_Logo.png**.
+1. Right-click the **Assets** directory in the Solution Explorer and choose **Add > Existing Item**. Add the logo asset from **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Source\Begin\Assets\Tile_Logo.png**.
 
 	> **Note:** The new assets that will be generated using the extension will appear in the same folder as the original image. You may choose to add a subfolder to the Assets directory and place the new logo image in the subfolder for better organization.
 	> 
@@ -371,7 +371,7 @@ Do not install it from the store now - it is pre-installed on your computer.
 
 	> **Note:** The image path in the sample XML is defined as a relative path from the Notifications Visualizer app folder.
 
-1. Use the **Pick Folder of XML Files** button to select the **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Begin\Microsoft.Labs.SightsToSee\Assets** folder in the file explorer. The **AdaptiveTiles.xml** file will automatically load into the XML Payload window.
+1. Use the **Pick Folder of XML Files** button to select the **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Source\Begin\Microsoft.Labs.SightsToSee\Assets** folder in the file explorer. The **AdaptiveTiles.xml** file will automatically load into the XML Payload window.
 
     > **Note:** For more on adaptive tile and toast schema and implementation, check out the **Help (?)** section of the Notifications Visualizer app or visit https://msdn.microsoft.com/en-us/library/windows/apps/xaml/mt185606.aspx
 
@@ -397,7 +397,7 @@ The structure of the XML we’re going to generate with code will reflect the st
 
 1. Install the **NotificationsExtensions.Win10** NuGet Package.
 
-1. In the Solution Explorer, right-click the **Services > TileNotificationService** folder and choose **Add > Existing Item**. Browse to the **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Begin\Assets** folder and add **TileHelper.cs**.
+1. In the Solution Explorer, right-click the **Services > TileNotificationService** folder and choose **Add > Existing Item**. Browse to the **C:\Labs\CodeLabs-UWP\Workshop\Module 1-AdaptiveUI\Source\Begin\Assets** folder and add **TileHelper.cs**.
 
     > **Note:** The TileHelper generates XML similar to the XML we previewed in the Notifications Visualizer app. It looks for the first five Sights added to a Trip, and displays a peek image from each Sight along with the Sight name and description on an adaptive tile. The TileHelper also generates the tile notification.
 
