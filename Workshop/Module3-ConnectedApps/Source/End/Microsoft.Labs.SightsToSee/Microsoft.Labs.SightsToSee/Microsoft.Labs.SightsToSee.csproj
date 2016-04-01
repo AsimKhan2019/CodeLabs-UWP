@@ -143,6 +143,7 @@
     <Content Include="Models\DemoRestaurants.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Models\SanFranciscoSights.json" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="VoiceCommands.xml">
       <SubType>Designer</SubType>

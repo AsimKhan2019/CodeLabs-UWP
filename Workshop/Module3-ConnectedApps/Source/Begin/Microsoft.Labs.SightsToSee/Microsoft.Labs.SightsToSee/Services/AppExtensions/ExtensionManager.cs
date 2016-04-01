@@ -443,7 +443,10 @@ namespace Microsoft.Labs.SightsToSee.Facts
         // Enable is user intention. Load respects enable, but unload doesn't care
         public async void Unload()
         {
-            StorageFolder folder = await _extension.GetPublicFolderAsync();
+            // This is broken in 14291 - worked in 14273!
+            //StorageFolder folder = await _extension.GetPublicFolderAsync();
+            // HACK - temporarily set folder to the Models folder in the package - have put a copy of the SanFranciscoSights.json in there
+            StorageFolder folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Models");
 
             if (folder == null)
                 return; //nothing to unload
