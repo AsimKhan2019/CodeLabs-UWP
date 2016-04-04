@@ -14,8 +14,8 @@ Follow these steps to prepare your computer for the code labs:
     
 * For each module, go to the _labfolder_\CodeLabs-UWP\Workshop\ _module_\Source folder, rightclick on __Setup.cmd__ and click ‘Run as Administrator’. This installs the code snippets for the module. Do this for each module.
 
-* For module 2, install the __Ink Toolbar preview__. To install it, double click on _labfolder_\CodeLabs-UWP\Workshop\Module2-MorePersonalComputing\Source\Setup\ExtensionSDKs\InkToolbarPreview.vsix
+* For module 2, install the __Ink Toolbar preview__. To install it, double click on _labfolder_\CodeLabs-UWP\Workshop\Module2-MorePersonalComputing\Source\Setup\ExtensionSDKs\InkToolbarPreview.vsix. _Note: This InkToolbarPreview is provided for this lab only. It must not be used for production code. It will be replaced by the fully integrated Ink Toolbar in future releases of the Windows SDK._
 
-* For module 3, you need the latest Windows insider Program Windows 10 update (14291 right now) and the 14291 SDK –and emulators 
+* For module 3, you need the latest Windows insider Program Windows 10 update (14295 right now) and the 14295 SDK –and emulators 
 
 * For module 3, you will also need to go into Visual Studio: Tools->Nuget Package Manager->Package Manager settings. In there, go to Package Sources and setup a local NuGet package source, pointing at the folder _labfolder_\CodeLabs-UWP\Workshop\Module3-ConnectedApps\Source\Setup\Nuget-local  

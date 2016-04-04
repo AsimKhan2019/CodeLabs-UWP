@@ -29,9 +29,9 @@ In this module, you will see how to:
 
 The following is required to complete this module:
 
-- Microsoft Windows 10 Build 14291 or later
+- Microsoft Windows 10 Build 14295 or later
 - Microsoft Visual Studio 2015 Update 2 or later
-- Windows SDK Build 14291 or later
+- Windows SDK Build 14295 or later
 
 ---
 
