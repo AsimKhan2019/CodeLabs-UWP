@@ -1,0 +1,16 @@
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
+  <Metadata>
+    <Identity Id="InkToolbarPreviewVSIX.fe333d3f-b157-4159-a1fd-ab3593fddcdf" Version="1.0" Language="en-US" Publisher="Microsoft Corporation" />
+    <DisplayName>InkToolbar Preview</DisplayName>
+    <Description xml:space="preserve">InkToolbar Preview</Description>
+    <License>License.rtf</License>
+    <Icon>32x32.png</Icon>
+    <PreviewImage>200x200.png</PreviewImage>
+  </Metadata>
+  <Installation Scope="Global" AllUsers="true">
+    <InstallationTarget Id="Microsoft.ExtensionSDK" TargetPlatformIdentifier="UAP" SdkVersion="0.5" SdkName="InkToolbarPreview" TargetPlatformVersion="v0.8.0.0" />
+  </Installation>
+  <Assets>
+    <Asset Type="Microsoft.ExtensionSDK" Path="SDKManifest.xml" />
+  </Assets>
+</PackageManifest>
