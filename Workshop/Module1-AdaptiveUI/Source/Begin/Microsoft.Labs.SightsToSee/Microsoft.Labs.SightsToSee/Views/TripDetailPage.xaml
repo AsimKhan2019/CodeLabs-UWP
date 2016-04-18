@@ -107,11 +107,9 @@
                         <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="SightsGrid" />
                         <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.Padding" Value="0,0,0,0" />
                         <Setter Target="SightsGrid.Width" Value="404" />
                         <Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
                     </VisualState.Setters>
-
                 </VisualState>
 
 
@@ -139,9 +137,9 @@
                     <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
                 <TextBlock 
-                       Style="{ThemeResource SubheaderTextBlockStyle}"
-                       Margin="24,0,0,28" VerticalAlignment="Top"
-                       Text="{x:Bind ViewModel.CurrentTrip.Name, Mode=OneWay}" />
+                   Style="{ThemeResource SubheaderTextBlockStyle}"
+                   Margin="24,0,0,28" VerticalAlignment="Top"
+                   Text="{x:Bind ViewModel.CurrentTrip.Name, Mode=OneWay}" />
                 <Image Grid.Column="1" Source="ms-appx:///Assets/Sights2SeeLogo.png" Height="60" Margin="0,6,24,6" HorizontalAlignment="Right" VerticalAlignment="Center" />
 
             </Grid>
@@ -189,14 +187,14 @@
                             </GridView.GroupStyle>
                         </GridView>
 
-                        <Grid x:Name="MapGrid">
+                        <Grid x:Name="MapGrid"
+                              Margin="0,0,12,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <maps:MapControl x:Name="Map"
                                      Grid.Row="1"
-                                    Margin="0,0,10,0"
                                      MapServiceToken="{x:Bind ViewModel.MapServiceToken}"
                                      ZoomInteractionMode="GestureAndControl"
                                      TiltInteractionMode="GestureAndControl">
