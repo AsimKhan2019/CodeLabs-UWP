@@ -144,8 +144,6 @@
                 </Style>
             </Flyout.FlyoutPresenterStyle>
         </Flyout>
-
-
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -302,41 +300,39 @@
                                                 <Grid FlyoutBase.AttachedFlyout="{StaticResource SightMapFlyout}"
                                           Tapped="MapPinTapped">
                                                     <Ellipse Stroke="{StaticResource NavMenuForegroundPressedBrush}"
-                                                 StrokeThickness="2"
-                                                 maps:MapControl.Location="{x:Bind Location}"
-                                                 maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
-                                                 Height="36"
-                                                 Width="36"
-                                                 Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                 Fill="{StaticResource SightGridItemHoverBrush}" />
+                                                         StrokeThickness="2"
+                                                         maps:MapControl.Location="{x:Bind Location}"
+                                                         maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
+                                                         Height="36"
+                                                         Width="36"
+                                                         Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                         Fill="{StaticResource SightGridItemHoverBrush}" />
                                                     <Ellipse Stroke="{StaticResource NavMenuForegroundPressedBrush}"
-                                                 StrokeThickness="0"
-                                                 maps:MapControl.Location="{x:Bind Location}"
-                                                 maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
-                                                 Height="18"
-                                                 Width="18"
-                                                 Opacity=".75"
-                                                 Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                                                 Fill="{StaticResource SightGridItemHoverBrush}" />
+                                                         StrokeThickness="0"
+                                                         maps:MapControl.Location="{x:Bind Location}"
+                                                         maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
+                                                         Height="18"
+                                                         Width="18"
+                                                         Opacity=".75"
+                                                         Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                                        Fill="{StaticResource SightGridItemHoverBrush}" />
                                                     <Ellipse maps:MapControl.Location="{x:Bind Location}"
-                                                 maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
-                                                 Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                 Height="8"
-                                                 Width="8"
-                                                 Fill="Black" />
+                                                         maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
+                                                         Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                         Height="8"
+                                                         Width="8"
+                                                         Fill="Black" />
                                                     <Ellipse maps:MapControl.Location="{x:Bind Location}"
-                                                 maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
-                                                 Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                                                 Height="4"
-                                                 Width="4"
-                                                 Fill="Black" />
+                                                         maps:MapControl.NormalizedAnchorPoint="0.5,0.5"
+                                                         Visibility="{x:Bind IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                                         Height="4"
+                                                         Width="4"
+                                                         Fill="Black" />
                                                 </Grid>
                                             </DataTemplate>
                                         </maps:MapItemsControl.ItemTemplate>
                                     </maps:MapItemsControl>
                                 </maps:MapControl.Children>
-
-
                             </maps:MapControl>
 
                             <!--Insert the M1_Close3DX snippet here-->
