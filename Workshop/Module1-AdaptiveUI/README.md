@@ -170,7 +170,6 @@ This state moves the Map control above the Sights GridViews, and it anchors the 
             <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="SightsGrid" />
             <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
             <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" Value="True" />
-            <Setter Target="MapGrid.Padding" Value="0,0,0,0" />
             <Setter Target="SightsGrid.Width" Value="404" />
             <Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
         </VisualState.Setters>
@@ -234,13 +233,11 @@ You can override properties in a visual state by setting them to different value
                 <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="" />
                 <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                 <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                <Setter Target="MapGrid.Margin" Value="0,0,0,12" />
-                <Setter Target="MapGrid.Padding" Value="0" />
+                <Setter Target="MapGrid.Margin" Value="0,0,12,12" />
                 <Setter Target="SightsGrid.(RelativePanel.Below)" Value="MapGrid" />
                 <Setter Target="SightsGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                 <Setter Target="SightsGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                 <Setter Target="SightsGrid.Width" Value="Auto" />
-                <Setter Target="SightsGrid.Margin" Value="12,0,0,0" />
                 <Setter Target="LayoutPanel.Padding" Value="24,0,16,24" />
                 <Setter Target="LayoutPanel.Margin" Value="0" />
             </VisualState.Setters>
