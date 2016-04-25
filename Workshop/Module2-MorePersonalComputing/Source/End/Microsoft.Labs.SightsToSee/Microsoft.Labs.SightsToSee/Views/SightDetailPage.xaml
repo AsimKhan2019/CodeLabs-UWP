@@ -102,7 +102,6 @@
                         <Setter Target="Column1Content.Padding" Value="0" />
                         <Setter Target="GalleryGrid.Padding" Value="0" />
                         <Setter Target="GalleryGrid.Height" Value="82" />
-                        <Setter Target="InkingRoot.Width" Value="Auto" />
                         <Setter Target="ImageInkToolbar.Margin" Value="0,0" />
                         <Setter Target="GalleryGrid.Style" Value="{StaticResource HorizontalGridView}" />
                         <Setter Target="Column0Content.(RelativePanel.Below)" Value="Column1Content" />
@@ -127,7 +126,6 @@
                         <Setter Target="Column0Content.(RelativePanel.Below)" Value="Column1Content" />
                         <Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="Column0Content.Padding" Value="0" />
                         <Setter Target="Column0Content.Width" Value="Auto" />
                         <Setter Target="GalleryGrid.Padding" Value="0" />
                         <Setter Target="GalleryGrid.Height" Value="82" />
@@ -139,9 +137,8 @@
                         <Setter Target="SightImage.Stretch" Value="UniformToFill" />
                         <Setter Target="LayoutRoot.Margin" Value="0" />
                         <Setter Target="LayoutRoot.VerticalAlignment" Value="Stretch" />
-                        <Setter Target="Content.Padding" Value="0,10,15,72" />
-                        <Setter Target="LayoutPanel.Margin" Value="12,0" />
-                        <Setter Target="LayoutPanel.Padding" Value="0" />
+                        <Setter Target="LayoutPanel.Margin" Value="0" />
+                        <Setter Target="LayoutPanel.Padding" Value="12,0" />
                         <Setter Target="TitleCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="TitleArea.Visibility" Value="Collapsed" />
                         <Setter Target="MobileHeader.Visibility" Value="Visible" />
@@ -167,7 +164,6 @@
                                            BackgroundImageSource="{x:Bind ViewModel.SightImage, Mode=OneWay}" />
 
         <!-- Row 0 -->
-
         <Border x:Name="TitleArea" Grid.Row="0" HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
                 Margin="0,0,0,0">
@@ -178,7 +174,7 @@
         </Border>
 
         <Pivot x:Name="LayoutPanel"
-               Padding="24,0,24,0"
+               Padding="24,0,0,0"
                Margin="0,-40,0,0"
                Grid.Row="1">
             <PivotItem Style="{StaticResource SelectedPivotItem}">
@@ -187,16 +183,16 @@
                 </PivotItem.Header>
                 <ScrollViewer x:Name="MyScroller"
                       Grid.Row="1"
-                      Margin="0,12,0,0">
+                      Margin="0,12,60,0">
 
                     <RelativePanel x:Name="Content"                           
-                           Padding="0,10,0,48">
-                        <StackPanel Width="472"
-                            x:Name="Column0Content">
+                           Padding="0,10,8,48">
+                        <StackPanel x:Name="Column0Content">
                             <TextBlock x:Name="Caption"
                                Style="{ThemeResource CaptionTextBlockStyle}"
                                Text="{x:Bind ViewModel.CurrentSight.LongDescription, Mode=OneWay}"
                                Margin="0,0,0,36" />
+                            
                             <!--Insert the M2_DatePicker snippet here-->
                             <StackPanel Orientation="Vertical" Grid.Row="0">
                                 <TextBlock VerticalAlignment="Center" FontSize="20" Margin="0,0,0,10">When are you going?</TextBlock>
@@ -212,47 +208,43 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" VerticalAlignment="Center" FontSize="20">Notes</TextBlock>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" FontSize="20">Notes</TextBlock>
 
-                                    <!--Insert the M2_EnableInkButton snippet here-->
-                                    <Button x:Name="InkButton" Grid.Column="1" Background="Transparent" Click="{x:Bind ViewModel.EnableInk}"
-                                        Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
-                                        <FontIcon Glyph="&#xEC87;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
-                                    </Button>
+                                <!--Insert the M2_EnableInkButton snippet here-->
+                                <Button x:Name="InkButton" Grid.Column="1" Background="Transparent" Click="{x:Bind ViewModel.EnableInk}"
+                                    Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                                    <FontIcon Glyph="&#xEC87;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
+                                </Button>
 
-                                    <!--Insert the M2_InkToolbar snippet here-->
-                                    <inkToolbarPreview:InkToolbar x:Name="NoteInkToolbar" Grid.Column="1"
-                                                                  TargetInkCanvas="{x:Bind NotesInkCanvas}"
-                                                                  Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                                  EraseAllClick="EraserClearAll">
-
-
-                                        <inkToolbarPreview:InkToolbarEraserButton />
-                                        <inkToolbarPreview:InkToolbarBallpointPenButton SelectedStrokeWidth="5"/>
-
-                                        <inkToolbarPreview:InkToolbarCustomToggleButton Click="TryInkReco">
-                                            <FontIcon Glyph="&#xE8E9;" FontFamily="Segoe MDL2 Assets" />
-                                        </inkToolbarPreview:InkToolbarCustomToggleButton>
-
-                                        <inkToolbarPreview:InkToolbarCustomToggleButton Click="NotesSaveButton_Click">
-                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE001;" />
-                                        </inkToolbarPreview:InkToolbarCustomToggleButton>
-                                        <inkToolbarPreview:InkToolbarCustomToggleButton Click="NotesUndoButton_Click">
-                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
-                                        </inkToolbarPreview:InkToolbarCustomToggleButton>
+                                <!--Insert the M2_InkToolbar snippet here-->
+                                <!--<inkToolbarPreview:InkToolbar x:Name="NoteInkToolbar" Grid.Column="1" 
+                                                                TargetInkCanvas="{x:Bind NotesInkCanvas}"
+                                                                Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                                EraseAllClick="EraserClearAll">
 
 
-                                    </inkToolbarPreview:InkToolbar>
+                                    <inkToolbarPreview:InkToolbarEraserButton />
+                                    <inkToolbarPreview:InkToolbarBallpointPenButton SelectedStrokeWidth="5"/>
 
-                                </Grid>
-                                <Border Grid.Row="1" Background="White"
-                                    Height="96"
-                                    Margin="0,8,0,0">
+                                    <inkToolbarPreview:InkToolbarCustomToggleButton Click="TryInkReco">
+                                        <FontIcon Glyph="&#xE8E9;" FontFamily="Segoe MDL2 Assets" />
+                                    </inkToolbarPreview:InkToolbarCustomToggleButton>
+
+                                    <inkToolbarPreview:InkToolbarCustomToggleButton Click="NotesSaveButton_Click">
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE001;" />
+                                    </inkToolbarPreview:InkToolbarCustomToggleButton>
+                                    <inkToolbarPreview:InkToolbarCustomToggleButton Click="NotesUndoButton_Click">
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
+                                    </inkToolbarPreview:InkToolbarCustomToggleButton>
+
+                                </inkToolbarPreview:InkToolbar>-->
+
+                                <Border Grid.Row="1" Grid.ColumnSpan="2" Background="White"
+                                        Height="96">
 
                                     <TextBox  x:Name="Notes"
                                          Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
@@ -262,14 +254,14 @@
                                 </Border>
 
                                 <!--Insert the M2_NotesInkCanvas snippet here-->
-                                <Grid x:Name="InkGrid" 
-                                      Grid.Row="1" 
+                                <!--<Grid x:Name="InkGrid" 
+                                      Grid.Row="1" Grid.ColumnSpan="2" 
                                       Background="White" 
                                       Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                    Margin="0,8,0,0">
-                                    <InkCanvas x:Name="NotesInkCanvas" 
-                                       MinHeight="500" />
-                                </Grid>
+                                      Margin="0,8,0,0">
+                                     <InkCanvas x:Name="NotesInkCanvas" 
+                                                MinHeight="500" />
+                                </Grid>-->
 
                             </Grid>
 
@@ -312,7 +304,7 @@
                             <Grid x:Name="InkingRoot"
                                   Grid.Row="0"
                                   Height="448"
-                                  Width="448"
+                                  Width="Auto"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Left">
 
@@ -457,6 +449,7 @@
             </AppBarButton>
         </CommandBar>-->
 
+        
         <!-- Content Dialogs -->
 
         <!--Insert the M2_InkRecoDialog snippet here-->
