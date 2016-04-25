@@ -185,9 +185,10 @@ namespace Microsoft.Labs.SightsToSee.Controls
                 yOffset = (BlurredImage.ActualHeight - imageHeight * scale) / 2.0;
                 xOffset = (BlurredImage.ActualWidth - imageWidth * scale) / 2.0;
 
-                args.DrawingSession.DrawImage(_blurEffect,
-                    new Rect(xOffset, yOffset, imageWidth * scale, imageHeight * scale),
-                    _backgroundBitmap.Bounds);
+                if (_blurEffect != null)
+                    args.DrawingSession.DrawImage(_blurEffect,
+                        new Rect(xOffset, yOffset, imageWidth * scale, imageHeight * scale),
+                        _backgroundBitmap.Bounds);
             }
         }
 
@@ -216,9 +217,10 @@ namespace Microsoft.Labs.SightsToSee.Controls
                 yOffset = (BlurredImage.ActualHeight - imageHeight * scale) / 2.0;
                 xOffset = (BlurredImage.ActualWidth - imageWidth * scale) / 2.0;
 
-                args.DrawingSession.DrawImage(_blurEffect,
-                    new Rect(xOffset, yOffset, imageWidth * scale, imageHeight * scale),
-                    _altBackBitmap.Bounds);
+                if (_blurEffect != null)
+                    args.DrawingSession.DrawImage(_blurEffect,
+                        new Rect(xOffset, yOffset, imageWidth * scale, imageHeight * scale),
+                        _altBackBitmap.Bounds);
             }
         }
 

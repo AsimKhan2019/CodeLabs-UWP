@@ -18,10 +18,10 @@ namespace Microsoft.Labs.SightsToSee.Controls
     public sealed partial class BlurredBackgroundControl : UserControl
     {
         public static readonly DependencyProperty BlurFactorProperty = DependencyProperty.Register(
-            "BlurFactor", typeof (float), typeof (BlurredBackgroundControl), new PropertyMetadata(20.0f));
+            "BlurFactor", typeof(float), typeof(BlurredBackgroundControl), new PropertyMetadata(20.0f));
 
         public static readonly DependencyProperty BackgroundImageSourceProperty = DependencyProperty.Register(
-            "BackgroundImageSource", typeof (ImageSource), typeof (BlurredBackgroundControl),
+            "BackgroundImageSource", typeof(ImageSource), typeof(BlurredBackgroundControl),
             new PropertyMetadata(default(ImageSource), PropertyChangedCallback));
 
         private CanvasBitmap _backgroundBitmap;
@@ -39,13 +39,13 @@ namespace Microsoft.Labs.SightsToSee.Controls
 
         public float BlurFactor
         {
-            get { return (float) GetValue(BlurFactorProperty); }
+            get { return (float)GetValue(BlurFactorProperty); }
             set { SetValue(BlurFactorProperty, value); }
         }
 
         public ImageSource BackgroundImageSource
         {
-            get { return (ImageSource) GetValue(BackgroundImageSourceProperty); }
+            get { return (ImageSource)GetValue(BackgroundImageSourceProperty); }
             set { SetValue(BackgroundImageSourceProperty, value); }
         }
 
@@ -70,7 +70,7 @@ namespace Microsoft.Labs.SightsToSee.Controls
                     return;
                 }
 
-                var uriPath = ((BitmapImage) imageSource).UriSource;
+                var uriPath = ((BitmapImage)imageSource).UriSource;
                 var path = uriPath.AbsoluteUri;
                 if (path.StartsWith("ms-appx"))
                 {
@@ -78,7 +78,7 @@ namespace Microsoft.Labs.SightsToSee.Controls
                     //Pending issue https://github.com/aspnet/EntityFramework/issues/4683
 #if !EFCOREHACK
                     control._backgroundBitmap =
-                        await CanvasBitmap.LoadAsync(control.BlurredImage, ((BitmapImage) imageSource).UriSource);
+                        await CanvasBitmap.LoadAsync(control.BlurredImage, ((BitmapImage)imageSource).UriSource);
                     control._altBackBitmap =
                         await CanvasBitmap.LoadAsync(control.BlurredBackImage, ((BitmapImage)imageSource).UriSource);
 #endif
@@ -86,8 +86,8 @@ namespace Microsoft.Labs.SightsToSee.Controls
                 else if (path.StartsWith("ms-appdata"))
                 {
 #if !EFCOREHACK
-                    control._backgroundBitmap = 
-                        await CanvasBitmap.LoadAsync(control.BlurredImage,((BitmapImage)imageSource).UriSource);
+                    control._backgroundBitmap =
+                        await CanvasBitmap.LoadAsync(control.BlurredImage, ((BitmapImage)imageSource).UriSource);
                     control._altBackBitmap =
                         await CanvasBitmap.LoadAsync(control.BlurredBackImage, ((BitmapImage)imageSource).UriSource);
 #endif
@@ -95,7 +95,7 @@ namespace Microsoft.Labs.SightsToSee.Controls
                 else
                 {
 #if !EFCOREHACK
-                    control._backgroundBitmap = 
+                    control._backgroundBitmap =
                         await CanvasBitmap.LoadAsync(control.BlurredImage, uriPath.AbsolutePath);
                     control._altBackBitmap =
                         await CanvasBitmap.LoadAsync(control.BlurredBackImage, ((BitmapImage)imageSource).UriSource);
@@ -167,27 +167,28 @@ namespace Microsoft.Labs.SightsToSee.Controls
                 var imageHeight = _backgroundBitmap.Bounds.Height;
                 var imageWidth = _backgroundBitmap.Bounds.Width;
 
-                var scale = Math.Min(BlurredImage.ActualWidth/imageWidth, BlurredImage.ActualHeight/imageHeight);
+                var scale = Math.Min(BlurredImage.ActualWidth / imageWidth, BlurredImage.ActualHeight / imageHeight);
 
                 double xOffset = 0, yOffset = 0;
-                if (Math.Abs(imageWidth*scale - BlurredImage.ActualWidth) < 1)
+                if (Math.Abs(imageWidth * scale - BlurredImage.ActualWidth) < 1)
                 {
                     // Basically the same width, we need to scale up for the height to fit
-                    var newScale = BlurredImage.ActualHeight/(imageHeight*scale);
+                    var newScale = BlurredImage.ActualHeight / (imageHeight * scale);
                     scale *= newScale;
                 }
                 else
                 {
-                    var newScale = BlurredImage.ActualWidth/(imageWidth*scale);
+                    var newScale = BlurredImage.ActualWidth / (imageWidth * scale);
                     scale *= newScale;
                 }
 
-                yOffset = (BlurredImage.ActualHeight - imageHeight*scale)/2.0;
-                xOffset = (BlurredImage.ActualWidth - imageWidth*scale)/2.0;
+                yOffset = (BlurredImage.ActualHeight - imageHeight * scale) / 2.0;
+                xOffset = (BlurredImage.ActualWidth - imageWidth * scale) / 2.0;
 
-                args.DrawingSession.DrawImage(_blurEffect,
-                    new Rect(xOffset, yOffset, imageWidth*scale, imageHeight*scale),
-                    _backgroundBitmap.Bounds);
+                if (_blurEffect != null)
+                    args.DrawingSession.DrawImage(_blurEffect,
+                        new Rect(xOffset, yOffset, imageWidth * scale, imageHeight * scale),
+                        _backgroundBitmap.Bounds);
             }
         }
 
@@ -216,9 +217,10 @@ namespace Microsoft.Labs.SightsToSee.Controls
                 yOffset = (BlurredImage.ActualHeight - imageHeight * scale) / 2.0;
                 xOffset = (BlurredImage.ActualWidth - imageWidth * scale) / 2.0;
 
-                args.DrawingSession.DrawImage(_blurEffect,
-                    new Rect(xOffset, yOffset, imageWidth * scale, imageHeight * scale),
-                    _altBackBitmap.Bounds);
+                if (_blurEffect != null)
+                    args.DrawingSession.DrawImage(_blurEffect,
+                        new Rect(xOffset, yOffset, imageWidth * scale, imageHeight * scale),
+                        _altBackBitmap.Bounds);
             }
         }
 
