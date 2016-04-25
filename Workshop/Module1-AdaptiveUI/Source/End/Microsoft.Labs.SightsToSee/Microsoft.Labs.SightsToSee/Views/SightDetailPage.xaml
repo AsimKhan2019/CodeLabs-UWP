@@ -78,11 +78,10 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
+                        <Setter Target="Column0Content.(RelativePanel.RightOf)" Value="Column1Content" />
                         <Setter Target="Column1Content.Padding" Value="0" />
                         <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />                            
-                        <Setter Target="Column0Content.Margin" Value="20,0,12,0" />
-                        <Setter Target="Column0Content.(RelativePanel.RightOf)" Value="Column1Content" />
-                        <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="Column0Content.Margin" Value="20,0,0,0" />
                         <Setter Target="GalleryGrid.Padding" Value="0" />
                         <Setter Target="InkingRoot.Width" Value="Auto" />
                         <Setter Target="GalleryGrid.ItemsPanel" Value="{StaticResource ItemsPanelTemplate}" />
@@ -187,12 +186,12 @@
                               Margin="0,12,60,0">
 
                     <RelativePanel x:Name="Content"                           
-                           Padding="0,10,4,48" VerticalAlignment="Top">
+                           Padding="0,10,8,48" VerticalAlignment="Top">
                         <StackPanel x:Name="Column0Content">
                             <TextBlock x:Name="Caption"
                                Style="{ThemeResource CaptionTextBlockStyle}"
                                Text="{x:Bind ViewModel.CurrentSight.LongDescription, Mode=OneWay}"
-                                       TextWrapping="WrapWholeWords"
+                               TextWrapping="WrapWholeWords"
                                Margin="0,0,0,36" />
 
                             <Grid>

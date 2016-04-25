@@ -250,17 +250,6 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             await UpdateSightAsync(CurrentSight);
         }
 
-        public async void GetDirectionsFromFlyoutAsync(object sender, RoutedEventArgs e)
-        {
-            var sight = ((Button) sender).DataContext as Sight;
-            var mapsUri = new Uri($@"bingmaps:?rtp=~pos.{sight.Latitude}_{sight.Longitude}_{sight.Name}");
-
-            // Launch the Windows Maps app
-            var launcherOptions = new LauncherOptions();
-            launcherOptions.TargetApplicationPackageFamilyName = "Microsoft.WindowsMaps_8wekyb3d8bbwe";
-            await Launcher.LaunchUriAsync(mapsUri, launcherOptions);
-        }
-
         // Insert the M1_Close3D snippet here
         public async void Close3D()
         {
