@@ -156,9 +156,11 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <!-- Visual States -->
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>                 
-                <VisualState>
+            <VisualStateGroup>
+                <!-- Wide state -->
+                <VisualState x:Name="WideState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
@@ -172,12 +174,14 @@
                         <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="SightsGrid" />
                         <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="MapGrid.(RelativePanel.AlignBottomWithPanel)" Value="True" />
-                        <Setter Target="MapGrid.Padding" Value="0,0,0,0" />
                         <Setter Target="SightsGrid.Width" Value="404" />
                         <Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
                     </VisualState.Setters>
-                </VisualState>
-                <VisualState>
+
+                </VisualState>                
+
+                <!-- Narrow State -->
+                <VisualState x:Name="NarrowState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
@@ -191,12 +195,10 @@
                         <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="MapGrid.Margin" Value="0,0,12,12" />
-                        <Setter Target="MapGrid.Padding" Value="0" />
                         <Setter Target="SightsGrid.(RelativePanel.Below)" Value="MapGrid" />
                         <Setter Target="SightsGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="SightsGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="SightsGrid.Width" Value="Auto" />
-                        <Setter Target="SightsGrid.Margin" Value="12,0,0,0" />
                         <Setter Target="LayoutPanel.Padding" Value="24,0,16,24" />
                         <Setter Target="LayoutPanel.Margin" Value="0" />
                     </VisualState.Setters>
@@ -246,10 +248,10 @@
 
             <Pivot x:Name="LayoutPanel" Margin="0,-40,0,0">
                 <PivotItem Style="{StaticResource SelectedPivotItem}"  >
-                    <PivotItem.Header>     
+                    <PivotItem.Header>
                         <TextBlock Text="Sights"/>
                     </PivotItem.Header>
-                    
+
                     <RelativePanel>
                         <GridView x:Name="SightsGrid"
                           ItemsSource="{x:Bind CvsSights.View, Mode=OneWay}"
@@ -266,14 +268,14 @@
                             </GridView.GroupStyle>
                         </GridView>
 
-                        <Grid x:Name="MapGrid">
+                        <Grid x:Name="MapGrid"
+                              Margin="0,0,12,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <maps:MapControl x:Name="Map"
                                      Grid.Row="1"
-                                     Margin="0,0,12,0"
                                      MapServiceToken="{x:Bind ViewModel.MapServiceToken}"
                                      ZoomInteractionMode="GestureAndControl"
                                      TiltInteractionMode="GestureAndControl">
@@ -319,14 +321,14 @@
                                 </maps:MapControl.Children>
                             </maps:MapControl>
 
-                            <!--Insert M1_Close3DX snippet here-->
+                            <!--Insert the M1_Close3DX snippet here-->
                             <Button Style="{StaticResource CircleButtonStyle}"
-                                Grid.Row="1"
-                                Click="{x:Bind ViewModel.Close3DAsync}"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Right"
-                                Margin="24"
-                                Visibility="{x:Bind ViewModel.IsDisplay3D, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    Grid.Row="1"
+                                    Click="{x:Bind ViewModel.Close3D}"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Right"
+                                    Margin="24"
+                                    Visibility="{x:Bind ViewModel.IsDisplay3D, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <FontIcon
                                     x:Name="CloseView3D"
                                     VerticalAlignment="Center"

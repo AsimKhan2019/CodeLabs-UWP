@@ -323,85 +323,6 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             SightGroups = new ObservableCollection<SightGroup>(grouped.ToList());
         }
 
-        public async void ShowStreet(object sender, RoutedEventArgs e)
-        {
-            Flyout?.Hide();
-            // sender is the button - and the data context is the Sight
-            CurrentSight = ((Button) sender).DataContext as Sight;
-            if (CurrentSight == null)
-                return;
-
-            // Check if Streetside is supported.
-            if (Map.IsStreetsideSupported)
-            {
-                var panorama = await StreetsidePanorama.FindNearbyAsync(CurrentSight.Location);
-
-                // Set the Streetside view if a panorama exists.
-                if (panorama != null)
-                {
-                    // Create the Streetside view.
-                    var ssView = new StreetsideExperience(panorama) {OverviewMapVisible = true};
-                    Map.CustomExperience = ssView;
-                }
-                else
-                {
-                    var viewNotSupportedDialog = new ContentDialog
-                    {
-                        Title = "Streetside not available",
-                        Content = "\nNo Streetside view found for this location.",
-                        PrimaryButtonText = "OK"
-                    };
-                    await viewNotSupportedDialog.ShowAsync();
-                }
-            }
-            else
-            {
-                // If Streetside is not supported
-                var viewNotSupportedDialog = new ContentDialog
-                {
-                    Title = "Streetside is not supported",
-                    Content = "\nStreetside views are not supported on this device.",
-                    PrimaryButtonText = "OK"
-                };
-                await viewNotSupportedDialog.ShowAsync();
-            }
-        }
-
-        public async void Show3D(object sender, RoutedEventArgs e)
-        {
-            Flyout?.Hide();
-            // sender is the button - and the data context is the Sight
-            CurrentSight = ((Button) sender).DataContext as Sight;
-            if (CurrentSight == null)
-                return;
-
-            if (Map.Is3DSupported)
-            {
-                // Set the aerial 3D view.
-                Map.Style = MapStyle.Aerial3DWithRoads;
-
-
-                // Create the map scene.
-                var hwScene = MapScene.CreateFromLocationAndRadius(CurrentSight.Location,
-                    200, /* show this many meters around */
-                    0, /* looking at it to the North*/
-                    60 /* degrees pitch */);
-                // Set the 3D view with animation.
-                await Map.TrySetSceneAsync(hwScene, MapAnimationKind.Bow);
-                IsDisplay3D = true;
-            }
-            else
-            {
-                // If 3D views are not supported, display dialog.
-                var viewNotSupportedDialog = new ContentDialog
-                {
-                    Title = "3D is not supported",
-                    Content = "\n3D views are not supported on this device.",
-                    PrimaryButtonText = "OK"
-                };
-                await viewNotSupportedDialog.ShowAsync();
-            }
-        }
 
         public void ShowDetail(object sender, RoutedEventArgs e)
         {
@@ -433,22 +354,91 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             await UpdateSightAsync(CurrentSight);
         }
 
-        public async void GetDirectionsFromFlyoutAsync(object sender, RoutedEventArgs e)
-        {
-            var sight = ((Button) sender).DataContext as Sight;
-            var mapsUri = new Uri($@"bingmaps:?rtp=~pos.{sight.Latitude}_{sight.Longitude}_{sight.Name}");
-
-            // Launch the Windows Maps app
-            var launcherOptions = new LauncherOptions();
-            launcherOptions.TargetApplicationPackageFamilyName = "Microsoft.WindowsMaps_8wekyb3d8bbwe";
-            await Launcher.LaunchUriAsync(mapsUri, launcherOptions);
-        }
-
-        public async void Close3DAsync()
+        public async void Close3D()
         {
             IsDisplay3D = false;
             Map.Style = MapStyle.Road;
             await Map.TrySetViewAsync(CurrentSight.Location, 13, 0, 0);
+        }
+
+        public async void ShowStreet(object sender, RoutedEventArgs e)
+        {
+            Flyout?.Hide();
+            // sender is the button - and the data context is the Sight
+            CurrentSight = ((Button)sender).DataContext as Sight;
+            if (CurrentSight == null)
+                return;
+
+            // Check if Streetside is supported.
+            if (Map.IsStreetsideSupported)
+            {
+                var panorama = await StreetsidePanorama.FindNearbyAsync(CurrentSight.Location);
+
+                // Set the Streetside view if a panorama exists.
+                if (panorama != null)
+                {
+                    // Create the Streetside view.
+                    var ssView = new StreetsideExperience(panorama) { OverviewMapVisible = true };
+                    Map.CustomExperience = ssView;
+                }
+                else
+                {
+                    var viewNotSupportedDialog = new ContentDialog
+                    {
+                        Title = "Streetside not available",
+                        Content = "\nNo Streetside view found for this location.",
+                        PrimaryButtonText = "OK"
+                    };
+                    await viewNotSupportedDialog.ShowAsync();
+                }
+            }
+            else
+            {
+                // If Streetside is not supported
+                var viewNotSupportedDialog = new ContentDialog
+                {
+                    Title = "Streetside is not supported",
+                    Content = "\nStreetside views are not supported on this device.",
+                    PrimaryButtonText = "OK"
+                };
+                await viewNotSupportedDialog.ShowAsync();
+            }
+        }
+
+        public async void Show3D(object sender, RoutedEventArgs e)
+        {
+            Flyout?.Hide();
+            // sender is the button - and the data context is the Sight
+            CurrentSight = ((Button)sender).DataContext as Sight;
+            if (CurrentSight == null)
+                return;
+
+            if (Map.Is3DSupported)
+            {
+                // Set the aerial 3D view.
+                Map.Style = MapStyle.Aerial3DWithRoads;
+
+
+                // Create the map scene.
+                var hwScene = MapScene.CreateFromLocationAndRadius(CurrentSight.Location,
+                    200, /* show this many meters around */
+                    0, /* looking at it to the North*/
+                    60 /* degrees pitch */);
+                // Set the 3D view with animation.
+                await Map.TrySetSceneAsync(hwScene, MapAnimationKind.Bow);
+                IsDisplay3D = true;
+            }
+            else
+            {
+                // If 3D views are not supported, display dialog.
+                var viewNotSupportedDialog = new ContentDialog
+                {
+                    Title = "3D is not supported",
+                    Content = "\n3D views are not supported on this device.",
+                    PrimaryButtonText = "OK"
+                };
+                await viewNotSupportedDialog.ShowAsync();
+            }
         }
 
         public void SightClicked(object sender, ItemClickEventArgs args)
