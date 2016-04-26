@@ -342,6 +342,17 @@ namespace Microsoft.Labs.SightsToSee.ViewModels
             await UpdateSightAsync(CurrentSight);
         }
 
+        public async void GetDirectionsFromFlyoutAsync(object sender, RoutedEventArgs e)
+        {
+            var sight = ((Button)sender).DataContext as Sight;
+            var mapsUri = new Uri($@"bingmaps:?rtp=~pos.{sight.Latitude}_{sight.Longitude}_{sight.Name}");
+
+            // Launch the Windows Maps app
+            var launcherOptions = new LauncherOptions();
+            launcherOptions.TargetApplicationPackageFamilyName = "Microsoft.WindowsMaps_8wekyb3d8bbwe";
+            await Launcher.LaunchUriAsync(mapsUri, launcherOptions);
+        }
+
         public async void AddSightAsync()
         {
             if (CurrentSightDate.HasValue)
