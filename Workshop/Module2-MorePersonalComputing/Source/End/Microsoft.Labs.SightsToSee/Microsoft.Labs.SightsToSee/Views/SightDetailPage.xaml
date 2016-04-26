@@ -221,7 +221,7 @@
                                 </Button>
 
                                 <!--Insert the M2_InkToolbar snippet here-->
-                                <!--<inkToolbarPreview:InkToolbar x:Name="NoteInkToolbar" Grid.Column="1" 
+                                <inkToolbarPreview:InkToolbar x:Name="NoteInkToolbar" Grid.Column="1" 
                                                                 TargetInkCanvas="{x:Bind NotesInkCanvas}"
                                                                 Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
                                                                 EraseAllClick="EraserClearAll">
@@ -241,7 +241,7 @@
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
                                     </inkToolbarPreview:InkToolbarCustomToggleButton>
 
-                                </inkToolbarPreview:InkToolbar>-->
+                                </inkToolbarPreview:InkToolbar>
 
                                 <Border Grid.Row="1" Grid.ColumnSpan="2" Background="White"
                                         Height="96">
@@ -254,14 +254,14 @@
                                 </Border>
 
                                 <!--Insert the M2_NotesInkCanvas snippet here-->
-                                <!--<Grid x:Name="InkGrid" 
+                                <Grid x:Name="InkGrid" 
                                       Grid.Row="1" Grid.ColumnSpan="2" 
                                       Background="White" 
                                       Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
                                       Margin="0,8,0,0">
                                      <InkCanvas x:Name="NotesInkCanvas" 
                                                 MinHeight="500" />
-                                </Grid>-->
+                                </Grid>
 
                             </Grid>
 
