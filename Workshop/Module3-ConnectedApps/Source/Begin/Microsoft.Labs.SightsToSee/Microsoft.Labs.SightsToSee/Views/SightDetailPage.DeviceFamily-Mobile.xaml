@@ -126,7 +126,6 @@
                         <Setter Target="Column0Content.(RelativePanel.Below)" Value="Column1Content" />
                         <Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="Column0Content.Padding" Value="0" />
                         <Setter Target="Column0Content.Width" Value="Auto" />
                         <Setter Target="GalleryGrid.Padding" Value="0" />
                         <Setter Target="GalleryGrid.Height" Value="82" />
@@ -138,7 +137,6 @@
                         <Setter Target="SightImage.Stretch" Value="UniformToFill" />
                         <Setter Target="LayoutRoot.Margin" Value="0" />
                         <Setter Target="LayoutRoot.VerticalAlignment" Value="Stretch" />
-                        <Setter Target="Content.Padding" Value="0,10,15,72" />
                         <Setter Target="LayoutPanel.Margin" Value="0" />
                         <Setter Target="LayoutPanel.Padding" Value="12,0" />
                         <Setter Target="TitleCommandBar.Visibility" Value="Collapsed" />
@@ -185,7 +183,7 @@
                 </PivotItem.Header>
                 <ScrollViewer x:Name="MyScroller"
                       Grid.Row="1"
-                      Margin="0,12,60,0">
+                      Margin="0,12,16,0">
 
                     <RelativePanel x:Name="Content"                           
                            Padding="0,10,8,48">
@@ -197,7 +195,8 @@
 
                             <StackPanel Orientation="Vertical" Grid.Row="0">
                                 <TextBlock VerticalAlignment="Center" FontSize="20" Margin="0,0,0,10">When are you going?</TextBlock>
-                                <CalendarDatePicker Date="{x:Bind ViewModel.CurrentSightDate, Mode=TwoWay}" HorizontalAlignment="Left" Width="300" Margin="0,0,0,10" Background="White" />
+                                <CalendarDatePicker Date="{x:Bind ViewModel.CurrentSightDate, Mode=TwoWay}" HorizontalAlignment="Stretch" 
+                                                    Margin="0,0,0,10" Background="White" />
                                 <TimePicker Time="{x:Bind ViewModel.CurrentSightTime, Mode=TwoWay}" Margin="0,0,0,10" Background="White" />
                                 <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" FontSize="16" Text="30 minute reminder" />
                                 <ToggleSwitch Style="{StaticResource SightToggleSwitch}" IsOn="True"  Margin="0,0,0,10"/>
@@ -243,8 +242,8 @@
 
                                 </inkToolbarPreview:InkToolbar>
 
-                                <Border Grid.Row="1" Background="White"
-                                    Height="96">
+                                <Border Grid.Row="1" Grid.ColumnSpan="2" Background="White"
+                                        Height="96">
 
                                     <TextBox  x:Name="Notes"
                                          Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
@@ -424,7 +423,8 @@
             <AppBarButton x:Name="MobileDeleteFlyout"
                           Label="Delete from Trip"
                           Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                          Flyout="{StaticResource DeleteFlyout}" Foreground="White"
+                          Flyout="{StaticResource DeleteFlyout}" 
+                          Foreground="White"
                           Style="{StaticResource TopCmdBtnStyle}">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
@@ -433,8 +433,9 @@
             <AppBarButton
                 Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
                 Label="Add to Trip"
-                Click="{x:Bind ViewModel.AddSightAsync}" Foreground="White"
-                          Style="{StaticResource TopCmdBtnStyle}">
+                Click="{x:Bind ViewModel.AddSightAsync}"
+                Foreground="White"
+                Style="{StaticResource TopCmdBtnStyle}">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
                 </AppBarButton.Icon>
@@ -444,9 +445,8 @@
         <!-- This CommandBar is ideal for mobile devices (phones) -->
          <CommandBar x:Name="MobileCommandBar" 
                     Grid.Row="2" 
-                    HorizontalAlignment="Right"
-                    Foreground="White"
-                    Background="{StaticResource NavMenuBackgroundBrush}">
+                    HorizontalAlignment="Stretch">
+
             <!--Insert the M3_MobileShareButton snippet here-->
 
 
@@ -456,8 +456,7 @@
             <AppBarButton x:Name="MobileDeleteFlyout"
                           Label="Delete from Trip"
                           Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                          Flyout="{StaticResource DeleteFlyout}" Foreground="White"
-                          Style="{StaticResource TopCmdBtnStyle}">
+                          Flyout="{StaticResource DeleteFlyout}">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
                 </AppBarButton.Icon>
@@ -465,8 +464,7 @@
             <AppBarButton
                 Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
                 Label="Add to Trip"
-                Click="{x:Bind ViewModel.AddSightAsync}" Foreground="White"
-                          Style="{StaticResource TopCmdBtnStyle}">
+                Click="{x:Bind ViewModel.AddSightAsync}">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
                 </AppBarButton.Icon>

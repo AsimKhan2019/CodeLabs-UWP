@@ -183,7 +183,7 @@
                 </PivotItem.Header>
                 <ScrollViewer x:Name="MyScroller"
                       Grid.Row="1"
-                      Margin="0,12,60,0">
+                      Margin="0,12,16,0">
 
                     <RelativePanel x:Name="Content"                           
                            Padding="0,10,8,48">
@@ -196,7 +196,8 @@
                             <!--Insert the M2_DatePicker snippet here-->
                             <StackPanel Orientation="Vertical" Grid.Row="0">
                                 <TextBlock VerticalAlignment="Center" FontSize="20" Margin="0,0,0,10">When are you going?</TextBlock>
-                                <CalendarDatePicker Date="{x:Bind ViewModel.CurrentSightDate, Mode=TwoWay}" HorizontalAlignment="Left" Width="300" Margin="0,0,0,10" Background="White" />
+                                <CalendarDatePicker Date="{x:Bind ViewModel.CurrentSightDate, Mode=TwoWay}" HorizontalAlignment="Stretch" 
+                                                    Margin="0,0,0,10" Background="White" />
                                 <TimePicker Time="{x:Bind ViewModel.CurrentSightTime, Mode=TwoWay}" Margin="0,0,0,10" Background="White" />
                                 <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" FontSize="16" Text="30 minute reminder">
                                 </TextBlock>
@@ -371,7 +372,7 @@
                     Background="Transparent"
                     Margin="0,0,0,0" Height="60">
             <AppBarButton x:Name="DesktopDeleteFlyout"
-                          Label="Delete"
+                          Label="Delete from Trip"
                           Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
                           Flyout="{StaticResource DeleteFlyout}">
                 <AppBarButton.Icon>
@@ -380,7 +381,7 @@
             </AppBarButton>
             <AppBarButton
                 Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
-                Label="Add"
+                Label="Add to Trip"
                 Click="{x:Bind ViewModel.AddSightAsync}">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
@@ -429,7 +430,7 @@
         </CommandBar>-->
 
         <!-- For Mobile-specific devices -->
-        <CommandBar Grid.Row="2"
+        <CommandBar Grid.Row="2" HorizontalAlignment="Stretch"
                     x:Name="MobileCommandBar">
             <AppBarButton x:Name="MobileDeleteFlyout"
                           Label="Delete from Trip"
