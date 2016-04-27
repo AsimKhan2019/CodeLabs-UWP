@@ -92,7 +92,7 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="MapGrid.Height" Value="240" />
+                        <Setter Target="MapGrid.Height" Value="200" />
                         <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="" />
                         <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
