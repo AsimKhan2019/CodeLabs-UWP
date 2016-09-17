@@ -1,5 +1,5 @@
 ﻿using Microsoft.Labs.SightsToSee.Library.Models;
-using NotificationsExtensions.Tiles;
+using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,14 +46,14 @@ namespace Microsoft.Labs.SightsToSee.Services.TilesNotificationsService
                                     Content = new TileBindingContentAdaptive()
                                     {
                                         Children =
-                                {
-                                    new TileText()
-                                    {
-                                        Text = trip.Name,
-                                        Style = TileTextStyle.Caption,
-                                        Wrap = true
-                                    }
-                                }
+                                        {
+                                            new AdaptiveText()
+                                            {
+                                                Text = trip.Name,
+                                                HintStyle = AdaptiveTextStyle.Caption,
+                                                HintWrap = true
+                                            }
+                                        }
                                     }
                                 },
 
@@ -64,24 +64,24 @@ namespace Microsoft.Labs.SightsToSee.Services.TilesNotificationsService
                                     {
                                         PeekImage = new TilePeekImage()
                                         {
-                                            Source = new TileImageSource(sight.ImagePath),
-                                            Overlay = 20
+                                            Source = sight.ImagePath,
+                                            HintOverlay = 20
                                         },
                                         Children =
-                                {
-                                    new TileText()
-                                    {
-                                        Text = sight.Name,
-                                        Style = TileTextStyle.Caption
-                                    },
-                                    new TileText()
-                                    {
-                                        Text = sight.Description,
-                                        Style = TileTextStyle.CaptionSubtle,
-                                        Wrap = true,
-                                        MaxLines = 2
-                                    }
-                                }
+                                        {
+                                            new AdaptiveText()
+                                            {
+                                                Text = sight.Name,
+                                                HintStyle = AdaptiveTextStyle.Caption
+                                            },
+                                            new AdaptiveText()
+                                            {
+                                                Text = sight.Description,
+                                                HintStyle = AdaptiveTextStyle.CaptionSubtle,
+                                                HintWrap = true,
+                                                HintMaxLines = 2
+                                            }
+                                        }
                                     }
                                 },
 
@@ -92,24 +92,24 @@ namespace Microsoft.Labs.SightsToSee.Services.TilesNotificationsService
                                     {
                                         PeekImage = new TilePeekImage()
                                         {
-                                            Source = new TileImageSource(sight.ImagePath),
-                                            Overlay = 20
+                                            Source = sight.ImagePath,
+                                            HintOverlay = 20
                                         },
                                         Children =
-                                {
-                                    new TileText()
-                                    {
-                                        Text = sight.Name,
-                                        Style = TileTextStyle.Subtitle
-                                    },
-                                    new TileText()
-                                    {
-                                        Text = sight.Description,
-                                        Style = TileTextStyle.BodySubtle,
-                                        Wrap = true,
-                                        MaxLines = 2
-                                    }
-                                }
+                                        {
+                                            new AdaptiveText()
+                                            {
+                                                Text = sight.Name,
+                                                HintStyle = AdaptiveTextStyle.Subtitle
+                                            },
+                                            new AdaptiveText()
+                                            {
+                                                Text = sight.Description,
+                                                HintStyle = AdaptiveTextStyle.BodySubtle,
+                                                HintWrap = true,
+                                                HintMaxLines = 2
+                                            }
+                                        }
                                     }
                                 },
 
@@ -120,24 +120,24 @@ namespace Microsoft.Labs.SightsToSee.Services.TilesNotificationsService
                                     {
                                         PeekImage = new TilePeekImage()
                                         {
-                                            Source = new TileImageSource(sight.ImagePath),
-                                            Overlay = 20
+                                            Source = sight.ImagePath,
+                                            HintOverlay = 20
                                         },
                                         Children =
-                                {
-                                    new TileText()
-                                    {
-                                        Text = sight.Name,
-                                        Style = TileTextStyle.Subtitle
-                                    },
-                                    new TileText()
-                                    {
-                                        Text = sight.Description,
-                                        Style = TileTextStyle.BodySubtle,
-                                        Wrap = true,
-                                        MaxLines = 3
-                                    }
-                                }
+                                        {
+                                            new AdaptiveText()
+                                            {
+                                                Text = sight.Name,
+                                                HintStyle = AdaptiveTextStyle.Subtitle
+                                            },
+                                            new AdaptiveText()
+                                            {
+                                                Text = sight.Description,
+                                                HintStyle = AdaptiveTextStyle.BodySubtle,
+                                                HintWrap = true,
+                                                HintMaxLines = 3
+                                            }
+                                        }
                                     }
                                 }
                             }

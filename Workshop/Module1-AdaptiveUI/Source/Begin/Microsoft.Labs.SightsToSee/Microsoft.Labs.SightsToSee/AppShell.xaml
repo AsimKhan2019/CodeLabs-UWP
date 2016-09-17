@@ -7,7 +7,7 @@
       xmlns:controls="using:Microsoft.Labs.SightsToSee.Controls"
       xmlns:models="using:Microsoft.Labs.SightsToSee.Models"
       xmlns:views="using:Microsoft.Labs.SightsToSee.Views"
-      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      Background="{ThemeResource NavMenuForegroundSelectedBrush}"
       KeyDown="AppShell_KeyDown"
       TabNavigation="Cycle"
       mc:Ignorable="d">

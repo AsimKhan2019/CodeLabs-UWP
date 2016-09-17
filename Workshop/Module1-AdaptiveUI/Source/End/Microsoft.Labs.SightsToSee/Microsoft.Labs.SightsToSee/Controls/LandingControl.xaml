@@ -157,7 +157,7 @@
                     <TextBox x:Name="Destination"
                              IsReadOnly="True"
                              Padding="0,5,0,0"
-                             Width="296"
+                             MaxWidth="220"
                              Height="48"
                              Background="White"
                              Text="San Francisco"

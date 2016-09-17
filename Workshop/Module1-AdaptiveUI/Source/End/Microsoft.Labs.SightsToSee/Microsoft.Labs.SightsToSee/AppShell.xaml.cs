@@ -39,6 +39,15 @@ namespace Microsoft.Labs.SightsToSee
         {
             InitializeComponent();
 
+            Loading += async (sender, args) =>
+            {
+                // StatusBar is Mobile only
+                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                {
+                    await Windows.UI.ViewManagement.StatusBar.GetForCurrentView().HideAsync();
+                }
+            };
+
             Loaded += async (sender, args) =>
             {
                 Current = this;

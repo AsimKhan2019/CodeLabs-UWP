@@ -9,7 +9,6 @@
 	xmlns:viewModels="using:Microsoft.Labs.SightsToSee.ViewModels"
 	xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
 	xmlns:models="using:Microsoft.Labs.SightsToSee.Library.Models"
-	xmlns:inkToolbarPreview="using:InkToolbarPreview"
 	x:Name="SightPage"
 	mc:Ignorable="d">
 
@@ -248,25 +247,28 @@
 									<FontIcon Glyph="&#xEC87;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
 								</ToggleButton>
 							</Border>
-							<inkToolbarPreview:InkToolbar x:Name="ImageInkToolbar" 
-								  Grid.Row="1"  
-								  Visibility="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-								  TargetInkCanvas="{x:Bind ImageInkCanvas}"
-								  EraseAllClick="EraserClearAll">
+                            <StackPanel Orientation="Horizontal" 
+								        Visibility="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                        Grid.Row="1">
+							    <InkToolbar x:Name="ImageInkToolbar" 
+								      TargetInkCanvas="{x:Bind ImageInkCanvas}" 
+								      EraseAllClicked="EraserClearAll">
 
-								<inkToolbarPreview:InkToolbarEraserButton />
-								<inkToolbarPreview:InkToolbarBallpointPenButton SelectedStrokeWidth="5"/>
-								<inkToolbarPreview:InkToolbarHighlighterButton />
-								<inkToolbarPreview:InkToolbarPencilButton />
-								<inkToolbarPreview:InkToolbarCustomToggleButton Click="ImageSaveButton_Click">
+								    <InkToolbarEraserButton />
+								    <InkToolbarBallpointPenButton SelectedStrokeWidth="5"/>
+								    <InkToolbarHighlighterButton />
+								    <InkToolbarPencilButton />
+							    </InkToolbar>
+                                
+                                <Button Click="ImageSaveButton_Click" Background="Transparent">
 									<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE001;" />
-								</inkToolbarPreview:InkToolbarCustomToggleButton>
-								<inkToolbarPreview:InkToolbarCustomToggleButton Click="ImageUndoButton_Click">
+								</Button>
+								<Button Click="ImageUndoButton_Click" Background="Transparent">
 									<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
-								</inkToolbarPreview:InkToolbarCustomToggleButton>
-							</inkToolbarPreview:InkToolbar>
+								</Button>
+                            </StackPanel>
 
-							<Grid x:Name="InkingRoot"
+                            <Grid x:Name="InkingRoot"
 								  Grid.Row="0"
 								  Height="448"
 								  Width="Auto"
@@ -385,8 +387,8 @@
 				Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
 				Label="Add to Trip"
 				Click="{x:Bind ViewModel.AddSightAsync}"
-		Foreground="White"
-						  Style="{StaticResource TopCmdBtnStyle}">
+		        Foreground="White"
+				Style="{StaticResource TopCmdBtnStyle}">
 				<AppBarButton.Icon>
 					<FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
 				</AppBarButton.Icon>

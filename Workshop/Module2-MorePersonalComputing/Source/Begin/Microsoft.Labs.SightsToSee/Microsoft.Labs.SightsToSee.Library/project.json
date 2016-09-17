@@ -1,11 +1,11 @@
 ﻿{
   "dependencies": {
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
-    "Newtonsoft.Json": "8.0.3",
-    "NotificationsExtensions.Win10": "10586.0.2",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
+    "Microsoft.Toolkit.Uwp.Notifications": "1.0.0",
+    "Newtonsoft.Json": "9.0.1",
     "SQLite.Net-PCL": "3.1.1",
     "SQLite.Net.Async-PCL": "3.1.1",
-    "Win2D.uwp": "1.16.0"
+    "Win2D.uwp": "1.19.0"
   },
   "frameworks": {
     "uap10.0": {}
