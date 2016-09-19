@@ -9,7 +9,6 @@
     xmlns:viewModels="using:Microsoft.Labs.SightsToSee.ViewModels"
     xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
     xmlns:models="using:Microsoft.Labs.SightsToSee.Library.Models"
-    xmlns:inkToolbarPreview="using:InkToolbarPreview"
     x:Name="SightPage"
     mc:Ignorable="d">
 
@@ -77,13 +76,16 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="1200" />
                     </VisualState.StateTriggers>
+
                     <VisualState.Setters>
-                        <Setter Target="Column0Content.(RelativePanel.RightOf)" Value="Column1Content" />
                         <Setter Target="Column1Content.Padding" Value="0" />
                         <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
-                        <Setter Target="Column0Content.Margin" Value="20,0,0,0" />
+                        <Setter Target="SightImage.MaxWidth" Value="600" />
+                        <Setter Target="Column0Content.Margin" Value="20,0,12,0" />
+                        <Setter Target="Column0Content.(RelativePanel.RightOf)" Value="Column1Content" />
+                        <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="GalleryGrid.Padding" Value="0" />
-                        <Setter Target="InkingRoot.Width" Value="Auto" />
+                        <Setter Target="InkingRoot.Width" Value="480" />
                         <Setter Target="GalleryGrid.ItemsPanel" Value="{StaticResource ItemsPanelTemplate}" />
                         <Setter Target="LayoutPanel.Margin" Value="0,-40,0,0" />
                         <Setter Target="TitleCommandBar.Visibility" Value="Visible" />
@@ -97,12 +99,14 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
+
                     <VisualState.Setters>
                         <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="Column1Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="SightImage.MaxWidth" Value="600" />
                         <Setter Target="Column1Content.Padding" Value="0" />
                         <Setter Target="GalleryGrid.Padding" Value="0" />
                         <Setter Target="GalleryGrid.Height" Value="82" />
-                        <Setter Target="ImageInkToolbar.Margin" Value="0,0" />
                         <Setter Target="GalleryGrid.Style" Value="{StaticResource HorizontalGridView}" />
                         <Setter Target="Column0Content.(RelativePanel.Below)" Value="Column1Content" />
                         <Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
@@ -126,21 +130,15 @@
                         <Setter Target="Column0Content.(RelativePanel.Below)" Value="Column1Content" />
                         <Setter Target="Column0Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="Column0Content.Padding" Value="0" />
                         <Setter Target="Column0Content.Width" Value="Auto" />
                         <Setter Target="GalleryGrid.Padding" Value="0" />
                         <Setter Target="GalleryGrid.Height" Value="82" />
                         <Setter Target="GalleryGrid.Style" Value="{StaticResource HorizontalGridView}" />
                         <Setter Target="GalleryGrid.Margin" Value="0,12,0,12" />
-                        <Setter Target="InkingRoot.Width" Value="Auto" />
-                        <Setter Target="InkingRoot.Height" Value="Auto" />
                         <Setter Target="InkingRoot.MaxHeight" Value="360" />
-                        <Setter Target="SightImage.Stretch" Value="UniformToFill" />
                         <Setter Target="LayoutRoot.Margin" Value="0" />
                         <Setter Target="LayoutRoot.VerticalAlignment" Value="Stretch" />
-                        <Setter Target="Content.Padding" Value="0,10,15,72" />
                         <Setter Target="LayoutPanel.Margin" Value="0" />
-                        <Setter Target="LayoutPanel.Padding" Value="12,0" />
                         <Setter Target="TitleCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="TitleArea.Visibility" Value="Collapsed" />
                         <Setter Target="MobileHeader.Visibility" Value="Visible" />
@@ -175,6 +173,7 @@
                    Text="{x:Bind ViewModel.CurrentSight.Name, Mode=OneWay}" />
         </Border>
 
+        <!-- Pivot (spans Row 0 and 1) -->
         <Pivot x:Name="LayoutPanel"
                Padding="24,0,0,0"
                Margin="0,-40,0,0"
@@ -185,14 +184,16 @@
                 </PivotItem.Header>
                 <ScrollViewer x:Name="MyScroller"
                       Grid.Row="1"
-                      Margin="0,12,60,0">
+                              Margin="0,12,32,0"
+                              VerticalScrollBarVisibility="Auto">
 
                     <RelativePanel x:Name="Content"                           
-                           Padding="0,10,8,48">
+                           Padding="0,10,16,48" VerticalAlignment="Top">
                         <StackPanel x:Name="Column0Content">
                             <TextBlock x:Name="Caption"
                                Style="{ThemeResource CaptionTextBlockStyle}"
                                Text="{x:Bind ViewModel.CurrentSight.LongDescription, Mode=OneWay}"
+							   TextWrapping="WrapWholeWords"
                                Margin="0,0,0,36" />
                             
                             <StackPanel Orientation="Vertical" Grid.Row="0">
@@ -214,36 +215,37 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" VerticalAlignment="Center" FontSize="20">Notes</TextBlock>
                                 
-                                <Button x:Name="InkButton" Grid.Column="1" Background="Transparent"
-                                        Click="{x:Bind ViewModel.EnableInk}"
+                                <!--Insert the M2_EnableInkButton snippet here-->
+                                <Button x:Name="InkButton" Grid.Column="1" Background="Transparent" Click="{x:Bind ViewModel.EnableInk}"
                                         Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
                                     <FontIcon Glyph="&#xEC87;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
                                 </Button>
 
-                                <inkToolbarPreview:InkToolbar x:Name="NoteInkToolbar" Grid.Column="1"
+                                <!--Insert the M2_InkToolbar snippet here-->
+                                <StackPanel Orientation="Horizontal" 
+								        Visibility="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                        Grid.Column="1">
+                                        <InkToolbar x:Name="NoteInkToolbar"  
                                                                 TargetInkCanvas="{x:Bind NotesInkCanvas}"
                                                                 Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                                EraseAllClick="EraserClearAll">
+                                                    EraseAllClicked="EraserClearAll">
 
+                                        <InkToolbarEraserButton />
+                                        <InkToolbarBallpointPenButton SelectedStrokeWidth="5"/>
+                                    </InkToolbar>
 
-                                    <inkToolbarPreview:InkToolbarEraserButton />
-                                    <inkToolbarPreview:InkToolbarBallpointPenButton SelectedStrokeWidth="5"/>
-
-                                    <inkToolbarPreview:InkToolbarCustomToggleButton Click="TryInkReco">
-                                        <FontIcon Glyph="&#xE8E9;" FontFamily="Segoe MDL2 Assets" />
-                                    </inkToolbarPreview:InkToolbarCustomToggleButton>
-
-                                    <inkToolbarPreview:InkToolbarCustomToggleButton Click="NotesSaveButton_Click">
+                                    <Button Click="TryInkReco" Background="Transparent">
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8E9;" />
+                                    </Button>
+                                    <Button Click="ImageSaveButton_Click" Background="Transparent">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE001;" />
-                                    </inkToolbarPreview:InkToolbarCustomToggleButton>
-                                    <inkToolbarPreview:InkToolbarCustomToggleButton Click="NotesUndoButton_Click">
+                                    </Button>
+                                    <Button Click="ImageUndoButton_Click" Background="Transparent">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
-                                    </inkToolbarPreview:InkToolbarCustomToggleButton>
+                                    </Button>
+                                </StackPanel>
 
-
-                                </inkToolbarPreview:InkToolbar>
-
-                                <Border Grid.Row="1" Background="White"
+                                <Border Grid.Row="1" Grid.ColumnSpan="2" Background="White"
                                     Height="96">
                                     
                                     <TextBox  x:Name="Notes"
@@ -254,19 +256,19 @@
                                 </Border>
                                 
                                 <Grid x:Name="InkGrid"
-                                      Grid.Row="1"
+                                      Grid.Row="1" Grid.ColumnSpan="2" 
                                       Background="White"
                                       Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
                                       Margin="0,8,0,0">
                                     <InkCanvas x:Name="NotesInkCanvas"
                                                MinHeight="500" />
                                 </Grid>
+
                             </Grid>
 
                         </StackPanel>
 
                         <Grid x:Name="Column1Content"
-                              Width="472"
                               Padding="24,0,0,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -281,38 +283,34 @@
                                     <FontIcon Glyph="&#xEC87;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
                                 </ToggleButton>
                             </Border>
-                            <inkToolbarPreview:InkToolbar x:Name="ImageInkToolbar" 
-                                      Grid.Row="1" 
+                            <StackPanel Orientation="Horizontal" 
                                       Visibility="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                        Grid.Row="1">
+                                <InkToolbar x:Name="ImageInkToolbar" 
                                       TargetInkCanvas="{x:Bind ImageInkCanvas}"
-                                      EraseAllClick="EraserClearAll">
+								      EraseAllClicked="EraserClearAll">
 
-                                <inkToolbarPreview:InkToolbarEraserButton />
-                                <inkToolbarPreview:InkToolbarBallpointPenButton SelectedStrokeWidth="5"/>
-                                <inkToolbarPreview:InkToolbarHighlighterButton />
-                                <inkToolbarPreview:InkToolbarPencilButton />
-                                <inkToolbarPreview:InkToolbarCustomToggleButton Click="ImageSaveButton_Click">
+                                    <InkToolbarEraserButton />
+                                    <InkToolbarBallpointPenButton SelectedStrokeWidth="5"/>
+                                    <InkToolbarHighlighterButton />
+                                    <InkToolbarPencilButton />
+                                </InkToolbar>
+
+                                <Button Click="ImageSaveButton_Click" Background="Transparent">
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE001;" />
-                                </inkToolbarPreview:InkToolbarCustomToggleButton>
-                                <inkToolbarPreview:InkToolbarCustomToggleButton Click="ImageUndoButton_Click">
+                                </Button>
+                                <Button Click="ImageUndoButton_Click" Background="Transparent">
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
-                                </inkToolbarPreview:InkToolbarCustomToggleButton>
-
-                                <!--Insert the M3_LaunchButton snippet here-->
-
-
-                            </inkToolbarPreview:InkToolbar>
+                                </Button>
+                            </StackPanel>
 
                             <Grid x:Name="InkingRoot"
                                   Grid.Row="0"
-                                  Height="448"
-                                  Width="Auto"
-                                  VerticalAlignment="Center"
                                   HorizontalAlignment="Left">
 
                                 <Image Source="{x:Bind ViewModel.SightImage, Mode=OneWay}"
-                                       Stretch="UniformToFill"
-                                       x:Name="SightImage" />
+                                       Stretch="Uniform"
+                                       x:Name="SightImage"/>
 
                                 <InkCanvas x:Name="ImageInkCanvas"
                                            Visibility="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -424,7 +422,8 @@
             <AppBarButton x:Name="MobileDeleteFlyout"
                           Label="Delete from Trip"
                           Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                          Flyout="{StaticResource DeleteFlyout}" Foreground="White"
+                          Flyout="{StaticResource DeleteFlyout}" 
+                          Foreground="White"
                           Style="{StaticResource TopCmdBtnStyle}">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
@@ -433,7 +432,8 @@
             <AppBarButton
                 Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
                 Label="Add to Trip"
-                Click="{x:Bind ViewModel.AddSightAsync}" Foreground="White"
+                Click="{x:Bind ViewModel.AddSightAsync}"
+                Foreground="White"
                           Style="{StaticResource TopCmdBtnStyle}">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
@@ -441,18 +441,14 @@
             </AppBarButton>
         </CommandBar>
 
-        <!-- This CommandBar is ideal for mobile devices (phones) -->
-        <!-- <CommandBar x:Name="MobileCommandBar" 
-                    Grid.Row="2" 
-                    HorizontalAlignment="Right"
-                    Foreground="White"
-                    Background="{StaticResource NavMenuBackgroundBrush}">
-            
+        <!-- Mobile Device Command Bar-->
+        <!--<CommandBar Grid.Row="2"
+                    HorizontalAlignment="Stretch"  
+                    x:Name="MobileCommandBar">
             <AppBarButton x:Name="MobileDeleteFlyout"
                           Label="Delete from Trip"
                           Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                          Flyout="{StaticResource DeleteFlyout}" Foreground="White"
-                          Style="{StaticResource TopCmdBtnStyle}">
+                          Flyout="{StaticResource DeleteFlyout}">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
                 </AppBarButton.Icon>
@@ -460,14 +456,13 @@
             <AppBarButton
                 Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
                 Label="Add to Trip"
-                Click="{x:Bind ViewModel.AddSightAsync}" Foreground="White"
-                          Style="{StaticResource TopCmdBtnStyle}">
+                Click="{x:Bind ViewModel.AddSightAsync}">
                 <AppBarButton.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE109;" />
                 </AppBarButton.Icon>
             </AppBarButton>
-        </CommandBar>
--->
+		</CommandBar> -->
+
 
         <!-- Content Dialogs -->
 
