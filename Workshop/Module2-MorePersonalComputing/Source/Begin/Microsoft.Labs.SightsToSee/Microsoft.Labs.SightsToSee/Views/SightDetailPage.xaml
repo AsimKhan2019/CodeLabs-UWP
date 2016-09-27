@@ -81,6 +81,7 @@
 						<Setter Target="Column1Content.Padding" Value="0" />
 						<Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="SightImage.MaxWidth" Value="600" />
+                        <Setter Target="ImageInkingBorder.MaxWidth" Value="600" />
                         <Setter Target="Column0Content.Margin" Value="20,0,12,0" />
                         <Setter Target="Column0Content.(RelativePanel.RightOf)" Value="Column1Content" />
                         <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
@@ -104,6 +105,7 @@
 						<Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Column1Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="SightImage.MaxWidth" Value="600" />
+                        <Setter Target="ImageInkingBorder.MaxWidth" Value="600" />
 						<Setter Target="Column1Content.Padding" Value="0" />
 						<Setter Target="GalleryGrid.Padding" Value="0" />
 						<Setter Target="GalleryGrid.Height" Value="82" />
@@ -234,13 +236,15 @@
 						</StackPanel>
 
 						<Grid x:Name="Column1Content"
-							  Padding="24,0,0,0">
+							  Padding="24,0,0,0"
+                              HorizontalAlignment="Left">
 							<Grid.RowDefinitions>
 								<RowDefinition Height="Auto" />
 								<RowDefinition Height="Auto" />
 								<RowDefinition Height="Auto" />
 							</Grid.RowDefinitions>
-							<Border Grid.Row="1" Background="#FFE6E6E6" Height="50">
+							<Border x:Name="ImageInkingBorder" Grid.Row="1" 
+                                    Background="#FFE6E6E6" Height="50">
 								<ToggleButton x:Name="ImageInkButton" Grid.Column="1" Background="Transparent" 
 											  Checked="{x:Bind ViewModel.EnableImageInk}" Unchecked="{x:Bind ViewModel.DisableImageInk}"
 										IsChecked="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToNullableBooleanConverter}}"

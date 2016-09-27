@@ -81,6 +81,7 @@
                         <Setter Target="Column1Content.Padding" Value="0" />
                         <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="SightImage.MaxWidth" Value="600" />
+                        <Setter Target="ImageInkToolbar.MaxWidth" Value="600" />
                         <Setter Target="Column0Content.Margin" Value="20,0,12,0" />
                         <Setter Target="Column0Content.(RelativePanel.RightOf)" Value="Column1Content" />
                         <Setter Target="Column0Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
@@ -104,6 +105,7 @@
                         <Setter Target="Column1Content.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Column1Content.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="SightImage.MaxWidth" Value="600" />
+                        <Setter Target="ImageInkToolbar.MaxWidth" Value="600" />
                         <Setter Target="Column1Content.Padding" Value="0" />
                         <Setter Target="GalleryGrid.Padding" Value="0" />
                         <Setter Target="GalleryGrid.Height" Value="82" />
@@ -224,26 +226,27 @@
 
                                 <!--Insert the M2_InkToolbar snippet here-->
                                 <StackPanel Orientation="Horizontal" 
-								        Visibility="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+								        Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
                                         Grid.Column="1">
-                                        <InkToolbar x:Name="NoteInkToolbar"  
+                                        <InkToolbar x:Name="NoteInkToolbar" Height="46" 
                                                     TargetInkCanvas="{x:Bind NotesInkCanvas}"
                                                     Visibility="{x:Bind ViewModel.IsNotesInking, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
                                                     EraseAllClicked="EraserClearAll">
 
-                                        <InkToolbarEraserButton />
-                                        <InkToolbarBallpointPenButton SelectedStrokeWidth="5"/>
-                                    </InkToolbar>
+                                            <InkToolbarEraserButton />
+                                            <InkToolbarBallpointPenButton SelectedStrokeWidth="5"/>
+                                        </InkToolbar>
 
-                                    <Button Click="TryInkReco" Background="Transparent">
+                                    <Button Click="TryInkReco" Background="#FFE6E6E6" Height="46">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8E9;" />
                                     </Button>
-                                    <Button Click="ImageSaveButton_Click" Background="Transparent">
+                                    <Button Click="NotesSaveButton_Click" Background="#FFE6E6E6" Height="46">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE001;" />
                                     </Button>
-                                    <Button Click="ImageUndoButton_Click" Background="Transparent">
+                                    <Button Click="NotesUndoButton_Click" Background="#FFE6E6E6" Height="46">
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" />
                                     </Button>
+
                                 </StackPanel>
 
                                 <Border Grid.Row="1" Grid.ColumnSpan="2" Background="White"
@@ -271,17 +274,18 @@
                         </StackPanel>
 
                         <Grid x:Name="Column1Content"
-                              Padding="24,0,0,0">
+                              Padding="24,0,0,0"
+                              HorizontalAlignment="Left">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <Border Grid.Row="1" Background="#FFE6E6E6" Height="50">
+                            <Border x:Name="ImageInkBorder" Grid.Row="1" Background="#FFE6E6E6" Height="50">
                                 <ToggleButton x:Name="ImageInkButton" Grid.Column="1" Background="Transparent" 
                                               Checked="{x:Bind ViewModel.EnableImageInk}" Unchecked="{x:Bind ViewModel.DisableImageInk}"
-                                        IsChecked="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToNullableBooleanConverter}}"
-                                        HorizontalAlignment="Right">
+                                              IsChecked="{x:Bind ViewModel.IsImageInking, Mode=OneWay, Converter={StaticResource BooleanToNullableBooleanConverter}}"
+                                              HorizontalAlignment="Right">
                                     <FontIcon Glyph="&#xEC87;" FontFamily="Segoe MDL2 Assets" FontSize="20" />
                                 </ToggleButton>
                             </Border>
@@ -371,7 +375,8 @@
 		<CommandBar x:Name="TitleCommandBar"
 					Grid.Row="0"
                     Background="Transparent"
-                    Margin="0,0,0,0" Height="60">
+                    Margin="0,0,0,0" Height="60"
+                    DefaultLabelPosition="Right">
             <AppBarButton x:Name="DesktopDeleteFlyout"
                           Label="Delete from Trip"
                           Visibility="{x:Bind ViewModel.CurrentSight.IsMySight, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
