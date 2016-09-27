@@ -1,5 +1,5 @@
 ﻿using Microsoft.Labs.SightsToSee.Library.Models;
-using NotificationsExtensions.Toasts;
+using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,55 +43,55 @@ namespace Microsoft.Labs.SightsToSee.Services.TilesNotificationsService
         }
 
         //Not Used to due inability to specify action hint-systemCommands with subactions in NotificationsExtensions
-        public static XmlDocument GenerateContent(Sight sight)
-        {
-            var content = new ToastContent()
-            {
-                Launch = "SightReminder",
+        //public static XmlDocument GenerateContent(Sight sight)
+        //{
+        //    var content = new ToastContent()
+        //    {
+        //        Launch = "SightReminder",
 
-                Visual = new ToastVisual()
-                {
-                    TitleText = new ToastText()
-                    {
-                        Text = $"Visit {sight.Name}"
-                    },
+        //        Visual = new ToastVisual()
+        //        {
+        //            TitleText = new ToastText()
+        //            {
+        //                Text = $"Visit {sight.Name}"
+        //            },
 
-                    BodyTextLine1 = new ToastText()
-                    {
-                        Text = $"{sight.Location}"
-                    },
+        //            BodyTextLine1 = new ToastText()
+        //            {
+        //                Text = $"{sight.Location}"
+        //            },
 
-                    BodyTextLine2 = new ToastText()
-                    {
-                        Text = $"{sight.VisitDate.Value.ToString("hh:mm tt")}"
-                    },
-                    InlineImages =
-                    {
-                        new ToastImage()
-                        {
-                            Source = new ToastImageSource(sight.ImagePath)
-                        }
-                    }
-                },
-                Actions = new ToastActionsCustom()
-                {
-                    Buttons =
-                    {
-                        new ToastButtonSnooze(),
-                        new ToastButtonDismiss(),
-                        new ToastButton("View", $"View:{sight.Id.ToString()}")
-                        {
-                            ActivationType = ToastActivationType.Foreground
-                        },
-                        new ToastButton("Remove", $"Remove:{sight.Id.ToString()}")
-                        {
-                            ActivationType = ToastActivationType.Foreground
-                        }
-                    }
-                },
-            };
+        //            BodyTextLine2 = new ToastText()
+        //            {
+        //                Text = $"{sight.VisitDate.Value.ToString("hh:mm tt")}"
+        //            },
+        //            InlineImages =
+        //            {
+        //                new ToastImage()
+        //                {
+        //                    Source = new ToastImageSource(sight.ImagePath)
+        //                }
+        //            }
+        //        },
+        //        Actions = new ToastActionsCustom()
+        //        {
+        //            Buttons =
+        //            {
+        //                new ToastButtonSnooze(),
+        //                new ToastButtonDismiss(),
+        //                new ToastButton("View", $"View:{sight.Id.ToString()}")
+        //                {
+        //                    ActivationType = ToastActivationType.Foreground
+        //                },
+        //                new ToastButton("Remove", $"Remove:{sight.Id.ToString()}")
+        //                {
+        //                    ActivationType = ToastActivationType.Foreground
+        //                }
+        //            }
+        //        },
+        //    };
 
-            return content.GetXml();
-        }
+        //    return content.GetXml();
+        //}
     }
 }

@@ -12,7 +12,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using InkToolbarPreview;
 using Microsoft.Labs.SightsToSee.Controls;
 using Microsoft.Labs.SightsToSee.Services.FileService;
 using Microsoft.Labs.SightsToSee.ViewModels;

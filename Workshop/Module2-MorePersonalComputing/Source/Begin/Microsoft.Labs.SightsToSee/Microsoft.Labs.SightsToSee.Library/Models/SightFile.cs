@@ -137,7 +137,7 @@ namespace Microsoft.Labs.SightsToSee.Library.Models
 
         [JsonIgnore]
         [Ignore]
-        public BitmapImage ImageUri => new BitmapImage(new Uri(Uri, UriKind.Absolute));
+        public BitmapImage ImageUri => (Uri != null) ? new BitmapImage(new Uri(Uri, UriKind.Absolute)) : null;
 
 
 

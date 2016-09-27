@@ -134,5 +134,15 @@ namespace Microsoft.Labs.SightsToSee.Views
             sight.IsMySight = false;
             ViewModel.UpdateSightAsync(sight);
         }
+
+        /// <summary>
+        /// Workaround for bug causing x:Bind direct to ViewModel to fail to compile
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SightsGrid_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ViewModel.SightClicked(sender, e);
+        }
     }
 }

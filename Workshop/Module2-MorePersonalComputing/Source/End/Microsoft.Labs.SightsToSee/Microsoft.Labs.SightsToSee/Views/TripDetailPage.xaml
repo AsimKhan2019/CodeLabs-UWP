@@ -181,7 +181,7 @@
                         <Setter Target="MobileHeader.Visibility" Value="Visible" />
                         <Setter Target="baseBranding.Visibility" Value="Collapsed" />
                         <Setter Target="narrowBranding.Visibility" Value="Visible" />
-                        <Setter Target="MapGrid.Height" Value="240" />
+                        <Setter Target="MapGrid.Height" Value="200" />
                         <Setter Target="MapGrid.(RelativePanel.AlignTopWith)" Value="" />
                         <Setter Target="MapGrid.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="MapGrid.(RelativePanel.AlignLeftWithPanel)" Value="True" />
@@ -226,27 +226,29 @@
                 Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="72" />
             </Grid.ColumnDefinitions>
             <TextBlock Style="{ThemeResource TitleTextBlockStyle}"
-                       Foreground="White"
-                       VerticalAlignment="Center"
-                       Margin="48,0,0,0"
+                       Foreground="White" 
+                       VerticalAlignment="Center" HorizontalAlignment="Left"
+                       Margin="48,0,0,0" 
+                       MaxWidth="240" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
                        Text="{x:Bind ViewModel.CurrentTrip.Name, Mode=OneWay}" />
             <Image x:Name="baseBranding" Grid.Column="1" Source="ms-appx:///Assets/Sights2SeeLogo.png" Margin="0,6,24,6" HorizontalAlignment="Right"  />
-            <Image x:Name="narrowBranding" Grid.Column="1" Source="ms-appx:///Assets/Tile_Logo.png" Margin="0,6,24,6" HorizontalAlignment="Right" Visibility="Collapsed" />
+            <Image x:Name="narrowBranding" Grid.Column="1" Source="ms-appx:///Assets/Tile_Logo.png" Height="36" Margin="0,6,24,6" HorizontalAlignment="Right" Visibility="Collapsed" />
         </Grid>
         
         <Grid Grid.Row="1" EntranceNavigationTransitionInfo.IsTargetElement="True">
 
-            <Pivot x:Name="LayoutPanel" Margin="0,-40,0,0">
+            <Pivot x:Name="LayoutPanel">
                 <PivotItem Style="{StaticResource SelectedPivotItem}"  >
                     <PivotItem.Header>
                         <TextBlock Text="Sights"/>
                     </PivotItem.Header>
 
-                    <RelativePanel>
+                    <RelativePanel Margin="0,0,36,0">
                         <GridView x:Name="SightsGrid"
+                          Margin="0,0,12,0"
                           ItemsSource="{x:Bind CvsSights.View, Mode=OneWay}"
                           ScrollViewer.IsVerticalScrollChainingEnabled="False"
                           MinHeight="124"
@@ -254,7 +256,7 @@
                           ItemTemplate="{StaticResource SightTemplate}"
                           SelectionMode="None"
                           IsItemClickEnabled="True"
-                          ItemClick="{x:Bind ViewModel.SightClicked}">
+                          ItemClick="SightsGrid_ItemClick">
                             <GridView.GroupStyle>
                                 <GroupStyle HeaderTemplate="{StaticResource SightGroupHeaderTemplate}"
                                     HeaderContainerStyle="{StaticResource SightGridViewHeaderItem}" />
